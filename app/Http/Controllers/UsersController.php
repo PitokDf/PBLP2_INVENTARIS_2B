@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
+use App\Models\User;
 use App\Models\Users;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -37,7 +40,19 @@ class UsersController extends Controller
      */
     public function store(StoreUsersRequest $request)
     {
-        //
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role' => $request->role
+        ];
+
+        Users::create($data);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil Menambahkan data user.'
+        ]);
     }
 
     /**
@@ -51,24 +66,72 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Users $users)
+    public function edit(Users $users, $id)
     {
-        //
+        $data = Users::where('id_user', $id)->get([
+            "id_user",
+            'name',
+            'email',
+            'password',
+            'role'
+        ]);
+        return response()->json([
+            'status' => 200,
+            'data' => $data
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUsersRequest $request, Users $users)
+    public function update(UpdateUsersRequest $request, $id)
     {
-        //
+        try {
+            $user = Users::findOrFail($id);
+
+            $rules = [
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('users')->ignore($user),
+                ],
+            ];
+
+            $validator = Validator::make($request->all(), $rules, [
+                "email.unique" => "Email sudah pernah digunakan",
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->password = $request->password; // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
+            $user->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => "Berhasil mengupdate data."
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Users $users)
+    public function destroy(Users $users, $id)
     {
-        //
+        Users::where('id_user', $id)->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil Menghapus data user.'
+        ]);
     }
 }

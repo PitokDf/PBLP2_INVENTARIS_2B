@@ -11,7 +11,7 @@ class StoreUsersRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class StoreUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => "required",
+            "email" => [
+                "unique:users,email",
+                "required",
+            ],
+            "role" => "required",
+            "password" => "min:8",
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            "name.required" => "Nama tidak boleh kosong.",
+            "email.required" => "Email tidak boleh kosong.",
+            "email.unique" => "Email sudah pernah digunakan",
+            "role.required" => "Pilih salah satu dari role yang tersedia.",
+            "password.min" => "Password minimal :min karakter.",
         ];
     }
 }

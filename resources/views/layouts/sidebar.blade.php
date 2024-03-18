@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
@@ -9,8 +9,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
-        <a class="nav-link" href="/">
+    <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -23,7 +23,7 @@
         Interface
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item {{ Request::is('pengelolaan*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('**') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
             aria-expanded="true" aria-controls="pengelolaanData">
             <i class="fas fa-tasks"></i>
@@ -31,8 +31,7 @@
         </a>
         <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::is('pengelolaan/barang') ? 'active' : '' }}"
-                    href="{{ route('user.index') }}">
+                <a class="collapse-item {{ Request::is('') ? 'active' : '' }}" href="{{ route('user.index') }}">
                     <i class="fas fa-box-open"></i>
                     <span>Barang</span>
                 </a>
@@ -42,18 +41,17 @@
                         <i class="far fa-calendar-plus"></i>
                         <span>Berita</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('pengelolaan/kategori-berita') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('kategori-berita') ? 'active' : '' }}"
+                        href="{{ route('kategori-berita.index') }}">
                         <i class="fas fa-list-alt"></i>
                         <span>Kategori Berita</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('pengelolaan/users') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('user') ? 'active' : '' }}" href="{{--  --}}">
                         <i class="fas fa-users"></i>
                         <span>Users</span>
                     </a>
                     <a class="collapse-item {{ Request::is('pengelolaan/dosen') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                        href="{{ route('dosen.index') }}">
                         <i class="fas fa-users"></i>
                         <span>Data Dosen</span>
                     </a>

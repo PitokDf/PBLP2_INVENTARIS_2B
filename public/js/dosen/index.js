@@ -1,9 +1,6 @@
 
-
-
 $(document).ready(function () {
-    var role = ['Admin', 'Pimpinan', 'Dosen', 'Mahasiswa', 'Staff'];
-    $('#tableUsers').DataTable({
+    $('#table_dosen').DataTable({
         "processing": true,
         "paging": true,
         "searching": true,
@@ -12,7 +9,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "getAllDataUser", // Ganti dengan URL endpoint Anda
+            "url": "getAllDataDosen", // Ganti dengan URL endpoint Anda
             "type": "GET"
         },
         "columns": [
@@ -23,24 +20,17 @@ $(document).ready(function () {
                 }
             },
             { "data": "name", "orderable": true },
+            { "data": "nip", "orderable": true },
+            { "data": "academic_position", "orderable": true },
+            { "data": "phone_number", "orderable": true },
             { "data": "email", "orderable": true },
-            {
-                "data": "role",
-                "render": function (data) {
-                    return role[data - 1];
-                }, "orderable": true
-            },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    // if (row.role == 1) {
-                    //     return "<button type='button' class='btn btn-sm btn-danger' style='cursor: not-alowed' disabled><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' disabled><i class='fas fa-regular fa-pen'></i></button>"
-                    // } else {
-                    return "<button type='button' data-id='" + row.id_user + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_user + "'><i class='fas fa-regular fa-pen'></i></button>"
-                    // }
+                    return "<button type='button' data-id='" + row.id_dosen + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_dosen + "'><i class='fas fa-regular fa-pen'></i></button>"
                 }
                 , "orderable": false
-            } // Contoh tombol aksi
+            }
         ]
     });
 
@@ -48,15 +38,17 @@ $(document).ready(function () {
 
     function clearErrorMsg() {
         $('#name_error').text('');
+        $('#nip_error').text('');
+        $('#jabatan_error').text('');
+        $('#no_telpn_error').text('');
         $('#email_error').text('');
-        $('#role_error').text('');
-        $('#pass_error').text('');
+        $('#dir_foto_error').text('');
     }
 
     function clerInput(modal) {
         $('.role').css('display', 'block')
         $("#" + modal + " input").val('');
-        $("#" + modal + " select").val($('#' + modal + " select option:first").val());
+        $("#" + modal + " select").val('1');
     }
 
     function showModal(modal, title, form, icon) {
@@ -66,97 +58,112 @@ $(document).ready(function () {
         $('.action').html(icon);
     }
 
+    var server = "http://127.0.0.1:8001/";
     $('#btnCreate').click(function () {
+        var modal = "modalDosen";
+        $('#img-preview').css('display', 'block');
+        $('#img-preview').attr('src', server + 'images/download.png');
+        console.log($('#img-preview'))
         if ($('.action').attr('id') != 'btnCreateform') {
-            clerInput(modal = "modalUser");
+            clerInput(modal);
         }
-        showModal(modal = "modalUser", title = "Add User", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
-
+        showModal(modal, title = "Add Data Dosen", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
     });
 
+    // proses yang akan menangani proses create data dan mengembalikan error saat terjadi error
     $(document).on('click', '#btnCreateform', function () {
-        var formData = $('#form').serialize();
-        url = "user";
+        var formData = new FormData(document.getElementById('form'));
+        url = "dosen";
         $.ajax({
             type: "POST",
             url: url,
             data: formData,
+            processData: false,
+            contentType: false,
             dataType: "json",
             success: function (response) {
                 if (response.status == 200) {
-                    clerInput(modal = "modalUser");
+                    clerInput(modal = "modalDosen");
                     clearErrorMsg();
-                    reloadTable(tableUsers);
-                    $('#modalUser').modal('hide');
+                    reloadTable(table_dosen);
+                    $('#modalDosen').modal('hide');
                     Swal.fire({
                         title: "Insert!",
                         text: response.message,
                         icon: "success",
                         confirmButtonText: "Yes"
-                    })
+                    });
                 }
             },
             error: function (xhr) {
-                console.error(xhr);
-                clearErrorMsg();
                 var errorMessage = xhr.responseJSON.errors;
+                clearErrorMsg();
                 $('#name_error').text(errorMessage.name);
+                $('#nip_error').text(errorMessage.nip);
+                $('#jabatan_error').text(errorMessage.jabatan);
+                $('#no_telpn_error').text(errorMessage.no_telpn);
                 $('#email_error').text(errorMessage.email);
-                $('#role_error').text(errorMessage.role);
-                $('#pass_error').text(errorMessage.password);
+                $('#dir_foto_error').text(errorMessage.dir_foto);
             }
         });
     });
 
+    // saat btn edit diclick maka akan melakakuan request ke server dengan mengirimkan id dan server akan mengembalikan data yang sesuai dengan id yang dikirimkan
     $(document).on('click', '.btnEdit', function () {
-        showModal(modal = "modalUser", title = "Edit User", form = "btnEditform", icon = "<i class='fas fa-regular fa-pen'></i> Update");
+        showModal(modal = "modalDosen", title = "Edit Data Dosen", form = "btnEditform", icon = "<i class='fas fa-regular fa-pen'></i> Update");
         clearErrorMsg();
-        url = "user/" + $(this).attr('id') + "/edit";
+        url = "dosen/" + $(this).attr('id') + "/edit";
         $.ajax({
             type: "GET",
             url: url,
             dataType: "json",
             success: function (response) {
-                console.log(response.data[0])
-                $('#id').val(response.data[0].id_user);
+                $('#id').val(response.data[0].id_dosen);
                 $('#name').val(response.data[0].name);
+                $('#nip').val(response.data[0].nip);
+                $('#jabatan').val(response.data[0].academic_position);
+                $('#no_telpn').val(response.data[0].phone_number);
                 $('#email').val(response.data[0].email);
-                $('#role').val(response.data[0].role);
-                $('#password').val(response.data[0].password);
-                if (response.data[0].role == 1) {
-                    $('.role').css('display', 'none')
-                } else {
-                    $('.role').css('display', 'block')
-                }
-                $('#password').val(response.data[0].password);
+                $('#img-preview').css('display', 'block');
+                $('#img-preview').attr('src', server + "storage/dosen/" + response.data[0].photo_dir);
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;
                 $('#name_error').text(errorMessage.name);
+                $('#nip_error').text(errorMessage.nip);
+                $('#jabatan_error').text(errorMessage.jabatan);
+                $('#no_telpn_error').text(errorMessage.no_telpn);
                 $('#email_error').text(errorMessage.email);
-                $('#role_error').text(errorMessage.role);
-                $('#pass_error').text(errorMessage.password);
+                $('#dir_foto_error').text(errorMessage.dir_foto);
             }
         });
     });
 
     $(document).on('click', '#btnEditform', function () {
-        var formData = $('#form').serialize();
+        var formData = new FormData();
+        formData.append('_method', 'PUT');
+        formData.append('name', $('#name').val());
+        formData.append('nip', $('#nip').val());
+        formData.append('jabatan', $('#jabatan').val());
+        formData.append('no_telpn', $('#no_telpn').val());
+        formData.append('email', $('#email').val());
+        formData.append('dir_foto', $('#file_image')[0].files[0]);
         var id = $('#id').val();
-        url = "user/" + id;
-        console.log(url + formData)
+        url = "dosen/" + id;
 
         $.ajax({
-            type: "PUT",
+            type: "POST",
             url: url,
             data: formData,
+            processData: false,
+            contentType: false,
             dataType: "json",
             success: function (response) {
                 if (response.status == 200) {
-                    clerInput(modal = "modalUser");
+                    clerInput(modal = "modalDosen");
                     clearErrorMsg();
-                    reloadTable(tableUsers);
-                    $('#modalUser').modal('hide');
+                    reloadTable(table_dosen);
+                    $('#modalDosen').modal('hide');
                     Swal.fire({
                         title: "Updated!",
                         text: response.message,
@@ -166,16 +173,19 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                console.error(xhr.responseJSON.email)
+                // console.error(xhr.responseJSON)
                 $('#email_error').text(xhr.responseJSON.email);
                 var errorMessage = xhr.responseJSON.errors;
                 $('#name_error').text(errorMessage.name);
+                $('#nip_error').text(errorMessage.nip);
+                $('#jabatan_error').text(errorMessage.jabatan);
+                $('#no_telpn_error').text(errorMessage.no_telpn);
                 $('#email_error').text(errorMessage.email);
-                $('#role_error').text(errorMessage.role);
-                $('#pass_error').text(errorMessage.password);
+                $('#dir_foto_error').text(errorMessage.dir_foto);
             }
         });
     });
+
 
     // menangani proses delete data
     $(document).on('click', '.btnDelete', function () {
@@ -188,7 +198,7 @@ $(document).ready(function () {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                var url = 'user/' + $(this).data('id');
+                var url = 'dosen/' + $(this).data('id');
                 $.ajax({
                     type: "DELETE",
                     url: url,
@@ -199,7 +209,7 @@ $(document).ready(function () {
                             text: response.message,
                             icon: "success"
                         });
-                        reloadTable(tableUsers);
+                        reloadTable(table_dosen);
                     },
                     error: function (xhr, stattus, error) {
                         console.error(xhr + "\n" + stattus + "\n" + error)

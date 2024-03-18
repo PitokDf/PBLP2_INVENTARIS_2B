@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
@@ -31,9 +31,14 @@
         </a>
         <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::is('') ? 'active' : '' }}" href="{{ route('user.index') }}">
+                <a class="collapse-item {{ Request::is('') ? 'active' : '' }}" href="{{ route('barang.index') }}">
                     <i class="fas fa-box-open"></i>
                     <span>Barang</span>
+                </a>
+                <a class="collapse-item {{ Request::is('') ? 'active' : '' }}"
+                    href="{{ route('kategori-barang.index') }}">
+                    <i class="fas fa-box-open"></i>
+                    <span>Kategori Barang</span>
                 </a>
                 <?php $admin = 'admin'; ?>
                 @if ($admin == 'admin')

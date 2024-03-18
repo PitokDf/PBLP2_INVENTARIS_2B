@@ -1,0 +1,165 @@
+Proyek
+
+1. Initiating
+    4.2 project management plan
+    4.3 plan scope management
+    4.4 collect requirement
+    4.5 define scope
+        - create WBS(Work Breakdown Structur)
+
+    6.1 plan scedule management
+    6.2 define activity
+    6.3 squence activity
+    6.4 estimate duration
+    6.5 develop schedule
+    
+2. planning
+3. executing
+4. monitoring dan control
+5. closing
+
+
+
+-- Tabel Users done
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    role_id INT,
+    password VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel Roles
+CREATE TABLE Roles (
+    role_id INT PRIMARY KEY AUTO_INCREMENT,
+    role_name VARCHAR(255)
+);
+
+-- Tabel News
+CREATE TABLE News (
+    news_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255),
+    content TEXT,
+    publication_date DATE,
+    category_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel NewsCategories
+CREATE TABLE NewsCategories (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(255)
+);
+
+-- Tabel Items
+CREATE TABLE Items (
+    item_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_code VARCHAR(50),
+    name VARCHAR(255),
+    category_id INT,
+    quantity INT,
+    position VARCHAR(255),
+    photo VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel ItemCategories
+CREATE TABLE ItemCategories (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(255)
+);
+
+-- Tabel Students
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    nim VARCHAR(20),
+    study_program VARCHAR(255),
+    batch INT,
+    gpa DECIMAL(3,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel LendingRecords
+CREATE TABLE LendingRecords (
+    record_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_id INT,
+    student_id INT,
+    lending_date DATE,
+    return_date DATE,
+    status VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel Suppliers
+CREATE TABLE Suppliers (
+    supplier_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    phone_number VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel DocumentStatus
+CREATE TABLE DocumentStatus (
+    status_id INT PRIMARY KEY AUTO_INCREMENT,
+    status_name VARCHAR(255)
+);
+
+-- Tabel Comments
+CREATE TABLE Comments (
+    comment_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel ActivityLogs
+CREATE TABLE ActivityLogs (
+    log_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    activity TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabel BackupLogs
+CREATE TABLE BackupLogs (
+    backup_id INT PRIMARY KEY AUTO_INCREMENT,
+    backup_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50)
+);
+
+-- Tabel ResourceUsage
+CREATE TABLE ResourceUsage (
+    resource_id INT PRIMARY KEY AUTO_INCREMENT,
+    resource_name VARCHAR(255),
+    usage INT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabel Dosen
+CREATE TABLE Dosen (
+    dosen_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    nip VARCHAR(20),
+    academic_position VARCHAR(255),
+    email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel Report
+CREATE TABLE Report (
+    report_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    report_content TEXT,
+    report_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

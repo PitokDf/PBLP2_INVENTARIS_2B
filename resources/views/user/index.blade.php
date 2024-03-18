@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div class="table table-responsive">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="tableUsers" width="100%" cellspacing="0">
+                            <table class="table table-bordered table-hover" id="tableUsers" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>No</th>

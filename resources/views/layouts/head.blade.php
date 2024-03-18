@@ -22,7 +22,7 @@
     <link href="{{ asset('vendors/css/dataTables.css') }}" rel="stylesheet">
 
     {{-- css datatales --}}
-    {{-- <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css"> --}}
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
 
     <link
         href="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/dataTables.bootstrap4.min.css') }}"

@@ -58,11 +58,11 @@ $(document).ready(function () {
         $('.action').html(icon);
     }
 
-    var server = "http://127.0.0.1:8001/";
+    var server = "http://127.0.0.1:8000/";
     $('#btnCreate').click(function () {
         var modal = "modalDosen";
         $('#img-preview').css('display', 'block');
-        $('#img-preview').attr('src', server + 'images/download.png');
+        $('#img-preview').attr('src', 'images/download.png');
         console.log($('#img-preview'))
         if ($('.action').attr('id') != 'btnCreateform') {
             clerInput(modal);
@@ -125,7 +125,7 @@ $(document).ready(function () {
                 $('#no_telpn').val(response.data[0].phone_number);
                 $('#email').val(response.data[0].email);
                 $('#img-preview').css('display', 'block');
-                $('#img-preview').attr('src', server + "storage/dosen/" + response.data[0].photo_dir);
+                $('#img-preview').attr('src', "storage/dosen/" + response.data[0].photo_dir);
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;

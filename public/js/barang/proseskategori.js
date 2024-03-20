@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    $('#table_dosen').DataTable({
+    $('#table_kategoriB').DataTable({
         "processing": true,
         "paging": true,
         "searching": true,
@@ -9,7 +9,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "getAllDataDosen", // Ganti dengan URL endpoint Anda
+            "url": "getKategori", // Ganti dengan URL endpoint Anda
             "type": "GET"
         },
         "columns": [
@@ -19,15 +19,11 @@ $(document).ready(function () {
                     return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
                 }
             },
-            { "data": "name", "orderable": true },
-            { "data": "nip", "orderable": true },
-            { "data": "academic_position", "orderable": true },
-            { "data": "phone_number", "orderable": true },
-            { "data": "email", "orderable": true },
+            { "data": "nama_kategori_barang", "orderable": true },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id_dosen + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_dosen + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
                 }
                 , "orderable": false
             }
@@ -38,17 +34,10 @@ $(document).ready(function () {
 
     function clearErrorMsg() {
         $('#name_error').text('');
-        $('#nip_error').text('');
-        $('#jabatan_error').text('');
-        $('#no_telpn_error').text('');
-        $('#email_error').text('');
-        $('#dir_foto_error').text('');
     }
 
     function clerInput(modal) {
-        $('.role').css('display', 'block')
         $("#" + modal + " input").val('');
-        $("#" + modal + " select").val('1');
     }
 
     function showModal(modal, title, form, icon) {
@@ -58,22 +47,18 @@ $(document).ready(function () {
         $('.action').html(icon);
     }
 
-    var server = "http://127.0.0.1:8000/";
     $('#btnCreate').click(function () {
-        var modal = "modalDosen";
-        $('#img-preview').css('display', 'block');
-        $('#img-preview').attr('src', server + 'images/download.png');
-        console.log($('#img-preview'))
+        var modal = "modal-kategori";
         if ($('.action').attr('id') != 'btnCreateform') {
             clerInput(modal);
         }
-        showModal(modal, title = "Add Data Dosen", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
+        showModal(modal, title = "Add Kategori Barang", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
     });
 
     // proses yang akan menangani proses create data dan mengembalikan error saat terjadi error
     $(document).on('click', '#btnCreateform', function () {
         var formData = new FormData(document.getElementById('form'));
-        url = "dosen";
+        url = "kategori-barang";
         $.ajax({
             type: "POST",
             url: url,
@@ -82,11 +67,12 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
+                console.log(response)
                 if (response.status == 200) {
-                    clerInput(modal = "modalDosen");
+                    clerInput(modal = "modal-kategori");
                     clearErrorMsg();
-                    reloadTable(table_dosen);
-                    $('#modalDosen').modal('hide');
+                    reloadTable(table_kategoriB);
+                    $('#modal-kategori').modal('hide');
                     Swal.fire({
                         title: "Insert!",
                         text: response.message,
@@ -97,59 +83,41 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;
+                console.log(errorMessage)
                 clearErrorMsg();
-                $('#name_error').text(errorMessage.name);
-                $('#nip_error').text(errorMessage.nip);
-                $('#jabatan_error').text(errorMessage.jabatan);
-                $('#no_telpn_error').text(errorMessage.no_telpn);
-                $('#email_error').text(errorMessage.email);
-                $('#dir_foto_error').text(errorMessage.dir_foto);
+                $('#name_error').text(errorMessage.name_kategori);
             }
         });
     });
 
     // saat btn edit diclick maka akan melakakuan request ke server dengan mengirimkan id dan server akan mengembalikan data yang sesuai dengan id yang dikirimkan
     $(document).on('click', '.btnEdit', function () {
-        showModal(modal = "modalDosen", title = "Edit Data Dosen", form = "btnEditform", icon = "<i class='fas fa-regular fa-pen'></i> Update");
+        showModal(modal = "modal-kategori", title = "Edit Kategori", form = "btnEditform", icon = "<i class='fas fa-regular fa-pen'></i> Update");
         clearErrorMsg();
-        url = "dosen/" + $(this).attr('id') + "/edit";
+        url = "kategori-barang/" + $(this).attr('id') + "/edit";
         $.ajax({
             type: "GET",
             url: url,
             dataType: "json",
             success: function (response) {
-                $('#id').val(response.data[0].id_dosen);
-                $('#name').val(response.data[0].name);
-                $('#nip').val(response.data[0].nip);
-                $('#jabatan').val(response.data[0].academic_position);
-                $('#no_telpn').val(response.data[0].phone_number);
-                $('#email').val(response.data[0].email);
-                $('#img-preview').css('display', 'block');
-                $('#img-preview').attr('src', server + "storage/dosen/" + response.data[0].photo_dir);
+                console.log(response);
+                $('#id').val(response.data[0].id);
+                $('#name_kategori').val(response.data[0].nama_kategori_barang);
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;
-                $('#name_error').text(errorMessage.name);
-                $('#nip_error').text(errorMessage.nip);
-                $('#jabatan_error').text(errorMessage.jabatan);
-                $('#no_telpn_error').text(errorMessage.no_telpn);
-                $('#email_error').text(errorMessage.email);
-                $('#dir_foto_error').text(errorMessage.dir_foto);
+                console.log(errorMessage);
             }
         });
     });
 
+    // proses update data
     $(document).on('click', '#btnEditform', function () {
         var formData = new FormData();
         formData.append('_method', 'PUT');
-        formData.append('name', $('#name').val());
-        formData.append('nip', $('#nip').val());
-        formData.append('jabatan', $('#jabatan').val());
-        formData.append('no_telpn', $('#no_telpn').val());
-        formData.append('email', $('#email').val());
-        formData.append('dir_foto', $('#file_image')[0].files[0]);
+        formData.append('name_kategori', $('#name_kategori').val());
         var id = $('#id').val();
-        url = "dosen/" + id;
+        url = "kategori-barang/" + id;
 
         $.ajax({
             type: "POST",
@@ -160,10 +128,10 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.status == 200) {
-                    clerInput(modal = "modalDosen");
+                    clerInput(modal = "modal-kategori");
                     clearErrorMsg();
-                    reloadTable(table_dosen);
-                    $('#modalDosen').modal('hide');
+                    reloadTable(table_kategoriB);
+                    $('#modal-kategori').modal('hide');
                     Swal.fire({
                         title: "Updated!",
                         text: response.message,
@@ -173,15 +141,9 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                // console.error(xhr.responseJSON)
-                $('#email_error').text(xhr.responseJSON.email);
+                console.error(xhr.responseJSON)
                 var errorMessage = xhr.responseJSON.errors;
-                $('#name_error').text(errorMessage.name);
-                $('#nip_error').text(errorMessage.nip);
-                $('#jabatan_error').text(errorMessage.jabatan);
-                $('#no_telpn_error').text(errorMessage.no_telpn);
-                $('#email_error').text(errorMessage.email);
-                $('#dir_foto_error').text(errorMessage.dir_foto);
+                $('#name_error').text(errorMessage.name_kategori);
             }
         });
     });
@@ -198,7 +160,7 @@ $(document).ready(function () {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                var url = 'dosen/' + $(this).data('id');
+                var url = 'kategori-barang/' + $(this).data('id');
                 $.ajax({
                     type: "DELETE",
                     url: url,
@@ -209,7 +171,7 @@ $(document).ready(function () {
                             text: response.message,
                             icon: "success"
                         });
-                        reloadTable(table_dosen);
+                        reloadTable(table_kategoriB);
                     },
                     error: function (xhr, stattus, error) {
                         console.error(xhr + "\n" + stattus + "\n" + error)

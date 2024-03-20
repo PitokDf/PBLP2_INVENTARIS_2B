@@ -23,7 +23,8 @@
         Interface
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item {{ Request::is('**') ? 'active' : '' }}">
+
+    <li class="nav-item {{ Request::is('') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
             aria-expanded="true" aria-controls="pengelolaanData">
             <i class="fas fa-tasks"></i>
@@ -116,6 +117,25 @@
                     href="{{--  --}}">
                     <i class="fas fa-boxes"></i>
                     <span>Stok</span>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item {{ Request::is('barang') || Request::is('kategori-barang') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang" aria-expanded="true"
+            aria-controls="barang">
+            <i class="fas fa-archive"></i>
+            <span>Barang</span>
+        </a>
+        <div id="barang" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::is('barang') ? 'active' : '' }}"
+                    href="{{ route('barang.index') }}">
+                    <span>Data Barang</span>
+                </a>
+                <a class="collapse-item {{ Request::is('kategori-barang') ? 'active' : '' }}"
+                    href="{{ route('kategori-barang.index') }}">
+                    <span>Kategori Barang</span>
                 </a>
             </div>
         </div>

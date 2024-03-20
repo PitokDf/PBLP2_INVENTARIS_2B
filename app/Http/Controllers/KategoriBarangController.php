@@ -13,7 +13,7 @@ class KategoriBarangController extends Controller
      */
     public function index()
     {
-        //
+        return view("barang.kategori");
     }
 
     public function getKategori()
@@ -30,7 +30,7 @@ class KategoriBarangController extends Controller
      */
     public function create()
     {
-        //
+        //jj
     }
 
     /**
@@ -38,7 +38,14 @@ class KategoriBarangController extends Controller
      */
     public function store(StoreKategoriBarangRequest $request)
     {
-        //
+        $data = [
+            "nama_kategori_barang" => $request->name_kategori
+        ];
+        KategoriBarang::create($data);
+        return response()->json([
+            "status" => 200,
+            "message" => "Berhasil Menambahkan kategorid."
+        ]);
     }
 
     /**
@@ -52,24 +59,41 @@ class KategoriBarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(KategoriBarang $kategoriBarang)
+    public function edit($id)
     {
-        //
+        $data = KategoriBarang::where("id", $id)->get(["id", "nama_kategori_barang"]);
+
+        return response()->json([
+            "status" => 200,
+            "message" => "berhasil mendapatkan data.",
+            "data" => $data
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKategoriBarangRequest $request, KategoriBarang $kategoriBarang)
+    public function update(UpdateKategoriBarangRequest $request, $id)
     {
-        //
+        $kategori = KategoriBarang::findOrFail($id);
+        $kategori->nama_kategori_barang = $request->name_kategori;
+        $kategori->save();
+        return response()->json([
+            "status" => 200,
+            "message" => "Berhasil mengupdate kategori."
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KategoriBarang $kategoriBarang)
+    public function destroy($id)
     {
-        //
+        $kategori = KategoriBarang::findOrFail($id);
+        $kategori->delete();
+        return response()->json([
+            "status" => 200,
+            "message" => "Berhasil menghapus kategori."
+        ]);
     }
 }

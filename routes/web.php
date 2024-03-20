@@ -9,9 +9,9 @@ use App\Models\Users;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $userCount = Users::count();
+    return view("dashboard.index")->with("count", $userCount);
 });
-
 
 Route::resource('user', UsersController::class);
 Route::get('getAllDataUser', [UsersController::class, "getAllData"]);

@@ -1,0 +1,4 @@
+.bg-purple {
+    background-color: rgba(255, 255, 255, 0.116);
+    backdrop-filter: blur(24px);
+}

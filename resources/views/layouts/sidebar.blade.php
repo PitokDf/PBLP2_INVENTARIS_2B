@@ -2,7 +2,9 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-text mx-3">Inventaris barang</div>
+        <div class="sidebar-brand-icon "><img style="width:45px" src="{{asset('asset/2aja.png')}}"></div>
+    
+        <div class="sidebar-brand-text mx-3">IT Ventory</div>
     </a>
 
     <!-- Divider -->

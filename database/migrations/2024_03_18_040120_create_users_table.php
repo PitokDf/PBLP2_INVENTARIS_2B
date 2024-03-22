@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name')->nullable(false);
             $table->string('email')->unique();
             $table->enum('role', ['1', '2', '3', '4', '5'])->default('5');
-            $table->string('password');
+            $table->string('password')->default('12345678');
             $table->timestamps();
         });
     }

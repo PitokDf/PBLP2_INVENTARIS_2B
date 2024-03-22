@@ -208,4 +208,41 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Menangani proses import
+    $('.btnImport').click(function () {
+        var data = new FormData();
+        data.append('file', $('#file').prop('files')[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "importUser",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                console.log('berhasil' + response.message);
+            }, error: function (xhr) {
+                console.error(xhr.responseJSON)
+            }
+        });
+    });
+
+    // menangani proses export
+    $('.btnExport').click(function () {
+        $.ajax({
+            type: "get",
+            url: "exportUser",
+            dataType: "json",
+            beforeSend: function () {
+                // Tampilkan pesan bahwa file sedang diunduh
+                alert("Sedang mengunduh file, mohon tunggu...");
+            },
+            success: function (response) {
+                console.log(response.message)
+                alert(response.message);
+            }
+        });
+    });
 });

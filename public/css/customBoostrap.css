@@ -1,0 +1,10 @@
+.bg-purple {
+    background-color: rgba(255, 255, 255, 0.116);
+    backdrop-filter: blur(24px);
+}
+
+.modal-blur {
+    background-color: rgba(255, 255, 255, 0.26);
+    backdrop-filter: blur(12px);
+    color: white;
+}

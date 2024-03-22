@@ -28,17 +28,17 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form action="/import-users" method="post" enctype="multipart/form-data">
+            <form id="formImport" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <h5 class="title">Pastikan file diimport terdapat kolom name, email, role, dan, password</h5>
-                    <input type="file" name="file-users" accept="xlsx" />
+                    <h5 class="title">Pastikan file diimport terdapat kolom name, email, role</h5>
+                    <input type="file" name="file" id="file" accept="excel/csv,xlsx" />
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-sm btn-danger" type="button" data-dismiss="modal">
                         <i class="fas fa-window-close"></i>
                         Cancel
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary">
+                    <button type="button" class="btn btn-sm btn-primary btnImport">
                         <i class="fas fa-solid fa-file-import"></i>
                         Import
                     </button>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMahasiswasRequest;
 use App\Http\Requests\UpdateMahasiswasRequest;
 use App\Models\Mahasiswas;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class MahasiswasController extends Controller
 {
@@ -86,20 +88,38 @@ class MahasiswasController extends Controller
      */
     public function update(UpdateMahasiswasRequest $request, $id)
     {
-        $mahasiswa = Mahasiswas::findOrFail($id);
-        $data = [
-            "nama" => $request->nama_mahasiswa,
-            "nim" => $request->nim,
-            "program_studi" => $request->prodi,
-            "angkatan" => $request->angkatan,
-            "ipk" => $request->ipk
-        ];
+        try {
+            $mahasiswa = Mahasiswas::findOrFail($id);
 
-        $mahasiswa->update($data);
-        return response()->json([
-            "status" => 200,
-            "message" => "Berhasil mengupdate data."
-        ]);
+            $rules = [
+                "nim" => "required|numeric|digits:10|" . Rule::unique('mahasiswa')->ignore($mahasiswa),
+            ];
+
+            $validator = Validator::make($request->all(), $rules, [
+                "email.unique" => "Email sudah pernah digunakan",
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            $mahasiswa->nama = $request->nama_mahasiswa;
+            $mahasiswa->nim = $request->nim;
+            $mahasiswa->program_studi = $request->prodi;
+            $mahasiswa->angkatan = $request->angkatan;
+            $mahasiswa->ipk = $request->ipk;
+
+            $mahasiswa->save();
+            return response()->json([
+                'status' => 200,
+                'message' => "Berhasil mengupdate data."
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

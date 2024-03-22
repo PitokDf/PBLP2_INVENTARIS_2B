@@ -24,7 +24,6 @@ class UpdateMahasiswasRequest extends FormRequest
     {
         return [
             "nama_mahasiswa" => "required",
-            "nim" => "required|numeric|digits:10|unique:mahasiswa,nim",
             "prodi" => "required",
             "angkatan" => "required|numeric|min:2000|max:" . date('Y'),
             "ipk" => "required|numeric|min:0|max:4",

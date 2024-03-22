@@ -62,6 +62,7 @@ $(document).ready(function () {
 
     $('#btnCreate').click(function () {
         var modal = "modal";
+        clearErrorMsg();
         if ($('.action').attr('id') != 'btnCreateform') {
             clerInput(modal);
         }
@@ -202,8 +203,9 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
+                console.log(xhr)
                 var errorMessage = xhr.responseJSON.errors;
-                clearErrorMsg();
+                clearErrorMsg(); z
                 $('#nama_error').text(errorMessage.nama_mahasiswa);
                 $('#nim_error').text(errorMessage.nim);
                 $('#prodi_error').text(errorMessage.prodi);

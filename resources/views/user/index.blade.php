@@ -20,7 +20,7 @@
                             <i class="fas fa-solid fa-plus"></i>
                             Add
                         </a>
-                        <a href="/export-users" class="btn btn-sm btn-primary">
+                        <a href="#" class="btn btn-sm btn-primary btnExport">
                             <i class="fas fa-solid fa-file-export"></i>
                             Export
                         </a>

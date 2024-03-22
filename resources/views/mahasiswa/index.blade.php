@@ -5,6 +5,7 @@
 @endsection
 @section('modal')
     @include('mahasiswa.modal')
+    @include('mahasiswa.modalDetail')
 @endsection
 
 @section('title', 'Mahasiswa')

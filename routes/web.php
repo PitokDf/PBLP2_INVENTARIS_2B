@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::resource('user', UsersController::class);
 Route::get('getAllDataUser', [UsersController::class, "getAllData"]);
+Route::post('importUser', [UsersController::class, "import"]);
+Route::get('exportUser', [UsersController::class, "export"])->name("user.export");
 Route::resource("kategori-berita", KategoriBeritaController::class);
 Route::get('getAllDataKategori', [KategoriBeritaController::class, "getData"]);
 Route::resource("dosen", DosenController::class);

@@ -29,7 +29,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id_mahasiswa + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_mahasiswa + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    return "<button type='button' data-id='" + row.id_mahasiswa + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_mahasiswa + "'><i class='fas fa-regular fa-pen'></i></button> <button class='btn btn-sm btn-info btnDetail' id='" + row.id_mahasiswa + "'><i class='fas fa-info-circle'></i></button>"
                 }
                 , "orderable": false
             }
@@ -213,5 +213,9 @@ $(document).ready(function () {
                 $('#ipk_error').text(errorMessage.ipk);
             }
         });
+    });
+
+    $(document).on('click', '.btnDetail', function () {
+        showModal(modal = "modalDetail", title = "Detail Mahasiswa", form = "", icon = "");
     });
 });

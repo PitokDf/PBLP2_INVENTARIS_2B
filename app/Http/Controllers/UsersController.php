@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserExport;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Models\User;
+use App\Imports\UserImport;
 use App\Models\Users;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
@@ -134,4 +136,30 @@ class UsersController extends Controller
             'message' => 'Berhasil Menghapus data user.'
         ]);
     }
+
+    public function import()
+    {
+        Excel::import(new UserImport, request()->file('file'));
+
+        return response()->json([
+            "status" => 200,
+            "message" => "file berhasil diimport"
+        ]);
+    }
+    public function export()
+    {
+        try {
+            Excel::download(new UserExport, 'datauser.csv');
+            return response()->json([
+                "status" => 200,
+                "message" => "File berhasil diexport"
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => 500,
+                "message" => "Gagal mengekspor file: " . $e->getMessage()
+            ]);
+        }
+    }
+
 }

@@ -22,7 +22,7 @@ class StoreMahasiswasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nama_mahasiswa" => "required|regex:/^[a-zA-Z]+$/",
+            "nama_mahasiswa" => "required",
             "nim" => "required|numeric|digits:10|unique:mahasiswa,nim",
             "prodi" => "required",
             "angkatan" => "required|numeric|min:2000|max:" . date('Y'),

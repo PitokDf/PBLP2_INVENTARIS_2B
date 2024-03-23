@@ -82,8 +82,12 @@ $(document).ready(function () {
             url: url,
             data: formData,
             dataType: "json",
+            beforeSend: function () {
+                $('#btnCreateform').text('Simpan...');
+            },
             success: function (response) {
                 if (response.status == 200) {
+                    $('#btnCreateform').text('Simpan');
                     clerInput(modal = "modalUser");
                     clearErrorMsg();
                     reloadTable(tableUsers);
@@ -98,6 +102,7 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 console.error(xhr);
+                $('#btnCreateform').text('Simpan');
                 clearErrorMsg();
                 var errorMessage = xhr.responseJSON.errors;
                 $('#name_error').text(errorMessage.name);
@@ -209,11 +214,16 @@ $(document).ready(function () {
         });
     });
 
+    $('.showImport').click(function () {
+        $('#modalImport').modal('show');
+        $('.action').html("<i class='fas fa-solid fa-file-import'></i> Import");
+        $('.action').attr('id', "btnImport");
+    });
+
     // Menangani proses import
-    $('.btnImport').click(function () {
+    $(document).on('click', '#btnImport', function () {
         var data = new FormData();
         data.append('file', $('#file').prop('files')[0]);
-
         $.ajax({
             type: "POST",
             url: "importUser",
@@ -222,27 +232,40 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log('berhasil' + response.message);
+                $("#modalImport").modal('hide');
+                Swal.fire({
+                    title: "Imported!",
+                    text: response.message,
+                    icon: "success"
+                });
+                reloadTable(tableUsers);
             }, error: function (xhr) {
                 console.error(xhr.responseJSON)
+                alert('check file .csv/.xlsx anda, pastikan terdapat coloumn nama, email, role(1=admin, 2=pimpinan,3=dosen, 4=mahasiswa, 5=staff), dan password')
             }
         });
     });
 
     // menangani proses export
     $('.btnExport').click(function () {
+        // Membuat permintaan AJAX GET
         $.ajax({
-            type: "get",
+            type: "GET",
             url: "exportUser",
-            dataType: "json",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             beforeSend: function () {
-                // Tampilkan pesan bahwa file sedang diunduh
-                alert("Sedang mengunduh file, mohon tunggu...");
+                $('.btnExport').text('sedang memproses..');
             },
-            success: function (response) {
-                console.log(response.message)
-                alert(response.message);
+            success: function () {
+                $('.btnExport').text('Export');
+                alert('file berhasil diexport, silahkan check pada donwloads browser anda.')
+            },
+            error: function (xhr, status, error) {
+                // Menampilkan pesan jika terjadi kesalahan saat mengunduh file
+                alert("Terjadi kesalahan saat mengunduh file: " + error);
             }
         });
     });
+
+
 });

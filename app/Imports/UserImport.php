@@ -16,9 +16,10 @@ class UserImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Users([
-            "name" => $row["name"],
+            "name" => $row["nama"],
             "email" => $row["email"],
-            "role" => $row["role"]
+            "role" => $row["role"],
+            "password" => $row['password']
         ]);
     }
 }

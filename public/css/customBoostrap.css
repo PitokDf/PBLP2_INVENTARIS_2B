@@ -1,10 +1,36 @@
+:root {
+    --Antique_White: #FDFCF8;
+    --Platinum: #EEEFE1;
+    --Terra_Cotta: #E26266;
+    --Eerie_Black: #1C1A1B;
+}
+
 .bg-purple {
     background-color: rgba(255, 255, 255, 0.116);
     backdrop-filter: blur(24px);
 }
 
-.modal-blur {
-    background-color: rgba(255, 255, 255, 0.26);
-    backdrop-filter: blur(12px);
-    color: white;
+.modal-platinum {
+    background-color: var(--Platinum);
+    color: var(--Eerie_Black);
+}
+
+.bg-platinum {
+    background-color: var(--Platinum);
+    color: var(--Eerie_Black);
+    box-shadow: 3px 0 24px 3px rgba(160, 160, 160, 0.533);
+}
+
+.sidebar-brand-text {
+    color: var(--Eerie_Black);
+}
+
+.nav-item.active {
+    color: var(--Terra_Cotta);
+}
+
+.footer-sidebar {
+    border-radius: 12px;
+    background-color: var(--Antique_White);
+    margin: 24px;
 }

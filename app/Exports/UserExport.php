@@ -4,21 +4,22 @@ namespace App\Exports;
 
 use App\Models\Users;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class UserExport implements FromCollection, WithHeadingRow
+class UserExport implements FromCollection, WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return Users::select([
+        $user = Users::select([
             'name',
             'email',
             'role',
             'password'
         ])->get();
+        return $user;
     }
 
     public function headings(): array
@@ -27,7 +28,7 @@ class UserExport implements FromCollection, WithHeadingRow
             "Nama",
             "Email",
             "Role",
-            "Password",
+            "Password"
         ];
     }
 }

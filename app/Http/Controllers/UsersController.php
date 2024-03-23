@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Imports\UserImport;
 use App\Models\Users;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
@@ -148,18 +148,20 @@ class UsersController extends Controller
     }
     public function export()
     {
-        try {
-            Excel::download(new UserExport, 'datauser.csv');
-            return response()->json([
-                "status" => 200,
-                "message" => "File berhasil diexport"
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => 500,
-                "message" => "Gagal mengekspor file: " . $e->getMessage()
-            ]);
-        }
+        // $export = new UserExport; 
+        return Excel::download(new UserExport, 'data.xlsx');
+        // try {
+        //     Excel::download(new UserExport(), 'datauser.xlsx');
+        //     response()->json([
+        //         "status" => 200,
+        //         "message" => "File berhasil diexport"
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         "status" => 500,
+        //         "message" => "Gagal mengekspor file: " . $e->getMessage()
+        //     ]);
+        // }
     }
 
 }

@@ -1,9 +1,9 @@
-<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-platinum sidebar accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-icon "><img style="width:45px" src="{{asset('asset/2aja.png')}}"></div>
-    
+        <div class="sidebar-brand-icon "><img style="width:45px" src="{{ asset('asset/1aja.png') }}"></div>
+
         <div class="sidebar-brand-text mx-3">IT Ventory</div>
     </a>
 
@@ -80,6 +80,12 @@
             Mahasiswa
         </a>
     </li>
+    <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
+        <a href="{{ route('user.index') }}" class="nav-link">
+            <i class="fas fa-users"></i>
+            Users
+        </a>
+    </li>
     <li class="nav-item {{ Request::is('') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
             aria-expanded="true" aria-controls="pengelolaanData">
@@ -146,5 +152,15 @@
                 </a>
             </div>
         </div>
+    </li>
+
+    <li class="nav-item">
+        <footer class="sticky-footer footer-sidebar">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; PBL P2 TRPL2B {{ date('Y') }}</span>
+                </div>
+            </div>
+        </footer>
     </li>
 </ul>

@@ -17,8 +17,33 @@
     </div>
 </div>
 
+<!-- create/update data user Modal-->
+<div class="modal fade" id="modalImport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Pilih file</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <h5 class="title">Pastikan file diimport terdapat kolom name, email, role</h5>
+                    <input type="file" name="file" id="file" accept="excel/csv,xlsx" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"><i
+                        class="fas fa-window-close"></i>
+                    Cancel</button>
+                <button type="button" class="btn btn-sm btn-primary action">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Import data user Modal-->
-<div class="modal fade" id="import-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+{{-- <div class="modal fade" id="import-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-xxl">
@@ -46,7 +71,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- create/update data user Modal-->
 <div class="modal fade" id="modalUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

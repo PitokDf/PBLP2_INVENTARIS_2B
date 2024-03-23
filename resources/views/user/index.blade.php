@@ -20,11 +20,11 @@
                             <i class="fas fa-solid fa-plus"></i>
                             Add
                         </a>
-                        <a href="#" class="btn btn-sm btn-primary btnExport">
+                        <a href="{{ route('user.export') }}" class="btn btn-sm btn-primary btnExport">
                             <i class="fas fa-solid fa-file-export"></i>
                             Export
                         </a>
-                        <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#import-user">
+                        <a href="" class="btn btn-sm btn-primary showImport" data-toggle="modal">
                             <i class="fas fa-solid fa-file-import"></i>
                             Import
                         </a>

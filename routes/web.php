@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\UserExport;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KategoriBarangController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\MahasiswasController;
 use App\Http\Controllers\UsersController;
 use App\Models\Users;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/', function () {
     $userCount = Users::count();
@@ -18,7 +20,7 @@ Route::get('/', function () {
 Route::resource('user', UsersController::class);
 Route::get('getAllDataUser', [UsersController::class, "getAllData"]);
 Route::post('importUser', [UsersController::class, "import"]);
-Route::get('exportUser', [UsersController::class, "export"])->name("user.export");
+Route::get('exportUser', [UsersController::class, "export"])->name('user.export');
 Route::resource("kategori-berita", KategoriBeritaController::class);
 Route::get('getAllDataKategori', [KategoriBeritaController::class, "getData"]);
 Route::resource("dosen", DosenController::class);
@@ -40,3 +42,7 @@ Route::fallback(
         return view("404");
     }
 );
+
+// Route::get('export-users', function () {
+//     return Excel::download(new UserExport(), 'data-users.xlsx');
+// });

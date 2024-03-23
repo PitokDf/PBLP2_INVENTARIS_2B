@@ -2,7 +2,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-icon "><img style="width:45px" src="{{ asset('asset/1aja.png') }}"></div>
+        <div class="sidebar-brand-icon "><img style="width:35px" src="{{ asset('asset/baru2.png') }}"></div>
 
         <div class="sidebar-brand-text mx-3">IT Ventory</div>
     </a>

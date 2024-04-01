@@ -2,6 +2,7 @@
 
 namespace Illuminate\Foundation\Configuration;
 
+use App\Http\Middleware\UserAkses;
 use Closure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate;
@@ -16,6 +17,7 @@ use Illuminate\Http\Middleware\TrustProxies;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 
 class Middleware
 {
@@ -342,19 +344,19 @@ class Middleware
      */
     protected function modifyGroup(string $group, array|string $append, array|string $prepend, array|string $remove, array $replace)
     {
-        if (! empty($append)) {
+        if (!empty($append)) {
             $this->appendToGroup($group, $append);
         }
 
-        if (! empty($prepend)) {
+        if (!empty($prepend)) {
             $this->prependToGroup($group, $prepend);
         }
 
-        if (! empty($remove)) {
+        if (!empty($remove)) {
             $this->removeFromGroup($group, $remove);
         }
 
-        if (! empty($replace)) {
+        if (!empty($replace)) {
             foreach ($replace as $search => $replace) {
                 $this->replaceInGroup($group, $search, $replace);
             }
@@ -420,17 +422,19 @@ class Middleware
         ]));
 
         $middleware = array_map(function ($middleware) {
-            return isset($this->replacements[$middleware])
+            return isset ($this->replacements[$middleware])
                 ? $this->replacements[$middleware]
                 : $middleware;
         }, $middleware);
 
-        return array_values(array_filter(
-            array_diff(
-                array_unique(array_merge($this->prepends, $middleware, $this->appends)),
-                $this->removals
+        return array_values(
+            array_filter(
+                array_diff(
+                    array_unique(array_merge($this->prepends, $middleware, $this->appends)),
+                    $this->removals
+                )
             )
-        ));
+        );
     }
 
     /**
@@ -453,7 +457,7 @@ class Middleware
 
             'api' => array_values(array_filter([
                 $this->statefulApi ? \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class : null,
-                $this->apiLimiter ? 'throttle:'.$this->apiLimiter : null,
+                $this->apiLimiter ? 'throttle:' . $this->apiLimiter : null,
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
             ])),
         ];
@@ -469,21 +473,27 @@ class Middleware
         }
 
         foreach ($this->groupRemovals as $group => $removals) {
-            $middleware[$group] = array_values(array_filter(
-                array_diff($middleware[$group] ?? [], $removals)
-            ));
+            $middleware[$group] = array_values(
+                array_filter(
+                    array_diff($middleware[$group] ?? [], $removals)
+                )
+            );
         }
 
         foreach ($this->groupPrepends as $group => $prepends) {
-            $middleware[$group] = array_values(array_filter(
-                array_unique(array_merge($prepends, $middleware[$group] ?? []))
-            ));
+            $middleware[$group] = array_values(
+                array_filter(
+                    array_unique(array_merge($prepends, $middleware[$group] ?? []))
+                )
+            );
         }
 
         foreach ($this->groupAppends as $group => $appends) {
-            $middleware[$group] = array_values(array_filter(
-                array_unique(array_merge($middleware[$group] ?? [], $appends))
-            ));
+            $middleware[$group] = array_values(
+                array_filter(
+                    array_unique(array_merge($middleware[$group] ?? [], $appends))
+                )
+            );
         }
 
         return $middleware;
@@ -520,8 +530,8 @@ class Middleware
      */
     public function redirectTo(callable|string $guests = null, callable|string $users = null)
     {
-        $guests = is_string($guests) ? fn () => $guests : $guests;
-        $users = is_string($users) ? fn () => $users : $users;
+        $guests = is_string($guests) ? fn() => $guests : $guests;
+        $users = is_string($users) ? fn() => $users : $users;
 
         if ($guests) {
             Authenticate::redirectUsing($guests);
@@ -583,7 +593,7 @@ class Middleware
      */
     public function convertEmptyStringsToNull(array $except = [])
     {
-        collect($except)->each(fn (Closure $callback) => ConvertEmptyStringsToNull::skipWhen($callback));
+        collect($except)->each(fn(Closure $callback) => ConvertEmptyStringsToNull::skipWhen($callback));
 
         return $this;
     }
@@ -596,9 +606,9 @@ class Middleware
      */
     public function trimStrings(array $except = [])
     {
-        [$skipWhen, $except] = collect($except)->partition(fn ($value) => $value instanceof Closure);
+        [$skipWhen, $except] = collect($except)->partition(fn($value) => $value instanceof Closure);
 
-        $skipWhen->each(fn (Closure $callback) => TrimStrings::skipWhen($callback));
+        $skipWhen->each(fn(Closure $callback) => TrimStrings::skipWhen($callback));
 
         TrimStrings::except($except->all());
 
@@ -632,11 +642,11 @@ class Middleware
      */
     public function trustProxies(array|string $at = null, int $headers = null)
     {
-        if (! is_null($at)) {
+        if (!is_null($at)) {
             TrustProxies::at($at);
         }
 
-        if (! is_null($headers)) {
+        if (!is_null($headers)) {
             TrustProxies::withHeaders($headers);
         }
 

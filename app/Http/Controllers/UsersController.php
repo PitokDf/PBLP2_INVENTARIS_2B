@@ -45,7 +45,7 @@ class UsersController extends Controller
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'role' => $request->role
         ];
 
@@ -110,7 +110,7 @@ class UsersController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->role = $request->role;
-            $user->password = $request->password; // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
+            $user->password = bcrypt($request->password); // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
             $user->save();
 
             return response()->json([

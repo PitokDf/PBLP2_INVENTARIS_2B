@@ -4,7 +4,7 @@
     <script src="{{ asset('js/kategori/index.js') }}"></script>
 @endsection
 @section('modal')
-    @include('kategory_berita.modal')
+    @include('berita.modal')
 @endsection
 
 @section('title', 'Kategory Berita')

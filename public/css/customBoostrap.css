@@ -34,3 +34,11 @@
     background-color: var(--Antique_White);
     margin: 24px;
 }
+
+.bg-login-image {
+    background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/78c4af118001599.608076cf95739.jpg');
+}
+
+.bg-custom-light {
+    background-color: rgb(236, 236, 236);
+}

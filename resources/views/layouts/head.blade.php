@@ -30,4 +30,5 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/customBoostrap.css') }}">
+    <link rel="icon" href="{{ asset('asset/baru3.png') }}" type="image/*">
 </head>

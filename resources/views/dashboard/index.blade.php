@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('modal')
-    @include('kategory_berita.modal')
+    @include('berita.modal')
 @endsection
 @section('title', 'Dashboard')
 @section('scriptPages')

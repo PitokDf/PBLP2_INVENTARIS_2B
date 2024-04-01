@@ -17,8 +17,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="name_kategori" class="form-label">Nama Kategori</label>
-                                <input type="text" class="form-control" name="name_kategori" id="name_kategori"
-                                    placeholder="exp: Elektronik" />
+                                <input type="text" class="form-control is-invalid" name="name_kategori"
+                                    id="name_kategori" placeholder="exp: Elektronik" />
                                 <span id="name_error" class="text-danger"></span>
                             </div>
                         </div>

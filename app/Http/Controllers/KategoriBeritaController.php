@@ -13,7 +13,7 @@ class KategoriBeritaController extends Controller
      */
     public function index()
     {
-        return view("kategory_berita.index");
+        return view("berita.kategori");
     }
 
     public function getData()

@@ -15,11 +15,16 @@ class UserImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
+        $existingUser = Users::where('email', $row['email'])->first();
+
+        if ($existingUser) {
+            return null;
+        }
         return new Users([
             "name" => $row["nama"],
             "email" => $row["email"],
             "role" => $row["role"],
-            "password" => $row['password']
+            "password" => bcrypt($row['password'])
         ]);
     }
 }

@@ -142,7 +142,6 @@ class UsersController extends Controller
             'message' => 'Berhasil Menghapus data user.'
         ]);
     }
-
     public function import()
     {
         Excel::import(new UserImport, request()->file('file'));

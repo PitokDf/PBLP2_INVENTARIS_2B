@@ -1,4 +1,4 @@
-<!-- create/update data user Modal-->
+<!-- import data user Modal-->
 <div class="modal fade" id="modalImport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -23,36 +23,6 @@
         </div>
     </div>
 </div>
-<!-- Import data user Modal-->
-{{-- <div class="modal fade" id="import-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content modal-xxl">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Pilih File</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <form id="formImport" method="post" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <h5 class="title">Pastikan file diimport terdapat kolom name, email, role</h5>
-                    <input type="file" name="file" id="file" accept="excel/csv,xlsx" />
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-danger" type="button" data-dismiss="modal">
-                        <i class="fas fa-window-close"></i>
-                        Cancel
-                    </button>
-                    <button type="button" class="btn btn-sm btn-primary btnImport">
-                        <i class="fas fa-solid fa-file-import"></i>
-                        Import
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --}}
 
 <!-- create/update data user Modal-->
 <div class="modal fade" id="modalUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -98,7 +68,7 @@
                                 <span id="role_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label id="labelPass" for="password" class="form-label">Password</label>
                                 <input type="text" class="form-control" name="password" id="password"
                                     placeholder="ex: 12345678" />
                                 <span id="pass_error" class="text-danger"></span>

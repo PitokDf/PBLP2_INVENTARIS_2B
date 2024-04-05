@@ -16,9 +16,10 @@ class UserAkses
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if ($request->user() && $request->user()->role == $role) {
+        $role = explode('|', $role);
+        if (in_array($request->user()->role, $role)) {
             return $next($request);
         }
-        abort(403, "Akses Ditolak");
+        abort(403, "You need Permision");
     }
 }

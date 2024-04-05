@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Imports\UserImport;
 use App\Models\Users;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -79,7 +80,8 @@ class UsersController extends Controller
         ]);
         return response()->json([
             'status' => 200,
-            'data' => $data
+            'data' => $data,
+            'session' => Auth::user()->role
         ]);
     }
 
@@ -90,9 +92,11 @@ class UsersController extends Controller
     {
         try {
             $user = Users::findOrFail($id);
-
+            $rules = [];
+            if ($request->has('password')) {
+            }
             $rules = [
-                'email' => [
+                "email" => [
                     'required',
                     'email',
                     Rule::unique('users')->ignore($user),
@@ -100,7 +104,7 @@ class UsersController extends Controller
             ];
 
             $validator = Validator::make($request->all(), $rules, [
-                "email.unique" => "Email sudah pernah digunakan",
+                "email.unique" => "Email sudah pernah tersedia.",
             ]);
 
             if ($validator->fails()) {
@@ -110,7 +114,9 @@ class UsersController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->role = $request->role;
-            $user->password = bcrypt($request->password); // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
+            if ($request->has('password')) {
+                $user->password = bcrypt($request->password); // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
+            }
             $user->save();
 
             return response()->json([
@@ -150,18 +156,6 @@ class UsersController extends Controller
     {
         // $export = new UserExport; 
         return Excel::download(new UserExport, 'data.xlsx');
-        // try {
-        //     Excel::download(new UserExport(), 'datauser.xlsx');
-        //     response()->json([
-        //         "status" => 200,
-        //         "message" => "File berhasil diexport"
-        //     ]);
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         "status" => 500,
-        //         "message" => "Gagal mengekspor file: " . $e->getMessage()
-        //     ]);
-        // }
     }
 
 }

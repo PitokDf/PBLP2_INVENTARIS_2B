@@ -43,6 +43,13 @@ $(document).ready(function () {
         $('#no_telpn_error').text('');
         $('#email_error').text('');
         $('#dir_foto_error').text('');
+        $('#name').removeClass('is-invalid');
+        $('#nip').removeClass('is-invalid');
+        $('#jabatan').removeClass('is-invalid');
+        $('#no_telpn').removeClass('is-invalid');
+        $('#email').removeClass('is-invalid');
+        $('#dir_foto').removeClass('is-invalid');
+
     }
 
     function clerInput(modal) {
@@ -98,12 +105,30 @@ $(document).ready(function () {
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;
                 clearErrorMsg();
-                $('#name_error').text(errorMessage.name);
-                $('#nip_error').text(errorMessage.nip);
-                $('#jabatan_error').text(errorMessage.jabatan);
-                $('#no_telpn_error').text(errorMessage.no_telpn);
-                $('#email_error').text(errorMessage.email);
-                $('#dir_foto_error').text(errorMessage.dir_foto);
+                if (errorMessage.name) {
+                    $('#name_error').text(errorMessage.name);
+                    $('#name').addClass('is-invalid');
+                }
+                if (errorMessage.nip) {
+                    $('#nip_error').text(errorMessage.nip);
+                    $('#nip').addClass('is-invalid');
+                }
+                if (errorMessage.jabatan) {
+                    $('#jabatan_error').text(errorMessage.jabatan);
+                    $('#jabatan').addClass('is-invalid');
+                }
+                if (errorMessage.no_telpn) {
+                    $('#no_telpn_error').text(errorMessage.no_telpn);
+                    $('#no_telpn').addClass('is-invalid');
+                }
+                if (errorMessage.email) {
+                    $('#email_error').text(errorMessage.email);
+                    $('#email').addClass('is-invalid');
+                }
+                if (errorMessage.dir_foto) {
+                    $('#dir_foto_error').text(errorMessage.dir_foto);
+                    $('#dir_foto').addClass('is-invalid');
+                }
             }
         });
     });
@@ -173,15 +198,32 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                // console.error(xhr.responseJSON)
-                $('#email_error').text(xhr.responseJSON.email);
                 var errorMessage = xhr.responseJSON.errors;
-                $('#name_error').text(errorMessage.name);
-                $('#nip_error').text(errorMessage.nip);
-                $('#jabatan_error').text(errorMessage.jabatan);
-                $('#no_telpn_error').text(errorMessage.no_telpn);
-                $('#email_error').text(errorMessage.email);
-                $('#dir_foto_error').text(errorMessage.dir_foto);
+                clearErrorMsg();
+                if (errorMessage.name) {
+                    $('#name_error').text(errorMessage.name);
+                    $('#name').addClass('is-invalid');
+                }
+                if (errorMessage.nip) {
+                    $('#nip_error').text(errorMessage.nip);
+                    $('#nip').addClass('is-invalid');
+                }
+                if (errorMessage.jabatan) {
+                    $('#jabatan_error').text(errorMessage.jabatan);
+                    $('#jabatan').addClass('is-invalid');
+                }
+                if (errorMessage.no_telpn) {
+                    $('#no_telpn_error').text(errorMessage.no_telpn);
+                    $('#no_telpn').addClass('is-invalid');
+                }
+                if (errorMessage.email) {
+                    $('#email_error').text(errorMessage.email);
+                    $('#email').addClass('is-invalid');
+                }
+                if (errorMessage.dir_foto) {
+                    $('#dir_foto_error').text(errorMessage.dir_foto);
+                    $('#dir_foto').addClass('is-invalid');
+                }
             }
         });
     });

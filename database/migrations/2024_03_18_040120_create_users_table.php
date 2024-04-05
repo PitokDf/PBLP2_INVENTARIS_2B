@@ -14,8 +14,10 @@ return new class extends Migration {
             $table->id('id_user');
             $table->string('name')->nullable(false);
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->enum('role', ['1', '2', '3', '4', '5'])->default('5');
             $table->string('password')->default('12345678');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

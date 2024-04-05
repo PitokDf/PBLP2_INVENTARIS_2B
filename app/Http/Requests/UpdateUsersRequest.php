@@ -24,7 +24,6 @@ class UpdateUsersRequest extends FormRequest
         return [
             "name" => "required",
             "role" => "required",
-            "password" => "min:8",
             "email" => "required",
         ];
     }
@@ -34,7 +33,6 @@ class UpdateUsersRequest extends FormRequest
             "name.required" => "Nama tidak boleh kosong.",
             "email.required" => "Email tidak boleh kosong.",
             "role.required" => "Role tidak boleh kosong.",
-            "password.min" => "Password minimal :min karakter.",
         ];
     }
 }

@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
-    function index()
+    public function index()
     {
         return view('pages.login');
     }
 
-    function login(Request $request)
+    public function login(Request $request)
     {
 
         $credentials = $request->validate([
@@ -31,10 +31,35 @@ class SessionController extends Controller
         }
     }
 
-    function logout()
+    public function logout()
     {
         Auth::logout();
         return redirect('login');
     }
 
+    public function forgotShow()
+    {
+        return view('pages.forgotpass');
+    }
+
+    public function register()
+    {
+        return view('pages.register');
+    }
+
+    public function prosesRegister(Request $rq)
+    {
+        $nama = $rq->firstname . " " . $rq->lastname;
+
+        if (empty($rq->pass1) || empty($rq->pass2) || $rq->pass1 != $rq->pass2) {
+            return redirect('register')->withErrors('error_pass', "Password tidak sesuai.")->withInput();
+        } else {
+            echo "berhasil";
+        }
+
+        $data = [
+            "name" => $nama,
+            "email" => $rq->email,
+        ];
+    }
 }

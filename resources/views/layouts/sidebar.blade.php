@@ -10,7 +10,7 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    @if (auth()->user()->role == 1 || auth()->user()->role == 2)
+    @if (in_array(auth()->user()->role, ['1', '2']))
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('dashboard') }}">
@@ -25,7 +25,7 @@
     <div class="sidebar-heading">
         Interface
     </div>
-    @if (auth()->user()->role == 1 || auth()->user()->role == 2)
+    @if (auth()->user()->role == 1)
         <li class="nav-item {{ Request::is('barang') || Request::is('kategori-barang') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang"
                 aria-expanded="true" aria-controls="barang">
@@ -88,40 +88,50 @@
                 Users
             </a>
         </li>
-
     @endif
-    <li class="nav-item {{ Request::is('') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
-            aria-expanded="true" aria-controls="pengelolaanData">
-            <i class="fas fa-calendar-week"></i>
-            <span>Manajemen Barang</span>
-        </a>
-        <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::is('pengelolaan/barang-masuk') ? 'active' : '' }}"
-                    href="{{--  --}}">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>Barang Masuk</span>
-                </a>
-                <a class="collapse-item {{ Request::is('pengelolaan/barang-keluar') ? 'active' : '' }}"
-                    href="{{--  --}}">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Barang Keluar BHP</span>
-                </a>
-                <a class="collapse-item {{ Request::is('pengelolaan/pengembalian') ? 'active' : '' }}"
-                    href="{{--  --}}">
-                    <i class="fas fa-arrow-circle-left"></i>
-                    <span>Barang Pengembalian</span>
-                </a>
 
-                <a class="collapse-item {{ Request::is('pengelolaan/pinjaman') ? 'active' : '' }}"
-                    href="{{--  --}}">
-                    <i class="fas fa-hand-holding"></i>
-                    <span>Barang Pinjaman</span>
-                </a>
+    @if (in_array(auth()->user()->role, ['1']))
+        <li class="nav-item {{ Request::is('') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
+                aria-expanded="true" aria-controls="pengelolaanData">
+                <i class="fas fa-calendar-week"></i>
+                <span>Manajemen Barang</span>
+            </a>
+            <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item {{ Request::is('pengelolaan/barang-masuk') ? 'active' : '' }}"
+                        href="{{--  --}}">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Barang Masuk</span>
+                    </a>
+                    <a class="collapse-item {{ Request::is('pengelolaan/barang-keluar') ? 'active' : '' }}"
+                        href="{{--  --}}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Barang Keluar BHP</span>
+                    </a>
+                    <a class="collapse-item {{ Request::is('pengelolaan/pengembalian') ? 'active' : '' }}"
+                        href="{{--  --}}">
+                        <i class="fas fa-arrow-circle-left"></i>
+                        <span>Barang Pengembalian</span>
+                    </a>
+
+                    <a class="collapse-item {{ Request::is('pengelolaan/pinjaman') ? 'active' : '' }}"
+                        href="{{--  --}}">
+                        <i class="fas fa-hand-holding"></i>
+                        Barang Pinjaman
+                    </a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endif
+    @if (in_array(auth()->user()->role, ['3', '4', '5']))
+        <li class="nav-item {{ Request::is('pinjaman') ? 'active' : '' }}">
+            <a href="{{--  --}}" class="nav-link">
+                <i class="fas fa-hand-holding"></i>
+                <span>Barang Pinjaman</span>
+            </a>
+        </li>
+    @endif
     @if (auth()->user()->role == 1 || auth()->user()->role == 2)
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporan"

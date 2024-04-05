@@ -127,13 +127,12 @@ $(document).ready(function () {
                 $('#name').val(response.data[0].name);
                 $('#email').val(response.data[0].email);
                 $('#role').val(response.data[0].role);
-                $('#password').val(response.data[0].password);
                 if (response.data[0].role == 1) {
                     $('.role').css('display', 'none')
                 } else {
                     $('.role').css('display', 'block')
                 }
-                $('#password').val(response.data[0].password);
+                $('#labelPass').text('Ganti password (optional)');
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;
@@ -231,6 +230,9 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             dataType: "json",
+            beforeSend: function () {
+                $('#btnImport').text('proses...');
+            },
             success: function (response) {
                 $("#modalImport").modal('hide');
                 Swal.fire({
@@ -239,8 +241,10 @@ $(document).ready(function () {
                     icon: "success"
                 });
                 reloadTable(tableUsers);
+                $('.action').html("<i class='fas fa-solid fa-file-import'></i> Import");
             }, error: function (xhr) {
                 console.error(xhr.responseJSON)
+                $('.action').html("<i class='fas fa-solid fa-file-import'></i> Import");
                 alert('check file .csv/.xlsx anda, pastikan terdapat coloumn nama, email, role(1=admin, 2=pimpinan,3=dosen, 4=mahasiswa, 5=staff), dan password')
             }
         });

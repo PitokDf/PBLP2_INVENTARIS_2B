@@ -92,20 +92,23 @@ class UsersController extends Controller
     {
         try {
             $user = Users::findOrFail($id);
-            $rules = [];
-            if ($request->has('password')) {
-            }
             $rules = [
                 "email" => [
                     'required',
                     'email',
-                    Rule::unique('users')->ignore($user),
-                ],
+                    Rule::unique('users')->ignore($user),  // Use $user->id for clarity
+                ]
             ];
+
+            if (!empty($request->password)) {
+                $rules['password'] = ['min:8'];  // Array for password rules
+            }
 
             $validator = Validator::make($request->all(), $rules, [
                 "email.unique" => "Email sudah pernah tersedia.",
+                "password" => "Password minimal :min karakter."
             ]);
+
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
@@ -142,6 +145,7 @@ class UsersController extends Controller
             'message' => 'Berhasil Menghapus data user.'
         ]);
     }
+
     public function import()
     {
         Excel::import(new UserImport, request()->file('file'));

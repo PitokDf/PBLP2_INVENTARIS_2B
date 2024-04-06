@@ -23,11 +23,11 @@ class StoreDosenRequest extends FormRequest
     {
         return [
             "name" => ["required", "regex:/^[a-zA-Z\s]+$/u"],
-            "nip" => ["required", "regex:/^[0-9]+$/u", "digits:10"],
+            "nip" => ["required", "regex:/^[0-9]+$/u", "digits:10", "unique:dosen"],
             "jabatan" => ["required"],
-            "no_telpn" => ["required", "max:12"],
+            "no_telpn" => ["required", "max:12", "unique:dosen,phone_number"],
             "email" => ["required", "email", "unique:dosen,email"],
-            // "dir_foto" => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            "dir_foto" => 'image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 
@@ -37,11 +37,13 @@ class StoreDosenRequest extends FormRequest
             "name.required" => "Nama harus diisi.",
             "name.regex" => "Nama tidak boleh terdapat karakter unik ataupun angka.",
             "nip.required" => "NIP harus diisi.",
+            "nip.unique" => "NIP sudah terdaftar.",
             "nip.regex" => "NIP tidak boleh terdapat karakter huruf.",
             "nip.digits" => "NIP harus :digits karakter angka.",
             "jabatan.required" => "Jabatan harus diisi.",
             "no_telpn.required" => "No Telepon harus diisi.",
-            "email.unique" => "Email sudah tersedia.",
+            "no_telpn.unique" => "No Telepon sudah terdaftar.",
+            "email.unique" => "Email sudah terdaftar.",
             "email.required" => "Email harus diisi.",
         ];
     }

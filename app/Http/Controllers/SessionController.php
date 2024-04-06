@@ -22,7 +22,7 @@ class SessionController extends Controller
 
         if (Auth::attempt($credentials)) {
             if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
-                return redirect('berita');
+                return redirect('umum');
             } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
                 return redirect('/');
             }

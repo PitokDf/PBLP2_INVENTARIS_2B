@@ -21,12 +21,38 @@
     box-shadow: 3px 0 24px 3px rgba(160, 160, 160, 0.533);
 }
 
-.sidebar-brand-text {
-    color: var(--Eerie_Black);
+.bg-custom-dark {
+    background-color: #233c5a;
+    color: #f6f6f6;
+    box-shadow: 3px 0 24px 3px rgba(160, 160, 160, 0.533);
 }
 
-.nav-item.active {
-    color: var(--Terra_Cotta);
+.bg-custom-dark .nav-item.active {
+    background-color: #e85959;
+    border-radius: 12px;
+    margin: 5px;
+    color: #f6f6f6;
+}
+
+.bg-custom-dark .sidebar-brand-text {
+    color: #f6f6f6;
+}
+
+.bg-custom-dark-2 {
+    background-color: #2c3b42;
+    color: #feffff;
+    box-shadow: 3px 0 24px 3px rgba(160, 160, 160, 0.533);
+}
+
+.bg-custom-dark-2 .nav-item.active {
+    background-color: #65b789;
+    border-radius: 12px;
+    margin: 5px;
+    color: #feffff;
+}
+
+.bg-custom-dark-2 .sidebar-brand-text {
+    color: #f6f6f6;
 }
 
 .footer-sidebar {

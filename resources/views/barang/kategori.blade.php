@@ -28,8 +28,9 @@
                 <div class="card-body">
                     <div class="table table-responsive">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="table_kategoriB" width="100%" cellspacing="0">
-                                <thead>
+                            <table class="table table-bordered table-striped table-hover" id="table_kategoriB"
+                                width="100%" cellspacing="0">
+                                <thead style="background-color: #315d77; color: #f6f6f6">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Kategori</th>

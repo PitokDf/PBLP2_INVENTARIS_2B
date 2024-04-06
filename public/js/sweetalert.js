@@ -70,6 +70,7 @@ $(document).ready(function () {
         if ($('.action').attr('id') != 'btnCreateform') {
             clerInput(modal = "modalUser");
         }
+        $('#labelPass').text('Password');
         showModal(modal = "modalUser", title = "Add User", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
 
     });
@@ -170,13 +171,18 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                console.error(xhr.responseJSON.email)
-                $('#email_error').text(xhr.responseJSON.email);
+                clearErrorMsg();
+                console.error(xhr.responseJSON.password)
                 var errorMessage = xhr.responseJSON.errors;
+                $('#email_error').text(xhr.responseJSON.email);
+                $('#pass_error').text(xhr.responseJSON.password);
+                if (errorMessage.email) {
+                    $('#email_error').text(errorMessage.email);
+                } else {
+                    $('#email_error').text(responseJSON.email);
+                }
                 $('#name_error').text(errorMessage.name);
-                $('#email_error').text(errorMessage.email);
                 $('#role_error').text(errorMessage.role);
-                $('#pass_error').text(errorMessage.password);
             }
         });
     });

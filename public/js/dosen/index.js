@@ -150,7 +150,9 @@ $(document).ready(function () {
                 $('#no_telpn').val(response.data[0].phone_number);
                 $('#email').val(response.data[0].email);
                 $('#img-preview').css('display', 'block');
-                $('#img-preview').attr('src', "storage/dosen/" + response.data[0].photo_dir);
+                if (response.data[0].photo_dir) {
+                    $('#img-preview').attr('src', "storage/dosen/" + response.data[0].photo_dir);
+                }
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;

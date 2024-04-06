@@ -7,8 +7,8 @@
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/jquery-easing/jquery.easing.min.js') }}">
 </script>
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script> --}}
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js') }}"></script>

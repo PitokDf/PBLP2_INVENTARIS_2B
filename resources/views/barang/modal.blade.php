@@ -41,7 +41,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="posisi" class="form-label">Posisi</label>
-                                <input type="text" class="form-control" name="posisi" placeholder="exp: 12"
+                                <input type="text" class="form-control" name="posisi" placeholder="exp: E201"
                                     id="posisi">
                                 <span id="posisi_error" class="text-danger"></span>
                             </div>

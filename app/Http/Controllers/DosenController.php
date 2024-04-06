@@ -120,7 +120,7 @@ class DosenController extends Controller
                         'image',
                         'mimes:jpeg,png,jpg',
                         'max:2048'
-                    ],
+                    ]
                 ];
 
 
@@ -136,6 +136,12 @@ class DosenController extends Controller
                         'email',
                         Rule::unique('dosen')->ignore($dosen),
                     ],
+                    "no_telpn" => [
+                        Rule::unique('dosen')->ignore($dosen)
+                    ],
+                    "nip" => [
+                        Rule::unique('dosen')->ignore($dosen)
+                    ]
                 ];
             }
 

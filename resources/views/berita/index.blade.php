@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/kategori/index.js') }}"></script>
+    <script src="{{ asset('js/berita/prosesKri.js') }}"></script>
 @endsection
 @section('modal')
     @include('berita.modal')

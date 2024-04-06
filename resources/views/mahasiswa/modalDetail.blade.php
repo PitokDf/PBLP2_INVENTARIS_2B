@@ -12,34 +12,30 @@
                 <div class="d-flex justify-content-center">
                     <div class="col">
                         <div class="row-12">
-                            <div class="mb-3">
+                            <div class="mb-3" style="border-bottom: 2px solid rgb(141, 141, 141);">
                                 <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
-                                <input type="text" class="form-control" name="nama_mahasiswa" id="nama_mahasiswa"
-                                    placeholder="exp: Pito Desri Pauzi" @readonly(true) />
-                                <span id="nama_error" class="text-danger"></span>
+                                <input type="text" class="form-control-plaintext" name="nama_mahasiswa"
+                                    id="nama_mahasiswa" value="Pito Desri Pauzi" />
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="border-bottom: 2px solid rgb(141, 141, 141);">
                                 <label for="nim" class="form-label">NIM</label>
-                                <input type="number" @readonly(true) max="10" class="form-control"
-                                    name="nim" id="nim" placeholder="exp: 2211083044" />
-                                <span id="nim_error" class="text-danger"></span>
+                                <input type="text" class="form-control-plaintext" name="nim" id="nim"
+                                    value="2211083044" />
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="border-bottom: 2px solid rgb(141, 141, 141);">
                                 <label for="prodi" class="form-label">Prodi</label>
-                                <input class="form-control" type="text" @readonly(true) value="prodi"
-                                    id="prodi">
-                                <span id="prodi_error" class="text-danger"></span>
+                                <input type="text" class="form-control-plaintext" name="prodi" id="prodi"
+                                    value="TRPL" />
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="border-bottom: 2px solid rgb(141, 141, 141);">
                                 <label for="angkatan" class="form-label">Angkatan</label>
-                                <input class="form-control" type="text" id="angkatan" @readonly(true)>
-                                <span id="angkatan_error" class="text-danger"></span>
+                                <input type="text" class="form-control-plaintext" name="angkatan" id="angkatan"
+                                    value="2022" />
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="border-bottom: 2px solid rgb(141, 141, 141);">
                                 <label for="ipk" class="form-label">IPK</label>
-                                <input type="text" class="form-control" name="ipk" placeholder="exp: 3.60"
-                                    id="ipk" @readonly(true)>
-                                <span id="ipk_error" class="text-danger"></span>
+                                <input type="text" class="form-control-plaintext" name="ipk" id="ipk"
+                                    value="3.58" />
                             </div>
                         </div>
                     </div>

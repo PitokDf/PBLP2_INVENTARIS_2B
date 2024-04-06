@@ -34,8 +34,9 @@
                 <div class="card-body">
                     <div class="table table-responsive">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="tableUsers" width="100%" cellspacing="0">
-                                <thead>
+                            <table class="table table-bordered table-striped table-hover" id="tableUsers" width="100%"
+                                cellspacing="0">
+                                <thead style="background-color: #315d77; color: #f6f6f6">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
@@ -44,7 +45,7 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
+                                {{-- <tfoot style="background-color: rgb(0, 80, 104); color: white">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
@@ -52,7 +53,7 @@
                                         <th>Peran</th>
                                         <th>Aksi</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> --}}
                                 <tbody>
                                     <?php
                                     // $role = ['Admin', 'Pimpinan', 'Dosen', 'Mahasiswa', 'Staff'];

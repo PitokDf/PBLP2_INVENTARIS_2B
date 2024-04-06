@@ -58,12 +58,12 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label for="file_image" class="form-label">Foto
-                                    <img src="" class="img-thumbnail" id="img-preview"
+                                    <img src="{{ asset('images/download.png') }}" class="img-thumbnail" id="img-preview"
                                         style="width: 200px; display: none;" alt="">
                                     <span id="dir_foto_error" class="text-danger"></span>
                                 </label>
                                 <input type="file" class="form-control" onchange="previewImage()" name="dir_foto"
-                                    id="file_image" accept="image/*" />
+                                    id="file_image" accept="image/*" hidden />
                             </div>
                         </div>
                     </div>

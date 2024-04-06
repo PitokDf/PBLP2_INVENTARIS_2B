@@ -16,21 +16,9 @@
                                 <input type="hidden" class="form-control" name="id" id="id" />
                             </div>
                             <div class="mb-3">
-                                <label for="title" class="form-label">Judul</label>
-                                <input type="text" class="form-control is-invalid" name="title" id="title"
-                                    placeholder="exp: Elektronik" />
-                                <span id="name_error" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="content" class="form-label">Content</label>
-                                <input type="text" class="form-control is-invalid" name="content" id="content"
-                                    placeholder="exp: Elektronik" />
-                                <span id="name_error" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="publikasi" class="form-label">Tanggal Publikasi</label>
-                                <input type="text" class="form-control is-invalid" name="publikasi" id="publikasi"
-                                    placeholder="exp: Elektronik" />
+                                <label for="name_kategori" class="form-label">Nama Kategori</label>
+                                <input type="text" class="form-control is-invalid" name="name_kategori"
+                                    id="name_kategori" placeholder="exp: Elektronik" />
                                 <span id="name_error" class="text-danger"></span>
                             </div>
                         </div>

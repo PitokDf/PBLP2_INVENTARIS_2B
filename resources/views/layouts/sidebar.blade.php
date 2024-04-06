@@ -1,8 +1,8 @@
-<ul class="navbar-nav bg-platinum sidebar accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-custom-dark-2 sidebar accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-icon "><img style="width:35px" src="{{ asset('asset/baru2.png') }}"></div>
+        <div class="sidebar-brand-icon "><img style="width:35px" src="{{ asset('asset/baru3.png') }}"></div>
 
         <div class="sidebar-brand-text mx-3">IT Ventory</div>
     </a>
@@ -72,20 +72,20 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item {{ Request::is('dosen') ? 'active' : '' }}">
             <a href="{{ route('dosen.index') }}" class="nav-link">
-                <i class="fas fa-users"></i>
-                Dosen
+                <i class="fas fa-fw fa-users"></i>
+                <span>Dosen</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('mahasiswa') ? 'active' : '' }}">
             <a href="{{ route('mahasiswa.index') }}" class="nav-link">
-                <i class="fas fa-users"></i>
-                Mahasiswa
+                <i class="fas fa-fw fa-users"></i>
+                <span>Mahasiswa</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
             <a href="{{ route('user.index') }}" class="nav-link">
-                <i class="fas fa-users"></i>
-                Users
+                <i class="fas fa-fw fa-users"></i>
+                <span>Users</span>
             </a>
         </li>
     @endif
@@ -94,30 +94,26 @@
         <li class="nav-item {{ Request::is('') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
                 aria-expanded="true" aria-controls="pengelolaanData">
-                <i class="fas fa-calendar-week"></i>
+                <i class="fas fa-fw fa-calendar-week"></i>
                 <span>Manajemen Barang</span>
             </a>
             <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item {{ Request::is('pengelolaan/barang-masuk') ? 'active' : '' }}"
                         href="{{--  --}}">
-                        <i class="fas fa-sign-in-alt"></i>
                         <span>Barang Masuk</span>
                     </a>
                     <a class="collapse-item {{ Request::is('pengelolaan/barang-keluar') ? 'active' : '' }}"
                         href="{{--  --}}">
-                        <i class="fas fa-sign-out-alt"></i>
                         <span>Barang Keluar BHP</span>
                     </a>
                     <a class="collapse-item {{ Request::is('pengelolaan/pengembalian') ? 'active' : '' }}"
                         href="{{--  --}}">
-                        <i class="fas fa-arrow-circle-left"></i>
                         <span>Barang Pengembalian</span>
                     </a>
 
                     <a class="collapse-item {{ Request::is('pengelolaan/pinjaman') ? 'active' : '' }}"
                         href="{{--  --}}">
-                        <i class="fas fa-hand-holding"></i>
                         Barang Pinjaman
                     </a>
                 </div>
@@ -127,7 +123,7 @@
     @if (in_array(auth()->user()->role, ['3', '4', '5']))
         <li class="nav-item {{ Request::is('pinjaman') ? 'active' : '' }}">
             <a href="{{--  --}}" class="nav-link">
-                <i class="fas fa-hand-holding"></i>
+                <i class="fas fa-fw fa-hand-holding"></i>
                 <span>Barang Pinjaman</span>
             </a>
         </li>
@@ -136,7 +132,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporan"
                 aria-expanded="true" aria-controls="laporan">
-                <i class="fas fa-solid fa-list"></i>
+                <i class="fas fa-fw fa-solid fa-list"></i>
                 <span>Laporan</span>
             </a>
             <div id="laporan" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -170,13 +166,14 @@
             </div>
         </li>
     @endif
-    <li class="nav-item">
-        <footer class="sticky-footer footer-sidebar">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; PBL P2 TRPL2B {{ date('Y') }}</span>
-                </div>
-            </div>
-        </footer>
-    </li>
+    <!-- Sidebar Message -->
+    <div class="sidebar-card d-none d-lg-flex">
+        {{-- <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="..."> --}}
+        <p class="text-center mb-2"><strong>Copyright &copy; PBL P2 TRPL2B {{ date('Y') }}</strong></p>
+        <a class="btn btn-success btn-sm" target="blank" href="https://www.instagram.com/pitok_df">Chat Owner</a>
+    </div>
+
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
 </ul>

@@ -77,6 +77,12 @@ $(document).ready(function () {
         $('#jumlah_error').text('');
         $('#posisi_error').text('');
         $('#foto_error').text('');
+        $('#kode_barang').removeClass('is-invalid');
+        $('#nama_barang').removeClass('is-invalid');
+        $('#kategori').removeClass('is-invalid');
+        $('#jumlah').removeClass('is-invalid');
+        $('#posisi').removeClass('is-invalid');
+        $('#foto').removeClass('is-invalid');
     }
     function claerInput() {
         $('#kode_barang').val('');
@@ -151,12 +157,12 @@ $(document).ready(function () {
 
     // menampilkan modal form saat btn create di click
     $('#btnCreate').click(function () {
-        // Your create button logic here
         modal.modal('show');
         modal_title.text('Add Barang');
         btnAction.html("<i class='fas fa-save'></i> Simpan");
         $('#name_error').text('');
         if (btnAction.attr('id') != "btnCreateform") {
+            clearErrorMsg();
             $('#modal-kategori input').val('');
         }
         btnAction.attr('id', 'btnCreateform');
@@ -181,7 +187,6 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status == 200) {
                     reloadTable(table_barang);
                     modal.modal('hide');
@@ -198,12 +203,29 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 clearErrorMsg();
                 var data = xhr.responseJSON.errors;
-                $('#kode_error').text(data.kode_barang);
-                $('#nama_error').text(data.nama_barang);
-                $('#kategori_error').text(data.kategori);
-                $('#jumlah_error').text(data.jumlah);
-                $('#posisi_error').text(data.posisi);
-                $('#foto_error').text(data.foto);
+                if (data.kode_barang) {
+                    $('#kode_error').text(data.kode_barang);
+                    $('#kode_barang').addClass('is-invalid');
+                }
+                if (data.nama_barang) {
+                    $('#nama_error').text(data.nama_barang);
+                    $('#nama_barang').addClass('is-invalid');
+                }
+                if (data.kategori) {
+                    $('#kategori_error').text(data.kategori);
+                    $('#kategori').addClass('is-invalid');
+                }
+                if (data.jumlah) {
+                    $('#jumlah_error').text(data.jumlah);
+                    $('#jumlah').addClass('is-invalid');
+                } if (data.posisi) {
+                    $('#posisi_error').text(data.posisi);
+                    $('#posisi').addClass('is-invalid');
+                }
+                if (data.foto) {
+                    $('#foto_error').text(data.foto);
+                    $('#foto').addClass('is-invalid');
+                }
             }
         });
     });
@@ -246,12 +268,29 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 clearErrorMsg();
                 var data = xhr.responseJSON.errors;
-                $('#kode_error').text(data.kode_barang);
-                $('#nama_error').text(data.nama_barang);
-                $('#kategori_error').text(data.kategori);
-                $('#jumlah_error').text(data.jumlah);
-                $('#posisi_error').text(data.posisi);
-                $('#foto_error').text(data.foto);
+                if (data.kode_barang) {
+                    $('#kode_error').text(data.kode_barang);
+                    $('#kode_barang').addClass('is-invalid');
+                }
+                if (data.nama_barang) {
+                    $('#nama_error').text(data.nama_barang);
+                    $('#nama_barang').addClass('is-invalid');
+                }
+                if (data.kategori) {
+                    $('#kategori_error').text(data.kategori);
+                    $('#kategori').addClass('is-invalid');
+                }
+                if (data.jumlah) {
+                    $('#jumlah_error').text(data.jumlah);
+                    $('#jumlah').addClass('is-invalid');
+                } if (data.posisi) {
+                    $('#posisi_error').text(data.posisi);
+                    $('#posisi').addClass('is-invalid');
+                }
+                if (data.foto) {
+                    $('#foto_error').text(data.foto);
+                    $('#foto').addClass('is-invalid');
+                }
             }
         });
     });

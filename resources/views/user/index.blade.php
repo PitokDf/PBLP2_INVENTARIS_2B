@@ -36,7 +36,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover" id="tableUsers" width="100%"
                                 cellspacing="0">
-                                <thead style="background-color: #315d77; color: #f6f6f6">
+                                <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>

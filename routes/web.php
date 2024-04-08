@@ -8,10 +8,11 @@ use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\MahasiswasController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
+use App\Models\Barang;
 use App\Models\Users;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Laravel\Telescope\Telescope;
 
 Route::middleware(['guest'])->group(function () {
     Route::get("login", [SessionController::class, "index"]);
@@ -24,7 +25,7 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::get('/', function () {
-            $userCount = Users::count();
+            $userCount = Barang::count();
             return view("dashboard.index")->with("count", $userCount);
         })->name('dashboard');
     });
@@ -46,6 +47,55 @@ Route::middleware(['auth'])->group(function () {
         Route::get("getAllDataMahasiswa", [MahasiswasController::class, "getData"]);
         Route::resource("berita", BeritaController::class);
         Route::get("getBerita", [BeritaController::class, "getData"]);
+
+        // // Telescope API routes
+        // Route::get('telescope/telescope-api/batches', 'QueueBatchesController@index');
+        // Route::get('telescope/telescope-api/batches/{telescopeEntryId}', 'QueueBatchesController@show');
+        // Route::post('telescope/telescope-api/cache', 'CacheController@index');
+        // Route::get('telescope/telescope-api/cache/{telescopeEntryId}', 'CacheController@show');
+        // Route::post('telescope/telescope-api/client-requests', 'ClientRequestController@index');
+        // Route::get('telescope/telescope-api/client-requests/{telescopeEntryId}', 'ClientRequestController@show');
+        // Route::post('telescope/telescope-api/commands', 'CommandsController@index');
+        // Route::get('telescope/telescope-api/commands/{telescopeEntryId}', 'CommandsController@show');
+        // Route::post('telescope/telescope-api/dumps', 'DumpController@index');
+        // Route::delete('telescope/telescope-api/entries', 'EntriesController@destroy');
+        // Route::post('telescope/telescope-api/events', 'EventsController@index');
+        // Route::get('telescope/telescope-api/events/{telescopeEntryId}', 'EventsController@show');
+        // Route::post('telescope/telescope-api/exceptions', 'ExceptionController@index');
+        // Route::get('telescope/telescope-api/exceptions/{telescopeEntryId}', 'ExceptionController@show');
+        // Route::put('telescope/telescope-api/exceptions/{telescopeEntryId}', 'ExceptionController@update');
+        // Route::post('telescope/telescope-api/gates', 'GatesController@index');
+        // Route::get('telescope/telescope-api/gates/{telescopeEntryId}', 'GatesController@show');
+        // Route::post('telescope/telescope-api/jobs', 'QueueController@index');
+        // Route::get('telescope/telescope-api/jobs/{telescopeEntryId}', 'QueueController@show');
+        // Route::post('telescope/telescope-api/logs', 'LogController@index');
+        // Route::get('telescope/telescope-api/logs/{telescopeEntryId}', 'LogController@show');
+        // Route::post('telescope/telescope-api/mail', 'MailController@index');
+        // Route::get('telescope/telescope-api/mail/{telescopeEntryId}', 'MailController@show');
+        // Route::get('telescope/telescope-api/mail/{telescopeEntryId}/download', 'MailEmlController@show');
+        // Route::get('telescope/telescope-api/mail/{telescopeEntryId}/preview', 'MailHtmlController@show');
+        // Route::post('telescope/telescope-api/models', 'ModelsController@index');
+        // Route::get('telescope/telescope-api/models/{telescopeEntryId}', 'ModelsController@show');
+        // Route::get('telescope/telescope-api/monitored-tags', 'MonitoredTagController@index');
+        // Route::post('telescope/telescope-api/monitored-tags', 'MonitoredTagController@store');
+        // Route::post('telescope/telescope-api/monitored-tags/delete', 'MonitoredTagController@destroy');
+        // Route::post('telescope/telescope-api/notifications', 'NotificationsController@index');
+        // Route::get('telescope/telescope-api/notifications/{telescopeEntryId}', 'NotificationsController@show');
+        // Route::post('telescope/telescope-api/queries', 'QueriesController@index');
+        // Route::get('telescope/telescope-api/queries/{telescopeEntryId}', 'QueriesController@show');
+        // Route::post('telescope/telescope-api/redis', 'RedisController@index');
+        // Route::get('telescope/telescope-api/redis/{telescopeEntryId}', 'RedisController@show');
+        // Route::post('telescope/telescope-api/requests', 'RequestsController@index');
+        // Route::get('telescope/telescope-api/requests/{telescopeEntryId}', 'RequestsController@show');
+        // Route::post('telescope/telescope-api/schedule', 'ScheduleController@index');
+        // Route::get('telescope/telescope-api/schedule/{telescopeEntryId}', 'ScheduleController@show');
+        // Route::post('telescope/telescope-api/toggle-recording', 'RecordingController@toggle');
+        // Route::post('telescope/telescope-api/views', 'ViewsController@index');
+        // Route::get('telescope/telescope-api/views/{telescopeEntryId}', 'ViewsController@show');
+
+        // // Route untuk Telescope non-API
+        // Route::get('telescope/{view?}', '\Laravel\Telescope\Http\Controllers\HomeController@index');
+
     });
 
     Route::group(["middleware" => "userAkses:3|4|5"], function () {

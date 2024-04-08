@@ -34,6 +34,7 @@ $(document).ready(function () {
 
     function clearErrorMsg() {
         $('#name_error').text('');
+        $('#name_kategori').removeClass('is-invalid');
     }
 
     function clerInput(modal) {
@@ -52,6 +53,7 @@ $(document).ready(function () {
         if ($('.action').attr('id') != 'btnCreateform') {
             clerInput(modal);
         }
+        clearErrorMsg();
         showModal(modal, title = "Add Kategori Barang", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
     });
 
@@ -67,7 +69,6 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status == 200) {
                     clerInput(modal = "modal-kategori");
                     clearErrorMsg();
@@ -83,8 +84,8 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;
-                console.log(errorMessage)
                 clearErrorMsg();
+                $('#name_kategori').addClass('is-invalid');
                 $('#name_error').text(errorMessage.name_kategori);
             }
         });
@@ -92,21 +93,19 @@ $(document).ready(function () {
 
     // saat btn edit diclick maka akan melakakuan request ke server dengan mengirimkan id dan server akan mengembalikan data yang sesuai dengan id yang dikirimkan
     $(document).on('click', '.btnEdit', function () {
-        showModal(modal = "modal-kategori", title = "Edit Kategori", form = "btnEditform", icon = "<i class='fas fa-regular fa-pen'></i> Update");
         clearErrorMsg();
+        showModal(modal = "modal-kategori", title = "Edit Kategori", form = "btnEditform", icon = "<i class='fas fa-regular fa-pen'></i> Update");
         url = "kategori-barang/" + $(this).attr('id') + "/edit";
         $.ajax({
             type: "GET",
             url: url,
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 $('#id').val(response.data[0].id);
                 $('#name_kategori').val(response.data[0].nama_kategori_barang);
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON.errors;
-                console.log(errorMessage);
             }
         });
     });
@@ -143,6 +142,7 @@ $(document).ready(function () {
             error: function (xhr) {
                 console.error(xhr.responseJSON)
                 var errorMessage = xhr.responseJSON.errors;
+                $('#name_kategori').addClass('is-invalid');
                 $('#name_error').text(errorMessage.name_kategori);
             }
         });

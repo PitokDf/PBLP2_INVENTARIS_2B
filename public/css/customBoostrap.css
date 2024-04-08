@@ -55,6 +55,20 @@
     color: #f6f6f6;
 }
 
+.paginate_button.page-item.active .page-link {
+    background-color: #65b789;
+    color: #feffff;
+}
+
+.paginate_button.page-item .page-link {
+    color: #65b789;
+}
+
+.btn-warning {
+    background-color: #ff9900;
+    color: #feffff;
+}
+
 .footer-sidebar {
     border-radius: 12px;
     background-color: var(--Antique_White);

@@ -29,5 +29,8 @@ class Users extends Authenticatable implements MustVerifyEmail
     {
         $this->attributes['password'] = Hash::make($value);
     }
-
+    public function idAdmin()
+    {
+        return $this->role == "1";
+    }
 }

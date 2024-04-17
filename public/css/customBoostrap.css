@@ -79,6 +79,10 @@
     background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/78c4af118001599.608076cf95739.jpg');
 }
 
+.bg-register-image {
+    background-image: url('https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?w=826&t=st=1712717932~exp=1712718532~hmac=28c810f99a38df1c31f4e775526648ad0ac7e43687b09fba2bc5bdd194a2346e');
+}
+
 .bg-custom-light {
     background-color: rgb(236, 236, 236);
 }

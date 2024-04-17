@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
@@ -49,17 +53,41 @@ class SessionController extends Controller
 
     public function prosesRegister(Request $rq)
     {
-        $nama = $rq->firstname . " " . $rq->lastname;
+        try {
+            DB::beginTransaction();
 
-        if (empty($rq->pass1) || empty($rq->pass2) || $rq->pass1 != $rq->pass2) {
-            return redirect('register')->withErrors('error_pass', "Password tidak sesuai.")->withInput();
-        } else {
-            echo "berhasil";
+            $data = [
+                "name" => $rq->name,
+                "email" => $rq->email,
+                "password" => bcrypt($rq->password),
+            ];
+
+            $user = User::create($data);
+
+            // Kirim notifikasi verifikasi email
+            if ($user->sendEmailVerificationNotification()) {
+                // Pengguna telah memverifikasi email mereka, lakukan login
+                Auth::login($user);
+                DB::commit();
+
+                // Ubah pesan respons
+                return response()->json([
+                    "status" => 200,
+                    "message" => "Email verifikasi telah dikirimkan ke email Anda. Silahkan login ke akun Anda."
+                ]);
+            } else {
+                // Email verifikasi gagal terkirim, rollback transaksi
+                DB::rollback();
+                throw new Exception('Email verifikasi gagal terkirim');
+            }
+        } catch (Exception $e) {
+            // Tangani kesalahan
+            DB::rollback();
+            // Logger::error('Gagal mendaftarkan user: ' . $e->getMessage());
+            return response()->json([
+                "status" => 500,
+                "message" => "Email verifikasi gagal terkirim"
+            ]);
         }
-
-        $data = [
-            "name" => $nama,
-            "email" => $rq->email,
-        ];
     }
 }

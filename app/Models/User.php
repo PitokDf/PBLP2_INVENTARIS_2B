@@ -6,21 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Users extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
-
-    // protected $fillable = [
-    //     'id_user', // Tambahkan kolom 'id_user' ke dalam fillable
-    //     'name',
-    //     'email',
-    //     'role',
-    //     'password',
-    //     'created_at',
-    //     'updated_at',
-    // ];
     protected $guarded = ['id_user'];
     protected $table = 'users';
     protected $primaryKey = 'id_user';
@@ -29,8 +20,26 @@ class Users extends Authenticatable implements MustVerifyEmail
     {
         $this->attributes['password'] = Hash::make($value);
     }
-    public function idAdmin()
+
+    protected static function boot()
     {
-        return $this->role == "1";
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->id_user = (string) Str::uuid();
+        });
     }
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    protected $keyType = 'string';
 }

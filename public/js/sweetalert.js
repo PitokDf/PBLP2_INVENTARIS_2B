@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function () {
     var role = ['Admin', 'Pimpinan', 'Dosen', 'Mahasiswa', 'Staff'];
     $('#tableUsers').DataTable({
@@ -24,6 +21,12 @@ $(document).ready(function () {
             },
             { "data": "name", "orderable": true },
             { "data": "email", "orderable": true },
+            {
+                "data": null, "render": function (_data, _type, row) {
+                    if (row.email_verified_at !== null) return `<span class="badge bg-success"  style="text-align: center;">verified</span>`;
+                    else return `<span class="badge bg-danger"  style="text-align: center;">unverified</span>`;
+                }
+            },
             {
                 "data": "role",
                 "render": function (data) {
@@ -128,7 +131,7 @@ $(document).ready(function () {
                 $('#name').val(response.data[0].name);
                 $('#email').val(response.data[0].email);
                 $('#role').val(response.data[0].role);
-                if (response.data[0].role == 1) {
+                if (response.data[0].email == response.session) {
                     $('.role').css('display', 'none')
                 } else {
                     $('.role').css('display', 'block')
@@ -204,12 +207,19 @@ $(document).ready(function () {
                     url: url,
                     dataType: "json",
                     success: function (response) {
-                        Swal.fire({
+                        response.status === 302 ? Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: response.message
+                        }) : "";
+
+                        response.status === 200 ? (Swal.fire({
                             title: "Deleted!",
                             text: response.message,
                             icon: "success"
-                        });
-                        reloadTable(tableUsers);
+                        }),
+                            reloadTable(tableUsers))
+                            : ""
                     },
                     error: function (xhr, stattus, error) {
                         console.error(xhr + "\n" + stattus + "\n" + error)
@@ -218,6 +228,10 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.btn-refresh').click(function () {
+        reloadTable(tableUsers);
+    })
 
     $('.showImport').click(function () {
         $('#modalImport').modal('show');

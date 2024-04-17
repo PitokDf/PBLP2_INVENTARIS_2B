@@ -13,6 +13,7 @@ use App\Models\Users;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Telescope\Telescope;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::middleware(['guest'])->group(function () {
     Route::get("login", [SessionController::class, "index"]);
@@ -22,7 +23,23 @@ Route::middleware(['guest'])->group(function () {
     Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
+        return redirect('umum');
+    } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
+        return redirect('/');
+    }
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+
+Route::get('editData/{id}', [UsersController::class, "edit"]);
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::get('/', function () {
             $userCount = Barang::count();
@@ -104,11 +121,18 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::get("logout", [SessionController::class, "logout"])->name('logout');
 });
+Route::get("logout", [SessionController::class, "logout"])->name('logout');
 
 Route::fallback(
     function () {
         return view("404");
     }
 );
+use Illuminate\Http\Request;
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!')->withInput();
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Get the migration connection name.
      */
@@ -39,20 +38,23 @@ return new class extends Migration
         });
 
         $schema->create('telescope_entries_tags', function (Blueprint $table) {
-            $table->uuid('entry_uuid');
-            $table->string('tag');
+            // $table->uuid('entry_uuid');
+            $table->string('entry_uuid', 125);
+            // $table->string('tag');
+            $table->string('tag', 125);
 
             $table->primary(['entry_uuid', 'tag']);
             $table->index('tag');
 
             $table->foreign('entry_uuid')
-                  ->references('uuid')
-                  ->on('telescope_entries')
-                  ->onDelete('cascade');
+                ->references('uuid')
+                ->on('telescope_entries')
+                ->onDelete('cascade');
         });
 
         $schema->create('telescope_monitoring', function (Blueprint $table) {
-            $table->string('tag')->primary();
+            // $table->string('tag')->primary();
+            $table->string('tag', 125)->primary();
         });
     }
 

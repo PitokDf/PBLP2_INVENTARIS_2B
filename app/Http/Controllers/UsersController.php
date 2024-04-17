@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Imports\UserImport;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -24,7 +24,7 @@ class UsersController extends Controller
 
     public function getAllData()
     {
-        $data = Users::all();
+        $data = User::all();
         return response()->json([
             'status' => 200,
             'data' => $data
@@ -47,10 +47,11 @@ class UsersController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $request->role
+            'role' => $request->role,
+            'email_verified_at' => now()
         ];
 
-        Users::create($data);
+        User::create($data);
 
         return response()->json([
             'status' => 200,
@@ -61,7 +62,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Users $users)
+    public function show(User $users)
     {
         //
     }
@@ -69,19 +70,21 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Users $users, $id)
+    public function edit($id)
     {
-        $data = Users::where('id_user', $id)->get([
+        $data = User::where('id_user', $id)->get([
             "id_user",
             'name',
             'email',
             'password',
             'role'
         ]);
+
+        // dd($data . "dan id " . $id);
         return response()->json([
             'status' => 200,
             'data' => $data,
-            'session' => Auth::user()->role
+            'session' => Auth::user()->email
         ]);
     }
 
@@ -91,7 +94,7 @@ class UsersController extends Controller
     public function update(UpdateUsersRequest $request, $id)
     {
         try {
-            $user = Users::findOrFail($id);
+            $user = User::findOrFail($id);
             $rules = [
                 "email" => [
                     'required',
@@ -137,13 +140,20 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Users $users, $id)
+    public function destroy(User $users, $id)
     {
-        Users::where('id_user', $id)->delete();
-        return response()->json([
-            'status' => 200,
-            'message' => 'Berhasil Menghapus data user.'
-        ]);
+        if (auth()->user()->id_user != $id) {
+            User::findOrFail($id)->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Berhasil Menghapus data user.'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 302,
+                'message' => 'Tidak dapat menghapus diri sendiri.'
+            ]);
+        }
     }
 
     public function import()

@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Users;
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Ramsey\Uuid\Uuid;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,10 +16,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        Users::create([
+        User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'role' => '1',
+            'id_user' => Uuid::uuid4(),
+            'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
         ]);
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\CommandHelper;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
@@ -136,3 +137,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!')->withInput();
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('helper', [CommandHelper::class, 'index']);
+Route::post('helper', [CommandHelper::class, 'execCommand'])->name('helper.exec');

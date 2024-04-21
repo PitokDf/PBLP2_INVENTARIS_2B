@@ -53,41 +53,40 @@ class SessionController extends Controller
 
     public function prosesRegister(Request $rq)
     {
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
 
-            $data = [
-                "name" => $rq->name,
-                "email" => $rq->email,
-                "password" => bcrypt($rq->password),
-            ];
+        $data = [
+            "name" => $rq->name,
+            "email" => $rq->email,
+            "password" => bcrypt($rq->password),
+        ];
 
-            $user = User::create($data);
+        $user = User::create($data);
 
-            // Kirim notifikasi verifikasi email
-            if ($user->sendEmailVerificationNotification()) {
-                // Pengguna telah memverifikasi email mereka, lakukan login
-                Auth::login($user);
-                DB::commit();
+        // Kirim notifikasi verifikasi email
+        $user->sendEmailVerificationNotification();
+        // Pengguna telah memverifikasi email mereka, lakukan login
+        Auth::login($user);
 
-                // Ubah pesan respons
-                return response()->json([
-                    "status" => 200,
-                    "message" => "Email verifikasi telah dikirimkan ke email Anda. Silahkan login ke akun Anda."
-                ]);
-            } else {
-                // Email verifikasi gagal terkirim, rollback transaksi
-                DB::rollback();
-                throw new Exception('Email verifikasi gagal terkirim');
-            }
-        } catch (Exception $e) {
-            // Tangani kesalahan
-            DB::rollback();
-            // Logger::error('Gagal mendaftarkan user: ' . $e->getMessage());
-            return response()->json([
-                "status" => 500,
-                "message" => "Email verifikasi gagal terkirim"
-            ]);
-        }
+        // Ubah pesan respons
+        return response()->json([
+            "status" => 200,
+            "message" => "Email verifikasi telah dikirimkan ke email Anda. Silahkan login ke akun Anda."
+        ]);
+        //     } else {
+        //         // Email verifikasi gagal terkirim, rollback transaksi
+        //         DB::rollback();
+        //         throw new Exception('Email verifikasi gagal terkirim');
+        //     }
+        // } catch (Exception $e) {
+        //     // Tangani kesalahan
+        //     DB::rollback();
+        //     // Logger::error('Gagal mendaftarkan user: ' . $e->getMessage());
+        //     return response()->json([
+        //         "status" => 500,
+        //         "message" => "Email verifikasi gagal terkirim"
+        //     ]);
+        // }
     }
 }

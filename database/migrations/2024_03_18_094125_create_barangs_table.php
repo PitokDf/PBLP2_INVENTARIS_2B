@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('nama_barang')->nullable();
             $table->integer('quantity')->nullable();
             $table->unsignedBigInteger('id_kategory');
-            $table->foreign('id_kategory')->references('id')->on('kategori_barang')->onDelete('cascade');
+            $table->foreign('id_kategory')->references('id')->on('kategori_barang');
             $table->text('posisi')->nullable();
             $table->text('photo')->nullable();
             $table->timestamps();

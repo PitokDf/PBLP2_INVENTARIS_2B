@@ -14,7 +14,8 @@
 <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js') }}"></script>
 
 <!-- Page level plugins -->
-<script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/chart.js/Chart.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{-- <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/chart.js/Chart.min.js') }}"></script> --}}
 
 {{-- script dattaables --}}
 <script src="//cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>

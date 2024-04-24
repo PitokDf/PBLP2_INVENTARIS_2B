@@ -2,7 +2,29 @@ $(document).ready(function () {
     $('.btn-register').click(function () {
         var checkFirstname = $('#firstname').val().trim() == '' ? ($('#firstname').addClass('is-invalid'), false) : ($('#firstname').removeClass('is-invalid'), true);
         var checkEmail = $('#email').val().trim() == '' ? ($('#email').addClass('is-invalid'), false) : ($('#email').removeClass('is-invalid'), true)
-        var checkPass1 = $('#pass1').val().trim() === '' ? ($('#pass1').addClass('is-invalid'), false) : ($('#pass1').val() !== $('#pass2').val() ? ($('#pass1, #pass2').addClass('is-invalid'), $('#errorpass').text('password tidak sesuai'), false) : ($('#pass1, #pass2').removeClass('is-invalid'), $('#errorpass').text(''), true));
+        var pass1 = $('#pass1').val().trim();
+        var pass2 = $('#pass2').val().trim();
+
+        var checkPass1 = pass1 === '' ? (
+            $('#pass1').addClass('is-invalid'),
+            false
+        ) : (
+            pass1.length !== 8 ? (
+                $('#pass1, #pass2').addClass('is-invalid'),
+                $('#errorpass').text('Panjang password harus 8 karakter'),
+                false
+            ) : (
+                pass1 !== pass2 ? (
+                    $('#pass1, #pass2').addClass('is-invalid'),
+                    $('#errorpass').text('Password tidak sesuai'),
+                    false
+                ) : (
+                    $('#pass1, #pass2').removeClass('is-invalid'),
+                    $('#errorpass').text(''),
+                    true
+                )
+            )
+        );
 
         var check = checkFirstname && checkEmail && checkPass1;
         var data = "";

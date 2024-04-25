@@ -44,13 +44,20 @@ $(document).ready(function () {
             { "data": "code_barang", "orderable": true },
             { "data": "nama_barang", "orderable": true },
             {
-                "data": null, "render":
-                    function (_data, _type, row) {
-                        const kategori = kategoriList.find(item => item.id === row.id_kategory);
-                        return kategori ? kategori.nama_kategori_barang : "";;
-                    }
-                , "orderable": true
+                "data": null,
+                render: function (_data, _type, row) {
+                    return row.kategori.nama_kategori_barang
+                },
+                "orderable": true
             },
+            // {
+            //     "data": null, "render":
+            //         function (_data, _type, row) {
+            //             const kategori = kategoriList.find(item => item.id === row.id_kategory);
+            //             return kategori ? kategori.nama_kategori_barang : "";
+            //         }
+            //     , "orderable": true
+            // },
             { "data": "quantity", "orderable": false },
             { "data": "posisi", "orderable": false },
             {

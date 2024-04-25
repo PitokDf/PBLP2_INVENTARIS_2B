@@ -6,6 +6,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -53,9 +54,16 @@ class SessionController extends Controller
 
     public function prosesRegister(Request $rq)
     {
-        // try {
-        //     DB::beginTransaction();
 
+        $validator = Validator::make($rq->all(), [
+            'email' => "unique:users,email"
+        ], [
+            "email.unique" => "Email sudah tersedia.",
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
         $data = [
             "name" => $rq->name,
             "email" => $rq->email,
@@ -74,19 +82,5 @@ class SessionController extends Controller
             "status" => 200,
             "message" => "Email verifikasi telah dikirimkan ke email Anda. Silahkan login ke akun Anda."
         ]);
-        //     } else {
-        //         // Email verifikasi gagal terkirim, rollback transaksi
-        //         DB::rollback();
-        //         throw new Exception('Email verifikasi gagal terkirim');
-        //     }
-        // } catch (Exception $e) {
-        //     // Tangani kesalahan
-        //     DB::rollback();
-        //     // Logger::error('Gagal mendaftarkan user: ' . $e->getMessage());
-        //     return response()->json([
-        //         "status" => 500,
-        //         "message" => "Email verifikasi gagal terkirim"
-        //     ]);
-        // }
     }
 }

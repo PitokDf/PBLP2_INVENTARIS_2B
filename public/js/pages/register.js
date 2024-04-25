@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('.btn-register').click(function () {
         var checkFirstname = $('#firstname').val().trim() == '' ? ($('#firstname').addClass('is-invalid'), false) : ($('#firstname').removeClass('is-invalid'), true);
-        var checkEmail = $('#email').val().trim() == '' ? ($('#email').addClass('is-invalid'), false) : ($('#email').removeClass('is-invalid'), true)
+        // var checkEmail = $('#email').val().trim() == '' ? ($('#email').addClass('is-invalid'), false) : ($('#email').removeClass('is-invalid'), true)
         var pass1 = $('#pass1').val().trim();
         var pass2 = $('#pass2').val().trim();
 
@@ -11,22 +11,22 @@ $(document).ready(function () {
         ) : (
             pass1.length !== 8 ? (
                 $('#pass1, #pass2').addClass('is-invalid'),
-                $('#errorpass').text('Panjang password harus 8 karakter'),
+                $('#errorpass').html('<div class="text-danger ml-2">Panjang password harus 8 karakter.</div>'),
                 false
             ) : (
                 pass1 !== pass2 ? (
                     $('#pass1, #pass2').addClass('is-invalid'),
-                    $('#errorpass').text('Password tidak sesuai'),
+                    $('#errorpass').html('<div class="text-danger ml-2">Password tidak sesuai.</div>'),
                     false
                 ) : (
                     $('#pass1, #pass2').removeClass('is-invalid'),
-                    $('#errorpass').text(''),
+                    $('#errorpass').html(''),
                     true
                 )
             )
         );
 
-        var check = checkFirstname && checkEmail && checkPass1;
+        var check = checkFirstname && checkPass1;
         var data = "";
         if (check) {
             data = new FormData();
@@ -51,8 +51,7 @@ $(document).ready(function () {
                 contentType: false,
                 dataType: "json",
                 beforeSend: function () {
-                    $('.btn-register').html(`<img src="images/BeanEater@1x-1.0s-200px-200px.gif" alt=""
-                    srcset="" style="width: 20px;">`);
+                    $('.btn-register').text(`memproses...`);
                 },
                 success: function (response) {
                     console.log(response)
@@ -65,7 +64,9 @@ $(document).ready(function () {
                     }
                 },
                 error: function (error) {
-                    // console.log(error.responJson)
+                    $('#email').addClass('is-invalid');
+                    $('#emailError').html(`<div class="text-danger ml-2">${error.responseJSON.email}</div>`);
+                    console.log(error.responseJSON)
                     $('.btn-register').text('Register Account');
                 }
             });

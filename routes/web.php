@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CommandHelper;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
@@ -38,6 +39,7 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
+Route::get('topThreeBarang', [DashboardController::class, 'getTopThreeBarang']);
 
 Route::get('editData/{id}', [UsersController::class, "edit"]);
 Route::middleware(['auth', 'verified'])->group(function () {

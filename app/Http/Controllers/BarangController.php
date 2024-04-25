@@ -19,7 +19,11 @@ class BarangController extends Controller
 
     public function getData()
     {
-        $data = Barang::all();
+        $data = Barang::with('kategori')->get();
+        // foreach ($data as $item) {
+        //     echo $item->kategori->nama_kategori_barang;
+        // }
+        // dd($data);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mendapatkan data.",
@@ -81,7 +85,7 @@ class BarangController extends Controller
      */
     public function edit($id)
     {
-        $barang = Barang::findOrFail($id)->get([
+        $barang = Barang::select([
             "id_barang",
             "code_barang",
             "nama_barang",
@@ -89,7 +93,7 @@ class BarangController extends Controller
             "id_kategory",
             "posisi",
             "photo"
-        ]);
+        ])->where('id_barang', $id)->get();
 
         return response()->json([
             "status" => 200,

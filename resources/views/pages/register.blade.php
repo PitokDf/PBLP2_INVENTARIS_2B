@@ -56,12 +56,13 @@
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user"
                                         placeholder="Email Address" id="email" name="email">
+                                    <span id="emailError"></span>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user" id="pass1"
                                             placeholder="Password" name="pass1">
-                                        <span class="text-danger ml-2" id="errorpass"></span>
+                                        <span id="errorpass"></span>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user" id="pass2"

@@ -12,12 +12,23 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        //
+        return view('peminjaman.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    public function getData()
+    {
+        $data = Peminjaman::all();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data berhasil ditemukan',
+            'data' => $data
+        ]);
+    }
+
     public function create()
     {
         //

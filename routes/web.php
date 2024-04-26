@@ -8,9 +8,11 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\MahasiswasController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
 use App\Models\Barang;
+use App\Models\Peminjaman;
 use App\Models\Users;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -118,10 +120,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     });
 
-    Route::group(["middleware" => "userAkses:3|4|5"], function () {
+    Route::group(["middleware" => "userAkses:1|2|3|4|5"], function () {
         Route::get('umum', function () {
             return "Halaman untuk user umum belum dibuat.<br><a href='logout'>logout</a>";
         });
+
+        Route::get('getDataPeminjaman', [PeminjamanController::class, 'getData']);
+        Route::resource('peminjaman', PeminjamanController::class);
     });
 
 });

@@ -113,8 +113,8 @@
                     </a>
 
                     <a class="collapse-item {{ Request::is('pengelolaan/pinjaman') ? 'active' : '' }}"
-                        href="{{--  --}}">
-                        Barang Pinjaman
+                        href="{{ url('peminjaman') }}">
+                        Pinjaman
                     </a>
                 </div>
             </div>

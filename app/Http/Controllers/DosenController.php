@@ -136,7 +136,7 @@ class DosenController extends Controller
                         'email',
                         Rule::unique('dosen')->ignore($dosen),
                     ],
-                    "no_telpn" => [
+                    "phone_number" => [
                         Rule::unique('dosen')->ignore($dosen)
                     ],
                     "nip" => [

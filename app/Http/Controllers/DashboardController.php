@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function getTopThreeBarang()
     {
-        $barang = Barang::select(['nama_barang', 'quantity'])->orderBy('quantity', 'desc')->take(3)->get();
+        $barang = Barang::select(['nama_barang', 'quantity'])->orderBy('quantity', 'desc')->take(6)->get();
 
         return response()->json([
             'status' => 200,

@@ -25,11 +25,27 @@ class SessionController extends Controller
             "password" => "required"
         ]);
 
+        // if ($user->select('logged')) {
+        //     echo "test";
+        // }
+        $user = User::where('email', $request->email)->firstOrFail();
+        // dd($user->logged);
+
+        // if ($user->logged) {
+        //     return redirect('login')->with('gagal', 'Login gagal, anda sudah login diperangkat lain!')->withInput();
+        // }
+
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
-                return redirect('umum');
-            } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
-                return redirect('/');
+            if (auth()->user()->logged) {
+                auth()->logout();
+                return redirect('login')->with('gagal', 'Login gagal, anda sudah login diperangkat lain!')->withInput();
+            } else {
+                User::where('email', $request->email)->update(['logged' => true]);
+                if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
+                    return redirect('umum');
+                } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
+                    return redirect('/');
+                }
             }
         } else {
             return redirect('login')->with('gagal', 'Login gagal, email atau password salah')->withInput();
@@ -38,6 +54,7 @@ class SessionController extends Controller
 
     public function logout()
     {
+        User::where('email', auth()->user()->email)->update(['logged' => false]);
         Auth::logout();
         return redirect('login');
     }

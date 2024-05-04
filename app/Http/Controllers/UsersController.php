@@ -120,7 +120,7 @@ class UsersController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->role = $request->role;
-            if ($request->has('password')) {
+            if (!empty($request->password)) {
                 $user->password = bcrypt($request->password); // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
             }
             $user->save();

@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/berita/prosesKri.js') }}"></script>
+    <script src="{{ asset('js/berita/index.js') }}"></script>
 @endsection
 @section('modal')
     @include('berita.modal')
@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="table table-responsive">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" id="table_kategori" width="100%"
+                            <table class="table table-bordered table-striped table-hover" id="table_berita" width="100%"
                                 cellspacing="0">
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>

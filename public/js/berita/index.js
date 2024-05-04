@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    $('#table_kategori').DataTable({
+    $('#table_berita').DataTable({
         "processing": true,
         "paging": true,
         "searching": true,
@@ -9,7 +9,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "getAllDataKategori", // Ganti dengan URL endpoint Anda
+            "url": "getBerita", // Ganti dengan URL endpoint Anda
             "type": "GET"
         },
         "columns": [
@@ -19,11 +19,11 @@ $(document).ready(function () {
                     return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
                 }
             },
-            { "data": "nama_kategori", "orderable": true },
+            { "data": "title", "orderable": true },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id_kategori + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_kategori + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    return "<button type='button' data-id='" + row.id_berita + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_kategori + "'><i class='fas fa-regular fa-pen'></i></button>"
                 }
                 , "orderable": false
             }
@@ -41,8 +41,6 @@ $(document).ready(function () {
         modal.modal('show');
         modal_title.text('Edit Kategori');
         btnAction.attr('id', 'btnEdit');
-        $('#name_kategori').removeClass('is-invalid');
-        $('#name_error').text('');
         btnAction.html("<i class='fas fa-regular fa-pen'></i> Update");
         url = "kategori-berita/" + $(this).attr('id') + "/edit";
 
@@ -99,7 +97,6 @@ $(document).ready(function () {
     // menampilkan modal form saat btn create di click
     $('#btnCreate').click(function () {
         // Your create button logic here
-        $('#name_kategori').removeClass('is-invalid');
         modal.modal('show');
         modal_title.text('Add Kategori');
         btnAction.html("<i class='fas fa-save'></i> Simpan");
@@ -139,7 +136,6 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 console.error(xhr.responseJSON.errors)
                 $('#name_error').text(xhr.responseJSON.errors.name_kategori);
-                $('#name_kategori').addClass('is-invalid');
             }
         });
     });
@@ -172,7 +168,6 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseJSON.errors)
-                $('#name_kategori').addClass('is-invalid');
                 $('#name_error').text(xhr.responseJSON.errors.name_kategori);
             }
         });

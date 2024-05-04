@@ -18,7 +18,7 @@ class BeritaController extends Controller
 
     public function getData()
     {
-        $data = Berita::all();
+        $data = Berita::with('kategori')->get();
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mendapatkan data.",

@@ -20,32 +20,21 @@ class SessionController extends Controller
     public function login(Request $request)
     {
 
+        if (User::where('email', $request->email)->where('logged', true)->exists()) {
+            return redirect('login')->with('logged', 'Login gagal, anda sudah login diperangkat lain!')->withInput();
+        }
+
         $credentials = $request->validate([
             "email" => "required",
             "password" => "required"
         ]);
 
-        // if ($user->select('logged')) {
-        //     echo "test";
-        // }
-        $user = User::where('email', $request->email)->firstOrFail();
-        // dd($user->logged);
-
-        // if ($user->logged) {
-        //     return redirect('login')->with('gagal', 'Login gagal, anda sudah login diperangkat lain!')->withInput();
-        // }
-
         if (Auth::attempt($credentials)) {
-            if (auth()->user()->logged) {
-                auth()->logout();
-                return redirect('login')->with('gagal', 'Login gagal, anda sudah login diperangkat lain!')->withInput();
-            } else {
-                User::where('email', $request->email)->update(['logged' => true]);
-                if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
-                    return redirect('umum');
-                } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
-                    return redirect('/');
-                }
+            User::where('email', $request->email)->update(['logged' => true]);
+            if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
+                return redirect('umum');
+            } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
+                return redirect('/');
             }
         } else {
             return redirect('login')->with('gagal', 'Login gagal, email atau password salah')->withInput();

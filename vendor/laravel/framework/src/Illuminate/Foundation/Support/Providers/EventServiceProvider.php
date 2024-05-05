@@ -16,7 +16,11 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+        \Illuminate\Auth\Events\Logout::class => [
+            \App\Listeners\UpdateUserLogoutStatus::class,
+        ]
+    ];
 
     /**
      * The subscribers to register.
@@ -116,8 +120,8 @@ class EventServiceProvider extends ServiceProvider
     protected function discoveredEvents()
     {
         return $this->shouldDiscoverEvents()
-                    ? $this->discoverEvents()
-                    : [];
+            ? $this->discoverEvents()
+            : [];
     }
 
     /**
@@ -138,15 +142,15 @@ class EventServiceProvider extends ServiceProvider
     public function discoverEvents()
     {
         return collect($this->discoverEventsWithin())
-                    ->reject(function ($directory) {
-                        return ! is_dir($directory);
-                    })
-                    ->reduce(function ($discovered, $directory) {
-                        return array_merge_recursive(
-                            $discovered,
-                            DiscoverEvents::within($directory, $this->eventDiscoveryBasePath())
-                        );
-                    }, []);
+            ->reject(function ($directory) {
+                return !is_dir($directory);
+            })
+            ->reduce(function ($discovered, $directory) {
+                return array_merge_recursive(
+                    $discovered,
+                    DiscoverEvents::within($directory, $this->eventDiscoveryBasePath())
+                );
+            }, []);
     }
 
     /**
@@ -189,8 +193,10 @@ class EventServiceProvider extends ServiceProvider
      */
     protected function configureEmailVerification()
     {
-        if (! isset($this->listen[Registered::class]) ||
-            ! in_array(SendEmailVerificationNotification::class, Arr::wrap($this->listen[Registered::class]))) {
+        if (
+            !isset($this->listen[Registered::class]) ||
+            !in_array(SendEmailVerificationNotification::class, Arr::wrap($this->listen[Registered::class]))
+        ) {
             Event::listen(Registered::class, SendEmailVerificationNotification::class);
         }
     }

@@ -111,6 +111,20 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('logged'))
+        <script>
+            function showAlert() {
+                Swal.fire({
+                    title: "Opss..",
+                    text: "Anda sudah login pada perangkat lain!.",
+                    icon: "warning",
+                    confirmButtonText: "Yes"
+                });
+            }
+            showAlert();
+        </script>
+    @endif
     <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js') }}">
     </script>

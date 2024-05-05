@@ -88,8 +88,7 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <span
-                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}{{ auth()->user()->logged }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
                 <img class="img-profile rounded-circle"
                     src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/img/undraw_profile.svg') }}">
             </a>

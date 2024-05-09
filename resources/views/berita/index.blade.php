@@ -1,6 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
     <script src="{{ asset('js/berita/index.js') }}"></script>
 @endsection
 @section('modal')
@@ -34,7 +35,6 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Judul</th>
-                                        <th>Isi</th>
                                         <th>Tanggal Publikasi</th>
                                         <th>Kategori</th>
                                         <th>Aksi</th>
@@ -44,7 +44,6 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Judul</th>
-                                        <th>Isi</th>
                                         <th>Tanggal Publikasi</th>
                                         <th>Kategori</th>
                                         <th>Aksi</th>

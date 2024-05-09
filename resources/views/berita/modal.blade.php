@@ -1,7 +1,7 @@
 <!-- create/update data user Modal-->
 <div class="modal fade" id="modal-kategori" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modal-kategori">Modal title</h1>
@@ -16,22 +16,29 @@
                                 <input type="hidden" class="form-control" name="id" id="id" />
                             </div>
                             <div class="mb-3">
-                                <label for="title" class="form-label">Judul</label>
-                                <input type="text" class="form-control is-invalid" name="title" id="title"
-                                    placeholder="exp: Elektronik" />
-                                <span id="name_error" class="text-danger"></span>
+                                <label for="title" class="form-label">Judul Berita</label>
+                                <input type="text" class="form-control" name="title" id="title"
+                                    placeholder="exp: Masalah labor" />
+                                <span id="title_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label for="content" class="form-label">Content</label>
-                                <input type="text" class="form-control is-invalid" name="content" id="content"
-                                    placeholder="exp: Elektronik" />
-                                <span id="name_error" class="text-danger"></span>
+                                <input type="hidden" class="form-control" id="content" name="content" />
+                                <trix-editor input="content"></trix-editor>
+                                <span id="content_error" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="kategori" class="form-label">Kategori Berita</label>
+                                <select name="kategori" id="kategori" class="form-control">
+                                    <option value="">--Pilih Kategori--</option>
+                                </select>
+                                <span id="kategori_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label for="publikasi" class="form-label">Tanggal Publikasi</label>
-                                <input type="text" class="form-control is-invalid" name="publikasi" id="publikasi"
+                                <input type="date" class="form-control" name="publikasi" id="publikasi"
                                     placeholder="exp: Elektronik" />
-                                <span id="name_error" class="text-danger"></span>
+                                <span id="publikasi_error" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

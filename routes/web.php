@@ -23,6 +23,11 @@ Route::middleware(['guest'])->group(function () {
     Route::get("login", [SessionController::class, "index"]);
     Route::post("login", [SessionController::class, "login"])->name('login');
     Route::get("forgot", [SessionController::class, "forgotShow"])->name('forgotpass');
+    Route::post("forgot", [SessionController::class, "forgotSend"])->name('password.email');
+    Route::get('/reset-password/{token}', function (string $token) {
+        return view('auth.reset-pass', ['token' => $token]);
+    })->middleware('guest')->name('password.reset');
+    Route::post('/reset-password', [SessionController::class, 'resetPass'])->middleware('guest')->name('password.update');
     Route::get("register", [SessionController::class, "register"])->name('register');
     Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
 });

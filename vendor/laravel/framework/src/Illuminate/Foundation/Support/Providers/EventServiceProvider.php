@@ -16,11 +16,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [
-        \Illuminate\Auth\Events\Logout::class => [
-            \App\Listeners\UpdateUserLogoutStatus::class,
-        ]
-    ];
+    protected $listen = [];
 
     /**
      * The subscribers to register.

@@ -20,6 +20,9 @@ $(document).ready(function () {
                 }
             },
             { "data": "title", "orderable": true },
+            { "data": "title", "orderable": true },
+            { "data": "title", "orderable": true },
+            { "data": "title", "orderable": true },
             {
                 "data": null,
                 "render": function (_data, _type, row) {

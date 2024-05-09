@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Users;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -13,7 +13,7 @@ class UserExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $user = Users::select([
+        $user = User::select([
             'name',
             'email',
             'role',

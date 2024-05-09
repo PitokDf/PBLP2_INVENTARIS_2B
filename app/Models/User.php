@@ -16,6 +16,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $table = 'users';
     protected $primaryKey = 'id_user';
 
+    protected $hidden = [
+        'password'
+    ];
     public function setPasswordAtrribute($value)
     {
         $this->attributes['password'] = Hash::make($value);

@@ -20,17 +20,12 @@ class SessionController extends Controller
     public function login(Request $request)
     {
 
-        if (User::where('email', $request->email)->where('logged', true)->exists()) {
-            return redirect('login')->with('logged', 'Login gagal, anda sudah login diperangkat lain!')->withInput();
-        }
-
         $credentials = $request->validate([
             "email" => "required",
             "password" => "required"
         ]);
 
         if (Auth::attempt($credentials)) {
-            User::where('email', $request->email)->update(['logged' => true]);
             if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
                 return redirect('umum');
             } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
@@ -43,7 +38,6 @@ class SessionController extends Controller
 
     public function logout()
     {
-        User::where('email', auth()->user()->email)->update(['logged' => false]);
         Auth::logout();
         return redirect('login');
     }

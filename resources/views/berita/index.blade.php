@@ -33,14 +33,20 @@
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Kategory</th>
+                                        <th>Judul</th>
+                                        <th>Isi</th>
+                                        <th>Tanggal Publikasi</th>
+                                        <th>Kategori</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Kategory</th>
+                                        <th>Judul</th>
+                                        <th>Isi</th>
+                                        <th>Tanggal Publikasi</th>
+                                        <th>Kategori</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>

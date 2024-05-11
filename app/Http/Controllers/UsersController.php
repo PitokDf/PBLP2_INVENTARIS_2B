@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Imports\UserImport;
+use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -52,7 +53,12 @@ class UsersController extends Controller
         ];
 
         User::create($data);
-
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'add',
+            'deskripsi' => 'menambahkan data user pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil Menambahkan data user.'
@@ -124,7 +130,12 @@ class UsersController extends Controller
                 $user->password = bcrypt($request->password); // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
             }
             $user->save();
-
+            ActivityLog::create([
+                'id_user' => auth()->user()->id_user,
+                'activity' => 'update',
+                'deskripsi' => 'mengupdate data user pada ' . date('Y-F-d H:i'),
+                'time' => now()
+            ]);
             return response()->json([
                 'status' => 200,
                 'message' => "Berhasil mengupdate data."
@@ -144,6 +155,12 @@ class UsersController extends Controller
     {
         if (auth()->user()->id_user != $id) {
             User::findOrFail($id)->delete();
+            ActivityLog::create([
+                'id_user' => auth()->user()->id_user,
+                'activity' => 'delete',
+                'deskripsi' => 'menghapus data user pada ' . date('Y-F-d H:i'),
+                'time' => now()
+            ]);
             return response()->json([
                 'status' => 200,
                 'message' => 'Berhasil Menghapus data user.'

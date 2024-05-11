@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreKategoriBeritaRequest;
 use App\Http\Requests\UpdateKategoriBeritaRequest;
+use App\Models\ActivityLog;
 use App\Models\KategoriBerita;
 
 class KategoriBeritaController extends Controller
@@ -43,6 +44,12 @@ class KategoriBeritaController extends Controller
         ];
 
         KategoriBerita::create($data);
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'add',
+            'deskripsi' => 'menambahkan data kategori berita pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil manambahkan kategori."
@@ -77,6 +84,12 @@ class KategoriBeritaController extends Controller
         $kategori = KategoriBerita::findOrFail($id);
         $kategori->nama_kategori = $request->name_kategori;
         $kategori->save();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'update',
+            'deskripsi' => 'mengupdate data kategori berita pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             'status' => 200,
             "message" => "Berhasil mengupdate data."
@@ -90,6 +103,12 @@ class KategoriBeritaController extends Controller
     {
         $delete = KategoriBerita::findOrFail($id);
         $delete->delete();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'delete',
+            'deskripsi' => 'menghapus data kategori berita pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             'message' => "Berhasil menghapus data."

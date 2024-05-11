@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Berita;
 use Illuminate\Http\Request;
 
@@ -50,7 +51,12 @@ class BeritaController extends Controller
             'tgl_publikasi' => $request->publikasi,
             'id_kategori' => $request->kategori
         ]);
-
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'add',
+            'deskripsi' => 'menambahkan data berita pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             'status' => 200,
             'message' => 'Data Berhasil Ditambahkan!'
@@ -102,7 +108,12 @@ class BeritaController extends Controller
             'tgl_publikasi' => $request->publikasi,
             'id_kategori' => $request->kategori,
         ]);
-
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'update',
+            'deskripsi' => 'mengupdate data berita pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             'status' => 200,
             'message' => 'Berita Berhasil diupdate!',
@@ -116,6 +127,12 @@ class BeritaController extends Controller
     {
         $berita = Berita::findOrFail($id);
         $berita->delete();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'delete',
+            'deskripsi' => 'menghapus data berita pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             'status' => 200,
             'message' => 'Data Berhasil Dihapus'

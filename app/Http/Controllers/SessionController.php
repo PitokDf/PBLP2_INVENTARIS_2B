@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
@@ -29,8 +30,20 @@ class SessionController extends Controller
 
         if (Auth::attempt($credentials)) {
             if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
+                ActivityLog::create([
+                    'id_user' => auth()->user()->id_user,
+                    'activity' => 'Login',
+                    'deskripsi' => 'login pada ' . date('Y-F-d H:i'),
+                    'time' => now()
+                ]);
                 return redirect('umum');
             } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
+                ActivityLog::create([
+                    'id_user' => auth()->user()->id_user,
+                    'activity' => 'Login',
+                    'deskripsi' => 'login pada ' . date('Y-F-d H:i'),
+                    'time' => now()
+                ]);
                 return redirect('/');
             }
         } else {

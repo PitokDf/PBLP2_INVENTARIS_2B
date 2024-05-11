@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreKategoriBarangRequest;
 use App\Http\Requests\UpdateKategoriBarangRequest;
+use App\Models\ActivityLog;
 use App\Models\KategoriBarang;
 
 class KategoriBarangController extends Controller
@@ -42,6 +43,12 @@ class KategoriBarangController extends Controller
             "nama_kategori_barang" => $request->name_kategori
         ];
         KategoriBarang::create($data);
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'add',
+            'deskripsi' => 'menambahkan data kategori barang pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil Menambahkan kategorid."
@@ -78,6 +85,12 @@ class KategoriBarangController extends Controller
         $kategori = KategoriBarang::findOrFail($id);
         $kategori->nama_kategori_barang = $request->name_kategori;
         $kategori->save();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'update',
+            'deskripsi' => 'mengupdate data kategori barang pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mengupdate kategori."
@@ -91,6 +104,12 @@ class KategoriBarangController extends Controller
     {
         $kategori = KategoriBarang::findOrFail($id);
         $kategori->delete();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'delete',
+            'deskripsi' => 'menghapus data kategori barang pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menghapus kategori."

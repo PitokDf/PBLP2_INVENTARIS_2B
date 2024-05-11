@@ -20,12 +20,9 @@ $(document).ready(function () {
                 "orderable": false
             },
             { "data": "nama", "orderable": true },
-            { "data": "nim", "orderable": true },
             {
                 "data": "program_studi", "orderable": true
             },
-            { "data": "angkatan", "orderable": true },
-            { "data": "ipk", "orderable": false },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
@@ -217,5 +214,25 @@ $(document).ready(function () {
 
     $(document).on('click', '.btnDetail', function () {
         showModal(modal = "modalDetail", title = "Detail Mahasiswa", form = "", icon = "");
+        var url = "mahasiswa/" + $(this).attr('id') + "/edit";
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            success: function (response) {
+                if (response.status == 200) {
+                    var data = response.data[0];
+                    console.log(data);
+                    $('.nim').text(data.nama);
+                    $('.prodi').text(data.nim);
+                    $('.angkatan').text(data.angkatan);
+                    $('.nama').text(data.program_studi);
+                    $('.ipk').text(data.ipk);
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr)
+            }
+        });
     });
 });

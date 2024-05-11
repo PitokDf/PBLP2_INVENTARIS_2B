@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDosenRequest;
 use App\Http\Requests\UpdateDosenRequest;
+use App\Models\ActivityLog;
 use App\Models\Dosen;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -60,6 +61,12 @@ class DosenController extends Controller
         ];
 
         Dosen::create($data);
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'add',
+            'deskripsi' => 'menambahkan data dosen pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil manambahkan data dosen."
@@ -161,6 +168,12 @@ class DosenController extends Controller
 
 
             $dosen->save();
+            ActivityLog::create([
+                'id_user' => auth()->user()->id_user,
+                'activity' => 'update',
+                'deskripsi' => 'mengupdate data dosen pada ' . date('Y-F-d H:i'),
+                'time' => now()
+            ]);
             return response()->json([
                 'status' => 200,
                 'message' => "Berhasil mengupdate data."
@@ -184,6 +197,12 @@ class DosenController extends Controller
             Storage::delete('public/dosen/' . $dosen->photo_dir);
         }
         $dosen->delete();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'delete',
+            'deskripsi' => 'menghapus data dosen pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil Menghapus data dosen.'

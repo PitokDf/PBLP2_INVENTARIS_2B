@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBarangRequest;
 use App\Http\Requests\UpdateBarangRequest;
+use App\Models\ActivityLog;
 use App\Models\Barang;
 use Illuminate\Support\Facades\Storage;
 
@@ -66,6 +67,12 @@ class BarangController extends Controller
         }
 
         Barang::create($data);
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'add',
+            'deskripsi' => 'menambahkan data barang pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menambahkan data."
@@ -137,6 +144,12 @@ class BarangController extends Controller
         }
 
         $barang->update($data);
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'update',
+            'deskripsi' => 'mengupdate data barang pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mengupdate data.",
@@ -155,6 +168,12 @@ class BarangController extends Controller
         }
 
         $barang->delete();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'delete',
+            'deskripsi' => 'menghapus data barang pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
 
         return response()->json([
             "status" => 200,

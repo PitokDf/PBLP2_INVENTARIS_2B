@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMahasiswasRequest;
 use App\Http\Requests\UpdateMahasiswasRequest;
+use App\Models\ActivityLog;
 use App\Models\Mahasiswas;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -47,6 +48,12 @@ class MahasiswasController extends Controller
             "program_studi" => $request->prodi,
             "angkatan" => $request->angkatan,
             "ipk" => $request->ipk
+        ]);
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'add',
+            'deskripsi' => 'menambahkan data mahasiswa pada ' . date('Y-F-d H:i'),
+            'time' => now()
         ]);
         return response()->json([
             "status" => 200,
@@ -110,6 +117,12 @@ class MahasiswasController extends Controller
             $mahasiswa->ipk = $request->ipk;
 
             $mahasiswa->save();
+            ActivityLog::create([
+                'id_user' => auth()->user()->id_user,
+                'activity' => 'update',
+                'deskripsi' => 'mengupdate data mahasiswa pada ' . date('Y-F-d H:i'),
+                'time' => now()
+            ]);
             return response()->json([
                 'status' => 200,
                 'message' => "Berhasil mengupdate data."
@@ -128,6 +141,12 @@ class MahasiswasController extends Controller
     public function destroy($id)
     {
         Mahasiswas::where("id_mahasiswa", $id)->delete();
+        ActivityLog::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => 'delete',
+            'deskripsi' => 'menghapus data mahasiswa pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menghapus data."

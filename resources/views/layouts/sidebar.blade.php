@@ -166,6 +166,29 @@
             </div>
         </li>
     @endif
+    @if (auth()->user()->role == 1)
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others"
+                aria-expanded="true" aria-controls="others">
+                <i class="fas fa-network-wired"></i>
+                <span>Others</span>
+            </a>
+            <div id="others" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item {{ Request::is('pengelolaan/data-barang') ? 'active' : '' }}"
+                        href="{{--  --}}">
+                        <i class="fas fa-archive"></i>
+                        <span>Jabatan</span>
+                    </a>
+                    <a class="collapse-item {{ Route::is('pengelolaan/data-barang') ? 'active' : '' }}"
+                        href="{{--  --}}">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Prodi</span>
+                    </a>
+                </div>
+            </div>
+        </li>
+    @endif
     <!-- Sidebar Message -->
     <div class="sidebar-card d-none d-lg-flex">
         {{-- <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="..."> --}}

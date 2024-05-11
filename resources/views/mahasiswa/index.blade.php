@@ -43,10 +43,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Mahasiswa</th>
-                                        <th>NIM</th>
                                         <th>Prodi</th>
-                                        <th>Angkatan</th>
-                                        <th>IPK</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -54,10 +51,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Mahasiswa</th>
-                                        <th>NIM</th>
                                         <th>Prodi</th>
-                                        <th>Angkatan</th>
-                                        <th>IPK</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>

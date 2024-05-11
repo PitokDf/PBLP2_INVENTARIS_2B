@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CommandHelper;
@@ -31,6 +32,8 @@ Route::middleware(['guest'])->group(function () {
     Route::get("register", [SessionController::class, "register"])->name('register');
     Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
 });
+
+Route::get('activity', [ActivityLogController::class, 'index'])->name('activity');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();

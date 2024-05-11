@@ -32,10 +32,11 @@
 <script src="{{ asset('js/reloadTable.js') }}"></script>
 <script src="{{ asset('js/setupAjax.js') }}"></script>
 <script src="{{ asset('js/preview.js') }}"></script>
-
+@if (auth()->user()->role == '1')
+    <script src="{{ asset('js/activity/log.js') }}"></script>
+@endif
 
 {{-- script per pages --}}
 @yield('scriptPages')
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -113,7 +113,7 @@
                     </a>
 
                     <a class="collapse-item {{ Request::is('pengelolaan/pinjaman') ? 'active' : '' }}"
-                        href="{{ url('peminjaman') }}">
+                        href="{{ route('peminjaman.index') }}">
                         Pinjaman
                     </a>
                 </div>
@@ -167,7 +167,7 @@
         </li>
     @endif
     @if (auth()->user()->role == 1)
-        <li class="nav-item">
+        <li class="nav-item {{ Request::is('prodi') || Request::is('jabatan') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others"
                 aria-expanded="true" aria-controls="others">
                 <i class="fas fa-network-wired"></i>
@@ -175,13 +175,13 @@
             </a>
             <div id="others" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('pengelolaan/data-barang') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('jabatan') ? 'active' : '' }}"
+                        href="{{ route('jabatan.index') }}">
                         <i class="fas fa-archive"></i>
                         <span>Jabatan</span>
                     </a>
-                    <a class="collapse-item {{ Route::is('pengelolaan/data-barang') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Route::is('prodi') ? 'active' : '' }}"
+                        href="{{ route('prodi.index') }}">
                         <i class="fas fa-user-graduate"></i>
                         <span>Prodi</span>
                     </a>
@@ -190,7 +190,7 @@
         </li>
     @endif
     <!-- Sidebar Message -->
-    <div class="sidebar-card d-none d-lg-flex">
+    <div class="sidebar-card mt-3 d-none d-lg-flex">
         {{-- <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="..."> --}}
         <p class="text-center mb-2"><strong>Copyright &copy; PBL P2 TRPL2B {{ date('Y') }}</strong></p>
         <a class="btn btn-success btn-sm" target="blank" href="https://www.instagram.com/pitok_df">Chat Owner</a>

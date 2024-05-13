@@ -32,8 +32,12 @@
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label for="jabatan" class="form-label">Jabatan</label>
-                                <input type="text" class="form-control" name="jabatan" id="jabatan"
-                                    placeholder="exp: Kajur" />
+                                <select class="form-control" name="jabatan" id="jabatan">
+                                    <option value="">--Pilih Jabatan--</option>
+                                    @foreach ($jabatans as $item)
+                                        <option value="{{ $item->jabatan }}">{{ $item->jabatan }}</option>
+                                    @endforeach
+                                </select>
                                 <span id="jabatan_error" class="text-danger"></span>
                             </div>
                         </div>

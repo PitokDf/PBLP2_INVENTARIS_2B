@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class JabatanController extends Controller
 {
@@ -12,7 +13,17 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        //
+        return view("jabatan.index");
+    }
+
+    public function getAllData()
+    {
+        $data = Jabatan::latest()->get();
+        return response()->json([
+            "status" => 200,
+            "message" => 'data berhasil diambil',
+            "data" => $data
+        ]);
     }
 
     /**
@@ -28,7 +39,22 @@ class JabatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "jabatan" => "required"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        Jabatan::create([
+            "jabatan" => $request->jabatan
+        ]);
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Jabatan Berhasil Ditambahkan."
+        ]);
     }
 
     /**
@@ -42,24 +68,48 @@ class JabatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Jabatan $jabatan)
+    public function edit(string $id)
     {
-        //
+        $jabatan = Jabatan::findOrFail($id);
+        return response()->json([
+            "status" => 200,
+            "message" => "data berhasil diambil",
+            "data" => $jabatan
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Jabatan $jabatan)
+    public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "jabatan" => "required"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        Jabatan::where('id', $id)->update([
+            "jabatan" => $request->jabatan
+        ]);
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Jabatan Berhasil Diupdate."
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jabatan $jabatan)
+    public function destroy(string $id)
     {
-        //
+        Jabatan::destroy($id);
+        return response()->json([
+            "status" => 200,
+            "message" => "Jabatan Berhasil Dihapus."
+        ]);
     }
 }

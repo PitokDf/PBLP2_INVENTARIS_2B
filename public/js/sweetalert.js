@@ -97,7 +97,7 @@ $(document).ready(function () {
                     reloadTable(tableUsers);
                     $('#modalUser').modal('hide');
                     Swal.fire({
-                        title: "Insert!",
+                        title: "Created!",
                         text: response.message,
                         icon: "success",
                         confirmButtonText: "Yes"

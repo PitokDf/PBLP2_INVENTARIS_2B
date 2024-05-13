@@ -55,7 +55,7 @@ $(document).ready(function () {
     function clerInput(modal) {
         $('.role').css('display', 'block')
         $("#" + modal + " input").val('');
-        $("#" + modal + " select").val('1');
+        $("#" + modal + " select").val('');
     }
 
     function showModal(modal, title, form, icon) {
@@ -72,6 +72,7 @@ $(document).ready(function () {
         $('#img-preview').attr('src', 'images/download.png');
         console.log($('#img-preview'))
         if ($('.action').attr('id') != 'btnCreateform') {
+            clearErrorMsg();
             clerInput(modal);
         }
         showModal(modal, title = "Add Data Dosen", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");

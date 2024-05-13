@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDosenRequest;
 use App\Http\Requests\UpdateDosenRequest;
 use App\Models\ActivityLog;
 use App\Models\Dosen;
+use App\Models\Jabatan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -17,7 +18,8 @@ class DosenController extends Controller
      */
     public function index()
     {
-        return view("dosen.index");
+        $jabatan = Jabatan::all();
+        return view("dosen.index")->with('jabatans', $jabatan);
     }
 
     /**

@@ -6,10 +6,12 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CommandHelper;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\MahasiswasController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
 use App\Models\Barang;
@@ -74,9 +76,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource("barang", BarangController::class);
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
         Route::resource("mahasiswa", MahasiswasController::class);
+        Route::post("importMahasiswa", [MahasiswasController::class, 'import']);
+        Route::get("exportMahasiswa", [MahasiswasController::class, 'export'])->name('mahasiswa.export');
         Route::get("getAllDataMahasiswa", [MahasiswasController::class, "getData"]);
         Route::resource("berita", BeritaController::class);
         Route::get("getBerita", [BeritaController::class, "getData"]);
+        Route::resource('prodi', ProdiController::class);
+        Route::get('getAllDataProdi', [ProdiController::class, 'getData']);
+        Route::resource('jabatan', JabatanController::class);
+        Route::get('getAllJabatan', [JabatanController::class, 'getAllData']);
 
         // // Telescope API routes
         // Route::get('telescope/telescope-api/batches', 'QueueBatchesController@index');

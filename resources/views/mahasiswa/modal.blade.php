@@ -30,8 +30,10 @@
                             <div class="mb-3">
                                 <label for="prodi" class="form-label">Prodi</label>
                                 <select name="prodi" class="form-control" id="prodi">
-                                    <option value="TRPL">Teknologi Rekaya Perangkat Lunak</option>
-                                    <option value="MI">Manajemen Informasi</option>
+                                    <option value="">--Pilih Prodi--</option>
+                                    @foreach ($prodi as $item)
+                                        <option value="{{ $item->code_prodi }}">{{ $item->nama_prodi }}</option>
+                                    @endforeach
                                 </select>
                                 <span id="prodi_error" class="text-danger"></span>
                             </div>
@@ -61,6 +63,39 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+{{-- Modal Import --}}
+<div class="modal fade" id="modalImport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Pilih file</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="input-grub">
+                        <label class="title" for="file">Upload file csv</label>
+                        <input type="file" name="file" class="form-control" id="file"
+                            accept="excel/csv,xlsx" />
+                    </div>
+                    <div class="error-area">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"><i
+                        class="fas fa-window-close"></i>
+                    Cancel</button>
+                <button type="button" class="btn btn-sm btn-primary action">
+                </button>
+            </div>
         </div>
     </div>
 </div>

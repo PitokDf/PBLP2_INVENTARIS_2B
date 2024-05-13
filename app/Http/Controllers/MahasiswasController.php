@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MahasiswaExport;
 use App\Http\Requests\StoreMahasiswasRequest;
 use App\Http\Requests\UpdateMahasiswasRequest;
+use App\Imports\MahasiswaImport;
 use App\Models\ActivityLog;
 use App\Models\Mahasiswas;
+use App\Models\Prodi;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MahasiswasController extends Controller
 {
@@ -16,7 +21,8 @@ class MahasiswasController extends Controller
      */
     public function index()
     {
-        return view("mahasiswa.index");
+        $prodi = Prodi::all();
+        return view("mahasiswa.index")->with("prodi", $prodi);
     }
 
     public function getData()
@@ -32,9 +38,9 @@ class MahasiswasController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function export()
     {
-        //
+        return Excel::download(new MahasiswaExport(), 'Mahasiswas.csv');
     }
 
     /**
@@ -64,9 +70,14 @@ class MahasiswasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Mahasiswas $mahasiswas)
+    public function import(Request $request)
     {
-        //
+        Excel::import(new MahasiswaImport, request()->file('file'));
+
+        return response()->json([
+            "status" => 200,
+            "message" => "file berhasil diimport"
+        ]);
     }
 
     /**

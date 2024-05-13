@@ -168,8 +168,8 @@ $(document).ready(function () {
 
     // menangani proses edit
     $(document).on('click', '#btnEditForm', function () {
-        var data = new FormData();
-        data.append('_method', 'PUT');
+        var data = new FormData(); // membuat object dari formData
+        data.append('_method', 'PUT'); // menambahakan key method ke data
         data.append('nama_mahasiswa', $('#nama_mahasiswa').val());
         data.append('nim', $('#nim').val());
         data.append('prodi', $('#prodi').val());
@@ -202,7 +202,7 @@ $(document).ready(function () {
             error: function (xhr) {
                 console.log(xhr)
                 var errorMessage = xhr.responseJSON.errors;
-                clearErrorMsg(); z
+                clearErrorMsg();
                 $('#nama_error').text(errorMessage.nama_mahasiswa);
                 $('#nim_error').text(errorMessage.nim);
                 $('#prodi_error').text(errorMessage.prodi);
@@ -223,15 +223,52 @@ $(document).ready(function () {
                 if (response.status == 200) {
                     var data = response.data[0];
                     console.log(data);
-                    $('.nim').text(data.nama);
-                    $('.prodi').text(data.nim);
+                    $('.nim').text(data.nim);
+                    $('.prodi').text(data.program_studi);
                     $('.angkatan').text(data.angkatan);
-                    $('.nama').text(data.program_studi);
+                    $('.nama').text(data.nama);
                     $('.ipk').text(data.ipk);
                 }
             },
             error: function (xhr) {
                 console.log(xhr)
+            }
+        });
+    });
+
+    $(document).on('click', '.showImport', function () {
+        $('#modalImport').modal('show');
+        $('.action').html("<i class='fas fa-solid fa-file-import'></i> Import");
+        $('.action').attr('id', "btnImport");
+    });
+
+    $(document).on('click', '#btnImport', function () {
+        var data = new FormData();
+        data.append('file', $('#file').prop('files')[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/importMahasiswa",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                $("#modalImport").modal('hide');
+                reloadTable(table_mahasiswa);
+                $('#file').removeClass('is-invalid');
+                $('.error-area').html('');
+                $('#file').val('');
+                Swal.fire({
+                    title: "Imported!",
+                    text: response.message,
+                    icon: "success"
+                });
+            },
+            error: function (errors) {
+                $('#file').addClass('is-invalid');
+                $('.error-area').html(`<span class="text-danger">Pilih hanya file .csv atau .xlsx</span>`)
+                console.log(errors);
             }
         });
     });

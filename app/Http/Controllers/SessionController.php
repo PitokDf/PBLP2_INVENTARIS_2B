@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Password;
+use Mews\Captcha\Facades\Captcha;
 
 class SessionController extends Controller
 {
@@ -36,7 +37,7 @@ class SessionController extends Controller
                     'deskripsi' => 'login pada ' . date('Y-F-d H:i'),
                     'time' => now()
                 ]);
-                return redirect('umum');
+                return redirect('peminjamanUmum');
             } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
                 ActivityLog::create([
                     'id_user' => auth()->user()->id_user,
@@ -110,9 +111,11 @@ class SessionController extends Controller
     {
 
         $validator = Validator::make($rq->all(), [
-            'email' => "unique:users,email"
+            'email' => "unique:users,email",
+            'capcha' => 'required|captcha'
         ], [
             "email.unique" => "Email sudah tersedia.",
+            'capcha.captcha' => 'captcha tidak sesuai.'
         ]);
 
         if ($validator->fails()) {
@@ -136,5 +139,10 @@ class SessionController extends Controller
             "status" => 200,
             "message" => "Email verifikasi telah dikirimkan ke email Anda. Silahkan login ke akun Anda."
         ]);
+    }
+
+    public function reloadCapcha()
+    {
+        return response()->json(Captcha::img('math'));
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\MahasiswasController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PeminjamanUmumController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
@@ -33,6 +34,7 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/reset-password', [SessionController::class, 'resetPass'])->middleware('guest')->name('password.update');
     Route::get("register", [SessionController::class, "register"])->name('register');
     Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
+    Route::get('reload-capcha', [SessionController::class, 'reloadCapcha']);
 });
 
 Route::get('activity', [ActivityLogController::class, 'index'])->name('activity');
@@ -85,8 +87,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('getAllDataProdi', [ProdiController::class, 'getData']);
         Route::resource('jabatan', JabatanController::class);
         Route::get('getAllJabatan', [JabatanController::class, 'getAllData']);
+        Route::get('getDataPeminjaman', [PeminjamanController::class, 'getData']);
+        Route::resource('peminjaman', PeminjamanController::class);
 
-        // // Telescope API routes
+        // Telescope API routes
         // Route::get('telescope/telescope-api/batches', 'QueueBatchesController@index');
         // Route::get('telescope/telescope-api/batches/{telescopeEntryId}', 'QueueBatchesController@show');
         // Route::post('telescope/telescope-api/cache', 'CacheController@index');
@@ -136,13 +140,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     });
 
-    Route::group(["middleware" => "userAkses:1|2|3|4|5"], function () {
-        Route::get('umum', function () {
-            return "Halaman untuk user umum belum dibuat.<br><a href='logout'>logout</a>";
-        });
-
-        Route::get('getDataPeminjaman', [PeminjamanController::class, 'getData']);
-        Route::resource('peminjaman', PeminjamanController::class);
+    Route::group(["middleware" => "userAkses:3|4|5"], function () {
+        Route::resource('peminjamanUmum', PeminjamanUmumController::class);
     });
 
 });

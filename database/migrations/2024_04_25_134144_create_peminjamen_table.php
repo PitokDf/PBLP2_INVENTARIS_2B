@@ -16,11 +16,11 @@ return new class extends Migration {
             $table->foreign('id_barang')->references('id_barang')->on('barang');
             $table->uuid('id_user');
             $table->foreign('id_user')->references('id_user')->on('users');
-            $table->date('tgl_peminjaman');
-            $table->date('batas_pengembalian');
-            $table->date('tgl_pengembalian');
-            $table->string('status');
-            $table->decimal('denda');
+            $table->date('tgl_peminjaman')->nullable();
+            $table->date('batas_pengembalian')->nullable();
+            $table->date('tgl_pengembalian')->nullable();
+            $table->string('status')->nullable();
+            $table->decimal('denda')->nullable();
             $table->timestamps();
         });
     }

@@ -69,6 +69,14 @@
                                             placeholder="Repeat Password" name="pass2">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <span id="capcha_code"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"
+                                        placeholder="masukkan capcha" id="capcha" name="capcha">
+                                    <span id="capchaError"></span>
+                                </div>
                                 <button type="button" class="btn btn-primary btn-user btn-register btn-block">
                                     Register Account
                                 </button>

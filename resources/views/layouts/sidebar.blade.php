@@ -25,6 +25,26 @@
     <div class="sidebar-heading">
         Interface
     </div>
+    @if (in_array(auth()->user()->role, ['3', '4', '5']))
+        <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
+            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Peminjaman</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
+            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Pengembalian</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('riwayat') ? 'active' : '' }}">
+            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Riwayat Peminjaman</span>
+            </a>
+        </li>
+    @endif
     @if (auth()->user()->role == 1)
         <li class="nav-item {{ Request::is('barang') || Request::is('kategori-barang') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang"

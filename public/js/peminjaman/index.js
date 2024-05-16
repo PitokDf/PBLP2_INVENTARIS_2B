@@ -1,25 +1,5 @@
 $(document).ready(function () {
     var kategoriList = "";
-    // mendapatkan kategori barang dari server
-    $.ajax({
-        url: "getKategori", // URL endpoint untuk mengambil data kategori
-        type: "GET",
-        success: function (response) {
-            // Handle successful response
-            kategoriList = response.data;
-
-            // Populate the dropdown list with kategori options
-            $.each(kategoriList, function (index, kategori) {
-                $("#kategori").append(
-                    "<option value='" + kategori.id + "'>" + kategori.nama_kategori_barang + "</option>"
-                );
-            });
-        },
-        error: function (error) {
-            // Handle error response
-            console.error("Error retrieving kategori:", error);
-        }
-    });
 
     $('#table_peminjaman').DataTable({
         "processing": true,
@@ -30,7 +10,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "getDataPeminjaman", // Ganti dengan URL endpoint Anda
+            "url": "/getDataPeminjaman", // Ganti dengan URL endpoint Anda
             "type": "GET"
         },
         "columns": [
@@ -41,19 +21,19 @@ $(document).ready(function () {
                 },
                 "orderable": false
             },
-            { "data": "id_barang", "orderable": true },
-            { "data": "id_user", "orderable": true },
-            // {
-            //     "data": null, "render":
-            //         function (_data, _type, row) {
-            //             const kategori = kategoriList.find(item => item.id === row.id_kategory);
-            //             return kategori ? kategori.nama_kategori_barang : "";
-            //         }
-            //     , "orderable": true
-            // },
-            { "data": "tgl_peminjaman", "orderable": false },
-            { "data": "batas_pengembalian", "orderable": false },
-            { "data": "tgl_pengembalian", "orderable": false },
+            {
+                "data": null,
+                "render": function (_data, _row, item) {
+                    return item.barang.nama_barang
+                }, "orderable": true
+            },
+            {
+                "data": null,
+                "render": function (_data, _row, item) {
+                    return item.user.name
+                },
+                "orderable": true
+            },
             {
                 "data": null,
                 'render': function () {
@@ -61,7 +41,6 @@ $(document).ready(function () {
                 },
                 "orderable": false
             },
-            { "data": "denda", "orderable": false },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
@@ -74,32 +53,29 @@ $(document).ready(function () {
 
 
     var url = "";
-    var modal = $('#modal-kategori');
+    var modal = $('#modal_peminjaman');
     var modal_title = $('.modal-title');
     var btnAction = $('.action');
 
     // fungsi untuk membersihkan pesan error
     function clearErrorMsg() {
-        $('#kode_error').text('');
-        $('#nama_error').text('');
-        $('#kategori_error').text('');
-        $('#jumlah_error').text('');
-        $('#posisi_error').text('');
-        $('#foto_error').text('');
-        $('#kode_barang').removeClass('is-invalid');
-        $('#nama_barang').removeClass('is-invalid');
-        $('#kategori').removeClass('is-invalid');
-        $('#jumlah').removeClass('is-invalid');
-        $('#posisi').removeClass('is-invalid');
-        $('#foto').removeClass('is-invalid');
+        $('#namaB_error').text('');
+        $('#namaU_error').text('');
+        $('#tglP_error').text('');
+        $('#batasP_error').text('');
+        $('#namaBarang').removeClass('is-invalid');
+        $('#namaUser').removeClass('is-invalid');
+        $('#tglPeminjaman').removeClass('is-invalid');
+        $('#batasPengembalian').removeClass('is-invalid');
     }
     function claerInput() {
-        $('#kode_barang').val('');
-        $('#nama_barang').val('');
-        $('#kategori').val(1).trigger('change');
-        $('#jumlah').val('');
-        $('#posisi').val('');
-        $('#foto').val('');
+        var tanggalSaatIni = new Date();
+        tanggalSaatIni.setDate(tanggalSaatIni.getDate() + 7);
+        var batas = tanggalSaatIni.toISOString().slice(0, 10);
+        var date = new Date().toISOString().slice(0, 10);
+        $('#modal_peminjaman select').val('');
+        $('#batasPeminjaman').val(batas)
+        $('#tglPeminjaman').val(date)
     }
 
     $(document).on('click', '#statusUpdate', function () {
@@ -155,7 +131,7 @@ $(document).ready(function () {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                var url = 'barang/' + $(this).data('id');
+                var url = '/peminjaman/' + $(this).data('id');
                 var data = { "_method": "DELETE" };
                 $.ajax({
                     type: "POST",
@@ -163,7 +139,7 @@ $(document).ready(function () {
                     data: data,
                     dataType: "json",
                     success: function (response) {
-                        reloadTable(table_barang);
+                        reloadTable(table_peminjaman);
                         Swal.fire({
                             title: "Deleted!",
                             text: response.message,
@@ -181,74 +157,74 @@ $(document).ready(function () {
     // menampilkan modal form saat btn create di click
     $('#btnCreate').click(function () {
         modal.modal('show');
-        modal_title.text('Add Barang');
+        modal_title.text('Add Peminjaman');
         btnAction.html("<i class='fas fa-save'></i> Simpan");
         $('#name_error').text('');
         if (btnAction.attr('id') != "btnCreateform") {
             clearErrorMsg();
-            $('#modal-kategori input').val('');
+            $('#modal_peminjaman input').val('');
         }
         btnAction.attr('id', 'btnCreateform');
     });
 
     // menangani proses create data
     $(document).on('click', '#btnCreateform', function () {
-        var formData = new FormData();
-        if ($('#foto')[0].files.length > 0) {
-            formData.append('foto', $('#foto')[0].files[0]);
-        }
-        formData.append('jumlah', $('#jumlah').val());
-        formData.append('kategori', $('#kategori').val());
-        formData.append('kode_barang', $('#kode_barang').val());
-        formData.append('nama_barang', $('#nama_barang').val());
-        formData.append('posisi', $('#posisi').val());
+        var data = new FormData();
+        data.append('namaBarang', $('#namaBarang').val());
+        data.append('namaUser', $('#namaUser').val());
+        data.append('tglPeminjaman', $('#tglPeminjaman').val());
+        data.append('batasPengembalian', $('#batasPengembalian').val());
+
         $.ajax({
-            type: "POST",
-            url: "barang",
-            data: formData,
+            type: "post",
+            url: "/peminjaman",
+            data: data,
             processData: false,
             contentType: false,
             dataType: "json",
             success: function (response) {
-                if (response.status == 200) {
-                    reloadTable(table_barang);
-                    modal.modal('hide');
+                if (response.status === 200) {
                     claerInput();
                     clearErrorMsg();
+                    modal.modal('hide')
+                    reloadTable(table_peminjaman)
                     Swal.fire({
-                        title: "Insert!",
+                        title: "Created!",
                         text: response.message,
                         icon: "success",
                         confirmButtonText: "Yes"
                     });
                 }
+
+                if (response.status === 202) {
+                    Swal.fire({
+                        title: "Ops..!",
+                        text: response.message,
+                        icon: "error",
+                        confirmButtonText: "Yes"
+                    });
+                }
             },
-            error: function (xhr, status, error) {
+            error: function (errors) {
                 clearErrorMsg();
-                var data = xhr.responseJSON.errors;
-                if (data.kode_barang) {
-                    $('#kode_error').text(data.kode_barang);
-                    $('#kode_barang').addClass('is-invalid');
+                const data = errors.responseJSON;
+                if (data.namaBarang) {
+                    $('#namaB_error').text(data.namaBarang);
+                    $('#namaBarang').addClass('is-invalid');
                 }
-                if (data.nama_barang) {
-                    $('#nama_error').text(data.nama_barang);
-                    $('#nama_barang').addClass('is-invalid');
+                if (data.namaUser) {
+                    $('#namaU_error').text(data.namaUser);
+                    $('#namaUser').addClass('is-invalid');
                 }
-                if (data.kategori) {
-                    $('#kategori_error').text(data.kategori);
-                    $('#kategori').addClass('is-invalid');
+                if (data.tglPeminjaman) {
+                    $('#tglP_error').text(data.tglPeminjaman);
+                    $('#tglPeminjaman').addClass('is-invalid');
                 }
-                if (data.jumlah) {
-                    $('#jumlah_error').text(data.jumlah);
-                    $('#jumlah').addClass('is-invalid');
-                } if (data.posisi) {
-                    $('#posisi_error').text(data.posisi);
-                    $('#posisi').addClass('is-invalid');
+                if (data.batasPengembalian) {
+                    $('#batasP_error').text(data.batasPengembalian);
+                    $('#batasPengembalian').addClass('is-invalid');
                 }
-                if (data.foto) {
-                    $('#foto_error').text(data.foto);
-                    $('#foto').addClass('is-invalid');
-                }
+                console.log(errors)
             }
         });
     });

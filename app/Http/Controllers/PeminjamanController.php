@@ -54,7 +54,20 @@ class PeminjamanController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
+        $existingPeminjaman = Peminjaman::where('id_barang', $request->namaBarang)
+            ->where('id_user', $request->namaUser)
+            ->whereNull('tgl_pengembalian')
+            ->exists();
+
+        if ($existingPeminjaman == true) {
+            return response()->json([
+                'status' => 202,
+                'message' => 'Tidak bisa melakukan peminjaman untuk barang yang belum dikembalikan.'
+            ]);
+        }
         $quantity = Barang::find($request->namaBarang);
+
         if ($quantity->quantity > 0) {
             Peminjaman::create([
                 'id_barang' => $request->namaBarang,
@@ -71,7 +84,7 @@ class PeminjamanController extends Controller
         } else {
             return response()->json([
                 'status' => 202,
-                'message' => 'Barang yang ingin anda pinjam barus aja tidak tersedia.'
+                'message' => 'Barang yang ingin anda pinjam baru saja tidak tersedia.'
             ]);
         }
     }
@@ -95,9 +108,17 @@ class PeminjamanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Peminjaman $peminjaman)
+    public function update(Request $request, $id)
     {
-        //
+        Peminjaman::findOrFail($id)->update([
+            'tgl_pengembalian' => now(),
+            'status' => true
+        ]);
+        Barang::findOrFail($request->barang)->increment('quantity', 1);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil mengembalikan buku'
+        ]);
     }
 
     /**
@@ -105,6 +126,13 @@ class PeminjamanController extends Controller
      */
     public function destroy(string $id)
     {
+        $peminjaman = Peminjaman::find($id);
+        if ($peminjaman->tgl_pengembalian === null) {
+            return response()->json([
+                'status' => 202,
+                'message' => 'Gagal menghapus peminjaman, barang harus dikembalikan.'
+            ]);
+        }
         Peminjaman::findOrFail($id)->delete();
         return response()->json([
             'status' => 200,

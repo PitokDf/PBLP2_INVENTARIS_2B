@@ -36,15 +36,23 @@ $(document).ready(function () {
             },
             {
                 "data": null,
-                'render': function () {
-                    return `<button id="statusUpdate" class="btn btn-sm btn-success update">Kembalikan</button>`;
+                'render': function (_data, _type, row) {
+                    if (row.status === 0) {
+                        return `<button id="${row.id_barang}" data-id="${row.id}" class="btn btn-sm btn-danger kembalikan">Kembalikan</button>`;
+                    } else {
+                        return `<button id="sudahKembali" class="btn btn-sm btn-success">sudah dikembalikan</button>`;
+                    }
                 },
                 "orderable": false
             },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    if (row.status === 1) {
+                        return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    } else {
+                        return "<button class='btn btn-sm btn-warning btnEdit' id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    }
                 }
                 , "orderable": false
             }
@@ -78,17 +86,37 @@ $(document).ready(function () {
         $('#tglPeminjaman').val(date)
     }
 
-    $(document).on('click', '#statusUpdate', function () {
+    $(document).on('click', '.kembalikan', function () {
         var data = new FormData();
-        data.append('status', 'Sudah Dikembalikan')
+        data.append('_method', 'PUT');
+        data.append('barang', $(this).attr('id'));
         $.ajax({
             type: "POST",
-            url: "url",
+            url: "/peminjaman/" + $(this).data('id'),
+            processData: false,
+            contentType: false,
             data: data,
             dataType: "json",
             success: function (response) {
-
+                response.status == 202 ?
+                    Swal.fire({
+                        title: "Opss...",
+                        text: response.message,
+                        icon: "error"
+                    }) : '';
+                response.status === 200 ? (
+                    reloadTable(table_peminjaman),
+                    Swal.fire({
+                        title: "Dikembalikan!",
+                        text: response.message,
+                        icon: "success"
+                    })
+                ) : '';
+            },
+            error: function (errors) {
+                console.log(errors)
             }
+
         });
     });
 
@@ -139,12 +167,21 @@ $(document).ready(function () {
                     data: data,
                     dataType: "json",
                     success: function (response) {
-                        reloadTable(table_peminjaman);
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: response.message,
-                            icon: "success"
-                        });
+                        response.status === 200 ? (
+                            reloadTable(table_peminjaman),
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: response.message,
+                                icon: "success"
+                            })
+                        ) : '';
+                        response.status === 202 ? (
+                            Swal.fire({
+                                title: "ops..",
+                                text: response.message,
+                                icon: "error"
+                            })
+                        ) : '';
                     },
                     error: function (xhr, stattus, error) {
                         console.error(xhr + "\n" + stattus + "\n" + error)

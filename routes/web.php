@@ -43,7 +43,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     $request->fulfill();
 
     if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
-        return redirect('umum');
+        return redirect('peminjamanUmum');
     } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
         return redirect('/');
     }

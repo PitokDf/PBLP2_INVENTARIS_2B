@@ -90,7 +90,7 @@
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
                 <img class="img-profile rounded-circle"
-                    src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/img/undraw_profile.svg') }}">
+                    src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&background=4e73df&color=ffffff&size=100">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

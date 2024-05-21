@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CommandHelper;
 use App\Http\Controllers\DashboardController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
 use App\Models\Barang;
 use App\Models\Peminjaman;
+use App\Models\User;
 use App\Models\Users;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -89,6 +91,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('getAllJabatan', [JabatanController::class, 'getAllData']);
         Route::get('getDataPeminjaman', [PeminjamanController::class, 'getData']);
         Route::resource('peminjaman', PeminjamanController::class);
+        Route::resource('barangM', BarangMasukController::class);
+        Route::get('getDataBarangMasuk', [BarangMasukController::class, 'getData']);
 
         // Telescope API routes
         // Route::get('telescope/telescope-api/batches', 'QueueBatchesController@index');
@@ -142,6 +146,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::group(["middleware" => "userAkses:3|4|5"], function () {
         Route::resource('peminjamanUmum', PeminjamanUmumController::class);
+        Route::get('/roleMahasiswa', function () {
+            User::where('id_user', auth()->user()->id_user)->update([
+                'role' => '4'
+            ]);
+            return redirect()->back();
+        })->name('mahasiswa');
+        Route::get('/roleDosen', function () {
+            User::where('id_user', auth()->user()->id_user)->update([
+                'role' => '3'
+            ]);
+            return redirect()->back();
+        })->name('dosen');
     });
 
 });

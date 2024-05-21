@@ -49,11 +49,6 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    @if (session('status'))
-                                        <div class="alert alert-success">
-                                            {{ $message }}
-                                        </div>
-                                    @endif
                                     <form class="user" action="{{ route('password.email') }}" method="POST">
                                         @csrf
                                         <div class="form-group">

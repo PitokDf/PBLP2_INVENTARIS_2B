@@ -90,3 +90,13 @@
 .bg-custom-light {
     background-color: rgb(236, 236, 236);
 }
+
+.modal {
+    backdrop-filter: blur(3px);
+}
+
+/* custom css for swearalert */
+
+div:where(.swal2-container) {
+    backdrop-filter: blur(3px);
+}

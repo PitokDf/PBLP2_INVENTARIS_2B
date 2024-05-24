@@ -13,7 +13,7 @@
     @if (in_array(auth()->user()->role, ['1', '2']))
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('dashboard') }}">
+            <a class="nav-link" href="{{ route('index') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -25,7 +25,29 @@
     <div class="sidebar-heading">
         Interface
     </div>
+
+    @role(['3', '4', '5'])
+        <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
+            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Peminjaman</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
+            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Pengembalian</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('riwayat') ? 'active' : '' }}">
+            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Riwayat Peminjaman</span>
+            </a>
+        </li>
+    @endrole
     @if (in_array(auth()->user()->role, ['3', '4', '5']))
+        {{-- <x-sidebar :active="" icon=""></x-sidebar> --}}
         <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
             <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
@@ -120,7 +142,7 @@
             <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item {{ Request::is('pengelolaan/barang-masuk') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                        href="{{ route('barangM.index') }}">
                         <span>Barang Masuk</span>
                     </a>
                     <a class="collapse-item {{ Request::is('pengelolaan/barang-keluar') ? 'active' : '' }}"

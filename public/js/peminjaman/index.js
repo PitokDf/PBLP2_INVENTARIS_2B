@@ -7,7 +7,7 @@ $(document).ready(function () {
         "searching": true,
         "responsive": true,
         "language": {
-            "search": "cari"
+            "search": " 🔍 "
         },
         "ajax": {
             "url": "/getDataPeminjaman", // Ganti dengan URL endpoint Anda
@@ -146,7 +146,13 @@ $(document).ready(function () {
                     $('#denda').text(data.denda == 0 ? formatRupiah(denda) : formatRupiah(data.denda));
                     $('#batasPeminjaman').text(dateCutomFormat(data.batas_pengembalian) ?? '~');
                     $('#dipinjam').text(dateCutomFormat(data.tgl_peminjaman) ?? '~');
-                    data.tgl_pengembalian !== null ? ($('#statusP').html(`Dikembalikan pada <strong>${dateCutomFormat(data.tgl_pengembalian)}</strong>`), $('#statusP').removeClass('text-danger')) : ($('#statusP').text('Belum dikembalikan'), $('#statusP').addClass('text-danger'));
+                    data.tgl_pengembalian !== null ? (
+                        $('#statusP').html(`<strong>Telah dikembalikan (${dateCutomFormat(data.tgl_pengembalian)})</strong>`), 
+                        $('#statusP').removeClass('text-danger').addClass('text-success')
+                    ) : (
+                        $('#statusP').html('<strong>Belum dikembalikan</strong>'), 
+                        $('#statusP').addClass('text-danger').removeClass('text-success')
+                    );
                 }
             },
             error: function (xhr, status, error) {
@@ -213,14 +219,38 @@ $(document).ready(function () {
                     if (response.status === 200) {
                         $('#nama_barang').val(response.data.nama_barang);
                         $('#kategori_barang').val(response.data.kategori.nama_kategori_barang);
+
+                    //sweetalert
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Data ditemukan!',
+                        timer:1500,
+                        showConfirmButton: false,
+                        
+
+                    });
                     }
                     if (response.status === 404) {
-                        alert(response.message)
+
+                        //sweetalert
+                        Swal.fire({
+                            icon:'error',
+                            title:'Ops !!',
+                            text:response.message,
+                            confirmButtonText:'Periksa',
+                            confirmButtonColor:'#007bff',
+
+                        });
                     }
                 }
-            });
+            }); 
         }
     });
+
+
+
+
+
     // menampilkan modal form saat btn create di click
     $('#btnCreate').click(function () {
         modal.modal('show');

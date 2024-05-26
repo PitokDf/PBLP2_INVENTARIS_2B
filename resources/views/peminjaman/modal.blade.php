@@ -87,7 +87,7 @@
                     <div class="col-lg-4">
                         <label for="code_barang">Kode Barang</label>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="masukkan kode barang"
+                            <input type="text" class="form-control" placeholder="Masukkan kode barang!"
                                 aria-label="code barang" id="code_barang">
                             <button class=" btn btn-success" id="cari_barang"><i class="fas fa-search"></i></button>
                         </div>

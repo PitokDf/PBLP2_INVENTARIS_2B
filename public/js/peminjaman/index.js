@@ -236,7 +236,6 @@ $(document).ready(function () {
 
     // menangani proses create data
     $(document).on('click', '#btnCreateform', function () {
-        alert($('#code_barang').val())
         var data = new FormData();
         data.append('namaBarang', $('#code_barang').val());
         data.append('namaUser', $('#namaUser').val());

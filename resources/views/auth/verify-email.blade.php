@@ -37,7 +37,7 @@
 
         .btn-primary {
             position: relative;
-            background: #b100b8;
+            background: #009f32;
             color: white;
             cursor: pointer;
         }
@@ -61,7 +61,7 @@
 
         .btn-primary:hover::before {
             transform: translate(4px, 4px);
-            outline: 2px solid #b100b8;
+            outline: 2px solid #009f32;
         }
 
         .card {
@@ -69,7 +69,7 @@
             text-align: center;
             position: relative;
             top: 200px;
-            padding: 12px;
+            padding: 16px;
             width: 380px;
             background-color: rgba(255, 255, 255, 0.514);
             border-radius: 12px;
@@ -83,6 +83,10 @@
         .h2 {
             font-size: 18px;
         }
+
+        .text-gray {
+            color: rgb(84, 84, 84);
+        }
     </style>
 </head>
 
@@ -95,7 +99,8 @@
                 </div>
             @endif
             <h3 class="h1">Silahkan verifikasi email anda!</h3>
-            <p>Tidak menerima tautan verifikasi?<br>Kirim ulang tautan verifikasi dengan mengklik tombol dibawah.</p>
+            <p class="text-gray">Tidak menerima tautan verifikasi?<br>Kirim ulang tautan verifikasi dengan mengklik
+                tombol dibawah.</p>
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
                 <div class="form-group">

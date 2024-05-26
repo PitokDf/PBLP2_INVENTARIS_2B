@@ -9,15 +9,14 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-
-    @if (in_array(auth()->user()->role, ['1', '2']))
-        <!-- Nav Item - Dashboard -->
+    @role(['1', '2'])
         <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('index') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
-    @endif
+    @endrole
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -46,31 +45,11 @@
             </a>
         </li>
     @endrole
-    @if (in_array(auth()->user()->role, ['3', '4', '5']))
-        {{-- <x-sidebar :active="" icon=""></x-sidebar> --}}
-        <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
-            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Peminjaman</span>
-            </a>
-        </li>
-        <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
-            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Pengembalian</span>
-            </a>
-        </li>
-        <li class="nav-item {{ Request::is('riwayat') ? 'active' : '' }}">
-            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Riwayat Peminjaman</span>
-            </a>
-        </li>
-    @endif
-    @if (auth()->user()->role == 1)
+
+    @role('1')
         <li class="nav-item {{ Request::is('barang') || Request::is('kategori-barang') ? 'active' : '' }}">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang"
-                aria-expanded="true" aria-controls="barang">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang" aria-expanded="true"
+                aria-controls="barang">
                 <i class="fas fa-archive"></i>
                 <span>Barang</span>
             </a>
@@ -87,7 +66,7 @@
                 </div>
             </div>
         </li>
-    @endif
+    @endrole
 
     @if (auth()->user()->role == 1)
         <li class="nav-item {{ Request::is('berita') || Request::is('kategori-berita') ? 'active' : '' }}">
@@ -133,7 +112,7 @@
     @endif
 
     @if (in_array(auth()->user()->role, ['1']))
-        <li class="nav-item {{ Request::is('') ? 'active' : '' }}">
+        <li class="nav-item {{ Request::is(['barangM', 'peminjaman']) ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
                 aria-expanded="true" aria-controls="pengelolaanData">
                 <i class="fas fa-fw fa-calendar-week"></i>
@@ -141,7 +120,7 @@
             </a>
             <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('pengelolaan/barang-masuk') ? 'active' : '' }}"
+                    <a class="collapse-item {{ Request::is('barangM') ? 'active' : '' }}"
                         href="{{ route('barangM.index') }}">
                         <span>Barang Masuk</span>
                     </a>
@@ -154,7 +133,7 @@
                         <span>Barang Pengembalian</span>
                     </a>
 
-                    <a class="collapse-item {{ Request::is('pengelolaan/pinjaman') ? 'active' : '' }}"
+                    <a class="collapse-item {{ Request::is('peminjaman') ? 'active' : '' }}"
                         href="{{ route('peminjaman.index') }}">
                         Pinjaman
                     </a>

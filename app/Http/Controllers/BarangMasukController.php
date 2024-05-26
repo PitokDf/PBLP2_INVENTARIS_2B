@@ -40,19 +40,47 @@ class BarangMasukController extends Controller
      */
     public function store(StoreBarangMasukRequest $request)
     {
+        $barangMasuk = BarangMasuk::create([
+            "barang_id" => $request->barang,
+            "pemasok" => $request->pemasok,
+            "quantity" => $request->quantity
+        ]);
+
+        if ($barangMasuk) {
+            Barang::where("id_barang", $request->barang)->increment("quantity", $request->quantity);
+            return response()->json([
+                "status" => 200,
+                "message" => "Berhasil menambahkan barang masuk."
+            ]);
+        }
         return response()->json([
-            "status" => 200
+            "status" => 202,
+            "message" => "Terjadi masalah saat menambahkan barang masuk."
         ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(BarangMasuk $barangMasuk)
+    public function show(string $id)
     {
-        //
-    }
+        $data = BarangMasuk::with([
+            'barang' => function ($query) {
+                $query->select('id_barang', 'code_barang', 'nama_barang');
+            }
+        ])->where('id', $id)->first();
 
+        if (!$data) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'data' => $data
+        ]);
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -70,16 +98,19 @@ class BarangMasukController extends Controller
     public function update(UpdateBarangMasukRequest $request, string $id)
     {
         $data = BarangMasuk::find($id);
-        $data->update([
-            "barang_id" => $request->barang,
-            "pemasok" => $request->pemasok,
-            "quantity" => $request->quantity
-        ]);
+        $barang = Barang::where('id_barang', $request->barang)->increment('quantity', $request->quantity);
+        if ($barang) {
+            $data->update([
+                "barang_id" => $request->barang,
+                "pemasok" => $request->pemasok,
+                "quantity" => $request->quantity
+            ]);
+            return response()->json([
+                "status" => 200,
+                'message' => "Berhasil Mengupdata Data."
+            ]);
+        }
 
-        return response()->json([
-            "status" => 200,
-            'message' => "Berhasil Mengupdata Data."
-        ]);
     }
 
     /**

@@ -81,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get("getKategori", [KategoriBarangController::class, "getKategori"]);
         Route::resource("barang", BarangController::class);
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
+        Route::get('get-barang/{code}', [BarangController::class, "getById"]);
         Route::resource("mahasiswa", MahasiswasController::class);
         Route::post("importMahasiswa", [MahasiswasController::class, 'import']);
         Route::get("exportMahasiswa", [MahasiswasController::class, 'export'])->name('mahasiswa.export');

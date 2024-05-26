@@ -31,6 +31,7 @@
         rel="stylesheet">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="iziToast.min.css">
     <link rel="stylesheet" href="{{ asset('css/customBoostrap.css') }}">
     <link rel="icon" href="{{ asset('asset/baru3.png') }}" type="image/*">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">

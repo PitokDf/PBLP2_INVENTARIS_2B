@@ -49,9 +49,9 @@ $(document).ready(function () {
                 "data": null,
                 "render": function (_data, _type, row) {
                     if (row.status === 1) {
-                        return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
+                        return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-info btnDetail' id='" + row.id + "'><i class='fas fa-regular fa-info-circle'></i></button>"
                     } else {
-                        return "<button class='btn btn-sm btn-warning btnEdit' id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
+                        return "<button class='btn btn-sm btn-info btnDetail' id='" + row.id + "'><i class='fas fa-regular fa-info-circle'></i></button>"
                     }
                 }
                 , "orderable": false
@@ -61,7 +61,8 @@ $(document).ready(function () {
 
 
     var url = "";
-    var modal = $('#modal_peminjaman');
+    // var modal = $('#modal_peminjaman');
+    var modal = $('#modalPeminjaman');
     var modal_title = $('.modal-title');
     var btnAction = $('.action');
 
@@ -121,26 +122,32 @@ $(document).ready(function () {
     });
 
     // saat tombol edit di click maka akan mengambil data sesaui id
-    $(document).on('click', '.btnEdit', function () {
-        clearErrorMsg();
-        modal.modal('show');
-        modal_title.text('Edit Barang');
-        btnAction.attr('id', 'btnEdit');
-        btnAction.html("<i class='fas fa-regular fa-pen'></i> Update");
-        url = "barang/" + $(this).attr('id') + "/edit";
+    $(document).on('click', '.btnDetail', function () {
+        $('#modalDetailPeminjaman').modal('show');
+        btnAction.attr('id', 'btnDetail');
+        url = "/peminjaman/" + $(this).attr('id');
 
         $.ajax({
             type: "GET",
-            url: url, // Menggunakan variabel 'url' yang sudah didefinisikan sebelumnya
+            url: url,
             dataType: "json",
             success: function (response) {
-                var data = response.data[0];
-                $('#id').val(data.id_barang);
-                $('#kode_barang').val(data.code_barang);
-                $('#nama_barang').val(data.nama_barang);
-                $('#kategori').val(data.id_kategory);
-                $('#jumlah').val(data.quantity);
-                $('#posisi').val(data.posisi);
+                console.log(response)
+                if (response.status === 200) {
+                    const data = response.data;
+
+                    $('#id_peminjaman').text(data.id);
+                    $('#namaBarang').text(data.barang.nama_barang);
+                    $('#peminjam').text(data.user.name);
+                    $('#kodeBarang').text(data.barang.code_barang);
+
+                    let denda = calculateDenda(data.batas_pengembalian, getCurrentDate(), 1500);
+
+                    $('#denda').text(data.denda == 0 ? formatRupiah(denda) : formatRupiah(data.denda));
+                    $('#batasPeminjaman').text(dateCutomFormat(data.batas_pengembalian) ?? '~');
+                    $('#dipinjam').text(dateCutomFormat(data.tgl_peminjaman) ?? '~');
+                    data.tgl_pengembalian !== null ? ($('#statusP').html(`Dikembalikan pada <strong>${dateCutomFormat(data.tgl_pengembalian)}</strong>`), $('#statusP').removeClass('text-danger')) : ($('#statusP').text('Belum dikembalikan'), $('#statusP').addClass('text-danger'));
+                }
             },
             error: function (xhr, status, error) {
                 console.error(xhr + "\n" + status + "\n" + error)
@@ -191,11 +198,34 @@ $(document).ready(function () {
         });
     });
 
+
+    $('#cari_barang').click(function () {
+        const code = document.getElementById('code_barang').value;
+        if (code.trim() !== '') {
+            $.ajax({
+                type: "get",
+                url: "/get-barang/" + code,
+                dataType: "json",
+                success: function (response) {
+                    $('#nama_barang').val('');
+                    $('#kategori_barang').val('');
+                    console.log(response)
+                    if (response.status === 200) {
+                        $('#nama_barang').val(response.data.nama_barang);
+                        $('#kategori_barang').val(response.data.kategori.nama_kategori_barang);
+                    }
+                    if (response.status === 404) {
+                        alert(response.message)
+                    }
+                }
+            });
+        }
+    });
     // menampilkan modal form saat btn create di click
     $('#btnCreate').click(function () {
         modal.modal('show');
-        modal_title.text('Add Peminjaman');
-        btnAction.html("<i class='fas fa-save'></i> Simpan");
+        modal_title.text('Form Peminjaman');
+        btnAction.html("<i class='fas fa-save'></i> Pinjam");
         $('#name_error').text('');
         if (btnAction.attr('id') != "btnCreateform") {
             clearErrorMsg();
@@ -206,11 +236,10 @@ $(document).ready(function () {
 
     // menangani proses create data
     $(document).on('click', '#btnCreateform', function () {
+        alert($('#code_barang').val())
         var data = new FormData();
-        data.append('namaBarang', $('#namaBarang').val());
+        data.append('namaBarang', $('#code_barang').val());
         data.append('namaUser', $('#namaUser').val());
-        data.append('tglPeminjaman', $('#tglPeminjaman').val());
-        data.append('batasPengembalian', $('#batasPengembalian').val());
 
         $.ajax({
             type: "post",

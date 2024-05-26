@@ -25,7 +25,7 @@ class PeminjamanController extends Controller
      */
     public function getData()
     {
-        $data = Peminjaman::with(['user', 'barang'])->get();
+        $data = Peminjaman::with(['user', 'barang'])->latest()->get();
 
         return response()->json([
             'status' => 200,
@@ -45,17 +45,17 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'namaBarang' => 'required|exists:barang,id_barang',
-            'namaUser' => 'required|exists:users,id_user',
-            'tglPeminjaman' => 'required|date|date_equals:' . date('Y-m-d'),
-            'batasPengembalian' => 'required|date|date_equals:' . date('Y-m-d', strtotime('+7 days'))
+            'namaBarang' => 'required',
+            'namaUser' => 'required|exists:users,id_user'
+            // 'tglPeminjaman' => 'required|date|date_equals:' . date('Y-m-d'),
+            // 'batasPengembalian' => 'required|date|date_equals:' . date('Y-m-d', strtotime('+7 days'))
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
-        $existingPeminjaman = Peminjaman::where('id_barang', $request->namaBarang)
+        $barang = Barang::where('code_barang', $request->namaBarang)->first();
+        $existingPeminjaman = Peminjaman::where('id_barang', $barang->id_barang)
             ->where('id_user', $request->namaUser)
             ->whereNull('tgl_pengembalian')
             ->exists();
@@ -66,17 +66,16 @@ class PeminjamanController extends Controller
                 'message' => 'Tidak bisa melakukan peminjaman untuk barang yang belum dikembalikan.'
             ]);
         }
-        $quantity = Barang::find($request->namaBarang);
 
-        if ($quantity->quantity > 0) {
+        if ($barang->quantity > 0) {
             Peminjaman::create([
-                'id_barang' => $request->namaBarang,
+                'id_barang' => $barang->id_barang,
                 'id_user' => $request->namaUser,
-                'tgl_peminjaman' => $request->tglPeminjaman,
-                'batas_pengembalian' => $request->batasPengembalian
+                'tgl_peminjaman' => now(),
+                'batas_pengembalian' => date('Y-m-d', strtotime('+7 days'))
             ]);
 
-            Barang::findOrFail($request->namaBarang)->decrement('quantity', 1);
+            $barang->decrement('quantity', 1);
             return response()->json([
                 'status' => 200,
                 'message' => 'Berhasil Melakukan Peminjaman.'
@@ -92,9 +91,29 @@ class PeminjamanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Peminjaman $peminjaman)
+    public function show(string $id)
     {
-        //
+        $peminjaman = Peminjaman::with([
+            'user' => function ($query) {
+                $query->select('id_user', 'name');
+            },
+            'barang' => function ($query) {
+                $query->select('id_barang', 'code_barang', 'nama_barang');
+            }
+        ])->where('id', $id)->first();
+
+        if ($peminjaman) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Berhasil mendapatkan data.',
+                'data' => $peminjaman
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
     }
 
     /**
@@ -117,7 +136,7 @@ class PeminjamanController extends Controller
         Barang::findOrFail($request->barang)->increment('quantity', 1);
         return response()->json([
             'status' => 200,
-            'message' => 'Berhasil mengembalikan buku'
+            'message' => 'Berhasil Mengembalikan Barang.'
         ]);
     }
 

@@ -13,6 +13,7 @@ class BarangController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         return view("barang.index");
@@ -29,6 +30,23 @@ class BarangController extends Controller
             "status" => 200,
             "message" => "Berhasil mendapatkan data.",
             "data" => $data
+        ]);
+    }
+
+    public function getById(string $code)
+    {
+        $barang = Barang::with('kategori')->where('code_barang', $code)->first();
+        if (!$barang) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'code tidak terdaftar'
+            ]);
+        }
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Berhasil mendapatkan data.",
+            "data" => $barang
         ]);
     }
     /**

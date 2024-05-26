@@ -23,6 +23,7 @@
 <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/jquery.dataTables.min.js') }}">
 </script>
 <script src="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/dataTables.bootstrap4.min.js') }}">
+    type = "text/javascript" >
 </script>
 
 {{-- script sweet allert --}}
@@ -34,7 +35,6 @@
 @if (auth()->user()->role == '1')
     <script src="{{ asset('js/activity/log.js') }}"></script>
 @endif
-
 {{-- script per pages --}}
 @yield('scriptPages')
 

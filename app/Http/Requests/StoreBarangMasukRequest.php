@@ -22,7 +22,19 @@ class StoreBarangMasukRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'barang' => 'required|exists:barang,id_barang',
+            'quantity' => 'required|numeric',
+            'pemasok' => 'required'
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'barang.required' => 'Barang harus dipih.',
+            'barang.exists' => 'Barang tidak terdaftar.',
+            'quantity.required' => 'Quantity harus diisi.',
+            'quantity.numeric' => 'Quantity harus numeric.',
+            'pemasok.required' => 'Pemasok harus diisi.',
         ];
     }
 }

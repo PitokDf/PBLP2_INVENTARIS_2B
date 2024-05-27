@@ -147,10 +147,10 @@ $(document).ready(function () {
                     $('#batasPeminjaman').text(dateCutomFormat(data.batas_pengembalian) ?? '~');
                     $('#dipinjam').text(dateCutomFormat(data.tgl_peminjaman) ?? '~');
                     data.tgl_pengembalian !== null ? (
-                        $('#statusP').html(`<strong>Telah dikembalikan (${dateCutomFormat(data.tgl_pengembalian)})</strong>`), 
+                        $('#statusP').html(`<strong>Telah dikembalikan (${dateCutomFormat(data.tgl_pengembalian)})</strong>`),
                         $('#statusP').removeClass('text-danger').addClass('text-success')
                     ) : (
-                        $('#statusP').html('<strong>Belum dikembalikan</strong>'), 
+                        $('#statusP').html('<strong>Belum dikembalikan</strong>'),
                         $('#statusP').addClass('text-danger').removeClass('text-success')
                     );
                 }
@@ -220,30 +220,26 @@ $(document).ready(function () {
                         $('#nama_barang').val(response.data.nama_barang);
                         $('#kategori_barang').val(response.data.kategori.nama_kategori_barang);
 
-                    //sweetalert
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Data ditemukan!',
-                        timer:1500,
-                        showConfirmButton: false,
-                        
-
-                    });
+                        //sweetalert
+                        // Swal.fire({
+                        //     icon: 'success',
+                        //     title: 'Data ditemukan!',
+                        //     timer: 1500,
+                        //     showConfirmButton: false,
+                        // });
                     }
                     if (response.status === 404) {
-
                         //sweetalert
                         Swal.fire({
-                            icon:'error',
-                            title:'Ops !!',
-                            text:response.message,
-                            confirmButtonText:'Periksa',
-                            confirmButtonColor:'#007bff',
-
+                            icon: 'error',
+                            title: 'Ops !!',
+                            text: response.message,
+                            confirmButtonText: 'Periksa',
+                            confirmButtonColor: '#007bff',
                         });
                     }
                 }
-            }); 
+            });
         }
     });
 

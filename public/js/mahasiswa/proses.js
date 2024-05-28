@@ -41,13 +41,13 @@ $(document).ready(function () {
         $('#ipk_error').text('');
     }
 
-    var time = new Date();
-    var year = time.getFullYear();
+    // var time = new Date();
+    // var year = time.getFullYear();
     function clerInput(modal) {
         $('.role').css('display', 'block')
         $("#" + modal + " input").val('');
         $('#prodi').val($('#prodi option:first').val());
-        $('#angkatan').val(year);
+        // $('#angkatan').val(year);
     }
 
     function showModal(modal, title, form, icon) {

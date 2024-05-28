@@ -26,7 +26,7 @@ class UsersController extends Controller
 
     public function getAllData()
     {
-        $data = User::all();
+        $data = User::latest()->get();
         return response()->json([
             'status' => 200,
             'data' => $data

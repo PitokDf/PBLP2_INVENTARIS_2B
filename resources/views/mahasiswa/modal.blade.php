@@ -40,8 +40,9 @@
                             <div class="mb-3">
                                 <label for="angkatan" class="form-label">Angkatan</label>
                                 <select name="angkatan" id="angkatan" class="form-control">
-                                    @for ($i = 2009; $i <= date('Y'); $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @for ($i = 2009; $i < date('Y'); $i++)
+                                        <option {{ $i == date('Y') - 1 ? 'selected' : '' }} value="{{ $i }}">
+                                            {{ $i }}</option>
                                     @endfor
                                 </select>
                                 <span id="angkatan_error" class="text-danger"></span>

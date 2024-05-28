@@ -134,6 +134,15 @@ $(document).ready(function () {
                         reloadTable(table_mahasiswa);
                     },
                     error: function (xhr, stattus, error) {
+                        console.log(xhr)
+                        if (xhr.status === 500) {
+                            Swal.fire({
+                                title: "Ops !!",
+                                text: 'Something went wrong.',
+                                icon: "error",
+                                confirmButtonText: "Ok"
+                            });
+                        }
                         console.error(xhr + "\n" + stattus + "\n" + error)
                     }
                 });

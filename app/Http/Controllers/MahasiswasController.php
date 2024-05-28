@@ -64,12 +64,7 @@ class MahasiswasController extends Controller
             "angkatan" => $request->angkatan,
             "ipk" => $request->ipk
         ]);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'add',
-            'deskripsi' => 'menambahkan data mahasiswa pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('add', 'Menambahkan data mahasiswa');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menambahkan data Mahasiswa."
@@ -140,6 +135,7 @@ class MahasiswasController extends Controller
                 'deskripsi' => 'mengupdate data mahasiswa pada ' . date('Y-F-d H:i'),
                 'time' => now()
             ]);
+            ActivityLog::createLog('update', 'Mengupdate data prodi');
             return response()->json([
                 'status' => 200,
                 'message' => "Berhasil mengupdate data."
@@ -158,12 +154,7 @@ class MahasiswasController extends Controller
     public function destroy($id)
     {
         Mahasiswas::where("id_mahasiswa", $id)->delete();
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'delete',
-            'deskripsi' => 'menghapus data mahasiswa pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('delete', 'Menghapus data prodi');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menghapus data."

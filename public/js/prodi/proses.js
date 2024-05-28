@@ -189,6 +189,14 @@ $(document).ready(function () {
                         }), reloadTable(tableProdi)) : ''
                     },
                     error: function (xhr, stattus, error) {
+                        if (xhr.status === 500) {
+                            Swal.fire({
+                                title: "Ops !!",
+                                text: 'Something went wrong.',
+                                icon: "error",
+                                confirmButtonText: "Ok"
+                            });
+                        }
                         console.error(xhr + "\n" + stattus + "\n" + error)
                     }
                 });

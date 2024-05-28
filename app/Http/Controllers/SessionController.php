@@ -31,20 +31,10 @@ class SessionController extends Controller
 
         if (Auth::attempt($credentials)) {
             if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
-                ActivityLog::create([
-                    'id_user' => auth()->user()->id_user,
-                    'activity' => 'Login',
-                    'deskripsi' => 'login pada ' . date('Y-F-d H:i'),
-                    'time' => now()
-                ]);
+                ActivityLog::createLog('Login', 'Login');
                 return redirect('peminjamanUmum');
             } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
-                ActivityLog::create([
-                    'id_user' => auth()->user()->id_user,
-                    'activity' => 'Login',
-                    'deskripsi' => 'login pada ' . date('Y-F-d H:i'),
-                    'time' => now()
-                ]);
+                ActivityLog::createLog('Login', 'Login');
                 return redirect('/');
             }
         } else {
@@ -54,6 +44,7 @@ class SessionController extends Controller
 
     public function logout()
     {
+        ActivityLog::createLog('logout', 'Logout');
         Auth::logout();
         return redirect('login');
     }

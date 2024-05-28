@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Prodi;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -42,6 +43,8 @@ class ProdiController extends Controller
             'code_prodi' => $request->kode,
             'nama_prodi' => $request->nama
         ]);
+
+        ActivityLog::createLog('add', 'Menambahkan data prodi');
 
         return response()->json([
             'status' => 200,
@@ -95,6 +98,8 @@ class ProdiController extends Controller
             'nama_prodi' => $request->nama
         ]);
 
+        ActivityLog::createLog('update', 'Mengupdate data prodi');
+
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil Mengupdate Prodi.'
@@ -107,6 +112,7 @@ class ProdiController extends Controller
     public function destroy(string $id)
     {
         Prodi::findOrFail($id)->delete();
+        ActivityLog::createLog('delete', 'Menghapus data prodi');
         return response()->json([
             'status' => 200,
             'message' => 'Prodi Berhasil dihapus!'

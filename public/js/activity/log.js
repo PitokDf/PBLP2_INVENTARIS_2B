@@ -20,7 +20,7 @@ $(document).on('click', '#activity-log', function () {
                         </div>
                         <div>
                             <div class="small text-gray-500">${response[i].time}</div>
-                            ${response[i].user.name} ${response[i].deskripsi}
+                            ${response[i].user.username} ${response[i].deskripsi}
                         </div>
                     </a>
                     <hr>`
@@ -29,12 +29,12 @@ $(document).on('click', '#activity-log', function () {
                         `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
                             <div class="mr-3">
                                 <div class="icon-circle bg-success">
-                                <i class="fas fa-plus-circle text-white"></i>
+                                    <i class="fas fa-plus-circle text-white"></i>
                                 </div>
                             </div>
                             <div>
                                 <div class="small text-gray-500">${response[i].time}</div>
-                                ${response[i].user.name} ${response[i].deskripsi}
+                                ${response[i].user.username} ${response[i].deskripsi}
                             </div>
                         </a>`
                 } else if (response[i].activity == 'Login') {
@@ -47,7 +47,7 @@ $(document).on('click', '#activity-log', function () {
                             </div>
                             <div>
                                 <div class="small text-gray-500">${response[i].time}</div>
-                                ${response[i].user.name} ${response[i].deskripsi}
+                                ${response[i].user.username} ${response[i].deskripsi}
                             </div>
                         </a>`
                 } else {
@@ -60,7 +60,7 @@ $(document).on('click', '#activity-log', function () {
                             </div>
                             <div>
                                 <div class="small text-gray-500">${response[i].time}</div>
-                                ${response[i].user.name} ${response[i].deskripsi}
+                                ${response[i].user.username} ${response[i].deskripsi}
                             </div>
                         </a>`
                 }

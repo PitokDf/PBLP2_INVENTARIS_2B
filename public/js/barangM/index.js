@@ -1,9 +1,4 @@
 $(document).ready(function () {
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     }
-    // });
 
     $('#tableBarangM').DataTable({
         "processing": true,
@@ -33,6 +28,7 @@ $(document).ready(function () {
                 "orderable": true
             },
             { "data": "pemasok", "orderable": true },
+            { "data": "quantity", "orderable": true },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
@@ -48,14 +44,17 @@ $(document).ready(function () {
         $('#barang_error').text('');
         $('#quantity_error').text('');
         $('#pemasok_error').text('');
+        $('#keterangan_error').text('');
         $('#barangM').removeClass('is-invalid');
         $('#quantity').removeClass('is-invalid');
+        $('#keterangan').removeClass('is-invalid');
         $('#pemasok').removeClass('is-invalid');
     }
 
     function clearInput() {
         $('#barangM').val('');
         $('#quantity').val('');
+        $('#keterangan').val('');
         $('#pemasok').val('');
     }
 
@@ -65,6 +64,7 @@ $(document).ready(function () {
         data.append('barang', $('#barangM').val());
         data.append('quantity', $('#quantity').val());
         data.append('pemasok', $('#pemasok').val());
+        data.append('keterangan', $('#keterangan').val());
 
         $.ajax({
             type: "POST",
@@ -86,6 +86,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
+                console.info(xhr);
                 const errors = xhr.responseJSON.errors;
                 clearErrorMsg();
                 if (errors.barang) {
@@ -95,6 +96,10 @@ $(document).ready(function () {
                 if (errors.quantity) {
                     $('#quantity_error').text(errors.quantity);
                     $('#quantity').addClass('is-invalid');
+                }
+                if (errors.keterangan) {
+                    $('#keterangan_error').text(errors.keterangan);
+                    $('#keterangan').addClass('is-invalid');
                 }
                 if (errors.pemasok) {
                     $('#pemasok_error').text(errors.pemasok);

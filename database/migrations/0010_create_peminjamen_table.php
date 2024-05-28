@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->date('tgl_pengembalian')->nullable();
             $table->boolean('status')->default(false);
             $table->decimal('denda')->default(0.00);
+            $table->text('keterangan');
             $table->timestamps();
         });
     }

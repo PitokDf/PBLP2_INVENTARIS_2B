@@ -21,7 +21,13 @@ $(document).ready(function () {
             },
             { "data": "name", "orderable": true },
             { "data": "nip", "orderable": true },
-            { "data": "academic_position", "orderable": true },
+            {
+                "data": null,
+                "render": function (_data, _type, row) {
+                    return row.jabatan.jabatan
+                },
+                "orderable": true
+            },
             { "data": "phone_number", "orderable": true },
             { "data": "email", "orderable": true },
             {
@@ -96,7 +102,7 @@ $(document).ready(function () {
                     reloadTable(table_dosen);
                     $('#modalDosen').modal('hide');
                     Swal.fire({
-                        title: "Insert!",
+                        title: "Created!",
                         text: response.message,
                         icon: "success",
                         confirmButtonText: "Yes"
@@ -104,6 +110,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
+                console.info(xhr)
                 var errorMessage = xhr.responseJSON.errors;
                 clearErrorMsg();
                 if (errorMessage.name) {
@@ -144,18 +151,20 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                $('#id').val(response.data[0].id_dosen);
-                $('#name').val(response.data[0].name);
-                $('#nip').val(response.data[0].nip);
-                $('#jabatan').val(response.data[0].academic_position);
-                $('#no_telpn').val(response.data[0].phone_number);
-                $('#email').val(response.data[0].email);
+                console.log(response)
+                $('#id').val(response.data.id_dosen);
+                $('#name').val(response.data.name);
+                $('#nip').val(response.data.nip);
+                $('#jabatan').val(response.data.jabatan_id);
+                $('#no_telpn').val(response.data.phone_number);
+                $('#email').val(response.data.email);
                 $('#img-preview').css('display', 'block');
-                if (response.data[0].photo_dir) {
-                    $('#img-preview').attr('src', "storage/dosen/" + response.data[0].photo_dir);
+                if (response.data.photo_dir) {
+                    $('#img-preview').attr('src', "storage/dosen/" + response.data.photo_dir);
                 }
             },
             error: function (xhr) {
+                console.log(xhr)
                 var errorMessage = xhr.responseJSON.errors;
                 $('#name_error').text(errorMessage.name);
                 $('#nip_error').text(errorMessage.nip);
@@ -201,6 +210,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
+                console.log(xhr)
                 var errorMessage = xhr.responseJSON.errors;
                 clearErrorMsg();
                 if (errorMessage.name) {

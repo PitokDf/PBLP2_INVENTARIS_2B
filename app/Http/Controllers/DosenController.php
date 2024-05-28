@@ -22,6 +22,14 @@ class DosenController extends Controller
         return view("dosen.index")->with('jabatans', $jabatan);
     }
 
+    public function getDosenNip()
+    {
+        $dosen = Dosen::whereDoesntHave('user')->get();
+        return response()->json([
+            'status' => 200,
+            'data' => $dosen
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -32,7 +40,7 @@ class DosenController extends Controller
 
     public function getData()
     {
-        $data = Dosen::all();
+        $data = Dosen::with('jabatan')->latest()->get();
         return response()->json([
             "status" => 200,
             "data" => $data
@@ -56,7 +64,7 @@ class DosenController extends Controller
         $data = [
             "name" => $request->name,
             "nip" => $request->nip,
-            "academic_position" => $request->jabatan,
+            "jabatan_id" => $request->jabatan,
             "phone_number" => $request->no_telpn,
             "email" => $request->email,
             "photo_dir" => $filename
@@ -88,17 +96,7 @@ class DosenController extends Controller
      */
     public function edit($id)
     {
-        $data = Dosen::where('id_dosen', $id)->get(
-            [
-                "id_dosen",
-                "name",
-                "nip",
-                "academic_position",
-                "phone_number",
-                "email",
-                "photo_dir"
-            ]
-        );
+        $data = Dosen::with("jabatan")->where("id_dosen", $id)->first();
         return response()->json([
             'status' => 200,
             'data' => $data
@@ -164,18 +162,15 @@ class DosenController extends Controller
 
             $dosen->name = $request->name;
             $dosen->nip = $request->nip;
-            $dosen->academic_position = $request->jabatan;
+            $dosen->jabatan_id = $request->jabatan;
             $dosen->phone_number = $request->no_telpn;
             $dosen->email = $request->email;
 
-
             $dosen->save();
-            ActivityLog::create([
-                'id_user' => auth()->user()->id_user,
-                'activity' => 'update',
-                'deskripsi' => 'mengupdate data dosen pada ' . date('Y-F-d H:i'),
-                'time' => now()
-            ]);
+
+            $log = new ActivityLog();
+            $log->createLog('update', 'Mengupdate data dosen');
+
             return response()->json([
                 'status' => 200,
                 'message' => "Berhasil mengupdate data."

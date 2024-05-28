@@ -14,9 +14,10 @@ return new class extends Migration {
             $table->id('id_berita');
             $table->string('title')->nullable();
             $table->text('content')->nullable();
-            $table->date('tgl_publikasi')->nullable();
-            $table->unsignedBigInteger('id_kategori');
-            $table->foreign('id_kategori')->references('id_kategori')->on('kategori_berita')->onDelete('cascade');
+            $table->date('tgl_publikasi');
+            $table->foreignId('kategori_id')->constrained('kategori_berita');
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id_user')->on('users');
             $table->timestamps();
         });
     }

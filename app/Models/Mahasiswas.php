@@ -13,11 +13,21 @@ class Mahasiswas extends Model
         "id_mahasiswa",
         "nama",
         "nim",
-        "program_studi",
+        "code_prodi",
         "angkatan",
         "ipk",
     ];
 
     protected $table = "mahasiswa";
     protected $primaryKey = "id_mahasiswa";
+
+    public function user()
+    {
+        return $this->hasOne(User::class, "mahasiswa_id");
+    }
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, "code_prodi", 'code_prodi');
+    }
 }

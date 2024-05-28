@@ -18,6 +18,7 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // private $log = new ActivityLog();
     public function index()
     {
         return view("user.index");
@@ -36,7 +37,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -45,20 +46,20 @@ class UsersController extends Controller
     public function store(StoreUsersRequest $request)
     {
         $data = [
-            'name' => $request->name,
+            'username' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => $request->role,
             'email_verified_at' => now()
         ];
 
+        if (!empty($request->nim) || !empty($request->nip)) {
+            $data['mahasiswa_id'] = $request->nim;
+            $data['dosen_id'] = $request->nip;
+        }
+
         User::create($data);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'add',
-            'deskripsi' => 'menambahkan data user pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('add', 'Menambahkan data user');
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil Menambahkan data user.'
@@ -78,18 +79,15 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $data = User::where('id_user', $id)->get([
-            "id_user",
-            'name',
-            'email',
-            'password',
-            'role'
-        ]);
+        $data = User::with(['mahasiswa', 'dosen'])->where('id_user', $id)->first();
 
-        // dd($data . "dan id " . $id);
         return response()->json([
             'status' => 200,
-            'data' => $data,
+            'data' => [
+                $data,
+                'nim' => $data->mahasiswa ? $data->mahasiswa->nim : null,
+                'nip' => $data->dosen ? $data->dosen->nip : null
+            ],
             'session' => Auth::user()->email
         ]);
     }
@@ -101,17 +99,28 @@ class UsersController extends Controller
     {
         try {
             $user = User::findOrFail($id);
+            if (!empty($request->role)) {
+                if (in_array($user->role, ['3', '4']) && ($user->mahasiswa_id !== null || $user->dosen_id !== null)) {
+                    return response()->json([
+                        'status' => '400',
+                        'message' => 'Role Mahasiswa atau Dosen tidak boleh diubah.'
+                    ]);
+                }
+            }
             $rules = [
-                "email" => [
-                    'required',
-                    'email',
-                    Rule::unique('users')->ignore($user),  // Use $user->id for clarity
-                ]
+                "email" => 'required|email|' . Rule::unique('users')->ignore($user),
+                "role" => 'required_if:role,!null',
+                'password' => 'nullable|min:8'
             ];
 
-            if (!empty($request->password)) {
-                $rules['password'] = ['min:8'];  // Array for password rules
-            }
+            // jika input password diisi menambahkan validasi untuk password
+            // if (!empty($request->password)) {
+            //     $rules['password'] = ['min:8'];
+            // }
+
+            // if (!empty($request->role)) {
+            //     $rules['role'] = ['required'];
+            // }
 
             $validator = Validator::make($request->all(), $rules, [
                 "email.unique" => "Email sudah pernah tersedia.",
@@ -123,28 +132,32 @@ class UsersController extends Controller
                 return response()->json($validator->errors(), 422);
             }
 
-            $user->name = $request->name;
+            if (!empty($request->role)) {
+                $user->role = $request->role;
+            }
+
+            if (!empty($request->nim) || !empty($request->nip)) {
+                $user->mahasiswa_id = $request->nim;
+                $user->dosen_id = $request->nip;
+            }
+
+            $user->username = $request->name;
             $user->email = $request->email;
-            $user->role = $request->role;
+
             if (!empty($request->password)) {
-                $user->password = bcrypt($request->password); // Perhatikan apakah Anda ingin mengizinkan penggunaan plaintext password di sini
+                $user->password = bcrypt($request->password);
             }
             $user->save();
-            ActivityLog::create([
-                'id_user' => auth()->user()->id_user,
-                'activity' => 'update',
-                'deskripsi' => 'mengupdate data user pada ' . date('Y-F-d H:i'),
-                'time' => now()
-            ]);
+            ActivityLog::createLog('update', 'Mengupdate data user');
             return response()->json([
                 'status' => 200,
                 'message' => "Berhasil mengupdate data."
             ]);
         } catch (\Throwable $e) {
             return response()->json([
-                'status' => 500,
+                'status' => '400',
                 'message' => $e->getMessage(),
-            ], 500);
+            ], '400');
         }
     }
 

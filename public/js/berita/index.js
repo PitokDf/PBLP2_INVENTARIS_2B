@@ -11,7 +11,7 @@ $(document).ready(function () {
             // Populate the dropdown list with kategori options
             $.each(kategoriList, function (index, kategori) {
                 $("#kategori").append(
-                    "<option value='" + kategori.id_kategori + "'>" + kategori.nama_kategori + "</option>"
+                    "<option value='" + kategori.id + "'>" + kategori.nama_kategori + "</option>"
                 );
             });
         },
@@ -40,7 +40,13 @@ $(document).ready(function () {
                 }
             },
             { "data": "title", "orderable": true },
-            { "data": "tgl_publikasi", "orderable": true },
+            {
+                "data": null,
+                "render": function (_data, _type, row) {
+                    return dateCutomFormat(row.tgl_publikasi);
+                },
+                "orderable": true
+            },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
@@ -94,14 +100,11 @@ $(document).ready(function () {
             url: url, // Menggunakan variabel 'url' yang sudah didefinisikan sebelumnya
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 var data = response.data;
-                console.log(data.content)
                 $('#id').val(data.id_berita);
                 $('#title').val(data.title);
-                $('#publikasi').val(data.tgl_publikasi);
                 $('trix-editor').html(data.content);
-                $('#kategori').val(data.id_kategori);
+                $('#kategori').val(data.kategori_id);
             },
             error: function (xhr, status, error) {
                 console.error(xhr + "\n" + status + "\n" + error)
@@ -163,7 +166,6 @@ $(document).ready(function () {
         data.append('title', $('#title').val());
         data.append('content', $('#content').val());
         data.append('kategori', $('#kategori').val());
-        data.append('publikasi', $('#publikasi').val());
         $.ajax({
             type: "POST",
             url: "berita",
@@ -189,6 +191,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
+                console.info(xhr)
                 console.error(xhr.responseJSON.errors)
                 const errors = xhr.responseJSON.errors;
                 clearErrorMsg();

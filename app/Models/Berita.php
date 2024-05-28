@@ -9,17 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Berita extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        "title",
-        "content",
-        "tgl_publikasi",
-        "id_kategori"
-    ];
+    protected $guarded = ['id'];
     protected $table = "berita";
     protected $primaryKey = "id_berita";
 
     public function kategori()
     {
-        return $this->belongsTo(KategoriBerita::class, 'id_kategori');
+        return $this->belongsTo(KategoriBerita::class, "kategori_id");
     }
 }

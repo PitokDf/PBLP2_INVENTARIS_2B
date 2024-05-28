@@ -35,7 +35,7 @@
                                 <select class="form-control" name="jabatan" id="jabatan">
                                     <option value="">--Pilih Jabatan--</option>
                                     @foreach ($jabatans as $item)
-                                        <option value="{{ $item->jabatan }}">{{ $item->jabatan }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->jabatan }}</option>
                                     @endforeach
                                 </select>
                                 <span id="jabatan_error" class="text-danger"></span>

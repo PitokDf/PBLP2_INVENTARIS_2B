@@ -67,6 +67,7 @@
                                 </select>
                                 <span id="role_error" class="text-danger"></span>
                             </div>
+                            <div id="kondisi"></div>
                             <div class="mb-3">
                                 <label id="labelPass" for="password" class="form-label">Password</label>
                                 <input type="text" class="form-control" name="password" id="password"

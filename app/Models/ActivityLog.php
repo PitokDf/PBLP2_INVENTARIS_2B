@@ -16,6 +16,17 @@ class ActivityLog extends Model
     ];
     public $timestamps = true;
 
+    public static function createLog($activity, $ket)
+    {
+        self::create([
+            'id_user' => auth()->user()->id_user,
+            'activity' => $activity,
+            'deskripsi' => $ket . ' pada ' . date('Y-F-d H:i'),
+            'time' => now()
+        ]);
+        return true;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');

@@ -32,14 +32,19 @@
                         <span id="barang_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
+                        <label for="quantity" class="form-label">Pemasok</label>
+                        <input type="text" name="pemasok" id="pemasok" placeholder="Pemasok" class="form-control">
+                        <span id="pemasok_error" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
                         <label for="barang" class="form-label">Quantity</label>
                         <input type="number" name="quantity" id="quantity" placeholder="Quantity" class="form-control">
                         <span id="quantity_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="quantity" class="form-label">Pemasok</label>
-                        <input type="text" name="pemasok" id="pemasok" placeholder="Pemasok" class="form-control">
-                        <span id="pemasok_error" class="text-danger"></span>
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <textarea name="keterangan" class="form-control" id="keterangan" cols="30" rows="3"></textarea>
+                        <span id="keterangan_error" class="text-danger"></span>
                     </div>
                     <div class="divider"></div>
                     <div class="d-flex justify-content-end">
@@ -65,6 +70,7 @@
                                         <th>No</th>
                                         <th>Nama Barang</th>
                                         <th>Pemasok</th>
+                                        <th>Quantity</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -74,6 +80,7 @@
                                         <th>No</th>
                                         <th>Nama Barang</th>
                                         <th>Pemasok</th>
+                                        <th>Quantity</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>

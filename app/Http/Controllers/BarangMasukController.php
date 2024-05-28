@@ -43,7 +43,8 @@ class BarangMasukController extends Controller
         $barangMasuk = BarangMasuk::create([
             "barang_id" => $request->barang,
             "pemasok" => $request->pemasok,
-            "quantity" => $request->quantity
+            "quantity" => $request->quantity,
+            "keterangan" => $request->keterangan
         ]);
 
         if ($barangMasuk) {

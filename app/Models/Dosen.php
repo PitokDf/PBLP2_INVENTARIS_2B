@@ -13,11 +13,21 @@ class Dosen extends Model
         "id_dosen",
         "name",
         "nip",
-        "academic_position",
+        "jabatan_id",
         "phone_number",
         "email",
         "photo_dir"
     ];
     protected $table = "dosen";
     public $primaryKey = "id_dosen";
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'dosen_id');
+    }
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class);
+    }
 }

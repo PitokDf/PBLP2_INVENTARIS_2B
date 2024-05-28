@@ -41,15 +41,15 @@ class BeritaController extends Controller
         $validate = $request->validate([
             "title" => "required",
             "content" => "required",
-            "kategori" => "required|exists:kategori_berita,id_kategori",
-            "publikasi" => "required|date",
+            "kategori" => "required|exists:kategori_berita,id",
         ]);
 
         Berita::create([
             'title' => $request->title,
             'content' => $request->content,
-            'tgl_publikasi' => $request->publikasi,
-            'id_kategori' => $request->kategori
+            'tgl_publikasi' => now(),
+            'kategori_id' => $request->kategori,
+            'user_id' => auth()->user()->id_user
         ]);
         ActivityLog::create([
             'id_user' => auth()->user()->id_user,

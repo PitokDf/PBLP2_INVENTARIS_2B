@@ -108,11 +108,16 @@
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label for="jumlah" class="form-label">Quantity</label>
+                    <input type="number" class="form-control" id="jumlah" placeholder="Min 1" readonly>
+                    <span id="jumlah_error" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
                     <label for="namaUser" class="form-label">Peminjam</label>
                     <select name="namaUser" class="form-control" id="namaUser">
                         <option value="">-- Pilih Peminjam--</option>
                         @foreach ($users as $item)
-                            <option value="{{ $item->id_user }}">{{ $item->name }}</option>
+                            <option value="{{ $item->id_user }}">{{ $item->username }}</option>
                         @endforeach
                     </select>
                     <span id="namaU_error" class="text-danger"></span>
@@ -120,54 +125,22 @@
                 <div class="mb-3">
                     <label for="reason" class="form-label">Alasan Peminjaman</label>
                     <textarea name="" id="reason" class="form-control" rows="7"></textarea>
-                    {{-- <input type="text" class="form-control" id="reason" placeholder="Kategori barang"> --}}
+                    <span id="reason_error" class="text-danger"></span>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                     <i class="fas fa-window-close"></i> Close
                 </button>
-                <button type="button" class="btn btn-sm btn-primary action"></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Modal Import --}}
-<div class="modal fade" id="modalImport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Pilih file</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-body">
-                    <div class="input-grub">
-                        <label class="title" for="file">Upload file csv</label>
-                        <input type="file" name="file" class="form-control" id="file"
-                            accept="excel/csv,xlsx" />
-                    </div>
-                    <div class="error-area">
-
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"><i
-                        class="fas fa-window-close"></i>
-                    Cancel</button>
-                <button type="button" class="btn btn-sm btn-primary action">
-                </button>
+                <button type="button" class="btn btn-sm btn-primary action" disabled></button>
             </div>
         </div>
     </div>
 </div>
 
 {{-- Modal Detail Peminjaman --}}
-<div class="modal fade" id="modalDetailPeminjaman" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modalDetailPeminjaman" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

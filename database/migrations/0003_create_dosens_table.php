@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id('id_dosen');
             $table->string('name')->nullable();
             $table->string('nip', 20)->nullable();
-            $table->string('academic_position')->nullable();
+            $table->foreignId('jabatan_id')->constrained('jabatans');
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->string('photo_dir')->nullable();

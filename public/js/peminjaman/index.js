@@ -30,7 +30,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _row, item) {
-                    return item.user.name
+                    return item.user.username
                 },
                 "orderable": true
             },
@@ -68,23 +68,26 @@ $(document).ready(function () {
 
     // fungsi untuk membersihkan pesan error
     function clearErrorMsg() {
+
         $('#namaB_error').text('');
         $('#namaU_error').text('');
-        $('#tglP_error').text('');
-        $('#batasP_error').text('');
+        $('#jumlah_error').text('');
+        $('#reason_error').text('');
         $('#namaBarang').removeClass('is-invalid');
         $('#namaUser').removeClass('is-invalid');
-        $('#tglPeminjaman').removeClass('is-invalid');
-        $('#batasPengembalian').removeClass('is-invalid');
+        $('#reason').removeClass('is-invalid');
+        $('#jumlah').removeClass('is-invalid');
     }
+
     function claerInput() {
-        var tanggalSaatIni = new Date();
-        tanggalSaatIni.setDate(tanggalSaatIni.getDate() + 7);
-        var batas = tanggalSaatIni.toISOString().slice(0, 10);
-        var date = new Date().toISOString().slice(0, 10);
-        $('#modal_peminjaman select').val('');
-        $('#batasPeminjaman').val(batas)
-        $('#tglPeminjaman').val(date)
+        $('.action').attr('disabled', true);
+        $('#jumlah').attr('readonly', true);
+        $('#code_barang').val('');
+        $('#namaUser').val('');
+        $('#jumlah').val('');
+        $('#reason').val('');
+        $('#kategori_barang').val('');
+        $('#nama_barang').val('');
     }
 
     $(document).on('click', '.kembalikan', function () {
@@ -135,10 +138,9 @@ $(document).ready(function () {
                 console.log(response)
                 if (response.status === 200) {
                     const data = response.data;
-
                     $('#id_peminjaman').text(data.id);
                     $('#namaBarang').text(data.barang.nama_barang);
-                    $('#peminjam').text(data.user.name);
+                    $('#peminjam').text(data.user.username);
                     $('#kodeBarang').text(data.barang.code_barang);
 
                     let denda = calculateDenda(data.batas_pengembalian, getCurrentDate(), 1500);
@@ -156,7 +158,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error(xhr + "\n" + status + "\n" + error)
+                console.info(xhr + "\n" + status + "\n" + error)
             }
         });
     });
@@ -217,18 +219,17 @@ $(document).ready(function () {
                     $('#kategori_barang').val('');
                     console.log(response)
                     if (response.status === 200) {
+                        $('#jumlah').attr('readonly', false);
+                        $('.action').attr('disabled', false);
+                        $('#jumlah').val('1');
+
                         $('#nama_barang').val(response.data.nama_barang);
                         $('#kategori_barang').val(response.data.kategori.nama_kategori_barang);
-
-                        //sweetalert
-                        // Swal.fire({
-                        //     icon: 'success',
-                        //     title: 'Data ditemukan!',
-                        //     timer: 1500,
-                        //     showConfirmButton: false,
-                        // });
                     }
                     if (response.status === 404) {
+                        $('#jumlah').attr('readonly', true);
+                        $('.action').attr('disabled', true);
+                        $('#jumlah').val('');
                         //sweetalert
                         Swal.fire({
                             icon: 'error',
@@ -265,6 +266,8 @@ $(document).ready(function () {
         var data = new FormData();
         data.append('namaBarang', $('#code_barang').val());
         data.append('namaUser', $('#namaUser').val());
+        data.append('quantity', $('#jumlah').val());
+        data.append('reason', $('#reason').val());
 
         $.ajax({
             type: "post",
@@ -274,9 +277,9 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
+                clearErrorMsg();
                 if (response.status === 200) {
                     claerInput();
-                    clearErrorMsg();
                     modal.modal('hide')
                     reloadTable(table_peminjaman)
                     Swal.fire({
@@ -300,20 +303,24 @@ $(document).ready(function () {
                 clearErrorMsg();
                 const data = errors.responseJSON;
                 if (data.namaBarang) {
-                    $('#namaB_error').text(data.namaBarang);
-                    $('#namaBarang').addClass('is-invalid');
+                    Swal.fire({
+                        title: "Ops..!",
+                        text: 'Kode barang masih kosong',
+                        icon: "error",
+                        confirmButtonText: "Yes"
+                    });
                 }
                 if (data.namaUser) {
                     $('#namaU_error').text(data.namaUser);
                     $('#namaUser').addClass('is-invalid');
                 }
-                if (data.tglPeminjaman) {
-                    $('#tglP_error').text(data.tglPeminjaman);
-                    $('#tglPeminjaman').addClass('is-invalid');
+                if (data.quantity) {
+                    $('#jumlah_error').text(data.quantity);
+                    $('#jumlah').addClass('is-invalid');
                 }
-                if (data.batasPengembalian) {
-                    $('#batasP_error').text(data.batasPengembalian);
-                    $('#batasPengembalian').addClass('is-invalid');
+                if (data.reason) {
+                    $('#reason_error').text(data.reason);
+                    $('#reason').addClass('is-invalid');
                 }
                 console.log(errors)
             }

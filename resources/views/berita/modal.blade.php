@@ -34,12 +34,6 @@
                                 </select>
                                 <span id="kategori_error" class="text-danger"></span>
                             </div>
-                            <div class="mb-3">
-                                <label for="publikasi" class="form-label">Tanggal Publikasi</label>
-                                <input type="date" class="form-control" name="publikasi" id="publikasi"
-                                    placeholder="exp: Elektronik" />
-                                <span id="publikasi_error" class="text-danger"></span>
-                            </div>
                         </div>
                     </div>
                 </div>

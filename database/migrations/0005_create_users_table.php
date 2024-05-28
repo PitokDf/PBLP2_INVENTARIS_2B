@@ -13,11 +13,16 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id_user')->primary()->default(Uuid::uuid4());
-            $table->string('name');
+            $table->string('username');
             $table->string('email', 125)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('role', ['1', '2', '3', '4', '5'])->default('5');
             $table->string('password');
+            $table->unsignedBigInteger('mahasiswa_id')->nullable();
+            $table->foreign('mahasiswa_id')->references('id_mahasiswa')->on('mahasiswa');
+            $table->unsignedBigInteger('dosen_id')->nullable();
+            $table->foreign('dosen_id')->references('id_dosen')->on('dosen');
+            // $table->foreign('dosen_id')->constrained('dosens');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -30,7 +35,6 @@ return new class extends Migration {
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id', 125)->primary();
-            // $table->foreignId('user_id')->nullable()->index();
             $table->string('user_id', 125)->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();

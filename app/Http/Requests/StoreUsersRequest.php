@@ -27,6 +27,8 @@ class StoreUsersRequest extends FormRequest
                 "unique:users,email",
                 "required",
             ],
+            'nim' => 'nullable|exists:mahasiswa,id_mahasiswa',
+            'nip' => 'nullable|exists:dosen,id_dosen',
             "role" => "required",
             "password" => "min:8",
         ];

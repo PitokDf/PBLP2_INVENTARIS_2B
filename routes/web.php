@@ -77,12 +77,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('getAllDataKategori', [KategoriBeritaController::class, "getData"]);
         Route::resource("dosen", DosenController::class);
         Route::get('getAllDataDosen', [DosenController::class, "getData"]);
+        Route::get('getDosenNip', [DosenController::class, "getDosenNip"]);
         Route::resource("kategori-barang", KategoriBarangController::class);
         Route::get("getKategori", [KategoriBarangController::class, "getKategori"]);
         Route::resource("barang", BarangController::class);
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
         Route::get('get-barang/{code}', [BarangController::class, "getById"]);
         Route::resource("mahasiswa", MahasiswasController::class);
+        Route::get("/getMahasiswaNim", [MahasiswasController::class, 'getMahasiswaNim']);
         Route::post("importMahasiswa", [MahasiswasController::class, 'import']);
         Route::get("exportMahasiswa", [MahasiswasController::class, 'export'])->name('mahasiswa.export');
         Route::get("getAllDataMahasiswa", [MahasiswasController::class, "getData"]);

@@ -24,7 +24,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    return "<button type='button' data-id='" + row.code_prodi + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.code_prodi + "'><i class='fas fa-regular fa-pen'></i></button>"
                 }
                 , "orderable": false
             } // Contoh tombol aksi
@@ -115,7 +115,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status === 200) {
                     const data = response.data;
-                    $('#id').val(data[0].id);
+                    $('#id').val(data[0].code_prodi);
                     $('#kode').val(data[0].code_prodi);
                     $('#nama_prodi').val(data[0].nama_prodi);
                 }

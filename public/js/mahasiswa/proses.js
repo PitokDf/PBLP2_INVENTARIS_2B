@@ -21,7 +21,7 @@ $(document).ready(function () {
             },
             { "data": "nama", "orderable": true },
             {
-                "data": "program_studi", "orderable": true
+                "data": "code_prodi", "orderable": true
             },
             {
                 "data": null,
@@ -97,6 +97,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
+                console.info(xhr)
                 var errorMessage = xhr.responseJSON.errors;
                 clearErrorMsg();
                 $('#nama_error').text(errorMessage.nama_mahasiswa);
@@ -155,7 +156,7 @@ $(document).ready(function () {
                     $('#id').val(data.id_mahasiswa);
                     $('#nama_mahasiswa').val(data.nama);
                     $('#nim').val(data.nim);
-                    $('#prodi').val(data.program_studi);
+                    $('#prodi').val(data.code_prodi);
                     $('#angkatan').val(data.angkatan);
                     $('#ipk').val(data.ipk);
                 }
@@ -224,7 +225,7 @@ $(document).ready(function () {
                     var data = response.data[0];
                     console.log(data);
                     $('.nim').text(data.nim);
-                    $('.prodi').text(data.program_studi);
+                    $('.prodi').text(data.prodi.nama_prodi);
                     $('.angkatan').text(data.angkatan);
                     $('.nama').text(data.nama);
                     $('.ipk').text(data.ipk);

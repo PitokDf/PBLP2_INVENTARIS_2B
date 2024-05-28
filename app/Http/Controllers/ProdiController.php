@@ -68,7 +68,6 @@ class ProdiController extends Controller
     public function edit(string $id)
     {
         $prodi = Prodi::findOrFail($id)->get([
-            'id',
             'code_prodi',
             'nama_prodi'
         ]);
@@ -85,7 +84,6 @@ class ProdiController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'kode' => 'required',
             'nama' => 'required',
         ]);
 
@@ -93,8 +91,7 @@ class ProdiController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        Prodi::findOrFail($id)->update([
-            'code_prodi' => $request->kode,
+        Prodi::where('code_prodi', $request->kode)->update([
             'nama_prodi' => $request->nama
         ]);
 

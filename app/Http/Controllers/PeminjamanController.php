@@ -45,16 +45,28 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'namaBarang' => 'required',
-            'namaUser' => 'required|exists:users,id_user'
-            // 'tglPeminjaman' => 'required|date|date_equals:' . date('Y-m-d'),
-            // 'batasPengembalian' => 'required|date|date_equals:' . date('Y-m-d', strtotime('+7 days'))
+            'namaBarang' => 'required|exists:barang,code_barang',
+            'namaUser' => 'required|exists:users,id_user',
+            'quantity' => 'required|integer|min:1',
+            'reason' => 'required'
+        ], [
+            'namaBarang.required' => 'kode harus diisi.',
+            'namaBarang.exists' => 'Kode barang tidak terdaftar.',
+            'namaUser.required' => 'Pilih Peminjam.',
+            'namaUser.exists' => 'User tidak tersedia.',
+            'quantity.integer' => 'Jumlah harus numeric.',
+            'quantity.min' => 'Jumlah minimal :min.',
+            'reason.required' => 'Alasan Peminjaman harus diisi.',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
         $barang = Barang::where('code_barang', $request->namaBarang)->first();
+        $user = User::where('id_user', $request->namaUser)->first();
+
+        // $barang = Barang::where('code_barang', $request->namaBarang)->first();
         $existingPeminjaman = Peminjaman::where('id_barang', $barang->id_barang)
             ->where('id_user', $request->namaUser)
             ->whereNull('tgl_pengembalian')
@@ -67,11 +79,19 @@ class PeminjamanController extends Controller
             ]);
         }
 
+        if ($request->quantity > $barang->quantity) {
+            return response()->json([
+                'status' => 202,
+                'message' => 'Out of stcok.'
+            ]);
+        }
+
         if ($barang->quantity > 0) {
             Peminjaman::create([
                 'id_barang' => $barang->id_barang,
                 'id_user' => $request->namaUser,
                 'tgl_peminjaman' => now(),
+                'keterangan' => $request->reason,
                 'batas_pengembalian' => date('Y-m-d', strtotime('+7 days'))
             ]);
 
@@ -95,7 +115,7 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::with([
             'user' => function ($query) {
-                $query->select('id_user', 'name');
+                $query->select('id_user', 'username');
             },
             'barang' => function ($query) {
                 $query->select('id_barang', 'code_barang', 'nama_barang');

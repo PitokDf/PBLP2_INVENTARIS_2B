@@ -25,6 +25,15 @@ class MahasiswasController extends Controller
         return view("mahasiswa.index")->with("prodi", $prodi);
     }
 
+    public function getMahasiswaNim()
+    {
+        $mahasiswaNim = Mahasiswas::whereDoesntHave('user')->get();
+        return response()->json([
+            "status" => 200,
+            "data" => $mahasiswaNim
+        ]);
+    }
+
     public function getData()
     {
         $data = Mahasiswas::all();
@@ -51,7 +60,7 @@ class MahasiswasController extends Controller
         Mahasiswas::create([
             "nama" => $request->nama_mahasiswa,
             "nim" => $request->nim,
-            "program_studi" => $request->prodi,
+            "code_prodi" => $request->prodi,
             "angkatan" => $request->angkatan,
             "ipk" => $request->ipk
         ]);
@@ -85,14 +94,11 @@ class MahasiswasController extends Controller
      */
     public function edit($id)
     {
-        $data = Mahasiswas::where("id_mahasiswa", $id)->get([
-            "id_mahasiswa",
-            "nama",
-            "nim",
-            "program_studi",
-            "angkatan",
-            "ipk"
-        ]);
+        $data = Mahasiswas::with([
+            'prodi' => function ($prodi) {
+                $prodi->select('code_prodi', 'nama_prodi');
+            }
+        ])->where("id_mahasiswa", $id)->get();
 
         return response()->json([
             "status" => 200,
@@ -123,7 +129,7 @@ class MahasiswasController extends Controller
 
             $mahasiswa->nama = $request->nama_mahasiswa;
             $mahasiswa->nim = $request->nim;
-            $mahasiswa->program_studi = $request->prodi;
+            $mahasiswa->code_prodi = $request->prodi;
             $mahasiswa->angkatan = $request->angkatan;
             $mahasiswa->ipk = $request->ipk;
 

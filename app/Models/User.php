@@ -44,6 +44,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var bool
      */
     public $incrementing = false;
-
     protected $keyType = 'string';
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswas::class, 'id_mahasiswa', "mahasiswa_id");
+    }
+    public function dosen()
+    {
+        return $this->hasOne(Dosen::class, 'id_dosen', "dosen_id");
+    }
 }

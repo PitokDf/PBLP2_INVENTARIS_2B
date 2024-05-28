@@ -9,7 +9,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "getAllDataUser", // Ganti dengan URL endpoint Anda
+            "url": "getAllDataUser",
             "type": "GET"
         },
         "columns": [
@@ -19,7 +19,7 @@ $(document).ready(function () {
                     return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
                 }
             },
-            { "data": "name", "orderable": true },
+            { "data": "username", "orderable": true },
             { "data": "email", "orderable": true },
             {
                 "data": null, "render": function (_data, _type, row) {
@@ -49,6 +49,10 @@ $(document).ready(function () {
 
     var url = "";
 
+    function setKondisiNormal() {
+        $('#kondisi').html('');
+        $('#role').attr('disabled', false)
+    }
     function clearErrorMsg() {
         $('#name_error').text('');
         $('#email_error').text('');
@@ -71,7 +75,9 @@ $(document).ready(function () {
 
     $('#btnCreate').click(function () {
         if ($('.action').attr('id') != 'btnCreateform') {
+            clearErrorMsg();
             clerInput(modal = "modalUser");
+            setKondisiNormal();
         }
         $('#labelPass').text('Password');
         showModal(modal = "modalUser", title = "Add User", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
@@ -80,6 +86,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#btnCreateform', function () {
         var formData = $('#form').serialize();
+        console.log(formData)
         url = "user";
         $.ajax({
             type: "POST",
@@ -117,6 +124,85 @@ $(document).ready(function () {
         });
     });
 
+    function getKondisiData(role, other = null) {
+        if (other !== null) {
+            if (role == 3) {
+                $('#kondisi').html(`
+                <div class="mb-3">
+                    <label for="nip" class="form-label">NIP</label>
+                    <input type="number" value="${other}" class="form-control" name="nip" id="nip" placeholder="exp: 1999270190" disabled/>
+                    </select>
+                    <span id="nip_error" class="text-danger"></span>
+                </div>
+                `);
+            } else if (role == 4) {
+                $('#kondisi').html(`
+                <div class="mb-3">
+                    <label for="nim" class="form-label">NIM</label>
+                    <input type="number" value="${other}" class="form-control" name="nim" id="nim" placeholder="exp: 2211083044" disabled />
+                    <span id="nim_error" class="text-danger"></span>
+                </div>
+                `);
+            } else {
+                $('#kondisi').html('');
+            }
+        } else {
+            $('#role').attr('disabled', false);
+            if (role == 3) {
+                $('#kondisi').html(`
+                <div class="mb-3">
+                    <label for="nip" class="form-label">NIP</label>
+                    <select id="nip" name="nip" class="form-control">
+                    <option value="">-- Pilih nip --</option>
+                    </select>
+                    <span id="nip_error" class="text-danger"></span>
+                </div>
+                `);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/getDosenNip",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status === 200) {
+                            $.each(response.data, function (indexInArray, data) {
+                                $('#nip').append(`
+                                <option value="${data.id_dosen}">${data.nip}</option>
+                                `);
+                            });
+                        }
+                    }
+                });
+            } else if (role == 4) {
+                $('#kondisi').html(`
+                <div class="mb-3">
+                    <label for="nim" class="form-label">NIM</label>
+                    <select id="nim" name="nim" class="form-control">
+                    <option value="">-- Pilih nim --</option>
+                    </select>
+                    <span id="nim_error" class="text-danger"></span>
+                </div>
+                `);
+                $.ajax({
+                    type: "GET",
+                    url: "/getMahasiswaNim",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status === 200) {
+                            $.each(response.data, function (indexInArray, data) {
+                                $('#nim').append(`
+                                <option value="${data.id_mahasiswa}">${data.nim}</option>
+                                `);
+                            });
+                        }
+                    }
+                });
+            } else {
+                $('#kondisi').html('');
+            }
+        }
+    }
+
     $(document).on('click', '.btnEdit', function () {
         showModal(modal = "modalUser", title = "Edit User", form = "btnEditform", icon = "<i class='fas fa-regular fa-pen'></i> Update");
         clearErrorMsg();
@@ -126,9 +212,12 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                console.log(response.data[0])
+                getKondisiData(response.data[0].role, other = response.data.nim ?? response.data.nip)
+                if (response.data.nim ?? response.data.nip) {
+                    $('#role').attr('disabled', true)
+                }
                 $('#id').val(response.data[0].id_user);
-                $('#name').val(response.data[0].name);
+                $('#name').val(response.data[0].username);
                 $('#email').val(response.data[0].email);
                 $('#role').val(response.data[0].role);
                 if (response.data[0].email == response.session) {
@@ -139,6 +228,7 @@ $(document).ready(function () {
                 $('#labelPass').text('Ganti password (optional)');
             },
             error: function (xhr) {
+                console.log(xhr)
                 var errorMessage = xhr.responseJSON.errors;
                 $('#name_error').text(errorMessage.name);
                 $('#email_error').text(errorMessage.email);
@@ -148,11 +238,12 @@ $(document).ready(function () {
         });
     });
 
+    $('#role').change(function () { getKondisiData($(this).val()) });
+
     $(document).on('click', '#btnEditform', function () {
         var formData = $('#form').serialize();
         var id = $('#id').val();
         url = "user/" + id;
-        console.log(url + formData)
 
         $.ajax({
             type: "PUT",
@@ -160,6 +251,12 @@ $(document).ready(function () {
             data: formData,
             dataType: "json",
             success: function (response) {
+                console.log(response)
+                response.status == 400 ? Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.message
+                }) : "";
                 if (response.status == 200) {
                     clerInput(modal = "modalUser");
                     clearErrorMsg();
@@ -174,7 +271,13 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                clearErrorMsg();
+                console.log(xhr)
+                // clearErrorMsg();
+                xhr.status == 400 ? Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: 'Something went wrong!'
+                }) : "";
                 console.error(xhr.responseJSON.password)
                 var errorMessage = xhr.responseJSON.errors;
                 $('#email_error').text(xhr.responseJSON.email);

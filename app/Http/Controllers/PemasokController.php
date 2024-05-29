@@ -13,15 +13,20 @@ class PemasokController extends Controller
      */
     public function index()
     {
-        //
+        return view('pemasok.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function getAllData()
     {
-        //
+        $data = Pemasok::latest()->get();
+        return response()->json([
+            "status" => 200,
+            "data" => $data,
+            "type" => gettype($data)
+        ]);
     }
 
     /**
@@ -29,7 +34,25 @@ class PemasokController extends Controller
      */
     public function store(StorePemasokRequest $request)
     {
-        //
+        $data = [
+            "nama" => $request->nama_pemasok,
+            "alamat" => $request->alamat,
+            "kode_pos" => $request->kode_pos,
+            "kota" => $request->kota,
+            "no_hp" => $request->no_hp
+        ];
+
+        if (!Pemasok::create($data)) {
+            return response()->json([
+                "status" => 400,
+                "message" => "Something went wrong."
+            ]);
+        }
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Berhasil menambahkan data pemasok."
+        ]);
     }
 
     /**
@@ -37,7 +60,11 @@ class PemasokController extends Controller
      */
     public function show(Pemasok $pemasok)
     {
-        //
+        return response()->json([
+            "status" => 200,
+            "message" => "data berhasil diambil",
+            "data" => $pemasok
+        ]);
     }
 
     /**
@@ -61,6 +88,10 @@ class PemasokController extends Controller
      */
     public function destroy(Pemasok $pemasok)
     {
-        //
+        $pemasok->delete();
+        return response()->json([
+            "status" => 200,
+            "message" => "Data berhasil dihapus"
+        ]);
     }
 }

@@ -14,4 +14,9 @@ class BarangMasuk extends Model
     {
         return $this->belongsTo(Barang::class, 'barang_id');
     }
+
+    public function pemasok()
+    {
+        return $this->belongsTo(Pemasok::class, 'pemasok_id');
+    }
 }

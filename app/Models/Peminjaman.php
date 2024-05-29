@@ -20,4 +20,17 @@ class Peminjaman extends Model
     {
         return $this->belongsTo(Barang::class, 'id_barang');
     }
+
+    public static function getKodePeminjaman()
+    {
+        $lastPeminjaman = self::latest()->first();
+        $nextNumber = 1;
+        if ($lastPeminjaman) {
+            $lastKode = $lastPeminjaman->kode_peminjaman;
+            $lastNumber = (int) substr($lastKode, 1);
+            $nextNumber = $lastNumber + 1;
+        }
+
+        return 'T' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+    }
 }

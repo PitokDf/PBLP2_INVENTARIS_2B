@@ -24,7 +24,7 @@ class StoreBarangMasukRequest extends FormRequest
         return [
             'barang' => 'required|exists:barang,id_barang',
             'quantity' => 'required|numeric|min:1',
-            'pemasok' => 'required',
+            'pemasok' => 'required|exists:pemasoks,id',
             'keterangan' => 'required',
         ];
     }

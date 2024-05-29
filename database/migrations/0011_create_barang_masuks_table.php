@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('barang_id');
             $table->foreign('barang_id')->references('id_barang')->on('barang');
-            $table->string('pemasok');
+            $table->foreignId('pemasok_id')->constrained('pemasoks');
             $table->integer('quantity');
             $table->string('keterangan')->nullable();
             $table->timestamps();

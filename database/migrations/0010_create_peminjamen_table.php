@@ -12,16 +12,19 @@ return new class extends Migration {
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_peminjaman')->unique();
             $table->unsignedBigInteger('id_barang');
             $table->foreign('id_barang')->references('id_barang')->on('barang');
             $table->uuid('id_user');
             $table->foreign('id_user')->references('id_user')->on('users');
-            $table->date('tgl_peminjaman')->nullable();
-            $table->date('batas_pengembalian')->nullable();
+            $table->date('tgl_peminjaman');
+            $table->date('batas_pengembalian');
             $table->date('tgl_pengembalian')->nullable();
+            $table->integer('jumlah');
             $table->boolean('status')->default(false);
             $table->decimal('denda')->default(0.00);
             $table->text('keterangan');
+            $table->text('kondisi')->nullable();
             $table->timestamps();
         });
     }

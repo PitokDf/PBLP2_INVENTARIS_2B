@@ -12,12 +12,12 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\MahasiswasController;
+use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanUmumController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
-use App\Models\Barang;
 use App\Models\Peminjaman;
 use App\Models\Prodi;
 use App\Models\User;
@@ -101,6 +101,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('getDataBarangMasuk', [BarangMasukController::class, 'getData']);
         Route::resource('barang-keluar', BarangKeluarController::class);
         Route::get('getDatabarangKeluar', [BarangKeluarController::class, 'getAllData']);
+        Route::resource('pemasok', PemasokController::class);
+        Route::get('/getDataPemasok', [PemasokController::class, 'getAllData']);
+        Route::get('/getKodePeminjaman', function () {
+            return Peminjaman::getKodePeminjaman();
+        });
+        Route::get('/pengembalian', function () {
+            return view('pengembalian.index');
+        });
     });
 
     Route::group(["middleware" => "userAkses:3|4|5"], function () {

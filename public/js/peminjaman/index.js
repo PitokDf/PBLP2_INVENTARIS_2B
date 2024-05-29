@@ -91,12 +91,35 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '.kembalikan', function () {
+        $('#modalKembalikan').modal('show');
+        $.ajax({
+            type: "GET",
+            url: "/peminjaman/" + $(this).data('id'),
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                const data = response.data;
+                $('#id').val(data.id);
+                $('#nama_barangK').val(data.barang.nama_barang);
+                $('#kode_barangK').val(data.barang.code_barang);
+                $('#jumlahK').val(data.jumlah);
+                $('#peminjamK').val(data.user.username);
+                $('#tglpeminjamanK').val(dateCutomFormat(data.tgl_peminjaman));
+                $('#bataspengembalianK').val(dateCutomFormat(data.batas_pengembalian));
+                $('#reasonK').val(data.keterangan);
+            }
+        });
+    });
+
+    $('#kembalikan').on('click', function () {
+        $('#kondisiK').removeClass('is-invalid');
+        $('#kondisi_error').text('');
         var data = new FormData();
         data.append('_method', 'PUT');
-        data.append('barang', $(this).attr('id'));
+        data.append('kondisi', $('#kondisiK').val());
         $.ajax({
             type: "POST",
-            url: "/peminjaman/" + $(this).data('id'),
+            url: "/peminjaman/" + $('#id').val(),
             processData: false,
             contentType: false,
             data: data,
@@ -109,6 +132,10 @@ $(document).ready(function () {
                         icon: "error"
                     }) : '';
                 response.status === 200 ? (
+                    $('#kondisiK').removeClass('is-invalid'),
+                    $('#kondisiK').val(''),
+                    $('#kondisi_error').text(''),
+                    $('#modalKembalikan').modal('hide'),
                     reloadTable(table_peminjaman),
                     Swal.fire({
                         title: "Dikembalikan!",
@@ -118,12 +145,15 @@ $(document).ready(function () {
                 ) : '';
             },
             error: function (errors) {
-                console.log(errors)
+                $('#kondisiK').removeClass('is-invalid');
+                $('#kondisi_error').text('');
+                if (errors.responseJSON.kondisi) {
+                    $('#kondisiK').addClass('is-invalid');
+                    $('#kondisi_error').text(errors.responseJSON.kondisi);
+                }
             }
-
         });
-    });
-
+    })
     // saat tombol edit di click maka akan mengambil data sesaui id
     $(document).on('click', '.btnDetail', function () {
         $('#modalDetailPeminjaman').modal('show');
@@ -138,7 +168,7 @@ $(document).ready(function () {
                 console.log(response)
                 if (response.status === 200) {
                     const data = response.data;
-                    $('#id_peminjaman').text(data.id);
+                    $('#id_peminjaman').text(data.kode_peminjaman);
                     $('#namaBarang').text(data.barang.nama_barang);
                     $('#peminjam').text(data.user.username);
                     $('#kodeBarang').text(data.barang.code_barang);
@@ -224,6 +254,7 @@ $(document).ready(function () {
                         $('#jumlah').val('1');
 
                         $('#nama_barang').val(response.data.nama_barang);
+                        $('#stok').val(response.data.quantity);
                         $('#kategori_barang').val(response.data.kategori.nama_kategori_barang);
                     }
                     if (response.status === 404) {
@@ -250,6 +281,7 @@ $(document).ready(function () {
 
     // menampilkan modal form saat btn create di click
     $('#btnCreate').click(function () {
+        $.ajax({ type: "GET", url: "/getKodePeminjaman", dataType: "text", success: function (response) { $('#kodeP').text(response); } });
         modal.modal('show');
         modal_title.text('Form Peminjaman');
         btnAction.html("<i class='fas fa-save'></i> Pinjam");
@@ -327,7 +359,7 @@ $(document).ready(function () {
         });
     });
 
-    // menangani proses edit data
+    // menangani proses edit data 
     $(document).on('click', '#btnEdit', function () {
         var data = new FormData();
         data.append('_method', "PUT")

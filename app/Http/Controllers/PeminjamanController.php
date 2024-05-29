@@ -82,7 +82,7 @@ class PeminjamanController extends Controller
         if ($request->quantity > $barang->quantity) {
             return response()->json([
                 'status' => 202,
-                'message' => 'Out of stcok.'
+                'message' => 'Stok tidak mencukupi.'
             ]);
         }
 
@@ -91,11 +91,13 @@ class PeminjamanController extends Controller
                 'id_barang' => $barang->id_barang,
                 'id_user' => $request->namaUser,
                 'tgl_peminjaman' => now(),
+                'jumlah' => $request->quantity,
                 'keterangan' => $request->reason,
+                'kode_peminjaman' => Peminjaman::getKodePeminjaman(),
                 'batas_pengembalian' => date('Y-m-d', strtotime('+7 days'))
             ]);
 
-            $barang->decrement('quantity', 1);
+            $barang->decrement('quantity', $request->quantity);
             return response()->json([
                 'status' => 200,
                 'message' => 'Berhasil Melakukan Peminjaman.'
@@ -149,11 +151,23 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Peminjaman::findOrFail($id)->update([
-            'tgl_pengembalian' => now(),
-            'status' => true
+        $validator = Validator::make($request->all(), [
+            'kondisi' => 'required'
         ]);
-        Barang::findOrFail($request->barang)->increment('quantity', 1);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $peminjaman = Peminjaman::findOrFail($id);
+        $dataPeminjam = Peminjaman::with(['user', 'barang'])->where('id', $id)->first();
+        $peminjaman->update(
+            [
+                'tgl_pengembalian' => now(),
+                'status' => true,
+                "kondisi" => $request->kondisi
+            ]
+        );
+        Barang::findOrFail($dataPeminjam->barang->id_barang)->increment('quantity', $peminjaman->jumlah);
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil Mengembalikan Barang.'

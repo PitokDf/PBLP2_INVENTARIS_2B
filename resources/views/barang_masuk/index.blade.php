@@ -33,7 +33,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Pemasok</label>
-                        <input type="text" name="pemasok" id="pemasok" placeholder="Pemasok" class="form-control">
+                        <select name="barang" id="pemasok" class="form-control">
+                            <option value="">--Pilih Pemasok--</option>
+                            @foreach ($pemasoks as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                            @endforeach
+                        </select>
                         <span id="pemasok_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">

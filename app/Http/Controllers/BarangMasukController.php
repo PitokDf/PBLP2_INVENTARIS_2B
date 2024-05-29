@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBarangMasukRequest;
 use App\Http\Requests\UpdateBarangMasukRequest;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
+use App\Models\Pemasok;
 
 class BarangMasukController extends Controller
 {
@@ -14,14 +15,14 @@ class BarangMasukController extends Controller
      */
     public function index()
     {
-        $data = BarangMasuk::latest()->get();
         $barang = Barang::all();
-        return view("barang_masuk.index")->with(['barangM' => $data, 'barangs' => $barang]);
+        $pemasok = Pemasok::latest()->get();
+        return view("barang_masuk.index")->with(['pemasoks' => $pemasok, 'barangs' => $barang]);
     }
 
     public function getData()
     {
-        $data = BarangMasuk::with('barang')->latest()->get();
+        $data = BarangMasuk::with(['barang', 'pemasok'])->latest()->get();
         return response()->json([
             'data' => $data,
         ]);
@@ -42,7 +43,7 @@ class BarangMasukController extends Controller
     {
         $barangMasuk = BarangMasuk::create([
             "barang_id" => $request->barang,
-            "pemasok" => $request->pemasok,
+            "pemasok_id" => $request->pemasok,
             "quantity" => $request->quantity,
             "keterangan" => $request->keterangan
         ]);
@@ -68,7 +69,8 @@ class BarangMasukController extends Controller
         $data = BarangMasuk::with([
             'barang' => function ($query) {
                 $query->select('id_barang', 'code_barang', 'nama_barang');
-            }
+            },
+            'pemasok'
         ])->where('id', $id)->first();
 
         if (!$data) {

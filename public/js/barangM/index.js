@@ -27,7 +27,13 @@ $(document).ready(function () {
                 },
                 "orderable": true
             },
-            { "data": "pemasok", "orderable": true },
+            {
+                "data": null,
+                "render": function (_row, _type, data) {
+                    return data.pemasok.nama
+                },
+                "orderable": true
+            },
             { "data": "quantity", "orderable": true },
             {
                 "data": null,
@@ -130,7 +136,7 @@ $(document).ready(function () {
                     $('#txt_kode_barang').text(data.barang.code_barang);
                     $('#txt_namaBarang').text(data.barang.nama_barang);
                     $('#txt_quantity').text(data.quantity);
-                    $('#txt_pemasok').text(data.pemasok);
+                    $('#txt_pemasok').text(data.pemasok.nama);
                     $('#txt_tgl_masuk').text(dateCutomFormat(data.created_at));
                 }
             }

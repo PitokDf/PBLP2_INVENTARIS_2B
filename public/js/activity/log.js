@@ -11,60 +11,34 @@ $(document).on('click', '#activity-log', function () {
             }
             for (let i = 0; i < response.length; i++) {
                 if (response[i].activity == 'delete') {
-                    document.getElementById("activity-content").innerHTML +=
-                        `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
-                        <div class="mr-3">
-                            <div class="icon-circle bg-danger">
-                                <i class="fas fa-trash-alt text-white"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="small text-gray-500">${response[i].time}</div>
-                            ${response[i].user.username} ${response[i].deskripsi}
-                        </div>
-                    </a>
-                    <hr>`
+                    setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-trash-alt text-white"></i>`, response[i].deskripsi, 'bg-danger')
                 } else if (response[i].activity == 'add') {
-                    document.getElementById("activity-content").innerHTML +=
-                        `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-success">
-                                    <i class="fas fa-plus-circle text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">${response[i].time}</div>
-                                ${response[i].user.username} ${response[i].deskripsi}
-                            </div>
-                        </a>`
+                    setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-plus-circle text-white"></i>`, response[i].deskripsi, 'bg-success')
+                } else if (response[i].activity == 'logout') {
+                    setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-sign-out-alt"></i>`, response[i].deskripsi, 'bg-warning')
                 } else if (response[i].activity == 'Login') {
-                    document.getElementById("activity-content").innerHTML +=
-                        `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-info">
-                                    <i class="fas fa-sign-in-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">${response[i].time}</div>
-                                ${response[i].user.username} ${response[i].deskripsi}
-                            </div>
-                        </a>`
+                    setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-sign-in-alt text-white"></i>`, response[i].deskripsi, 'bg-success')
                 } else {
-                    document.getElementById("activity-content").innerHTML +=
-                        `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-warning">
-                                    <i class="fas fa-pencil-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">${response[i].time}</div>
-                                ${response[i].user.username} ${response[i].deskripsi}
-                            </div>
-                        </a>`
+                    setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-pencil-alt text-white"></i>`, response[i].deskripsi, 'bg-warning')
                 }
             }
         }
     });
 });
+
+
+function setIconLog(time, username, icon, deskripsi, background) {
+    document.getElementById("activity-content").innerHTML +=
+        `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
+            <div class="mr-3">
+                <div class="icon-circle ${background}">
+                    ${icon}
+                </div>
+            </div>
+        <div>
+            <div class="small text-gray-500">${time}</div>
+            ${username} ${deskripsi}
+        </div>
+    </a>
+    <hr>`
+}

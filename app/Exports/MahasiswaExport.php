@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Mahasiswa;
+use App\Models\Mahasiswas;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -17,7 +17,7 @@ class MahasiswaExport implements FromCollection, WithHeadings
     }
     public function collection()
     {
-        return Mahasiswa::select([
+        return Mahasiswas::select([
             "nim",
             "nama",
             "program_studi",

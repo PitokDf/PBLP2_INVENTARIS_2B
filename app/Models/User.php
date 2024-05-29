@@ -53,4 +53,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Dosen::class, 'id_dosen', "dosen_id");
     }
+
+
+    public static function createSlug(string $text)
+    {
+        $slug = Str::slug($text, "-");
+        return $slug;
+    }
 }

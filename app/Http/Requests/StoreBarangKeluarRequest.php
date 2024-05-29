@@ -11,7 +11,7 @@ class StoreBarangKeluarRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class StoreBarangKeluarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "barang" => "required|exists:barang,id_barang",
+            "quantity" => "required|numeric|min:1",
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            "barang.required" => "Pilih Barang.",
+            "barang.exists" => "Barang tidak terdaftar.",
+            "quantity.required" => "Quantity harus diisi.",
+            "quantity.numeric" => "Quantity harus numeric.",
+            "quantity.min" => "Quantity minimal :min."
         ];
     }
 }

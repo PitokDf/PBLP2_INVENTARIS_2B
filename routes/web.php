@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CommandHelper;
@@ -98,7 +99,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('peminjaman', PeminjamanController::class);
         Route::resource('barangM', BarangMasukController::class);
         Route::get('getDataBarangMasuk', [BarangMasukController::class, 'getData']);
-
+        Route::resource('barang-keluar', BarangKeluarController::class);
+        Route::get('getDatabarangKeluar', [BarangKeluarController::class, 'getAllData']);
     });
 
     Route::group(["middleware" => "userAkses:3|4|5"], function () {

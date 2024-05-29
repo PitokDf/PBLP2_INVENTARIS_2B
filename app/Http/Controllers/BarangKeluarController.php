@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBarangKeluarRequest;
 use App\Http\Requests\UpdateBarangKeluarRequest;
+use App\Models\Barang;
 use App\Models\BarangKeluar;
 
 class BarangKeluarController extends Controller
@@ -13,7 +14,17 @@ class BarangKeluarController extends Controller
      */
     public function index()
     {
-        //
+        $barang = Barang::latest()->get();
+        return view("barang_keluar.index")->with('barangs', $barang);
+    }
+
+    public function getAllData()
+    {
+        $data = BarangKeluar::with('barang')->latest()->get();
+        return response()->json([
+            'data' => $data,
+            'message' => "Data Berhasil didapatkan."
+        ]);
     }
 
     /**
@@ -21,7 +32,7 @@ class BarangKeluarController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -29,7 +40,29 @@ class BarangKeluarController extends Controller
      */
     public function store(StoreBarangKeluarRequest $request)
     {
-        //
+        $barang = Barang::find($request->barang)->first();
+
+        $data = [
+            "barang_id" => $request->barang,
+            "tgl_keluar" => now(),
+            "quantity" => $request->quantity
+        ];
+
+        if ($request->quantity > $barang->quantity) {
+            return response()->json([
+                'status' => 400,
+                'message' => "Quantiy tersedia kurang dari " . $request->quantity . "."
+            ]);
+        }
+        if (BarangKeluar::create($data)) {
+            $barang->update([
+                'quantity' => $barang->quantity -= $request->quantity
+            ]);
+        }
+        return response()->json([
+            "status" => 200,
+            "message" => "Barang keluar berhasil dicatat."
+        ]);
     }
 
     /**
@@ -37,7 +70,17 @@ class BarangKeluarController extends Controller
      */
     public function show(BarangKeluar $barangKeluar)
     {
-        //
+        if (!$barangKeluar) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Data tidak tersedia."
+            ]);
+        }
+        return response()->json([
+            "status" => 200,
+            "data" => $barangKeluar->with('barang')->get()->first(),
+            "message" => "Berhasil mendapatkan data."
+        ]);
     }
 
     /**
@@ -45,7 +88,7 @@ class BarangKeluarController extends Controller
      */
     public function edit(BarangKeluar $barangKeluar)
     {
-        //
+
     }
 
     /**
@@ -61,6 +104,16 @@ class BarangKeluarController extends Controller
      */
     public function destroy(BarangKeluar $barangKeluar)
     {
-        //
+        if ($barangKeluar->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Record barang keluar berhasil dihapus.'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong.'
+            ]);
+        }
     }
 }

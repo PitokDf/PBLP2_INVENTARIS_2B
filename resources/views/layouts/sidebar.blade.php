@@ -112,11 +112,12 @@
     @endif
 
     @if (in_array(auth()->user()->role, ['1']))
-        <li class="nav-item {{ Request::is(['barangM', 'peminjaman']) ? 'active' : '' }}">
+        <li class="nav-item {{ Request::is(['barangM', 'peminjaman', 'barang-keluar']) ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
                 aria-expanded="true" aria-controls="pengelolaanData">
                 <i class="fas fa-fw fa-calendar-week"></i>
-                <span>Manajemen Barang</span>
+                <span>{{ Request::is('barangM') ? 'Barang Masuk' : (Request::is('peminjaman') ? 'Peminjaman' : (Request::is('barang-keluar') ? 'Barang Keluar BHP' : 'Manajemen Barang')) }}
+                </span>
             </a>
             <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -124,8 +125,7 @@
                         href="{{ route('barangM.index') }}">
                         <span>Barang Masuk</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('pengelolaan/barang-keluar') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('barang-keluar') ? 'active' : '' }}" href="/barang-keluar">
                         <span>Barang Keluar BHP</span>
                     </a>
                     <a class="collapse-item {{ Request::is('pengelolaan/pengembalian') ? 'active' : '' }}"

@@ -113,7 +113,7 @@ class SessionController extends Controller
             return response()->json($validator->errors(), 422);
         }
         $data = [
-            "name" => $rq->name,
+            "username" => $rq->name,
             "email" => $rq->email,
             "password" => bcrypt($rq->password),
         ];

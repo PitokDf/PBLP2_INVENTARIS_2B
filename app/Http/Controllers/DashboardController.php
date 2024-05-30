@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $dataKategori = KategoriBarang::count();
         $mahasiswa = Mahasiswas::count();
         $userVeirfied = User::where("email_verified_at", '!=', null);
-        $pinjaman = Peminjaman::where("tgl_pengembalian", "=", null)->count();
+        $pinjaman = Peminjaman::where("tgl_pengembalian", "=", null)->sum('jumlah');
         return view("dashboard.index")->with([
             "barang" => $dataBarang,
             'kategoriB' => $dataKategori,

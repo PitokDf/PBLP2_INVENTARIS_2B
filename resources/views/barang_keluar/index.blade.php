@@ -42,11 +42,11 @@
                         <input type="number" name="quantity" id="quantity" placeholder="Quantity" class="form-control">
                         <span id="quantity_error" class="text-danger"></span>
                     </div>
-                    {{-- <div class="mb-3">
+                    <div class="mb-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <textarea name="keterangan" class="form-control" id="keterangan" cols="30" rows="3"></textarea>
                         <span id="keterangan_error" class="text-danger"></span>
-                    </div> --}}
+                    </div>
                     <div class="divider"></div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-sm btn-primary" id="simpan">Submit</button>

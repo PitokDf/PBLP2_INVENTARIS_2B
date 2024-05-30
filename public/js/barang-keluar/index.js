@@ -48,13 +48,16 @@ $(document).ready(function () {
     function clearErrorMsg() {
         $('#barang_error').text('');
         $('#quantity_error').text('');
+        $('#keterangan_error').text('');
         $('#barangM').removeClass('is-invalid');
         $('#quantity').removeClass('is-invalid');
+        $('#keterangan').removeClass('is-invalid');
     }
 
     function clearInput() {
         $('#barangM').val('');
         $('#quantity').val('');
+        $('#keterangan').val('');
     }
 
     $('#simpan').on('click', function () {
@@ -62,6 +65,7 @@ $(document).ready(function () {
 
         data.append('barang', $('#barangM').val());
         data.append('quantity', $('#quantity').val());
+        data.append('keterangan', $('#keterangan').val());
 
         $.ajax({
             type: "POST",
@@ -105,6 +109,10 @@ $(document).ready(function () {
                     $('#quantity_error').text(errorMessage.quantity);
                     $('#quantity').addClass('is-invalid');
                 }
+                if (errorMessage.keterangan) {
+                    $('#keterangan_error').text(errorMessage.keterangan);
+                    $('#keterangan').addClass('is-invalid');
+                }
             }
         });
     });
@@ -124,6 +132,7 @@ $(document).ready(function () {
                     $('#txt_namaBarang').text(data.barang.nama_barang);
                     $('#txt_quantity').text(data.quantity);
                     $('#txt_tgl_keluar').text(dateCutomFormat(data.tgl_keluar));
+                    $('#txt_keterangan').text(data.keterangan);
                 }
             },
             error: function (xhr) {

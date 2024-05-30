@@ -18,6 +18,7 @@ use App\Http\Controllers\PeminjamanUmumController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
+use App\Models\Barang;
 use App\Models\Peminjaman;
 use App\Models\Prodi;
 use App\Models\User;
@@ -125,6 +126,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ]);
             return redirect()->back();
         })->name('dosen');
+        Route::get('/daftar-barang', function () {
+            $data = Barang::with('kategori')->where('quantity', '!=', 0)->latest()->get();
+            return view('umum.barang')->with('barang', $data);
+        });
+        Route::get('/riwayat-peminjaman', function () {
+            $data = Peminjaman::with([
+                'user',
+                'barang'
+            ])->where('id_user', Auth::user()->id_user)->latest()->get();
+            return view('umum.riwayat_peminjaman')->with('peminjaman', $data);
+        });
     });
 
 });

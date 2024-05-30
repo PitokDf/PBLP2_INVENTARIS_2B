@@ -45,7 +45,8 @@ class BarangKeluarController extends Controller
         $data = [
             "barang_id" => $request->barang,
             "tgl_keluar" => now(),
-            "quantity" => $request->quantity
+            "quantity" => $request->quantity,
+            "keterangan" => $request->keterangan
         ];
 
         if ($request->quantity > $barang->quantity) {
@@ -68,8 +69,9 @@ class BarangKeluarController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BarangKeluar $barangKeluar)
+    public function show(string $id)
     {
+        $barangKeluar = BarangKeluar::with('barang')->findOrFail($id);
         if (!$barangKeluar) {
             return response()->json([
                 "status" => 404,
@@ -78,7 +80,7 @@ class BarangKeluarController extends Controller
         }
         return response()->json([
             "status" => 200,
-            "data" => $barangKeluar->with('barang')->get()->first(),
+            "data" => $barangKeluar,
             "message" => "Berhasil mendapatkan data."
         ]);
     }

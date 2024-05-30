@@ -100,3 +100,7 @@
 div:where(.swal2-container) {
     backdrop-filter: blur(3px);
 }
+
+.sidebar-divider {
+    background-color: white;
+}

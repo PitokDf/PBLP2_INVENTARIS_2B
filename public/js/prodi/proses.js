@@ -85,6 +85,7 @@ $(document).ready(function () {
                 });
             },
             error: function (errors) {
+                console.log(errors)
                 if (errors.status === 422) {
                     clearErrorMsg();
                     if (errors.responseJSON.kode) {

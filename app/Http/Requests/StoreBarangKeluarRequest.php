@@ -24,6 +24,7 @@ class StoreBarangKeluarRequest extends FormRequest
         return [
             "barang" => "required|exists:barang,id_barang",
             "quantity" => "required|numeric|min:1",
+            "keterangan" => "required",
         ];
     }
 

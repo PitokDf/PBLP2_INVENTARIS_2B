@@ -16,7 +16,6 @@
                 <span>Dashboard</span></a>
         </li>
     @endrole
-
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -26,10 +25,10 @@
     </div>
 
     @role(['3', '4', '5'])
-        <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
-            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+        <li class="nav-item {{ Request::is('daftar-barang') ? 'active' : '' }}">
+            <a href="/daftar-barang" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
-                <span>Peminjaman</span>
+                <span>Daftar Barang</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
@@ -38,8 +37,14 @@
                 <span>Pengembalian</span>
             </a>
         </li>
-        <li class="nav-item {{ Request::is('riwayat') ? 'active' : '' }}">
-            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+        <li class="nav-item {{ Request::is('pinjaman') ? 'active' : '' }}">
+            <a href="{{--  --}}" class="nav-link">
+                <i class="fas fa-fw fa-hand-holding"></i>
+                <span>Peminjaman</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('riwayat-peminjaman') ? 'active' : '' }}">
+            <a href="/riwayat-peminjaman" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Riwayat Peminjaman</span>
             </a>
@@ -66,12 +71,9 @@
                 </div>
             </div>
         </li>
-    @endrole
-
-    @if (auth()->user()->role == 1)
         <li class="nav-item {{ Request::is('berita') || Request::is('kategori-berita') ? 'active' : '' }}">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#berita"
-                aria-expanded="true" aria-controls="berita">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#berita" aria-expanded="true"
+                aria-controls="berita">
                 <i class="far fa-calendar-plus"></i>
                 <span>Berita</span>
             </a>
@@ -109,9 +111,6 @@
                 <span>Users</span>
             </a>
         </li>
-    @endif
-
-    @if (in_array(auth()->user()->role, ['1']))
         <li
             class="nav-item {{ Request::is(['barangM', 'peminjaman', 'barang-keluar', 'pemasok', 'pengembalian']) ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
@@ -129,9 +128,9 @@
                     <a class="collapse-item {{ Request::is('barang-keluar') ? 'active' : '' }}" href="/barang-keluar">
                         <span>Barang Keluar BHP</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('pengembalian') ? 'active' : '' }}" href="/pengembalian">
+                    {{-- <a class="collapse-item {{ Request::is('pengembalian') ? 'active' : '' }}" href="/pengembalian">
                         <span>Pengembalian</span>
-                    </a>
+                    </a> --}}
 
                     <a class="collapse-item {{ Request::is('peminjaman') ? 'active' : '' }}"
                         href="{{ route('peminjaman.index') }}">
@@ -144,16 +143,29 @@
                 </div>
             </div>
         </li>
-    @endif
-    @if (in_array(auth()->user()->role, ['3', '4', '5']))
-        <li class="nav-item {{ Request::is('pinjaman') ? 'active' : '' }}">
-            <a href="{{--  --}}" class="nav-link">
-                <i class="fas fa-fw fa-hand-holding"></i>
-                <span>Barang Pinjaman</span>
+        <li class="nav-item {{ Request::is('prodi') || Request::is('jabatan') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others"
+                aria-expanded="true" aria-controls="others">
+                <i class="fas fa-network-wired"></i>
+                <span>Others</span>
             </a>
+            <div id="others" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item {{ Request::is('jabatan') ? 'active' : '' }}"
+                        href="{{ route('jabatan.index') }}">
+                        <i class="fas fa-archive"></i>
+                        <span>Jabatan</span>
+                    </a>
+                    <a class="collapse-item {{ Route::is('prodi') ? 'active' : '' }}" href="{{ route('prodi.index') }}">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Prodi</span>
+                    </a>
+                </div>
+            </div>
         </li>
-    @endif
-    @if (auth()->user()->role == 1 || auth()->user()->role == 2)
+    @endrole
+
+    @role(['1', '2'])
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporan"
                 aria-expanded="true" aria-controls="laporan">
@@ -190,30 +202,8 @@
                 </div>
             </div>
         </li>
-    @endif
-    @if (auth()->user()->role == 1)
-        <li class="nav-item {{ Request::is('prodi') || Request::is('jabatan') ? 'active' : '' }}">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others"
-                aria-expanded="true" aria-controls="others">
-                <i class="fas fa-network-wired"></i>
-                <span>Others</span>
-            </a>
-            <div id="others" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('jabatan') ? 'active' : '' }}"
-                        href="{{ route('jabatan.index') }}">
-                        <i class="fas fa-archive"></i>
-                        <span>Jabatan</span>
-                    </a>
-                    <a class="collapse-item {{ Route::is('prodi') ? 'active' : '' }}"
-                        href="{{ route('prodi.index') }}">
-                        <i class="fas fa-user-graduate"></i>
-                        <span>Prodi</span>
-                    </a>
-                </div>
-            </div>
-        </li>
-    @endif
+    @endrole
+
     <!-- Sidebar Message -->
     <div class="sidebar-card mt-3 d-none d-lg-flex">
         {{-- <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="..."> --}}

@@ -35,7 +35,7 @@
             </div>
         </div>
     @endif
-    @if (in_array(Auth::user()->role, ['3', '4']))
+    @if (in_array(Auth::user()->role, ['3', '4']) && Auth::user()->mahasiswa_id == null)
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
                 <path
@@ -78,7 +78,7 @@
                                 <div class="col-lg-10">
                                     <div class="row mb-3">
                                         <div class="col-lg-12 d-flex justify-content-center">
-                                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=4e73df&color=ffffff&size=150"
+                                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->username }}&background=4e73df&color=ffffff&size=150"
                                                 alt="" class="img-profile rounded-circle">
                                         </div>
                                     </div>

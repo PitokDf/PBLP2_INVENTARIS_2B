@@ -113,20 +113,10 @@ class UsersController extends Controller
                 'password' => 'nullable|min:8'
             ];
 
-            // jika input password diisi menambahkan validasi untuk password
-            // if (!empty($request->password)) {
-            //     $rules['password'] = ['min:8'];
-            // }
-
-            // if (!empty($request->role)) {
-            //     $rules['role'] = ['required'];
-            // }
-
             $validator = Validator::make($request->all(), $rules, [
                 "email.unique" => "Email sudah pernah tersedia.",
                 "password" => "Password minimal :min karakter."
             ]);
-
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);

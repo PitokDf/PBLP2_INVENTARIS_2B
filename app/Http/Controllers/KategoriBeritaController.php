@@ -44,12 +44,8 @@ class KategoriBeritaController extends Controller
         ];
 
         KategoriBerita::create($data);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'add',
-            'deskripsi' => 'menambahkan data kategori berita pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+
+        ActivityLog::createLog('add', 'menambahkan data kategori berita');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil manambahkan kategori."

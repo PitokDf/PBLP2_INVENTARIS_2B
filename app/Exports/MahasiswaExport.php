@@ -20,7 +20,7 @@ class MahasiswaExport implements FromCollection, WithHeadings
         return Mahasiswas::select([
             "nim",
             "nama",
-            "program_studi",
+            "code_prodi",
             "angkatan",
             "ipk"
         ])->get();

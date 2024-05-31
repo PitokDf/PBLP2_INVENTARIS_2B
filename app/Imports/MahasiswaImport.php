@@ -2,7 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\Mahasiswa;
+
+use App\Models\Mahasiswas;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -15,16 +16,16 @@ class MahasiswaImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $existingMahasiswa = Mahasiswa::where('nim', $row['nim'])->first();
+        $existingMahasiswa = Mahasiswas::where('nim', $row['nim'])->first();
 
         if ($existingMahasiswa) {
             return null;
         }
 
-        return new Mahasiswa([
+        return new Mahasiswas([
             'nim' => $row['nim'],
             'nama' => $row['nama'],
-            'program_studi' => $row['prodi'],
+            'code_prodi' => $row['prodi'],
             'angkatan' => $row['angkatan'],
             'ipk' => $row['ipk'],
         ]);

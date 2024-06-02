@@ -1,6 +1,6 @@
 @extends('layouts.content')
 
-@section('title', 'Laporan Barang')
+@section('title', 'Laporan Peminjaman')
 @section('scriptPages')
     <script>
         $('#table_barang').dataTable();

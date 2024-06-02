@@ -165,36 +165,45 @@
     @endrole
 
     @role(['1', '2'])
-        <li class="nav-item">
+        <li
+            class="nav-item {{ Request::is(['laporan-barang', 'laporan-barang-masuk', 'laporan-barang-keluar', 'laporan-peminjaman', 'laporan-stok']) ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporan"
                 aria-expanded="true" aria-controls="laporan">
                 <i class="fas fa-fw fa-solid fa-list"></i>
-                <span>Laporan</span>
+                <span>{{ Request::is('laporan-barang')
+                    ? 'Laporan Barang'
+                    : (Request::is('laporan-barang-keluar')
+                        ? 'Transaksi Keluar'
+                        : (Request::is('laporan-barang-masuk')
+                            ? 'Transaksi Masuk'
+                            : (Request::is('laporan-peminjaman')
+                                ? 'Laporan Peminjaman'
+                                : (Request::is('laporan-stok')
+                                    ? 'Laporan Stok Barang'
+                                    : 'Laporan')))) }}</span>
             </a>
             <div id="laporan" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('pengelolaan/data-barang') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('laporan-barang') ? 'active' : '' }}" href="/laporan-barang">
                         <i class="fas fa-archive"></i>
-                        <span>Data Barang</span>
+                        <span>Barang</span>
                     </a>
-                    <a class="collapse-item {{ Route::is('pengelolaan/data-barang') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('laporan-barang-masuk') ? 'active' : '' }}"
+                        href="/laporan-barang-masuk">
                         <i class="fas fa-sign-in-alt"></i>
-                        <span>Transaksi Barang Masuk</span>
+                        <span>Transaksi Masuk</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('pengelolaan/barang-keluar') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('laporan-barang-keluar') ? 'active' : '' }}"
+                        href="/laporan-barang-keluar">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span>Transaksi Barang Keluar</span>
+                        <span>Transaksi Keluar</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('pengelolaan/peminjaman') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('laporan-peminjaman') ? 'active' : '' }}"
+                        href="/laporan-peminjaman">
                         <i class="fas fa-hand-holding"></i>
                         <span>Peminjaman</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('pengelolaan/stok') ? 'active' : '' }}"
-                        href="{{--  --}}">
+                    <a class="collapse-item {{ Request::is('laporan-stok') ? 'active' : '' }}" href="/laporan-stok">
                         <i class="fas fa-boxes"></i>
                         <span>Stok</span>
                     </a>

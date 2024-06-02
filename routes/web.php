@@ -16,6 +16,7 @@ use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanUmumController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
 use App\Models\Barang;
@@ -69,6 +70,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //     return view("dashboard.index")->with("count", $userCount);
         // })->name('dashboard');
         Route::resource('/', DashboardController::class);
+        Route::get('/laporan-barang', [ReportController::class, 'reportBarang']);
+        Route::get('/laporan-barang-masuk', [ReportController::class, 'reportBarangMasuk']);
+        Route::get('/laporan-barang-keluar', [ReportController::class, 'reportBarangKeluar']);
+        Route::get('/laporan-peminjaman', [ReportController::class, 'reportPeminjaman']);
+        Route::get('/laporan-stok', [ReportController::class, 'reportStok']);
     });
 
     Route::group(["middleware" => "userAkses:1"], function () {

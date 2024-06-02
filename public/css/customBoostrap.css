@@ -104,3 +104,11 @@ div:where(.swal2-container) {
 .sidebar-divider {
     background-color: white;
 }
+
+.bg-empty {
+    background: rgba(255, 0, 0, 0.911);
+}
+
+.text-bold {
+    font-weight: 700;
+}

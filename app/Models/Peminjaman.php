@@ -31,6 +31,6 @@ class Peminjaman extends Model
             $nextNumber = $lastNumber + 1;
         }
 
-        return 'T' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+        return 'PBL' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
     }
 }

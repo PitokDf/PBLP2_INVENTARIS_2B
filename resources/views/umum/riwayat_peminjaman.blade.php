@@ -52,9 +52,6 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h5 class="m-0 font-weight-bold text-secondary">Daftar Barang Tersedia</h5>
                     <div>
-                        <button type="button" class="btn btn-sm btn-light btn-refresh" data-toggle="modal">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
                     </div>
                 </div>
                 <!-- Card Body -->
@@ -82,7 +79,9 @@
                                             <td>{{ $item->barang->nama_barang }}</td>
                                             <td>{{ $item->tgl_peminjaman }}</td>
                                             <td>{{ $item->batas_pengembalian }}</td>
-                                            <td>{!! $item->tgl_pengembalian === null ? '<span class="badge text-bg-danger">Belum dikembalikan</span>' : '<span class="badge text-bg-success">Sudah dikembalikan</span>' !!}
+                                            <td>{!! $item->tgl_pengembalian === null
+                                                ? '<span class="badge text-bg-danger">Belum dikembalikan</span>'
+                                                : '<span class="badge text-bg-success">Sudah dikembalikan</span>' !!}
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-info" id="detail">

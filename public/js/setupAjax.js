@@ -34,32 +34,87 @@ function calculateDenda(tglBatasPengembalian, tglDikembalikan, dendaPerHari) {
 }
 
 function getCurrentDate() {
-    // Create a new Date object for the current date and time
     const today = new Date();
-
-    // Get the year, month, and day from the Date object
     const year = today.getFullYear();
     let month = today.getMonth() + 1; // Months are zero-based in JavaScript
     let day = today.getDate();
-
-    // Add leading zeros to month and day if they are less than 10
     if (month < 10) {
         month = '0' + month;
     }
     if (day < 10) {
         day = '0' + day;
     }
-
-    // Combine year, month, and day into the desired format
     const formattedDate = `${year}-${month}-${day}`;
-
     return formattedDate;
 }
 
+// memformat tanggal '2024-12-12' jadi 'sabtu, 12 Desember 2024'
 function dateCutomFormat(date) {
     let days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     let months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
     let dateFormat = new Date(date);
     return `${days[dateFormat.getDay()]}, ${dateFormat.getDate()} ${months[dateFormat.getMonth()]} ${dateFormat.getFullYear()}`;
+}
+
+function AjaxGetData(url, callback) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: function (response) {
+            callback(response ?? null)
+        },
+        errors: function (xhr) {
+            callback(xhr ?? null)
+        }
+    });
+}
+
+function AjaxGetIncludeData(url, data, callback) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: data,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (response) { callback(response) },
+        error: function (xhr) { callback(xhr) }
+    });
+}
+
+function AjaxPostIncludeData(url, data, callback) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (response) { callback(response) },
+        error: function (xhr) { callback(xhr) }
+    });
+}
+
+function AjaxGetIncludeSerialize(url, data, callback) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: data,
+        dataType: "json",
+        success: function (response) { callback(response) },
+        error: function (xhr) { callback(xhr) }
+    });
+}
+
+function AjaxPostIncludeSerialize(url, data, callback) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        dataType: "json",
+        success: function (response) { callback(response) },
+        error: function (xhr) { callback(xhr) }
+    });
 }

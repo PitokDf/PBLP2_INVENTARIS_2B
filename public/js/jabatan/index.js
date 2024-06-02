@@ -59,35 +59,26 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#btnCreateForm', function () {
-        var data = new FormData();
-        data.append('jabatan', $('#jabatan').val());
-
-        $.ajax({
-            type: "POST",
-            url: "/jabatan",
-            data: data,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            success: function (response) {
+        AjaxPostIncludeSerialize('/jabatan', $('#form').serialize(), function (res) {
+            console.log(res)
+            console.log(error)
+            if (res.status == 200) {
                 clearErrorMsg();
                 clerInput();
                 reloadTable(table_jabatan);
                 $('#modalJabatan').modal('hide');
                 Swal.fire({
                     title: "Created!",
-                    text: response.message,
+                    text: res.message,
                     icon: "success"
                 });
-            },
-            error: function (errors) {
-                console.log(errors)
-                if (errors.status === 422) {
-                    clearErrorMsg();
-                    if (errors.responseJSON.jabatan) {
-                        $('#jabatan').addClass('is-invalid');
-                        $('#jabatan_error').text(errors.responseJSON.jabatan);
-                    }
+            }
+
+            if (res.status == 422) {
+                clearErrorMsg();
+                if (res.responseJSON.jabatan) {
+                    $('#jabatan').addClass('is-invalid');
+                    $('#jabatan_error').text(res.responseJSON.jabatan);
                 }
             }
         });
@@ -101,19 +92,13 @@ $(document).ready(function () {
         }
         showModal(modal = "modalJabatan", title = "Edit Jabatan", form = "btnEditForm", icon = "<i class='fas fa-pen'></i> Update");
         const url = "/jabatan/" + $(this).attr('id') + "/edit";
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: "json",
-            success: function (response) {
-                console.log(response)
-                if (response.status === 200) {
-                    const data = response.data;
-                    $('#id').val(data.id);
-                    $('#jabatan').val(data.jabatan);
-                }
-            },
-            error: function (errors) { console.log(errors) }
+        AjaxGetData(url, function (res) {
+            console.log(res)
+            if (res.status == 200) {
+                const data = res.data;
+                $('#id').val(data.id);
+                $('#jabatan').val(data.jabatan);
+            }
         });
     });
 
@@ -122,27 +107,21 @@ $(document).ready(function () {
         var data = new FormData();
         data.append('_method', 'PUT');
         data.append('jabatan', $('#jabatan').val());
+        const url = "/jabatan/" + $('#id').val();
 
-        const url = "/jabatan/" + $('#id').val()
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: data,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            success: function (response) {
+        AjaxPostIncludeData(url, data, function (res, errors) {
+            if (res.status === 200) {
                 clearErrorMsg();
                 clerInput();
                 reloadTable(table_jabatan);
                 $('#modalJabatan').modal('hide');
                 Swal.fire({
                     title: "Updated!",
-                    text: response.message,
+                    text: res.message,
                     icon: "success"
                 });
-            },
-            error: function (errors) {
+            }
+            if (errors) {
                 if (errors.status === 422) {
                     clearErrorMsg();
                     if (errors.responseJSON.jabatan) {
@@ -154,6 +133,7 @@ $(document).ready(function () {
         });
     });
 
+    // Proses Delete Data
     $(document).on('click', '.btnDelete', function () {
         Swal.fire({
             title: "Yakin ingin menghapus?",
@@ -165,19 +145,16 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 var url = '/jabatan/' + $(this).data('id');
-                $.ajax({
-                    type: "DELETE",
-                    url: url,
-                    dataType: "json",
-                    success: function (response) {
-                        response.status === 200 ? (Swal.fire({
-                            title: "Deleted!",
-                            text: response.message,
-                            icon: "success"
-                        }), reloadTable(table_jabatan)) : ''
-                    },
-                    error: function (xhr, stattus, error) {
-                        if (xhr.status === 500) {
+                var data = new FormData();
+                data.append('_method', 'DELETE');
+                AjaxPostIncludeData(url, data, function (res, errors) {
+                    res.status === 200 ? (Swal.fire({
+                        title: "Deleted!",
+                        text: res.message,
+                        icon: "success"
+                    }), reloadTable(table_jabatan)) : ''
+                    if (errors) {
+                        if (errors.status === 500) {
                             Swal.fire({
                                 title: "Ops !!",
                                 text: 'Something went wrong.',
@@ -185,7 +162,6 @@ $(document).ready(function () {
                                 confirmButtonText: "Ok"
                             });
                         }
-                        console.error(xhr + "\n" + stattus + "\n" + error)
                     }
                 });
             }

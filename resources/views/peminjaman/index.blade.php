@@ -32,7 +32,7 @@
                                 width="100%" cellspacing="0">
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
-                                        <th>No</th>
+                                        <th>Kode Peminjaman</th>
                                         <th>Nama Barang</th>
                                         <th>Nama Peminjam</th>
                                         <th>Status</th>
@@ -41,7 +41,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No</th>
+                                        <th>Kode Peminjaman</th>
                                         <th>Nama Barang</th>
                                         <th>Nama User</th>
                                         <th>Status</th>

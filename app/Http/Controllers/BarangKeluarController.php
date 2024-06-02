@@ -40,7 +40,7 @@ class BarangKeluarController extends Controller
      */
     public function store(StoreBarangKeluarRequest $request)
     {
-        $barang = Barang::find($request->barang)->first();
+        $barang = Barang::find($request->barang);
 
         $data = [
             "barang_id" => $request->barang,

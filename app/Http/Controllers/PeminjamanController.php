@@ -16,7 +16,19 @@ class PeminjamanController extends Controller
     public function index()
     {
         $barang = Barang::latest()->where('quantity', '>', '0')->get();
-        $user = User::where('role', '!=', '1')->where('email_verified_at', '!=', null)->latest()->get();
+        $user = User::with(['mahasiswa', 'dosen'])
+            ->where(function ($query) {
+                $query->where('role', '3')
+                    ->whereNotNull('dosen_id');
+            })
+            ->orWhere(function ($query) {
+                $query->where('role', '4')
+                    ->whereNotNull('mahasiswa_id');
+            })
+            ->where('email_verified_at', '!=', null)
+            ->orWhereNotIn('role', ['3', '4'])
+            ->where('role', '!=', '1')
+            ->latest()->get();
         return view('peminjaman.index')->with(['barangs' => $barang, 'users' => $user]);
     }
 

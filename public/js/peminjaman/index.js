@@ -15,10 +15,10 @@ $(document).ready(function () {
         },
         "columns": [
             {
-                "data": null,
-                "render": function (_data, _type, _row, meta) {
-                    return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
-                },
+                "data": "kode_peminjaman",
+                // "render": function (_data, _type, _row, meta) {
+                //     return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
+                // },
                 "orderable": false
             },
             {
@@ -274,9 +274,6 @@ $(document).ready(function () {
             });
         }
     });
-
-
-
 
 
     // menampilkan modal form saat btn create di click

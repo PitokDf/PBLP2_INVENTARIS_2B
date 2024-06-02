@@ -14,4 +14,9 @@ class KategoriBarang extends Model
     ];
     protected $table = "kategori_barang";
     protected $primarykey = "id";
+
+    public function barang()
+    {
+        return $this->hasMany(Barang::class, 'id_kategory');
+    }
 }

@@ -19,6 +19,7 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
 use App\Models\Barang;
+use App\Models\KategoriBarang;
 use App\Models\Peminjaman;
 use App\Models\Prodi;
 use App\Models\User;
@@ -107,13 +108,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/getKodePeminjaman', function () {
             return Peminjaman::getKodePeminjaman();
         });
-        Route::get('/pengembalian', function () {
-            return view('pengembalian.index');
-        });
     });
 
     Route::group(["middleware" => "userAkses:3|4|5"], function () {
+        Route::get('/pengembalian', function () {
+            return view('pengembalian.index');
+        });
         Route::resource('peminjamanUmum', PeminjamanUmumController::class);
+        Route::post('/lengkapi-data', [PeminjamanUmumController::class, "lengkapi"]);
         Route::get('/roleMahasiswa', function () {
             User::where('id_user', auth()->user()->id_user)->update([
                 'role' => '4'
@@ -159,6 +161,37 @@ Route::get('helper', [CommandHelper::class, 'index']);
 Route::post('helper', [CommandHelper::class, 'execCommand'])->name('helper.exec');
 
 Route::get('test', function () {
-    $prodi = Prodi::all();
-    return view('mahasiswa.index2')->with(['prodi' => $prodi]);
+    $result = KategoriBarang::with([
+        'barang.peminjaman' => function ($query) {
+            $query->whereNull('tgl_pengembalian');
+        }
+    ])->latest()->get()->map(function ($kategori) {
+        return [
+            'jumlah_peminjaman' => $kategori->barang->sum(function ($barang) {
+                return $barang->peminjaman->sum('jumlah');
+            })
+        ];
+    });
+    $kategori = KategoriBarang::latest()->get();
+    $labels = [];
+    $idKategori = [];
+    $stock = [];
+    $bgColor = [];
+
+    foreach ($kategori as $item) {
+        $labels[] = $item->nama_kategori_barang;
+        $idKategori[] = $item->id;
+        $bgColor[] = "rgba(" . rand(0, 255) . ", " . rand(0, 255) . ", " . rand(0, 255) . ", 0.4)";
+    }
+    for ($i = 0; $i < count($idKategori); $i++) {
+        $stock[] = Barang::with(['kategori', 'peminjaman'])->where('id_kategory', $idKategori[$i])->get()->sum('quantity');
+    };
+    return response()->json([
+        "data" => [
+            "labels" => $labels,
+            "stok" => $stock,
+            "dipinjam" => $result,
+            "bgcolor" => $bgColor,
+        ],
+    ]);
 });

@@ -1,13 +1,7 @@
 @extends('layouts.content')
 @section('title', 'Peminjaman')
 @section('scriptPages')
-    <script>
-        $(document).ready(function() {
-            $('#showprofile').on('click', function() {
-                $('#profile').modal('show');
-            });
-        });
-    </script>
+    <script src="/js/umum/peminjaman.js"></script>
 @endsection
 @section('content')
     @if (Auth::user()->role == 5)
@@ -35,7 +29,10 @@
             </div>
         </div>
     @endif
-    @if (in_array(Auth::user()->role, ['3', '4']) && Auth::user()->mahasiswa_id == null)
+
+    @if (in_array(auth()->user()->role, ['3', '4']) &&
+            auth()->user()->mahasiswa_id === null &&
+            auth()->user()->dosen_id === null)
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
                 <path
@@ -56,198 +53,128 @@
                 <use xlink:href="#info-fill" />
             </svg>
             <div>
-                Lengkapi profil anda untuk dapat melakukan peminjaman, click tombol <button
-                    class="btn btn-sm btn-transparent" id="showprofile">ini</button> untuk
-                melengkapi profil anda.
+                Click <a class="text-warning" id="showprofile" style="cursor: pointer"><strong>lengkapi
+                        Profile</strong></a>, untuk melengkapi data anda, agar dapat melakukan peminjaman.
+            </div>
+        </div>
+    @elseif(in_array(auth()->user()->role, ['3', '4']))
+        <div class="alert alert-success">
+            Selamat Datang Kembali
+            <strong>{{ auth()->user()->dosen_id !== null ? auth()->user()->dosen->name : auth()->user()->mahasiswa->nama }}</strong>.
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                hai
             </div>
         </div>
     @endif
 
-    @if (auth()->user()->role == '4')
+    {{-- modal lengkapi data mahasiswa --}}
+    @if (auth()->user()->role == '4' && auth()->user()->mahasiswa_id === null)
         <div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5">Profile</h1>
+                        <h1 class="modal-title fs-5">Lengkapi Data</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="form" enctype="multipart/form-data">
+                    <form id="form">
                         <div class="modal-body">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-10">
-                                    <div class="row mb-3">
-                                        <div class="col-lg-12 d-flex justify-content-center">
-                                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->username }}&background=4e73df&color=ffffff&size=150"
-                                                alt="" class="img-profile rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="nama" name="nama"
-                                            placeholder="exp: John Doe">
-                                        <label for="nama">Nama Lengkap</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="nama" name=""
-                                            placeholder="exp: John Doe">
-                                        <label for="nama">Nama Lengkap</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="nama"
-                                            placeholder="exp: John Doe">
-                                        <label for="nama">Nama Lengkap</label>
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" name="nama" id="nama"
+                                    aria-describedby="helpId" placeholder="exp: Budi Sugiono" />
+                                <span id="nama_error"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nim" class="form-label">Nim</label>
+                                <input type="text" class="form-control" name="nim" id="nim"
+                                    aria-describedby="helpId" placeholder="exp: 2211******" />
+                                <span id="nim_error"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ipk" class="form-label">IPK</label>
+                                <input type="number" class="form-control" name="ipk" id="ipk"
+                                    aria-describedby="helpId" placeholder="min: 0.00, max: 4.00">
+                                <span id="ipk_error"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="prodi" class="form-label">Prodi</label>
+                                <select name="prodi" id="prodi" class="form-control">
+                                    <option value="" selected>--Pilih Prodi--</option>
+                                    @foreach ($prodis as $item)
+                                        <option value="{{ $item->code_prodi }}">{{ $item->code_prodi }}</option>
+                                    @endforeach
+                                </select>
+                                <span id="prodi_error"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="angkatan" class="form-label">Angkatan</label>
+                                <select name="angkatan" id="angkatan" class="form-control">
+                                    @for ($i = 2009; $i < date('Y'); $i++)
+                                        <option {{ $i == date('Y') - 1 ? 'selected' : '' }} value="{{ $i }}">
+                                            {{ $i }}</option>
+                                    @endfor
+                                </select>
+                                <span id="angkatan_error"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-sm btn-primary" type="button" data-bs-dismiss="modal"><i
-                                    class="fas fa-window-close"></i>
-                                save</button>
+                            <button class="btn btn-sm btn-primary" id="saveData" type="button"><i
+                                    class="fas fa-save"></i> save</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     @endif
-    @if (auth()->user()->role == '3')
+
+    {{-- modal lengkapi data dosen --}}
+    @if (auth()->user()->role == '3' && auth()->user()->dosen_id === null)
         <div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5">Profile Dosen</h1>
+                        <h1 class="modal-title fs-5">Lengkapi Data</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="form" enctype="multipart/form-data">
+                    <form id="form">
                         <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-6 d-flex justify-content-center">
-                                    <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=4e73df&color=ffffff&size=150"
-                                        alt="" class="img-profile rounded-circle" style="height: 150px;">
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com">
-                                        <label for="floatingInput">Email address</label>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                        <label for="floatingPassword">Password</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com">
-                                        <label for="floatingInput">Email address</label>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                        <label for="floatingPassword">Password</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com">
-                                        <label for="floatingInput">Email address</label>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                        <label for="floatingPassword">Password</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com">
-                                        <label for="floatingInput">Email address</label>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                        <label for="floatingPassword">Password</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com">
-                                        <label for="floatingInput">Email address</label>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                        <label for="floatingPassword">Password</label>
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" name="nama" id="nama"
+                                    aria-describedby="helpId" placeholder="exp: Budi Sugiono" />
+                                <span id="nama_error"></span>
                             </div>
-                            <div class="row ">
-                                <div class="col-lg-8">
-                                    <div class="mb-3">
-                                        <input type="hidden" class="form-control" name="id" id="id" />
-                                        <label for="name" class="form-label">Nama Dosen</label>
-                                        <input type="text" class="form-control" name="name" id="name"
-                                            placeholder="exp: Budi Siregar" />
-                                        <span id="name_error" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="mb-3">
-                                        <label for="nip" class="form-label">NIP</label>
-                                        <input type="number" class="form-control" name="nip" id="nip"
-                                            placeholder="exp: 1999270190" />
-                                        <span id="nip_error" class="text-danger"></span>
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <label for="nip" class="form-label">NIP</label>
+                                <input type="number" class="form-control" name="nip" id="nip"
+                                    aria-describedby="helpId" placeholder="exp: 1999121299" />
+                                <span id="nip_error"></span>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="mb-3">
-                                        <label for="jabatan" class="form-label">Jabatan</label>
-                                        <select class="form-control" name="jabatan" id="jabatan">
-                                            <option value="">--Pilih Jabatan--</option>
-                                            {{-- @foreach ($jabatans as $item)
-                                    <option value="{{ $item->jabatan }}">{{ $item->jabatan }}</option>
-                                @endforeach --}}
-                                        </select>
-                                        <span id="jabatan_error" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="mb-3">
-                                        <label for="no_telpn" class="form-label">No Telepon</label>
-                                        <input type="tel" class="form-control" name="no_telpn" id="no_telpn"
-                                            placeholder="exp: 081234567890" />
-                                        <span id="no_telpn_error" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="email" id="email"
-                                            placeholder="exp: budi@gmail.com" />
-                                        <span id="email_error" class="text-danger"></span>
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <label for="jabatan" class="form-label">Jabatan</label>
+                                <select name="jabatan" id="jabatan" class="form-control">
+                                    <option value="" selected>--Pilih Jabatan--</option>
+                                    @foreach ($jabatans as $item)
+                                        <option value="{{ $item->id }}">{{ $item->jabatan }}</option>
+                                    @endforeach
+                                </select>
+                                <span id="jabatan_error"></span>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-3">
-                                        <label for="file_image" class="form-label">Foto
-                                            <img src="{{ asset('images/download.png') }}" class="img-thumbnail"
-                                                id="img-preview" style="width: 200px; display: none;" alt="">
-                                            <span id="dir_foto_error" class="text-danger"></span>
-                                        </label>
-                                        <input type="file" class="form-control" onchange="previewImage()"
-                                            name="dir_foto" id="file_image" accept="image/*" hidden />
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <label for="no_hp" class="form-label">No Handphone</label>
+                                <input type="text" class="form-control" name="no_hp" id="no_hp"
+                                    aria-describedby="helpId" placeholder="exp: 08**********" />
+                                <span id="no_hp_error"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"><i
-                                    class="fas fa-window-close"></i>
-                                Cancel</button>
-                            <button type="button" class="btn btn-sm btn-primary action">
-                            </button>
+                            <button class="btn btn-sm btn-primary" id="saveData" type="button"><i
+                                    class="fas fa-save"></i> save</button>
                         </div>
                     </form>
                 </div>

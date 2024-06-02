@@ -32,13 +32,13 @@
             </a>
         </li>
         <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
-            <a href="{{ route('peminjamanUmum.index') }}" class="nav-link">
+            <a href="/pengembalian" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Pengembalian</span>
             </a>
         </li>
-        <li class="nav-item {{ Request::is('pinjaman') ? 'active' : '' }}">
-            <a href="{{--  --}}" class="nav-link">
+        <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
+            <a href="/peminjamanUmum" class="nav-link">
                 <i class="fas fa-fw fa-hand-holding"></i>
                 <span>Peminjaman</span>
             </a>
@@ -60,8 +60,7 @@
             </a>
             <div id="barang" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('barang') ? 'active' : '' }}"
-                        href="{{ route('barang.index') }}">
+                    <a class="collapse-item {{ Request::is('barang') ? 'active' : '' }}" href="{{ route('barang.index') }}">
                         <span>Data Barang</span>
                     </a>
                     <a class="collapse-item {{ Request::is('kategori-barang') ? 'active' : '' }}"

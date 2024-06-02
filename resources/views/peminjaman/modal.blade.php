@@ -57,7 +57,9 @@
                     <select name="namaUser" class="form-control" id="namaUser">
                         <option value="">-- Pilih Peminjam--</option>
                         @foreach ($users as $item)
-                            <option value="{{ $item->id_user }}">{{ $item->username }}</option>
+                            <option value="{{ $item->id_user }}">
+                                {{ $item->mahasiswa_id !== null ? $item->mahasiswa->nama . ' - ' . $item->mahasiswa->nim . ' (Mahasiswa)' : ($item->dosen_id !== null ? $item->dosen->name . ' - ' . $item->dosen->nip . ' (Dosen)' : $item->username . ' (Staf)') }}
+                            </option>
                         @endforeach
                     </select>
                     <span id="namaU_error" class="text-danger"></span>

@@ -31,7 +31,7 @@ class ProdiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kode' => 'required',
+            'kode' => 'required|unique:prodis,code_prodi',
             'nama' => 'required',
         ]);
 

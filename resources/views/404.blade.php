@@ -17,7 +17,7 @@
             <span id="c">4</span>
         </div>
         <h3>Page Not Found</h3>
-        <a href="/">&Leftarrow; kembali ke masalalu</a>
+        <a href="javascript:history.back()">&Leftarrow; Back</a>
     </div>
 </body>
 

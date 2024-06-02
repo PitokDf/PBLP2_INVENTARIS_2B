@@ -37,11 +37,12 @@
                                         <th rowspan="2" style="text-align: center;">Kode Barang</th>
                                         <th rowspan="2" style="text-align: center;">Nama Barang</th>
                                         <th rowspan="2" style="text-align: center;">Kategori Barang</th>
-                                        <th colspan="2" style="text-align: center;">Stok</th>
+                                        <th colspan="3" style="text-align: center;">Stok</th>
                                     </tr>
                                     <tr>
                                         <th style="text-align: center;">Tersedia</th>
                                         <th style="text-align: center;">Dipinjam</th>
+                                        <th style="text-align: center;">Total</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -52,6 +53,7 @@
                                         <th>Kategori Barang</th>
                                         <th>Tersedia</th>
                                         <th>Dipinjam</th>
+                                        <th style="text-align: center;">Total</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -65,6 +67,9 @@
                                                 {{ $item->quantity }}</td>
                                             <td>
                                                 {{ $item->peminjaman->sum('jumlah') != 0 ? $item->peminjaman->sum('jumlah') : '~' }}
+                                            </td>
+                                            <td>
+                                                {{ $item->quantity + $item->peminjaman->sum('jumlah') }}
                                             </td>
                                         </tr>
                                     @endforeach

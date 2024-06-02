@@ -1,6 +1,6 @@
 @extends('layouts.content')
 
-@section('title', 'Laporan Peminjaman')
+@section('title', 'Laporan Barang Masuk')
 @section('scriptPages')
     <script>
         $('#table_barang').dataTable();
@@ -13,9 +13,9 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h5 class="m-0 font-weight-bold text-secondary">Laporan Peminjaman</h5>
+                    <h5 class="m-0 font-weight-bold text-secondary">Laporan Barang Masuk</h5>
                     <div>
-                        <a href="" class="btn btn-sm btn-primary" data-toggle="modal" id="btnCetak">
+                        <a href="" class="btn btn-sm btn-primary" data-toggle="modal" id="btnCreate">
                             <i class="fas fa-solid fa-print"></i>
                             Cetak
                         </a>
@@ -35,33 +35,33 @@
                                 cellspacing="0">
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
-                                        <th style="text-align: center;">kode Peminjaman</th>
-                                        <th style="text-align: center;">Kode Barang</th>
-                                        <th style="text-align: center;">Nama Barang</th>
-                                        <th style="text-align: center;">Banyak Pinjam</th>
-                                        <th style="text-align: center;">Status</th>
+                                        <th>No</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Pemasok</th>
+                                        <th>Tanggal Masuk</th>
+                                        <th>Jumlah</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th style="text-align: center;">kode Peminjaman</th>
-                                        <th style="text-align: center;">Kode Barang</th>
-                                        <th style="text-align: center;">Nama Barang</th>
-                                        <th style="text-align: center;">Banyak Pinjam</th>
-                                        <th style="text-align: center;">Status</th>
+                                        <th>No</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Pemasok</th>
+                                        <th>Tanggal Masuk</th>
+                                        <th>Jumlah</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    @foreach ($peminjamans as $item)
+                                    @foreach ($barangs as $item)
                                         <tr>
-                                            <td>{{ $item->kode_peminjaman }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->barang->code_barang }}</td>
                                             <td>{{ $item->barang->nama_barang }}</td>
-                                            <td>{{ $item->jumlah }}</td>
-                                            <td
-                                                class="{{ $item->tgl_pengembalian ? 'text-success text-bold' : 'text-danger text-bold' }}">
-                                                {{ $item->tgl_pengembalian ? 'sudah dikembalikan' : 'belum dikembalikan' }}
-                                            </td>
+                                            <td>{{ $item->pemasok->nama }}</td>
+                                            <td>{{ $item->created_at }}</td>
+                                            <td>{{ $item->quantity }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

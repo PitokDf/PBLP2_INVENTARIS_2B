@@ -19,10 +19,12 @@
                             <i class="fas fa-solid fa-print"></i>
                             Cetak
                         </a>
-                        <a href="" class="btn btn-sm btn-danger" data-toggle="modal" id="btnCreate">
-                            <i class="fas fa-solid fa-flag"></i>
-                            Lapor
-                        </a>
+                        @if (Auth::user()->role == 2)
+                            <a href="" class="btn btn-sm btn-danger" data-toggle="modal" id="btnCreate">
+                                <i class="fas fa-solid fa-flag"></i>
+                                Lapor
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <!-- Card Body -->

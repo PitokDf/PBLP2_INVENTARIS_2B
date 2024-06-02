@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\BarangMasuk;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,8 @@ class ReportController extends Controller
     }
     public function reportBarangMasuk()
     {
-        $data = Barang::latest()->get();
-        return view("reports.barang")->with("barangs", $data);
+        $data = BarangMasuk::with(['barang', 'pemasok'])->latest()->get();
+        return view("reports.barang-masuk")->with("barangs", $data);
     }
     public function reportBarangKeluar()
     {

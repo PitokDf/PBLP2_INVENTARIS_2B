@@ -118,3 +118,13 @@ function AjaxPostIncludeSerialize(url, data, callback) {
         error: function (xhr) { callback(xhr) }
     });
 }
+
+const timeElement = document.getElementById('time');
+function getTime() {
+    const time = new Date();
+    const hours = time.getHours() < 10 ? ('0' + time.getHours()) : time.getHours()
+    const minutes = time.getMinutes() < 10 ? ('0' + time.getMinutes()) : time.getMinutes()
+    const second = time.getSeconds() < 10 ? ('0' + time.getSeconds()) : time.getSeconds()
+
+    timeElement.innerHTML = `${hours} : ${minutes} : ${second}`;
+}

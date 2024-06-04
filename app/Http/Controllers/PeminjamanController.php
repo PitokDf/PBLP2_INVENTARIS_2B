@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Dosen;
 use App\Models\Peminjaman;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class PeminjamanController extends Controller
                     ->whereNotNull('mahasiswa_id');
             })
             ->where('email_verified_at', '!=', null)
-            ->orWhereNotIn('role', ['3', '4'])
+            ->orWhereNotIn('role', ['2', '3', '4'])
             ->where('role', '!=', '1')
             ->latest()->get();
         return view('peminjaman.index')->with(['barangs' => $barang, 'users' => $user]);
@@ -37,8 +38,7 @@ class PeminjamanController extends Controller
      */
     public function getData()
     {
-        $data = Peminjaman::with(['user', 'barang'])->latest()->get();
-
+        $data = Peminjaman::latest()->with(['user.mahasiswa', 'user.dosen', 'barang'])->where('status', '=', true)->get();
         return response()->json([
             'status' => 200,
             'message' => 'Data berhasil ditemukan',
@@ -76,7 +76,7 @@ class PeminjamanController extends Controller
         }
 
         $barang = Barang::where('code_barang', $request->namaBarang)->first();
-        $user = User::where('id_user', $request->namaUser)->first();
+        // $user = User::where('id_user', $request->namaUser)->first();
 
         // $barang = Barang::where('code_barang', $request->namaBarang)->first();
         $existingPeminjaman = Peminjaman::where('id_barang', $barang->id_barang)
@@ -106,6 +106,7 @@ class PeminjamanController extends Controller
                 'jumlah' => $request->quantity,
                 'keterangan' => $request->reason,
                 'kode_peminjaman' => Peminjaman::getKodePeminjaman(),
+                'status' => true,
                 'batas_pengembalian' => date('Y-m-d', strtotime('+7 days'))
             ]);
 
@@ -164,7 +165,7 @@ class PeminjamanController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'kondisi' => 'required'
+            'kondisi' => 'required|min:5'
         ]);
 
         if ($validator->fails()) {
@@ -175,7 +176,6 @@ class PeminjamanController extends Controller
         $peminjaman->update(
             [
                 'tgl_pengembalian' => now(),
-                'status' => true,
                 "kondisi" => $request->kondisi
             ]
         );

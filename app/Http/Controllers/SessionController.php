@@ -102,10 +102,11 @@ class SessionController extends Controller
     {
 
         $validator = Validator::make($rq->all(), [
-            'email' => "unique:users,email",
+            'email' => "email|unique:users,email",
             'capcha' => 'required|captcha'
         ], [
             "email.unique" => "Email sudah tersedia.",
+            "email.email" => "Masukkan email yang valid.",
             'capcha.captcha' => 'captcha tidak sesuai.'
         ]);
 

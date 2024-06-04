@@ -17,17 +17,15 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanUmumController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RequestPeminjaman;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsersController;
 use App\Models\Barang;
 use App\Models\KategoriBarang;
 use App\Models\Peminjaman;
-use App\Models\Prodi;
 use App\Models\User;
-use App\Models\Users;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Laravel\Telescope\Telescope;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::middleware(['guest'])->group(function () {
@@ -65,10 +63,6 @@ Route::get('topThreeBarang', [DashboardController::class, 'getTopThreeBarang']);
 Route::get('editData/{id}', [UsersController::class, "edit"]);
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
-        // Route::get('/', function () {
-        //     $userCount = Barang::count();
-        //     return view("dashboard.index")->with("count", $userCount);
-        // })->name('dashboard');
         Route::resource('/', DashboardController::class);
         Route::get('/laporan-barang', [ReportController::class, 'reportBarang']);
         Route::get('/laporan-barang-masuk', [ReportController::class, 'reportBarangMasuk']);
@@ -77,6 +71,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/laporan-stok', [ReportController::class, 'reportStok']);
     });
 
+    Route::get('get-barang/{code}', [BarangController::class, "getById"]);
     Route::group(["middleware" => "userAkses:1"], function () {
         Route::resource('user', UsersController::class);
         Route::get('getAllDataUser', [UsersController::class, "getAllData"]);
@@ -91,7 +86,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get("getKategori", [KategoriBarangController::class, "getKategori"]);
         Route::resource("barang", BarangController::class);
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
-        Route::get('get-barang/{code}', [BarangController::class, "getById"]);
         Route::resource("mahasiswa", MahasiswasController::class);
         Route::get("/getMahasiswaNim", [MahasiswasController::class, 'getMahasiswaNim']);
         Route::post("importMahasiswa", [MahasiswasController::class, 'import']);
@@ -104,6 +98,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('jabatan', JabatanController::class);
         Route::get('getAllJabatan', [JabatanController::class, 'getAllData']);
         Route::get('getDataPeminjaman', [PeminjamanController::class, 'getData']);
+        Route::get('request-peminjaman', [RequestPeminjaman::class, 'index']);
+        Route::post('setujui-peminjaman', [RequestPeminjaman::class, 'setujui']);
+        Route::get('getRequestPeminjaman', function () {
+            return response()->json(['status' => 200, 'data' => Peminjaman::with(['barang', 'user', 'user.dosen', 'user.mahasiswa'])->where('status', '=', false)->get()]);
+        });
         Route::resource('peminjaman', PeminjamanController::class);
         Route::resource('barangM', BarangMasukController::class);
         Route::get('getDataBarangMasuk', [BarangMasukController::class, 'getData']);
@@ -120,6 +119,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/pengembalian', function () {
             return view('pengembalian.index');
         });
+        Route::post('request-peminjaman', [RequestPeminjaman::class, 'prosesRequest']);
         Route::resource('peminjamanUmum', PeminjamanUmumController::class);
         Route::post('/lengkapi-data', [PeminjamanUmumController::class, "lengkapi"]);
         Route::get('/roleMahasiswa', function () {
@@ -169,7 +169,7 @@ Route::post('helper', [CommandHelper::class, 'execCommand'])->name('helper.exec'
 Route::get('test', function () {
     $result = KategoriBarang::with([
         'barang.peminjaman' => function ($query) {
-            $query->whereNull('tgl_pengembalian');
+            $query->whereNull('tgl_pengembalian')->where('status', '=', true);
         }
     ])->latest()->get()->map(function ($kategori) {
         return [

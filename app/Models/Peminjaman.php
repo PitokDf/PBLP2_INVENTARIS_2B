@@ -27,7 +27,7 @@ class Peminjaman extends Model
         $nextNumber = 1;
         if ($lastPeminjaman) {
             $lastKode = $lastPeminjaman->kode_peminjaman;
-            $lastNumber = (int) substr($lastKode, 1);
+            $lastNumber = (int) substr($lastKode, 3);
             $nextNumber = $lastNumber + 1;
         }
 

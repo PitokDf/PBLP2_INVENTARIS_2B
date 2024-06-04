@@ -7,10 +7,6 @@
 @endsection
 
 @section('modal')
-    <!-- Modal trigger button -->
-    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalId">
-        Launch
-    </button>
 
     <!-- Modal Body -->
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
@@ -34,14 +30,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Optional: Place to the bottom of scripts -->
-    <script>
-        const myModal = new bootstrap.Modal(
-            document.getElementById("modalId"),
-            options,
-        );
-    </script>
 
 @endsection
 @section('content')
@@ -79,9 +67,11 @@
                                             <td>{{ $item->barang->nama_barang }}</td>
                                             <td>{{ $item->tgl_peminjaman }}</td>
                                             <td>{{ $item->batas_pengembalian }}</td>
-                                            <td>{!! $item->tgl_pengembalian === null
-                                                ? '<span class="badge text-bg-danger">Belum dikembalikan</span>'
-                                                : '<span class="badge text-bg-success">Sudah dikembalikan</span>' !!}
+                                            <td>{!! $item->status
+                                                ? ($item->tgl_pengembalian === null
+                                                    ? '<span class="badge text-bg-danger">Belum dikembalikan</span>'
+                                                    : '<span class="badge text-bg-success">Sudah dikembalikan</span>')
+                                                : '<span class="badge text-bg-warning"><i class="fas fa-clock"></i> Pending Request</span>' !!}
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-info" id="detail">

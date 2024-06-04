@@ -1,5 +1,17 @@
 $(document).ready(function () {
-    console.log('hai')
+    if (document.getElementById('time') !== null) {
+        getTime();
+        setInterval(() => {
+            getTime();
+        }, 1000);
+    }
+
+    $('#tableRequest').dataTable({
+        "processing": true,
+        "paging": false,
+        "searching": false,
+        "responsive": true,
+    });
 
     $('#showprofile').on('click', function () {
         $('#profile').modal('show');
@@ -68,5 +80,87 @@ $(document).ready(function () {
                 location.reload();
             }
         });
-    })
+    });
+
+    $('#cari_barang').click(function () {
+        const code = document.getElementById('code_barang').value;
+        if (code.trim() !== '') {
+            $.ajax({
+                type: "get",
+                url: "/get-barang/" + code,
+                dataType: "json",
+                success: function (response) {
+                    $('#nama_barang').val('');
+                    $('#kategori_barang').val('');
+                    console.log(response)
+                    if (response.status === 200) {
+                        $('#jumlah').attr('readonly', false);
+                        $('.action').attr('disabled', false);
+                        $('#jumlah').val('1');
+
+                        $('#nama_barang').val(response.data.nama_barang);
+                        $('#stok').val(response.data.quantity);
+                        $('#kategori_barang').val(response.data.kategori.nama_kategori_barang);
+                    }
+                    if (response.status === 404) {
+                        $('#jumlah').attr('readonly', true);
+                        $('.action').attr('disabled', true);
+                        $('#jumlah').val('');
+                        //sweetalert
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ops !!',
+                            text: response.message,
+                            confirmButtonText: 'Periksa',
+                            confirmButtonColor: '#007bff',
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    $('#btnRequest_peminjaman').on('click', function () {
+        const data = $('#form').serialize();
+        AjaxPostIncludeSerialize('request-peminjaman', data, function (response, error) {
+            console.log(response)
+            console.log(error)
+            if (response.status == 200) {
+                $('#jumlah').removeClass('is-invalid'); $('#jumlah_error').text(''); $('#code_barang').removeClass('is-invalid'); $('#reason').removeClass('is-invalid'); $('#reason_error').text('')
+                $('#code_barang').val(''); $('#stok').val(''); $('#nama_barang').val(''); $('#kategori_barang').val(''); $('#jumlah').val(''); $('#reason').val('')
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sukses!!',
+                    text: response.message,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#007bff',
+                });
+            }
+
+            if (response.status == 203) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ops !!',
+                    text: response.message,
+                    confirmButtonText: 'Periksa',
+                    confirmButtonColor: '#007bff',
+                });
+            }
+
+            var errors = '';
+            if (response.responseJSON.errors) {
+                errors = response.responseJSON.errors;
+            }
+            if (errors) {
+                $('#jumlah').removeClass('is-invalid')
+                $('#jumlah_error').text('')
+                $('#code_barang').removeClass('is-invalid')
+                $('#reason').removeClass('is-invalid')
+                $('#reason_error').text('')
+                errors.jumlah ? ($('#jumlah').addClass('is-invalid'), $('#jumlah_error').text(errors.jumlah)) : ''
+                errors.code_barang ? $('#code_barang').addClass('is-invalid') : ''
+                errors.reason ? ($('#reason').addClass('is-invalid'), $('#reason_error').text(errors.reason)) : ''
+            }
+        })
+    });
 });

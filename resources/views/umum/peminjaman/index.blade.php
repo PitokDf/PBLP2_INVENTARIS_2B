@@ -58,14 +58,85 @@
             </div>
         </div>
     @elseif(in_array(auth()->user()->role, ['3', '4']))
+        <div id="message"></div>
         <div class="alert alert-success">
             Selamat Datang Kembali
             <strong>{{ auth()->user()->dosen_id !== null ? auth()->user()->dosen->name : auth()->user()->mahasiswa->nama }}</strong>.
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h5 class="m-0 font-weight-bold text-secondary">Form Peminjaman</h5>
+                        <div>
+                            <div><span id="time"></span> <i class="fas fa-clock"></i></div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <form id="form">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label for="code_barang">Kode Barang</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Masukkan kode barang!"
+                                            style="height: 50px" aria-label="code barang" name="code_barang"
+                                            id="code_barang">
+                                        <button type="button" class="btn btn-success" id="cari_barang"><i
+                                                class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="card">
-            <div class="card-header">
-                hai
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="stok">Stok barang</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="Stok barang"
+                                            aria-label="stok" id="stok" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="nama_barang" class="form-label">Nama Barang</label>
+                                        <input type="text" class="form-control" id="nama_barang"
+                                            placeholder="Nama barang" readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="kategori_barang" class="form-label">Kategori Barang</label>
+                                        <input type="text" class="form-control" id="kategori_barang"
+                                            placeholder="Kategori barang" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="jumlah" class="form-label">Jumlah pinjam</label>
+                                        <input type="number" class="form-control" name="jumlah" id="jumlah"
+                                            placeholder="Min 1" readonly>
+                                        <span id="jumlah_error" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-xl">
+                                    <label for="reason" class="form-label">Alasan Peminjaman</label>
+                                    <textarea id="reason" name="reason" class="form-control" rows="7"></textarea>
+                                    <span id="reason_error" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button class="btn btn-sm btn-primary action" id="btnRequest_peminjaman" disabled>Request</button>
+                    </div>
+                </div>
             </div>
         </div>
     @endif

@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    var kategoriList = "";
-
     $('#table_peminjaman').DataTable({
         "processing": true,
         "paging": true,
@@ -30,17 +28,24 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _row, item) {
-                    return item.user.username
+                    if (item.user.mahasiswa) {
+                        return item.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>'
+                    } else if (item.user.dosen) {
+                        return item.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>'
+                    } else {
+                        return item.username + ' <span class="badge text-bg-primary">Staf</span>';
+                    }
+
                 },
                 "orderable": true
             },
             {
                 "data": null,
                 'render': function (_data, _type, row) {
-                    if (row.status === 0) {
+                    if (row.tgl_pengembalian === null) {
                         return `<button id="${row.id_barang}" data-id="${row.id}" class="btn btn-sm btn-danger kembalikan">Kembalikan</button>`;
                     } else {
-                        return `<button id="sudahKembali" class="btn btn-sm btn-success">sudah dikembalikan</button>`;
+                        return `<span class="badge text-bg-success">Sudah dikembalikan</span>`;
                     }
                 },
                 "orderable": false

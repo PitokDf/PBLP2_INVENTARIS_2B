@@ -111,11 +111,11 @@
             </a>
         </li>
         <li
-            class="nav-item {{ Request::is(['barangM', 'peminjaman', 'barang-keluar', 'pemasok', 'pengembalian']) ? 'active' : '' }}">
+            class="nav-item {{ Request::is(['barangM', 'peminjaman', 'barang-keluar', 'pemasok', 'pengembalian', 'request-peminjaman']) ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengelolaanData"
                 aria-expanded="true" aria-controls="pengelolaanData">
                 <i class="fas fa-fw fa-calendar-week"></i>
-                <span>{{ Request::is('barangM') ? 'Barang Masuk' : (Request::is('peminjaman') ? 'Peminjaman' : (Request::is('barang-keluar') ? 'Barang Keluar BHP' : (Request::is('pemasok') ? 'Pemasok' : (Request::is('pengembalian') ? 'Pengembalian' : 'Manajemen Barang')))) }}
+                <span>{{ Request::is('barangM') ? 'Barang Masuk' : (Request::is('peminjaman') ? 'Peminjaman' : (Request::is('barang-keluar') ? 'Barang Keluar BHP' : (Request::is('pemasok') ? 'Pemasok' : (Request::is('pengembalian') ? 'Pengembalian' : (Request::is('request-peminjaman') ? 'Request Peminjaman' : 'Manajemen Barang'))))) }}
                 </span>
             </a>
             <div id="pengelolaanData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -127,10 +127,11 @@
                     <a class="collapse-item {{ Request::is('barang-keluar') ? 'active' : '' }}" href="/barang-keluar">
                         <span>Barang Keluar BHP</span>
                     </a>
-                    {{-- <a class="collapse-item {{ Request::is('pengembalian') ? 'active' : '' }}" href="/pengembalian">
-                        <span>Pengembalian</span>
-                    </a> --}}
 
+                    <a class="collapse-item {{ Request::is('request-peminjaman') ? 'active' : '' }}"
+                        href="/request-peminjaman">
+                        Request Peminjaman
+                    </a>
                     <a class="collapse-item {{ Request::is('peminjaman') ? 'active' : '' }}"
                         href="{{ route('peminjaman.index') }}">
                         Peminjaman

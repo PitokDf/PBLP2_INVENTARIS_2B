@@ -121,6 +121,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         Route::post('request-peminjaman', [RequestPeminjaman::class, 'prosesRequest']);
         Route::resource('peminjamanUmum', PeminjamanUmumController::class);
+        Route::get('/detail-peminjaman/{id}', [PeminjamanController::class, 'show']);
         Route::post('/lengkapi-data', [PeminjamanUmumController::class, "lengkapi"]);
         Route::get('/roleMahasiswa', function () {
             User::where('id_user', auth()->user()->id_user)->update([

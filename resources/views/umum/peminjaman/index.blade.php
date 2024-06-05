@@ -4,7 +4,7 @@
     <script src="/js/umum/peminjaman.js"></script>
 @endsection
 @section('content')
-    @if (Auth::user()->role == 5)
+    @if (auth()->user()->mahasiswa_id === null && auth()->user()->dosen_id === null)
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
                 <path
@@ -25,7 +25,7 @@
             </svg>
             <div>
                 Pilih ingin sebagai <a href="{{ route('mahasiswa') }}">Mahasiswa</a> atau <a
-                    href="{{ route('dosen') }}">Dosen</a>. Abaikan jika anda ingin sebagai staff.
+                    href="{{ route('dosen') }}">Dosen</a>.
             </div>
         </div>
     @endif
@@ -57,11 +57,11 @@
                         Profile</strong></a>, untuk melengkapi data anda, agar dapat melakukan peminjaman.
             </div>
         </div>
-    @elseif(in_array(auth()->user()->role, ['3', '4']))
+    @elseif(in_array(auth()->user()->role, ['3', '4']) || auth()->user()->role == 5)
         <div id="message"></div>
         <div class="alert alert-success">
             Selamat Datang Kembali
-            <strong>{{ auth()->user()->dosen_id !== null ? auth()->user()->dosen->name : auth()->user()->mahasiswa->nama }}</strong>.
+            <strong>{{ auth()->user()->dosen_id ? auth()->user()->dosen->name : (auth()->user()->mahasiswa ? auth()->user()->mahasiswa->nama : auth()->user()->username) }}</strong>.
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -176,7 +176,7 @@
                                 <select name="prodi" id="prodi" class="form-control">
                                     <option value="" selected>--Pilih Prodi--</option>
                                     @foreach ($prodis as $item)
-                                        <option value="{{ $item->code_prodi }}">{{ $item->code_prodi }}</option>
+                                        <option value="{{ $item->code_prodi }}">{{ $item->nama_prodi }}</option>
                                     @endforeach
                                 </select>
                                 <span id="prodi_error"></span>

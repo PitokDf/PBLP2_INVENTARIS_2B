@@ -39,12 +39,12 @@
                                         <th rowspan="2" style="text-align: center;">Kode Barang</th>
                                         <th rowspan="2" style="text-align: center;">Nama Barang</th>
                                         <th rowspan="2" style="text-align: center;">Kategori Barang</th>
-                                        <th colspan="3" style="text-align: center;">Stok</th>
+                                        <th colspan="3" style="text-align: center;">Keterangan</th>
                                     </tr>
                                     <tr>
-                                        <th style="text-align: center;">Tersedia</th>
-                                        <th style="text-align: center;">Dipinjam</th>
-                                        <th style="text-align: center;">Total</th>
+                                        <th style="text-align: center;">Jumlah barang tersedia</th>
+                                        <th style="text-align: center;">Jumlah barang dipinjam</th>
+                                        <th style="text-align: center;">Stok</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -53,9 +53,9 @@
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Kategori Barang</th>
-                                        <th>Tersedia</th>
-                                        <th>Dipinjam</th>
-                                        <th style="text-align: center;">Total</th>
+                                        <th>Jumlah barang tersedia</th>
+                                        <th>Jumlah barang dipinjam</th>
+                                        <th style="text-align: center;">Stok</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -65,14 +65,16 @@
                                             <td>{{ $item->code_barang }}</td>
                                             <td>{{ $item->nama_barang }}</td>
                                             <td>{{ $item->kategori->nama_kategori_barang }}</td>
-                                            <td class="{{ $item->quantity == 0 ? 'bg-danger text-white' : '' }}">
-                                                {{ $item->quantity }}</td>
-                                            <td>
-                                                {{ $item->peminjaman->sum('jumlah') != 0 ? $item->peminjaman->sum('jumlah') : '~' }}
-                                            </td>
                                             <td>
                                                 {{ $item->quantity + $item->peminjaman->sum('jumlah') }}
                                             </td>
+
+                                            <td>
+                                                {{ $item->peminjaman->sum('jumlah') != 0 ? $item->peminjaman->sum('jumlah') : '~' }}
+                                            </td>
+                                            <td class="{{ $item->quantity == 0 ? 'bg-danger text-white' : '' }}">
+                                                {{ $item->quantity }}</td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>

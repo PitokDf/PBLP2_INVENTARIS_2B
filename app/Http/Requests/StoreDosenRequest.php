@@ -23,7 +23,7 @@ class StoreDosenRequest extends FormRequest
     {
         return [
             "name" => ["required", "regex:/^[a-zA-Z\s]+$/u"],
-            "nip" => ["required", "regex:/^[0-9]+$/u", "digits:10", "unique:dosen"],
+            "nip" => ["required", "regex:/^[0-9]+$/u", "digits:16", "unique:dosen"],
             "jabatan" => ["required", "exists:jabatans,id"],
             "no_telpn" => ["required", "max:12", "unique:dosen,phone_number"],
             "email" => ["required", "email", "unique:dosen,email"],

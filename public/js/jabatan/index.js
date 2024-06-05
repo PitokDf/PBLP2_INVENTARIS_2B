@@ -61,7 +61,6 @@ $(document).ready(function () {
     $(document).on('click', '#btnCreateForm', function () {
         AjaxPostIncludeSerialize('/jabatan', $('#form').serialize(), function (res) {
             console.log(res)
-            console.log(error)
             if (res.status == 200) {
                 clearErrorMsg();
                 clerInput();

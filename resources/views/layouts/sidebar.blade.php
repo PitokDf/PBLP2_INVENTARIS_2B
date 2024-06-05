@@ -31,12 +31,12 @@
                 <span>Daftar Barang</span>
             </a>
         </li>
-        <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
+        {{-- <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
             <a href="/pengembalian" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Pengembalian</span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
             <a href="/peminjamanUmum" class="nav-link">
                 <i class="fas fa-fw fa-hand-holding"></i>
@@ -143,20 +143,20 @@
                 </div>
             </div>
         </li>
-        <li class="nav-item {{ Request::is('prodi') || Request::is('jabatan') ? 'active' : '' }}">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others"
-                aria-expanded="true" aria-controls="others">
+        <li class="nav-item {{ Request::is(['prodi', 'jabatan']) ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others" aria-expanded="true"
+                aria-controls="others">
                 <i class="fas fa-network-wired"></i>
                 <span>Others</span>
             </a>
             <div id="others" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('jabatan') ? 'active' : '' }}"
-                        href="{{ route('jabatan.index') }}">
+                    <a class="collapse-item {{ Request::is('jabatan') ? 'active' : '' }}" href="/jabatan">
                         <i class="fas fa-archive"></i>
                         <span>Jabatan</span>
                     </a>
-                    <a class="collapse-item {{ Route::is('prodi') ? 'active' : '' }}" href="{{ route('prodi.index') }}">
+                    <a class="collapse-item {{ Request::is('prodi') ? 'active' : '' }}"
+                        href="{{ route('prodi.index') }}">
                         <i class="fas fa-user-graduate"></i>
                         <span>Prodi</span>
                     </a>

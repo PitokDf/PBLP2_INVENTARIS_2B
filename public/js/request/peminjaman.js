@@ -36,7 +36,7 @@ $(document).ready(function () {
                     return item.user.dosen.name +
                         ` <span class="badge text-bg-info">Dosen</span>`
                 }
-                // return item.user.username
+                return item.user.username + ` <span class="badge text-bg-info">Staf</span>`
             },
             "orderable": true
         },

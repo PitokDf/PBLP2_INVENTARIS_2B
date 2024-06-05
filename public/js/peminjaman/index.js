@@ -14,9 +14,6 @@ $(document).ready(function () {
         "columns": [
             {
                 "data": "kode_peminjaman",
-                // "render": function (_data, _type, _row, meta) {
-                //     return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
-                // },
                 "orderable": false
             },
             {
@@ -33,7 +30,7 @@ $(document).ready(function () {
                     } else if (item.user.dosen) {
                         return item.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>'
                     } else {
-                        return item.username + ' <span class="badge text-bg-primary">Staf</span>';
+                        return item.user.username + ' <span class="badge text-bg-primary">Staf</span>';
                     }
 
                 },
@@ -112,6 +109,8 @@ $(document).ready(function () {
                 $('#tglpeminjamanK').val(dateCutomFormat(data.tgl_peminjaman));
                 $('#bataspengembalianK').val(dateCutomFormat(data.batas_pengembalian));
                 $('#reasonK').val(data.keterangan);
+                const currentDenda = calculateDenda(data.batas_pengembalian, getCurrentDate(), 1500);
+                $('#txt_denda').html(currentDenda > 0 ? '<strong class="text-danger">' + formatRupiah(currentDenda) + '</strong>' : formatRupiah(data.denda));
             }
         });
     });
@@ -175,7 +174,7 @@ $(document).ready(function () {
                     const data = response.data;
                     $('#id_peminjaman').text(data.kode_peminjaman);
                     $('#namaBarang').text(data.barang.nama_barang);
-                    $('#peminjam').text(data.user.username);
+                    $('#peminjam').html(data.user.mahasiswa ? data.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>' : (data.user.dosen ? data.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>' : data.user.username + ' <span class="badge text-bg-primary">Staf</span>'));
                     $('#kodeBarang').text(data.barang.code_barang);
 
                     let denda = calculateDenda(data.batas_pengembalian, getCurrentDate(), 1500);

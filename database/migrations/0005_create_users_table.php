@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('username');
             $table->string('email', 125)->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->enum('role', ['1', '2', '3', '4', '5'])->default('5');
+            $table->enum('role', ['1', '2', '3', '4', '5'])->default('4');
             $table->string('password');
             $table->unsignedBigInteger('mahasiswa_id')->nullable();
             $table->foreign('mahasiswa_id')->references('id_mahasiswa')->on('mahasiswa');

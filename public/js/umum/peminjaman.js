@@ -163,4 +163,10 @@ $(document).ready(function () {
             }
         })
     });
+
+    $(document).on('click', '#btnDetail', function () {
+        AjaxGetData('/detail-peminjaman/' + $(this).data('id'), function (res, errors) {
+            console.log('2222')
+        });
+    });
 });

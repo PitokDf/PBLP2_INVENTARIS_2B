@@ -1,5 +1,5 @@
 @extends('layouts.content')
-@section('title', 'Peminjaman')
+@section('title', 'Daftar Barang')
 @section('scriptPages')
     <script>
         $('#tablebarang').DataTable();

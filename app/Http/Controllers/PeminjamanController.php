@@ -130,11 +130,13 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::with([
             'user' => function ($query) {
-                $query->select('id_user', 'username');
+                $query->select('id_user', 'username', 'dosen_id', 'mahasiswa_id');
             },
             'barang' => function ($query) {
                 $query->select('id_barang', 'code_barang', 'nama_barang');
-            }
+            },
+            'user.mahasiswa',
+            'user.dosen'
         ])->where('id', $id)->first();
 
         if ($peminjaman) {

@@ -12,6 +12,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\MahasiswasController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanUmumController;
@@ -24,6 +25,7 @@ use App\Models\Barang;
 use App\Models\KategoriBarang;
 use App\Models\Peminjaman;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -64,6 +66,9 @@ Route::get('editData/{id}', [UsersController::class, "edit"]);
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::resource('/', DashboardController::class);
+        Route::get('report-stok', [ReportController::class, 'cetakStok'])->name('cetak.pdf');
+        Route::get('report-barang', [ReportController::class, 'cetakBarang'])->name('cetak.barang');
+        Route::get('report-peminjaman', [ReportController::class, 'cetakPeminjaman'])->name('cetak.peminjaman');
         Route::get('/laporan-barang', [ReportController::class, 'reportBarang']);
         Route::get('/laporan-barang-masuk', [ReportController::class, 'reportBarangMasuk']);
         Route::get('/laporan-barang-keluar', [ReportController::class, 'reportBarangKeluar']);

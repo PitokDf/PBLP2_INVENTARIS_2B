@@ -15,7 +15,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h5 class="m-0 font-weight-bold text-secondary">Laporan Barang</h5>
                     <div>
-                        <a href="" class="btn btn-sm btn-primary" data-toggle="modal" id="btnCreate">
+                        <a href="/report-barang" class="btn btn-sm btn-primary" target="_blank" id="btnCreate">
                             <i class="fas fa-solid fa-print"></i>
                             Cetak
                         </a>

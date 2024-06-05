@@ -72,11 +72,11 @@ class ReportController extends Controller
     public function cetakBarangMasuk()
     {
         Carbon::setLocale('id');
-        $pdf = Pdf::loadView('reports.pdf.report_stok', [
-            'header' => 'Laporan Stok Barang',
+        $pdf = Pdf::loadView('reports.pdf.report_barang_masuk', [
+            'header' => 'Laporan Barang Masuk',
             'data' => BarangMasuk::with(['barang', 'pemasok'])->latest()->get(),
             'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
-            'title' => 'Laporan Stok Barang'
+            'title' => 'Laporan Barang Masuk'
         ]);
 
         return $pdf->stream('laporan-barang-masuk.pdf');

@@ -16,12 +16,11 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->barang->code_barang ? $item->user->mahasiswa->nama . ' - M' : ($item->user->dosen ? $item->user->dosen->name . ' - D' : $item->user->username . ' - S') }}
-                    </td>
                     <td>{{ $item->barang->code_barang }}</td>
                     <td>{{ $item->barang->nama_barang }}</td>
-                    <td>{{ $item->jumlah }}</td>
-                    <td>{{ $item->tgl_pengembalian ? 'Sudah Dikembalikan' : 'Belum Dikembalikan' }}</td>
+                    <td>{{ $item->pemasok->nama }}</td>
+                    <td>{{ $item->created_at }}</td>
+                    <td>{{ $item->quantity }}</td>
                 </tr>
             @endforeach
         </tbody>

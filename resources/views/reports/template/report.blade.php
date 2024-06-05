@@ -34,6 +34,14 @@
             padding: 8px;
             text-align: left;
         }
+
+        .bg-danger {
+            background: red;
+        }
+
+        .text-white {
+            color: white;
+        }
     </style>
 </head>
 

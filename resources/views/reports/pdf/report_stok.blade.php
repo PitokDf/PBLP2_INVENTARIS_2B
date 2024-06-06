@@ -18,7 +18,8 @@
         </thead>
         <tbody>
             @foreach ($data as $item)
-                <tr>
+                <tr
+                    class="{{ $item->quantity == 0 ? 'bg-danger text-white' : ($item->quantity <= 15 ? 'bg-warning' : '') }}">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->code_barang }}</td>
                     <td>{{ $item->nama_barang }}</td>
@@ -30,7 +31,7 @@
                     <td>
                         {{ $item->peminjaman->sum('jumlah') != 0 ? $item->peminjaman->sum('jumlah') : '~' }}
                     </td>
-                    <td class="{{ $item->quantity == 0 ? 'bg-danger text-white' : '' }}">
+                    <td>
                         {{ $item->quantity }}</td>
                 </tr>
             @endforeach

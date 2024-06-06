@@ -23,7 +23,7 @@
         }
 
         thead {
-            background: rgba(0, 194, 120, 0.5);
+            background: rgba(0, 31, 204, 0.5);
             text: white;
         }
 
@@ -33,6 +33,10 @@
             text-align: left;
         }
 
+        .text-center {
+            text-align: center;
+        }
+
         .bg-danger {
             background: red;
         }
@@ -40,14 +44,35 @@
         .text-white {
             color: white;
         }
+
+        .bg-warning {
+            background: rgb(255, 230, 0);
+            color: rgb(0, 0, 0);
+        }
+
+        .mb-3 {
+            margin-bottom: 30px;
+        }
+
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        .text-capitalize {
+            text-transform: capitalize;
+        }
+
+        .m-0 {
+            margin: 0;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="text-center mt-3">
-            <h2 class="h2">{{ $header }}</h2>
-            <h5 class="h6">{{ $time }}</h5>
+        <div class="text-center mb-3">
+            <h1 class="text-capitalize m-0">{{ $header }}</h1>
+            <h4 class="h6">{{ $time }} - PBLP2 Inventaris Labor TI</h4>
         </div>
     </div>
     <div class="main">

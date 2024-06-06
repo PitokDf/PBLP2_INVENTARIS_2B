@@ -39,7 +39,7 @@
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Kategori Barang</th>
-                                        <th>Quantity</th>
+                                        <th>Jumlah</th>
                                         <th>Posisi</th>
                                     </tr>
                                 </thead>
@@ -49,13 +49,14 @@
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Kategori Barang</th>
-                                        <th>Quantity</th>
+                                        <th>Jumlah</th>
                                         <th>Posisi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     @foreach ($barangs as $item)
-                                        <tr>
+                                        <tr
+                                            class="{{ $item->quantity == 0 ? 'bg-danger text-light' : ($item->quantity <= 15 ? 'bg-warning text-light' : '') }}">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->code_barang }}</td>
                                             <td>{{ $item->nama_barang }}</td>

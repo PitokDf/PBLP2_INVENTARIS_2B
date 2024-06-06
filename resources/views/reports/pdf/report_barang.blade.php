@@ -8,7 +8,7 @@
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Kategori Barang</th>
-                <th>Quantity</th>
+                <th>Jumlah</th>
                 <th>Posisi</th>
             </tr>
         </thead>

@@ -98,7 +98,7 @@ class ReportController extends Controller
         Carbon::setLocale('id');
         $pdf = Pdf::loadView('reports.pdf.report_peminjaman', [
             'header' => 'Laporan Peminjaman Barang',
-            'data' => Peminjaman::with(['barang', 'user'])->where('status', '=', true)->latest()->get(),
+            'data' => Peminjaman::with(['barang', 'user'])->where('status', '=', true)->orderBy('kode_peminjaman')->get(),
             'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
             'title' => 'Laporan Peminjaman'
         ]);

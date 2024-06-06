@@ -23,6 +23,7 @@ return array(
     'App\\Http\\Controllers\\KategoriBeritaController' => $baseDir . '/app/Http/Controllers/KategoriBeritaController.php',
     'App\\Http\\Controllers\\LengkapiDataController' => $baseDir . '/app/Http/Controllers/LengkapiDataController.php',
     'App\\Http\\Controllers\\MahasiswasController' => $baseDir . '/app/Http/Controllers/MahasiswasController.php',
+    'App\\Http\\Controllers\\PdfController' => $baseDir . '/app/Http/Controllers/PdfController.php',
     'App\\Http\\Controllers\\PemasokController' => $baseDir . '/app/Http/Controllers/PemasokController.php',
     'App\\Http\\Controllers\\PeminjamanController' => $baseDir . '/app/Http/Controllers/PeminjamanController.php',
     'App\\Http\\Controllers\\PeminjamanUmumController' => $baseDir . '/app/Http/Controllers/PeminjamanUmumController.php',

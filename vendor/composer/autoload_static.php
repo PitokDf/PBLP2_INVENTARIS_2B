@@ -642,6 +642,7 @@ class ComposerStaticInit968f73bcf5520ee401d641d0d79555ec
         'App\\Http\\Controllers\\KategoriBeritaController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriBeritaController.php',
         'App\\Http\\Controllers\\LengkapiDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/LengkapiDataController.php',
         'App\\Http\\Controllers\\MahasiswasController' => __DIR__ . '/../..' . '/app/Http/Controllers/MahasiswasController.php',
+        'App\\Http\\Controllers\\PdfController' => __DIR__ . '/../..' . '/app/Http/Controllers/PdfController.php',
         'App\\Http\\Controllers\\PemasokController' => __DIR__ . '/../..' . '/app/Http/Controllers/PemasokController.php',
         'App\\Http\\Controllers\\PeminjamanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PeminjamanController.php',
         'App\\Http\\Controllers\\PeminjamanUmumController' => __DIR__ . '/../..' . '/app/Http/Controllers/PeminjamanUmumController.php',

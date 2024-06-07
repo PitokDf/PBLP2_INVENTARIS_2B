@@ -89,6 +89,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource("kategori-barang", KategoriBarangController::class);
         Route::get("getKategori", [KategoriBarangController::class, "getKategori"]);
         Route::resource("barang", BarangController::class);
+        Route::delete("barangs/bulk-delete", [BarangController::class, 'bulkDelete']);
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
         Route::resource("mahasiswa", MahasiswasController::class);
         Route::get("/getMahasiswaNim", [MahasiswasController::class, 'getMahasiswaNim']);

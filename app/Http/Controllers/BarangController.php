@@ -215,4 +215,20 @@ class BarangController extends Controller
             "message" => "Berhasil menghapus data."
         ]);
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+        if (!empty($ids)) {
+            Barang::whereIn('id_barang', $ids)->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Berhasil menghapus data terpilih.'
+            ]);
+        }
+        return response()->json([
+            'status' => 400,
+            'message' => 'Tidak ada item yang dipilih.'
+        ]);
+    }
 }

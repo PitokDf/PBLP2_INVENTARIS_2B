@@ -32,6 +32,10 @@
                             <i class="fas fa-solid fa-file-import"></i>
                             Import
                         </button>
+                        <button type="button" class="btn btn-sm btn-danger" id="deleteSelected" disabled>
+                            <i class="fas fa-solid fa-trash"></i>
+                            Delete
+                        </button>
                     </div>
                 </div>
                 <!-- Card Body -->
@@ -42,6 +46,7 @@
                                 cellspacing="0">
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
+                                        <th><input type="checkbox" id="selectAll"> All</th>
                                         <th>No</th>
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
@@ -53,6 +58,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
+                                        <th>All</th>
                                         <th>No</th>
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>

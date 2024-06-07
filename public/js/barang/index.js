@@ -36,6 +36,13 @@ $(document).ready(function () {
         "columns": [
             {
                 "data": null,
+                "render": function (_data, _type, row) {
+                    return "<input class='selected' type='checkbox' value='" + row.id_barang + "'>"
+                }
+                , "orderable": false
+            },
+            {
+                "data": null,
                 "render": function (_data, _type, _row, meta) {
                     return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
                 },
@@ -50,14 +57,6 @@ $(document).ready(function () {
                 },
                 "orderable": true
             },
-            // {
-            //     "data": null, "render":
-            //         function (_data, _type, row) {
-            //             const kategori = kategoriList.find(item => item.id === row.id_kategory);
-            //             return kategori ? kategori.nama_kategori_barang : "";
-            //         }
-            //     , "orderable": true
-            // },
             { "data": "quantity", "orderable": false },
             { "data": "posisi", "orderable": false },
             {
@@ -346,5 +345,89 @@ $(document).ready(function () {
                 console.log(errors);
             }
         });
+    });
+
+    // update status btn delete all
+    function updateBulkDeleteButton() {
+        var ids = $('.selected:checked').length;
+        if (ids > 0) {
+            $('#deleteSelected').prop('disabled', false);
+        } else {
+            $('#deleteSelected').prop('disabled', true);
+        }
+    }
+
+    $('#selectAll').click(function () {
+        $('.selected').prop('checked', this.checked);
+        updateBulkDeleteButton();
+    });
+
+    $(document).on('click', '.selected', function () {
+        updateBulkDeleteButton();
+    });
+
+    $('#deleteSelected').click(function () {
+        var ids = [];
+        $('.selected:checked').each(function () {
+            ids.push($(this).val());
+        });
+
+        if (ids.length > 0) {
+            Swal.fire({
+                title: "Yakin ingin menghapus data terpilih?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = '/barangs/bulk-delete';
+                    var data = { "_method": "DELETE", ids: ids };
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: data,
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response)
+                            reloadTable(table_barang);
+                            Swal.fire({
+                                title: "Opss..!",
+                                text: response.message,
+                                icon: "error"
+                            });
+
+                            if (xhr.status === 400) {
+                                Swal.fire({
+                                    title: "Ops !!",
+                                    text: response.message,
+                                    icon: "error",
+                                    confirmButtonText: "Ok"
+                                });
+                            }
+                        },
+                        error: function (xhr, stattus, error) {
+                            console.log(xhr)
+                            if (xhr.status === 500) {
+                                Swal.fire({
+                                    title: "Ops !!",
+                                    text: 'Something went wrong.',
+                                    icon: "error",
+                                    confirmButtonText: "Ok"
+                                });
+                            }
+                            console.error(xhr + "\n" + stattus + "\n" + error)
+                        }
+                    });
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "Ops..!",
+                text: 'Tidak Ada Item Yang dipilih',
+                icon: "error"
+            });
+        }
     });
 });

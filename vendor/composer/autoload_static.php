@@ -626,6 +626,7 @@ class ComposerStaticInit968f73bcf5520ee401d641d0d79555ec
 
     public static $classMap = array (
         'App\\Console\\Commands\\BackupData' => __DIR__ . '/../..' . '/app/Console/Commands/BackupData.php',
+        'App\\Exports\\BarangExport' => __DIR__ . '/../..' . '/app/Exports/BarangExport.php',
         'App\\Exports\\MahasiswaExport' => __DIR__ . '/../..' . '/app/Exports/MahasiswaExport.php',
         'App\\Exports\\UserExport' => __DIR__ . '/../..' . '/app/Exports/UserExport.php',
         'App\\Http\\Controllers\\ActivityLogController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActivityLogController.php',
@@ -670,6 +671,7 @@ class ComposerStaticInit968f73bcf5520ee401d641d0d79555ec
         'App\\Http\\Requests\\UpdateMahasiswasRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateMahasiswasRequest.php',
         'App\\Http\\Requests\\UpdatePemasokRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatePemasokRequest.php',
         'App\\Http\\Requests\\UpdateUsersRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateUsersRequest.php',
+        'App\\Imports\\BarangImport' => __DIR__ . '/../..' . '/app/Imports/BarangImport.php',
         'App\\Imports\\DosenImport' => __DIR__ . '/../..' . '/app/Imports/DosenImport.php',
         'App\\Imports\\MahasiswaImport' => __DIR__ . '/../..' . '/app/Imports/MahasiswaImport.php',
         'App\\Imports\\UserImport' => __DIR__ . '/../..' . '/app/Imports/UserImport.php',

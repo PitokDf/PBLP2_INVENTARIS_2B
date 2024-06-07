@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Commands\\BackupData' => $baseDir . '/app/Console/Commands/BackupData.php',
+    'App\\Exports\\BarangExport' => $baseDir . '/app/Exports/BarangExport.php',
     'App\\Exports\\MahasiswaExport' => $baseDir . '/app/Exports/MahasiswaExport.php',
     'App\\Exports\\UserExport' => $baseDir . '/app/Exports/UserExport.php',
     'App\\Http\\Controllers\\ActivityLogController' => $baseDir . '/app/Http/Controllers/ActivityLogController.php',
@@ -51,6 +52,7 @@ return array(
     'App\\Http\\Requests\\UpdateMahasiswasRequest' => $baseDir . '/app/Http/Requests/UpdateMahasiswasRequest.php',
     'App\\Http\\Requests\\UpdatePemasokRequest' => $baseDir . '/app/Http/Requests/UpdatePemasokRequest.php',
     'App\\Http\\Requests\\UpdateUsersRequest' => $baseDir . '/app/Http/Requests/UpdateUsersRequest.php',
+    'App\\Imports\\BarangImport' => $baseDir . '/app/Imports/BarangImport.php',
     'App\\Imports\\DosenImport' => $baseDir . '/app/Imports/DosenImport.php',
     'App\\Imports\\MahasiswaImport' => $baseDir . '/app/Imports/MahasiswaImport.php',
     'App\\Imports\\UserImport' => $baseDir . '/app/Imports/UserImport.php',

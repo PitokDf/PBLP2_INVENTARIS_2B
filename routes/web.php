@@ -27,6 +27,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Storage;
 
 Route::middleware(['guest'])->group(function () {
     Route::get("login", [SessionController::class, "index"]);
@@ -90,6 +91,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get("getKategori", [KategoriBarangController::class, "getKategori"]);
         Route::resource("barang", BarangController::class);
         Route::delete("barangs/bulk-delete", [BarangController::class, 'bulkDelete']);
+        Route::get('barangs/contoh/file', function () {
+            return Storage::download('public/Barangs.csv', 'exp-barang.csv');
+        })->name('download.barang');
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
         Route::resource("mahasiswa", MahasiswasController::class);
         Route::get("/getMahasiswaNim", [MahasiswasController::class, 'getMahasiswaNim']);

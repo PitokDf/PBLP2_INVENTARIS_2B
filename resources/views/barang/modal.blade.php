@@ -93,6 +93,9 @@
                     Cancel</button>
                 <button type="button" class="btn btn-sm btn-primary action">
                 </button>
+                <a href="{{ route('download.barang') }}" class="btn btn-sm btn-success download">
+                    <i class="fas fa-download"></i> contoh file
+                </a>
             </div>
         </div>
     </div>

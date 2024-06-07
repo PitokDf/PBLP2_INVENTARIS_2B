@@ -29,4 +29,5 @@ class UpdateMahasiswasRequest extends FormRequest
             "ipk" => "required|numeric|min:0|max:4",
         ];
     }
+
 }

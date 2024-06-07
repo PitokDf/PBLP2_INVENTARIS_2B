@@ -29,8 +29,8 @@ class StoreUsersRequest extends FormRequest
             ],
             'nim' => 'nullable|exists:mahasiswa,id_mahasiswa',
             'nip' => 'nullable|exists:dosen,id_dosen',
-            "role" => "required",
-            "password" => "min:8",
+            "role" => "required|in:1,2,3,4,5",
+            "password" => "regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@!$%*?&]/|min:8",
         ];
     }
 
@@ -41,7 +41,8 @@ class StoreUsersRequest extends FormRequest
             "email.required" => "Email tidak boleh kosong.",
             "email.unique" => "Email sudah pernah digunakan",
             "role.required" => "Pilih salah satu dari role yang tersedia.",
-            "password.min" => "Password minimal :min karakter.",
+            "password.min" => "Password minimal :min karakter ",
+            "password.regex" => "Password terdiri dari huruf besar/kecil, angka, dan simbol",
         ];
     }
 }

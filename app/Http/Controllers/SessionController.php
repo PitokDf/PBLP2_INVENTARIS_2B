@@ -72,7 +72,8 @@ class SessionController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            // 'password' => 'required|min:8|confirmed',
+            "password" => "required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@!$%*?&]/|confirmed",
         ]);
 
         $status = Password::reset(

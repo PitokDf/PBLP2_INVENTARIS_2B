@@ -24,14 +24,12 @@ class UpdateBarangRequest extends FormRequest
         return [
             "kode_barang" => ["required"],
             "nama_barang" => ["required"],
-            "kategori" => ["required"],
-            "jumlah" => ["required"],
+            "kategori" => ["required", "exists:kategori_barang,id"],
+            "jumlah" => ["required", "numeric", "min:1"],
+            "foto" => ["required", "max:2000"],
             "posisi" => ["required"],
-            "foto" => [
-                "max:2048",
-                "mimes:jpeg,png,jpg",
-            ]
         ];
+
     }
 
     public function messages(): array
@@ -41,9 +39,10 @@ class UpdateBarangRequest extends FormRequest
             "nama_barang.required" => "Nama Barang harus diisi.",
             "kategori.required" => "Pilih Kategori.",
             "jumlah.required" => "Jumlah harus diisi.",
-            "posisi.required" => "Posisi harus diisi.",
-            "foto.max" => "Max ukuran image 2Mb.",
-            "foto.mimes" => "Hanya file jpg, jpeg, png yang diizinkan.",
+            "foto.required" => "Pilih salah satu gambar.",
+            // "foto.mimes" => "File harus :mimes.",
+            "foto.max" => "File maksimal berukuran 2MB",
+            "posisi.required" => "Posisi harus diisi."
         ];
     }
 }

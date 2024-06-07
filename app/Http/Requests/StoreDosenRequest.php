@@ -36,7 +36,7 @@ class StoreDosenRequest extends FormRequest
         return [
             "name.required" => "Nama harus diisi.",
             "name.regex" => "Nama tidak boleh terdapat karakter unik ataupun angka.",
-            "nip.required" => "NIP harus diisi.",
+            "nip.required" => "NIP tidak boleh kosong.",
             "nip.unique" => "NIP sudah terdaftar.",
             "nip.regex" => "NIP tidak boleh terdapat karakter huruf.",
             "nip.digits" => "NIP harus :digits karakter angka.",

@@ -26,4 +26,6 @@ class UpdateBarangMasukRequest extends FormRequest
             "pemasok" => "required",
         ];
     }
+
+
 }

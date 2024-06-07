@@ -29,7 +29,7 @@ class StoreKategoriBeritaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "name_kategori.required" => "Nama kategori harus diisi."
+            "name_kategori.required" => "Nama kategori tidak boleh kosong."
         ];
     }
 }

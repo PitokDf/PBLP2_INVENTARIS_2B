@@ -29,4 +29,26 @@ class StoreMahasiswasRequest extends FormRequest
             "ipk" => "required|numeric|min:0|max:4",
         ];
     }
+
+    public function messages()
+    {
+        return [
+            "nama_mahasiswa.required" => "nama tidak boleh kosong",
+            "nim.required" => "NIM tidak boleh kosong",
+            "nim.numeric" => "NIM harus berupa angka",
+            "nim.digits" => "NIM harus 10 digit",
+            "nim.unique" => "NIM sudah terdaftar",
+            "prodi.required" => "Prodi tidak boleh kosong",
+            "angkatan.required" => "Angkatan tidak boleh kosong",
+            "angkatan.numeric" => "Angkatan harus berupa angka",
+            "angkatan.min" => "Angkatan minimal tahun 2000",
+            "angkatan.max" => "Angkatan maximal tahun :max",
+            "ipk.required" => "IPK tidak boleh kosong",
+            "ipk.numeric" => "IPK harus berupa angka",
+            "ipk.min" => "IPK minimal 0.00",
+            "ipk.max" => "IPK maximal 4.00",
+
+
+        ];
+    }
 }

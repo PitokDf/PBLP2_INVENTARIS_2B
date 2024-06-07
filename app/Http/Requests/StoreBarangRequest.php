@@ -24,9 +24,9 @@ class StoreBarangRequest extends FormRequest
         return [
             "kode_barang" => ["required"],
             "nama_barang" => ["required"],
-            "kategori" => ["required"],
-            "jumlah" => ["required"],
-            "foto" => ["required"],
+            "kategori" => ["required", "exists:kategori_barang,id"],
+            "jumlah" => ["required", "numeric", "min:1"],
+            "foto" => ["required", "max:2000"],
             "posisi" => ["required"],
         ];
     }
@@ -38,7 +38,9 @@ class StoreBarangRequest extends FormRequest
             "nama_barang.required" => "Nama Barang harus diisi.",
             "kategori.required" => "Pilih Kategori.",
             "jumlah.required" => "Jumlah harus diisi.",
-            "foto" => "pilih file gambar.",
+            "foto.required" => "Pilih salah satu gambar.",
+            // "foto.mimes" => "File harus :mimes.",
+            "foto.max" => "File maksimal berukuran 2MB",
             "posisi.required" => "Posisi harus diisi."
         ];
     }

@@ -31,7 +31,7 @@ class StoreBarangKeluarRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "barang.required" => "Pilih Barang.",
+            "barang.required" => "Silahkan pilih barang.",
             "barang.exists" => "Barang tidak terdaftar.",
             "quantity.required" => "Quantity harus diisi.",
             "quantity.numeric" => "Quantity harus numeric.",

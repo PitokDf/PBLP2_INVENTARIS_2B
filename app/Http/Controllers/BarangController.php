@@ -7,6 +7,12 @@ use App\Http\Requests\UpdateBarangRequest;
 use App\Models\ActivityLog;
 use App\Models\Barang;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BarangExport;
+use App\Imports\BarangImport;
+use Illuminate\Http\Request;
+
+
 
 class BarangController extends Controller
 {
@@ -21,11 +27,7 @@ class BarangController extends Controller
 
     public function getData()
     {
-        $data = Barang::with('kategori')->get();
-        // foreach ($data as $item) {
-        //     echo $item->kategori->nama_kategori_barang;
-        // }
-        // dd($data);
+        $data = Barang::with('kategori')->latest()->get();
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mendapatkan data.",
@@ -171,6 +173,21 @@ class BarangController extends Controller
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mengupdate data.",
+        ]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new BarangExport(), 'Barangs.csv');
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new BarangImport, request()->file('file'));
+
+        return response()->json([
+            "status" => 200,
+            "message" => "file berhasil diimport"
         ]);
     }
 

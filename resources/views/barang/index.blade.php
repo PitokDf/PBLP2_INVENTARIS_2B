@@ -23,14 +23,15 @@
                             <i class="fas fa-solid fa-plus"></i>
                             Add
                         </a>
-                        <a href="/export-users" class="btn btn-sm btn-primary">
+                        <a href="{{ route('barang.export') }}" class="btn btn-sm btn-primary""
+                            class="btn btn-sm btn-primary">
                             <i class="fas fa-solid fa-file-export"></i>
                             Export
                         </a>
-                        <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#import-user">
+                        <button type="button" class="btn btn-sm btn-primary showImport">
                             <i class="fas fa-solid fa-file-import"></i>
                             Import
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <!-- Card Body -->

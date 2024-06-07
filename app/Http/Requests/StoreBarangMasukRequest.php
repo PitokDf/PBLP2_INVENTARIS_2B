@@ -31,11 +31,11 @@ class StoreBarangMasukRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'barang.required' => 'Barang harus dipih.',
+            'barang.required' => 'Barang tidak boleh kosong',
             'barang.exists' => 'Barang tidak terdaftar.',
             'quantity.required' => 'Quantity harus diisi.',
-            'quantity.numeric' => 'Quantity harus numeric.',
-            'pemasok.required' => 'Pemasok harus diisi.',
+            'quantity.numeric' => 'Quantity harus terdiri dari angka.',
+            'pemasok.required' => 'Pemasok tidak boleh kosong',
         ];
     }
 }

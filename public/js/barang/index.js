@@ -202,6 +202,7 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
+                console.log(response)
                 if (response.status == 200) {
                     reloadTable(table_barang);
                     modal.modal('hide');
@@ -216,6 +217,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
+                console.log(xhr)
                 clearErrorMsg();
                 var data = xhr.responseJSON.errors;
                 if (data.kode_barang) {
@@ -306,6 +308,42 @@ $(document).ready(function () {
                     $('#foto_error').text(data.foto);
                     $('#foto').addClass('is-invalid');
                 }
+            }
+        });
+    });
+
+    $(document).on('click', '.showImport', function () {
+        $('#modalImport').modal('show');
+        $('.action').html("<i class='fas fa-solid fa-file-import'></i> Import");
+        $('.action').attr('id', "btnImport");
+    });
+    $(document).on('click', '#btnImport', function () {
+        var data = new FormData();
+        data.append('file', $('#file').prop('files')[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/importBarang",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                $("#modalImport").modal('hide');
+                reloadTable(table_barang);
+                $('#file').removeClass('is-invalid');
+                $('.error-area').html('');
+                $('#file').val('');
+                Swal.fire({
+                    title: "Imported!",
+                    text: response.message,
+                    icon: "success"
+                });
+            },
+            error: function (errors) {
+                $('#file').addClass('is-invalid');
+                $('.error-area').html(`<span class="text-danger">Pilih hanya file .csv atau .xlsx</span>`)
+                console.log(errors);
             }
         });
     });

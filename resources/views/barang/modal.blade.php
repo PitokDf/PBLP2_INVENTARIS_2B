@@ -65,3 +65,35 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Import --}}
+<div class="modal fade" id="modalImport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Pilih file</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="input-grub">
+                        <label class="title" for="file">Upload file csv</label>
+                        <input type="file" name="file" class="form-control" id="file"
+                            accept="excel/csv,xlsx" />
+                    </div>
+                    <div class="error-area">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"><i
+                        class="fas fa-window-close"></i>
+                    Cancel</button>
+                <button type="button" class="btn btn-sm btn-primary action">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

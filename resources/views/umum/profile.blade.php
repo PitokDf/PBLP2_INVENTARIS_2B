@@ -9,21 +9,27 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="card shadow mb-4">
-                <div class="card-header text-bold text-center">
-                    <h4>Detail Akun</h4>
+                <div class="card-header text-bold text-center" style="background-color: #001e959a">
+                    <h4 style="color: white" class="text-bold">Akun</h4>
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <div class="row d-flex justify-content-center">
-                            <label class="text-center" style="width: 120px; height: 120px;" for="file_image">
-                                <img class="img-profile rounded-circle"
-                                    style="width: 120px; height: 120px; object-fit: cover;" id="img-preview"
-                                    src="https://ui-avatars.com/api/?name={{ auth()->user()->mahasiswa_id ? auth()->user()->mahasiswa->nama : (auth()->user()->dosen_id ? auth()->user()->dosen->name : Auth::user()->username) }}&background=4e73df&color=ffffff&size=100">
-                            </label>
-                            <h5 class="text-center mt-3">
-                                {{ auth()->user()->mahasiswa_id ? auth()->user()->mahasiswa->nama : (auth()->user()->dosen_id ? auth()->user()->dosen->name : Auth::user()->username) }}
-                            </h5>
-                            <input type="file" id="file_image" onchange="previewImage()" accept="image/*" hidden>
+                        <div class="row justify-content-center">
+                            <div class="col-auto text-center position-relative">
+                                <label class="d-block position-relative" style="width: 120px; height: 120px;" for="file_image">
+                                    <img class="img-profile rounded-circle"
+                                        style="width: 120px; height: 120px; object-fit: cover;" id="img-preview"
+                                        src="https://ui-avatars.com/api/?name={{ auth()->user()->mahasiswa_id ? auth()->user()->mahasiswa->nama : (auth()->user()->dosen_id ? auth()->user()->dosen->name : Auth::user()->username) }}&background=4e73df&color=ffffff&size=100">
+                                    <div class="overlayy">
+                                        <span class="text btn btn-outline-light btn-small" >Ganti Foto Profil</span>
+                                    </div>
+                                    </label>
+
+                                <h5 class="mt-3">
+                                    {{ auth()->user()->mahasiswa_id ? auth()->user()->mahasiswa->nama : (auth()->user()->dosen_id ? auth()->user()->dosen->name : Auth::user()->username) }}
+                                </h5>
+                                <input type="file" id="file_image" onchange="previewImage()" accept="image/*" hidden>
+                            </div>
                         </div>
                     </div>
                     <table class="table mt-5">
@@ -39,10 +45,11 @@
                     <label for="">Ganti Password (opsional)</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
-                        <input type="password" placeholder="Masukkan Password" class="form-control" id="password"
+                        <input type="password" placeholder="Masukkan password baru" class="form-control" id="password"
                             aria-label="Amount">
                     </div>
                 </div>
+
                 <div class="card-footer d-flex justify-content-end">
                     <button class="btn btn-sm btn-primary" type="button" id="save">Save Changes</button>
                 </div>
@@ -50,8 +57,8 @@
         </div>
         <div class="col-lg">
             <div class="card shadow mb-4">
-                <div class="card-header text-bold text-center">
-                    <h4>Detail Lainnya</h4>
+                <div class="card-header text-bold text-center" style="background-color: #001e959a ">
+                    <h4 style="color: white" class="text-bold">Detail Profil</h4>
                 </div>
                 <div class="card-body">
                     @if (auth()->user()->role == 3)

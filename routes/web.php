@@ -16,6 +16,7 @@ use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanUmumController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RequestPeminjaman;
 use App\Http\Controllers\SessionController;
@@ -134,6 +135,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('peminjamanUmum', PeminjamanUmumController::class);
         Route::get('/detail-peminjaman/{id}', [PeminjamanController::class, 'show']);
         Route::post('/lengkapi-data', [PeminjamanUmumController::class, "lengkapi"]);
+        Route::resource('/profile', ProfileController::class);
         Route::get('/roleMahasiswa', function () {
             User::where('id_user', auth()->user()->id_user)->update([
                 'role' => '4'

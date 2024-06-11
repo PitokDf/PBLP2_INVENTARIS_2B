@@ -19,9 +19,9 @@ return new class extends Migration {
             $table->enum('role', ['1', '2', '3', '4', '5'])->default('4');
             $table->string('password');
             $table->unsignedBigInteger('mahasiswa_id')->nullable();
-            $table->foreign('mahasiswa_id')->references('id_mahasiswa')->on('mahasiswa');
+            $table->foreign('mahasiswa_id')->references('id_mahasiswa')->on('mahasiswa')->cascadeOnDelete();
             $table->unsignedBigInteger('dosen_id')->nullable();
-            $table->foreign('dosen_id')->references('id_dosen')->on('dosen');
+            $table->foreign('dosen_id')->references('id_dosen')->on('dosen')->cascadeOnDelete();
             $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();

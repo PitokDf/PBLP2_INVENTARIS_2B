@@ -25,7 +25,8 @@
             </svg>
             <div>
                 Pilih ingin sebagai <a href="{{ route('mahasiswa') }}">Mahasiswa</a> atau <a
-                    href="{{ route('dosen') }}">Dosen</a>.
+                    href="{{ route('dosen') }}">Dosen</a>,<strong>Your Currently Role
+                    is {{ auth()->user()->role == 4 ? 'Mahasiswa' : 'Dosen' }}</strong>.
             </div>
         </div>
     @endif

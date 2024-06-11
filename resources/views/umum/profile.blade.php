@@ -17,7 +17,7 @@
                         <h4 style="color: white" class="text-bold">Akun</h4>
                     </div>
                     <div class="card-body">
-                        <div id="area-message"></div>
+                        <div id="area-message-akun"></div>
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-auto text-center mt-3">
@@ -75,6 +75,7 @@
                         <h4 style="color: white" class="text-bold">Detail Profil</h4>
                     </div>
                     <div class="card-body">
+                        <div id="area-message-profile"></div>
                         @if (in_array(auth()->user()->role, ['3', '5']))
                             <div class="mb-3">
                                 <label for="">Nama</label>
@@ -83,6 +84,7 @@
                                     <input type="text" class="form-control" value="{{ auth()->user()->dosen->name }}"
                                         aria-label="Amount (to the nearest dollar)" id="namaD">
                                 </div>
+                                <span id="namaD_error"></span>
                                 <label for="">NIP</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-digital-tachograph"></i></span>
@@ -92,21 +94,30 @@
                                 <label for="">Jabatan</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                                    <input type="text" class="form-control" aria-label="Amount"
-                                        value="{{ auth()->user()->dosen->jabatan->jabatan }}" disabled>
+                                    <select class="form-control" id="jabatan">
+                                        <option value="">--Pilih Jabatan--</option>
+                                        @foreach ($jabatans as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id === auth()->user()->dosen->jabatan->id ? 'selected' : '' }}>
+                                                {{ $item->jabatan }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                <span id="jabatan_error"></span>
                                 <label for="">Email</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     <input type="text" class="form-control" value="{{ auth()->user()->dosen->email }}"
                                         aria-label="Amount" disabled>
                                 </div>
-                                <label for="">No. Telepon</label>
+                                <label for="no_telp">No. Telepon</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-phone-square-alt"></i></span>
-                                    <input type="text" id="noTelp" class="form-control"
-                                        value="{{ auth()->user()->dosen->phone_number }}" aria-label="Amount">
+                                    <input type="text" class="form-control"
+                                        value="{{ auth()->user()->dosen->phone_number }}" id="no_telp"
+                                        aria-label="Amount">
                                 </div>
+                                <span id="no_telp_error"></span>
                             </div>
                         @endif
 
@@ -119,6 +130,7 @@
                                     <input type="text" id="namaM" class="form-control"
                                         value="{{ auth()->user()->mahasiswa->nama }}" aria-label="Amount">
                                 </div>
+                                <span id="namaM_error"></span>
                                 <label for="">NIM</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-digital-tachograph"></i></span>
@@ -128,15 +140,30 @@
                                 <label for="">Prodi</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
-                                    <input type="text" id="prodi" class="form-control" aria-label="Amount"
-                                        value="{{ auth()->user()->mahasiswa->prodi->nama_prodi }}">
+                                    {{-- <input type="text" id="prodi" class="form-control" aria-label="Amount"
+                                        value="{{ auth()->user()->mahasiswa->prodi->code_prodi }}"> --}}
+                                    <select name="prodi" id="prodi" class="form-control">
+                                        <option value="">--pilih prodi--</option>
+                                        @foreach ($prodis as $item)
+                                            <option value="{{ $item->code_prodi }}"
+                                                {{ $item->code_prodi === auth()->user()->mahasiswa->prodi->code_prodi ? 'selected' : '' }}>
+                                                {{ $item->nama_prodi }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                <span id="prodi_error"></span>
                                 <label for="">Angkatan</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                    <input type="text" class="form-control"
-                                        value="{{ auth()->user()->mahasiswa->angkatan }}" aria-label="Amount" disabled>
+                                    <select name="angkatan" id="angkatan" class="form-control">
+                                        @for ($i = 2009; $i < date('Y'); $i++)
+                                            <option {{ $i == auth()->user()->mahasiswa->angkatan ? 'selected' : '' }}
+                                                value="{{ $i }}">
+                                                {{ $i }}</option>
+                                        @endfor
+                                    </select>
                                 </div>
+                                <span id="angkatan_error"></span>
                             </div>
                         @endif
                     </div>

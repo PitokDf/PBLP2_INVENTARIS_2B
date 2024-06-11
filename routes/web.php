@@ -174,6 +174,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/lengkapi-data', [PeminjamanUmumController::class, "lengkapi"]);
         Route::get('/profile', [ProfileController::class, 'index']);
         Route::post('/edit-akun', [ProfileController::class, 'editAkun']);
+        Route::post('/edit-profile', [ProfileController::class, 'editProfile']);
         Route::get('/roleMahasiswa', function () {
             User::where('id_user', auth()->user()->id_user)->update([
                 'role' => '4'

@@ -55,7 +55,7 @@ $(document).ready(function () {
 
                 if (errors.file_image) {
                     $('.avatar').addClass('error-cs');
-                    $('#area-message').html(`<div class="alert alert-danger" role="alert">${errors.file_image}</div>`);
+                    $('#area-message-akun').html(`<div class="alert alert-danger" role="alert">${errors.file_image}</div>`);
                 }
             }
         });

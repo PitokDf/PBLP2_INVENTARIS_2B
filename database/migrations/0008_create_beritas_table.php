@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->date('tgl_publikasi');
-            $table->foreignId('kategori_id')->constrained('kategori_berita');
+            $table->foreignId('kategori_id')->constrained('kategori_berita')->onDelete('cascade');
             $table->uuid('user_id');
-            $table->foreign('user_id')->references('id_user')->on('users');
+            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -140,6 +140,12 @@ div:where(.swal2-container) {
     opacity: .5;
 }
 
+.opacity-70 {
+    opacity: .7;
+}
+
+
+
 .position-relative:hover .overlayy {
     opacity: 1;
 }
@@ -185,7 +191,7 @@ div:where(.swal2-container) {
     scale: 1.05;
     background: conic-gradient(from 45deg, red, yellow, lime, aqua, blue, magenta, red);
     animation: 3s rotated linear infinite;
-    box-shadow: 0 0 15px rgb(165, 165, 165);
+    box-shadow: 0 0 15px rgb(128, 128, 128);
 }
 
 @keyframes rotated {

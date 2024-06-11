@@ -21,9 +21,9 @@
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-auto text-center mt-3">
-                                    <label class="d-block position-relative" style="width: 120px; height: 120px;"
-                                        for="file_image">
-                                        <div class="rainbow-border" style="z-index: 99">
+                                    <label class="d-block position-relative"
+                                        style="width: 120px; height: 120px; z-index: 99" for="file_image">
+                                        <div class="rainbow-border">
                                             <img class="img-profile rounded-circle avatar"
                                                 style="width: 120px; height: 120px; object-fit: cover;" id="img-preview"
                                                 src=" {{ auth()->user()->avatar
@@ -37,7 +37,7 @@
                                                         '&background=4e73df&color=ffffff&size=100' }} ">
                                         </div>
                                         <div class="overlayy">
-                                            <i class="fas fa-edit opacity-50"></i>
+                                            <i class="fas fa-edit opacity-70"></i>
                                         </div>
                                     </label>
                                     <h5 class="mt-3">

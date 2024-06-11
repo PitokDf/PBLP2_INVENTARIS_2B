@@ -81,7 +81,7 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
                                     <input type="text" class="form-control" value="{{ auth()->user()->dosen->name }}"
-                                        aria-label="Amount (to the nearest dollar)">
+                                        aria-label="Amount (to the nearest dollar)" id="namaD">
                                 </div>
                                 <label for="">NIP</label>
                                 <div class="input-group mb-3">
@@ -104,7 +104,7 @@
                                 <label for="">No. Telepon</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-phone-square-alt"></i></span>
-                                    <input type="text" class="form-control"
+                                    <input type="text" id="noTelp" class="form-control"
                                         value="{{ auth()->user()->dosen->phone_number }}" aria-label="Amount">
                                 </div>
                             </div>
@@ -116,8 +116,8 @@
                                 <label for="">Nama</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->mahasiswa->nama }}"
-                                        aria-label="Amount">
+                                    <input type="text" id="namaM" class="form-control"
+                                        value="{{ auth()->user()->mahasiswa->nama }}" aria-label="Amount">
                                 </div>
                                 <label for="">NIM</label>
                                 <div class="input-group mb-3">
@@ -128,7 +128,7 @@
                                 <label for="">Prodi</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
-                                    <input type="text" class="form-control" aria-label="Amount"
+                                    <input type="text" id="prodi" class="form-control" aria-label="Amount"
                                         value="{{ auth()->user()->mahasiswa->prodi->nama_prodi }}">
                                 </div>
                                 <label for="">Angkatan</label>

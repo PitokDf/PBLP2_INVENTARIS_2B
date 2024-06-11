@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('barang_id');
             $table->foreign('barang_id')->references('id_barang')->on('barang');
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id_user')->on('users');
             $table->date('tgl_keluar');
             $table->integer('quantity')->default(1);
             $table->string('keterangan');

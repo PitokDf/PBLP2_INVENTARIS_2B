@@ -22,8 +22,14 @@ class RequestPeminjaman extends Controller
                 'message' => 'Kode Peminjaman Tidak Ditemukan.'
             ]);
         }
-
-        Barang::find($peminjaman->id_barang)->decrement('quantity', $peminjaman->jumlah);
+        $barang = Barang::find($peminjaman->id_barang);
+        if ($peminjaman->jumlah > $barang->quantity) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Barang yang ingin dipinjam kehabisam stok.'
+            ]);
+        }
+        $barang->decrement('quantity', $peminjaman->jumlah);
         $peminjaman->update([
             'status' => true
         ]);

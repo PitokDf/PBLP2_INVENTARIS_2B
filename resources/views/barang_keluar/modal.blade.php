@@ -21,7 +21,7 @@
                             <td>: <span id="txt_namaBarang">HP Laptop (dummy)</span></td>
                         </tr>
                         <tr>
-                            <th class="text-dark">Quantity</th>
+                            <th class="text-dark">Jumlah</th>
                             <td>: <span id="txt_quantity">135 (dummy)</span></td>
                         </tr>
                         {{-- <tr>

@@ -30,7 +30,7 @@
         </div>
     @endif
 
-    @if (in_array(auth()->user()->role, ['3', '4']) &&
+    @if (in_array(auth()->user()->role, ['3', '4', '5']) &&
             auth()->user()->mahasiswa_id === null &&
             auth()->user()->dosen_id === null)
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -203,7 +203,7 @@
     @endif
 
     {{-- modal lengkapi data dosen --}}
-    @if (auth()->user()->role == '3' && auth()->user()->dosen_id === null)
+    @if (in_array(auth()->user()->role, ['3', '5']) && auth()->user()->dosen_id === null)
         <div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">

@@ -25,6 +25,7 @@ class StoreBarangKeluarRequest extends FormRequest
             "barang" => "required|exists:barang,id_barang",
             "quantity" => "required|numeric|min:1",
             "keterangan" => "required",
+            'user' => 'required|exists:users,id_user'
         ];
     }
 

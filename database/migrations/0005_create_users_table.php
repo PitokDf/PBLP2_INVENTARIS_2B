@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->foreign('mahasiswa_id')->references('id_mahasiswa')->on('mahasiswa');
             $table->unsignedBigInteger('dosen_id')->nullable();
             $table->foreign('dosen_id')->references('id_dosen')->on('dosen');
-            // $table->foreign('dosen_id')->constrained('dosens');
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

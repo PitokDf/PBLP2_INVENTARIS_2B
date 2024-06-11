@@ -25,14 +25,15 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _row, item) {
-                    if (item.user.mahasiswa) {
+                    if (item.user.role == 4) {
                         return item.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>'
-                    } else if (item.user.dosen) {
+                    } else if (item.user.role == 3) {
                         return item.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>'
+                    } else if (item.user.role == 5) {
+                        return item.user.dosen.name + ' <span class="badge text-bg-primary">Staf</span>'
                     } else {
                         return item.user.username + ' <span class="badge text-bg-primary">Staf</span>';
                     }
-
                 },
                 "orderable": true
             },
@@ -174,7 +175,7 @@ $(document).ready(function () {
                     const data = response.data;
                     $('#id_peminjaman').text(data.kode_peminjaman);
                     $('#namaBarang').text(data.barang.nama_barang);
-                    $('#peminjam').html(data.user.mahasiswa ? data.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>' : (data.user.dosen ? data.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>' : data.user.username + ' <span class="badge text-bg-primary">Staf</span>'));
+                    $('#peminjam').html(data.user.role == '5' ? data.user.dosen.name + ' <span class="badge text-bg-primary">Staf</span>' : (data.user.mahasiswa ? data.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>' : (data.user.dosen ? data.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>' : data.user.username + ' <span class="badge text-bg-primary">Staf</span>')));
                     $('#kodeBarang').text(data.barang.code_barang);
 
                     let denda = calculateDenda(data.batas_pengembalian, getCurrentDate(), 1500);

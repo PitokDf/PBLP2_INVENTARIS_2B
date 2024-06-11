@@ -23,9 +23,8 @@ class UpdateDosenRequest extends FormRequest
     {
         return [
             "name" => ["required", "regex:/^[a-zA-Z\s]+$/u"],
-            "nip" => ["required", "regex:/^[0-9]+$/u", "digits:10"],
-            "jabatan" => ["required"],
-            "no_telpn" => ["required", "max:12"],
+            "nip" => ["required", "regex:/^[0-9]+$/u", "digits:16"],
+            "jabatan" => "required|exists:jabatans,id",
         ];
     }
 

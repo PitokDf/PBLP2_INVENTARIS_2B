@@ -91,7 +91,15 @@
                 <span
                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->mahasiswa_id ? auth()->user()->mahasiswa->nama : (auth()->user()->dosen_id ? auth()->user()->dosen->name : Auth::user()->username) }}</span>
                 <img class="img-profile rounded-circle"
-                    src="https://ui-avatars.com/api/?name={{ auth()->user()->mahasiswa_id ? auth()->user()->mahasiswa->nama : (auth()->user()->dosen_id ? auth()->user()->dosen->name : Auth::user()->username) }}&background=4e73df&color=ffffff&size=100">
+                    src=" {{ auth()->user()->avatar
+                        ? '/storage/avatar/' . auth()->user()->avatar
+                        : 'https://ui-avatars.com/api/?name=' .
+                            (auth()->user()->mahasiswa_id
+                                ? auth()->user()->mahasiswa->nama
+                                : (auth()->user()->dosen_id
+                                    ? auth()->user()->dosen->name
+                                    : Auth::user()->username)) .
+                            '&background=4e73df&color=ffffff&size=100' }} ">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -127,7 +135,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="container-fluid" id="activity-content">
+                        <div id="activity-content">
 
                         </div>
                     </div>

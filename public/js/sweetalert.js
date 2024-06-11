@@ -126,7 +126,7 @@ $(document).ready(function () {
 
     function getKondisiData(role, other = null) {
         if (other !== null) {
-            if (role == 3) {
+            if (role == 3 || role == 5) {
                 $('#kondisi').html(`
                 <div class="mb-3">
                     <label for="nip" class="form-label">NIP</label>
@@ -148,7 +148,7 @@ $(document).ready(function () {
             }
         } else {
             $('#role').attr('disabled', false);
-            if (role == 3) {
+            if (role == 3 || role == 5) {
                 $('#kondisi').html(`
                 <div class="mb-3">
                     <label for="nip" class="form-label">NIP</label>

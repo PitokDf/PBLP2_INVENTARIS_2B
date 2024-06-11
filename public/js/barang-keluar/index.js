@@ -28,6 +28,13 @@ $(document).ready(function () {
             },
             {
                 "data": null,
+                "render": function (data, type, row) {
+                    return data.user.username;
+                },
+                "orderable": true
+            },
+            {
+                "data": null,
                 "render": function (_data, _type, row) {
                     return dateCutomFormat(row.tgl_keluar);
                 },
@@ -49,15 +56,18 @@ $(document).ready(function () {
         $('#barang_error').text('');
         $('#quantity_error').text('');
         $('#keterangan_error').text('');
+        $('#user_error').text('');
         $('#barangM').removeClass('is-invalid');
         $('#quantity').removeClass('is-invalid');
         $('#keterangan').removeClass('is-invalid');
+        $('#user').removeClass('is-invalid');
     }
 
     function clearInput() {
         $('#barangM').val('');
         $('#quantity').val('');
         $('#keterangan').val('');
+        $('#user').val('');
     }
 
     $('#simpan').on('click', function () {
@@ -66,6 +76,7 @@ $(document).ready(function () {
         data.append('barang', $('#barangM').val());
         data.append('quantity', $('#quantity').val());
         data.append('keterangan', $('#keterangan').val());
+        data.append('user', $('#user').val());
 
         $.ajax({
             type: "POST",
@@ -112,6 +123,10 @@ $(document).ready(function () {
                 if (errorMessage.keterangan) {
                     $('#keterangan_error').text(errorMessage.keterangan);
                     $('#keterangan').addClass('is-invalid');
+                }
+                if (errorMessage.user) {
+                    $('#user_error').text(errorMessage.user);
+                    $('#user').addClass('is-invalid');
                 }
             }
         });

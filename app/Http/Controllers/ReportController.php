@@ -41,68 +41,65 @@ class ReportController extends Controller
         return view("reports.stok")->with("barangs", $data);
     }
 
-    public function cetakStok()
+    private function printPdf($view, $header, $data, $fileName)
     {
         Carbon::setLocale('id');
-        $pdf = Pdf::loadView('reports.pdf.report_stok', [
-            'header' => 'Laporan Stok Barang',
-            'data' => Barang::with([
+        $pdf = Pdf::loadView($view, [
+            'header' => $header,
+            'data' => $data,
+            'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
+            'title' => $header
+        ]);
+        return $pdf->stream($fileName);
+    }
+
+    public function cetakStok()
+    {
+        return $this->printPdf(
+            'reports.pdf.report_stok',
+            'Laporan Stok Barang',
+            Barang::with([
                 'peminjaman' => function ($query) {
                     $query->whereNull('tgl_pengembalian');
                 }
             ])->latest()->get(),
-            'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
-            'title' => 'Laporan Stok Barang'
-        ]);
-
-        return $pdf->stream('laporan-stok.pdf');
+            'laporan-stok.pdf'
+        );
     }
     public function cetakBarang()
     {
-        Carbon::setLocale('id');
-        $pdf = Pdf::loadView('reports.pdf.report_barang', [
-            'header' => 'Laporan Data Barang',
-            'data' => Barang::with('kategori')->latest()->get(),
-            'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
-            'title' => 'Laporan Ketersedian Barang'
-        ]);
-
-        return $pdf->stream('laporan-barang.pdf');
+        return $this->printPdf(
+            'reports.pdf.report_barang',
+            'Laporan Data Barang',
+            Barang::with('kategori')->latest()->get(),
+            'laporan-barang.pdf'
+        );
     }
     public function cetakBarangMasuk()
     {
-        Carbon::setLocale('id');
-        $pdf = Pdf::loadView('reports.pdf.report_barang_masuk', [
-            'header' => 'Laporan Barang Masuk',
-            'data' => BarangMasuk::with(['barang', 'pemasok'])->latest()->get(),
-            'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
-            'title' => 'Laporan Barang Masuk'
-        ]);
-
-        return $pdf->stream('laporan-barang-masuk.pdf');
+        return $this->printPdf(
+            'reports.pdf.report_barang_masuk',
+            'Laporan Barang Masuk',
+            BarangMasuk::with(['barang', 'pemasok'])->latest()->get(),
+            'laporan-barang-masuk.pdf'
+        );
     }
     public function cetakBarangKeluar()
     {
-        Carbon::setLocale('id');
-        $pdf = Pdf::loadView('reports.pdf.report_stok', [
-            'header' => 'Laporan Stok Barang',
-            'data' => BarangMasuk::with(['barang', 'pemasok'])->latest()->get(),
-            'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
-            'title' => 'Laporan Stok Barang'
-        ]);
-
-        return $pdf->stream('laporan-barang-keluar.pdf');
+        return $this->printPdf(
+            'reports.pdf.report_stok',
+            'Laporan Stok Barang',
+            BarangMasuk::with(['barang', 'pemasok'])->latest()->get(),
+            'laporan-barang-keluar.pdf'
+        );
     }
     public function cetakPeminjaman()
     {
-        Carbon::setLocale('id');
-        $pdf = Pdf::loadView('reports.pdf.report_peminjaman', [
-            'header' => 'Laporan Peminjaman Barang',
-            'data' => Peminjaman::with(['barang', 'user'])->where('status', '=', true)->orderBy('kode_peminjaman')->get(),
-            'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
-            'title' => 'Laporan Peminjaman'
-        ]);
-
-        return $pdf->stream('laporan-peminjaman.pdf');
+        return $this->printPdf(
+            'reports.pdf.report_peminjaman',
+            'Laporan Peminjaman Barang',
+            Peminjaman::with(['barang', 'user'])->where('status', '=', true)->orderBy('kode_peminjaman')->get(),
+            'laporan-peminjaman.pdf'
+        );
     }
 }

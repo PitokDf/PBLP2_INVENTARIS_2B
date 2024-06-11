@@ -28,15 +28,13 @@ $(document).ready(function () {
         {
             "data": null,
             "render": function (_data, _row, item) {
-                if (item.user.mahasiswa !== null) {
-                    return item.user.mahasiswa.nama +
-                        ` <span class="badge text-bg-info">Mahasiswa</span>`;
+                if (item.user.role == 4) {
+                    return item.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>'
+                } else if (item.user.role == 3) {
+                    return item.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>'
+                } else {
+                    return item.user.username + ' <span class="badge text-bg-primary">Staf</span>';
                 }
-                if (item.user.dosen !== null) {
-                    return item.user.dosen.name +
-                        ` <span class="badge text-bg-info">Dosen</span>`
-                }
-                return item.user.username + ` <span class="badge text-bg-info">Staf</span>`
             },
             "orderable": true
         },
@@ -74,6 +72,13 @@ $(document).ready(function () {
                             icon: "success",
                             confirmButtonText: "Ok"
                         }), reloadTable(table_request)) : ''
+                    response.status == 400 ?
+                        Swal.fire({
+                            title: "Ops..",
+                            text: response.message,
+                            icon: "error",
+                            confirmButtonText: "Ok"
+                        }) : ''
                 })
             }
         })

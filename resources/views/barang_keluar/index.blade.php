@@ -32,14 +32,22 @@
                         </select>
                         <span id="barang_error" class="text-danger"></span>
                     </div>
-                    {{-- <div class="mb-3">
-                        <label for="quantity" class="form-label">Pemasok</label>
-                        <input type="text" name="pemasok" id="pemasok" placeholder="Pemasok" class="form-control">
-                        <span id="pemasok_error" class="text-danger"></span>
-                    </div> --}}
                     <div class="mb-3">
-                        <label for="barang" class="form-label">Quantity</label>
-                        <input type="number" name="quantity" id="quantity" placeholder="Quantity" class="form-control">
+                        <label for="user" class="form-label">User</label>
+                        <select name="user" id="user" class="form-control">
+                            <option value="">--Pilih user--</option>
+                            @foreach ($users as $item)
+                                <option value="{{ $item->id_user }}">
+                                    {{ $item->mahasiswa_id !== null ? $item->mahasiswa->nama . ' - ' . $item->mahasiswa->nim . ' (Mahasiswa)' : ($item->dosen_id !== null ? $item->dosen->name . ' - ' . $item->dosen->nip . ' (Dosen)' : $item->username . ' (Staf)') }}
+
+                                </option>
+                            @endforeach
+                        </select>
+                        <span id="user_error" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="barang" class="form-label">Jumlah</label>
+                        <input type="number" name="quantity" id="quantity" placeholder="Jumlah" class="form-control">
                         <span id="quantity_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -70,6 +78,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Barang</th>
+                                        <th>Penerima</th>
                                         <th>Tanggal Keluar</th>
                                         <th>Quantity</th>
                                         <th>Aksi</th>
@@ -79,6 +88,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Barang</th>
+                                        <th>Penerima</th>
                                         <th>Tanggal Keluar</th>
                                         <th>Quantity</th>
                                         <th>Aksi</th>

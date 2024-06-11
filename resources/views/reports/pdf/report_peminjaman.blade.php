@@ -16,7 +16,7 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $item->kode_peminjaman }}</td>
-                    <td>{{ $item->user->mahasiswa ? $item->user->mahasiswa->nama . ' - M' : ($item->user->dosen ? $item->user->dosen->name . ' - D' : $item->user->username . ' - S') }}
+                    <td>{{ $item->user->mahasiswa ? $item->user->mahasiswa->nama : ($item->user->dosen ? $item->user->dosen->name : $item->user->username . ' - S') }}
                     </td>
                     <td>{{ $item->barang->code_barang }}</td>
                     <td>{{ $item->barang->nama_barang }}</td>

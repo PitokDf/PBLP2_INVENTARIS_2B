@@ -17,7 +17,7 @@ class PeminjamanUmumController extends Controller
         $jabatan = Jabatan::latest()->get();
         $prodi = Prodi::latest()->get();
 
-        return Auth::user()->role == '3' ?
+        return in_array(Auth::user()->role, ['3', '5']) ?
             view("umum.peminjaman.index")->with('jabatans', $jabatan) :
             (
                 Auth::user()->role == '4' ? view("umum.peminjaman.index")->with('prodis', $prodi) : view("umum.peminjaman.index")
@@ -38,9 +38,9 @@ class PeminjamanUmumController extends Controller
 
     public function lengkapi(Request $request)
     {
-        if (auth()->user()->role == '3') {
+        if (in_array(auth()->user()->role, ['3', '5'])) {
             $request->validate([
-                'nip' => 'required|numeric|digits:18|unique:dosen,nip',
+                'nip' => 'required|numeric|digits:16|unique:dosen,nip',
                 'nama' => 'required',
                 'jabatan' => 'required|exists:jabatans,id',
                 'no_hp' => 'required|unique:dosen,phone_number'

@@ -24,19 +24,13 @@
         Interface
     </div>
 
-    @role(['3', '4', '5'])
+    @can('umum')
         <li class="nav-item {{ Request::is('daftar-barang') ? 'active' : '' }}">
             <a href="/daftar-barang" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Daftar Barang</span>
             </a>
         </li>
-        {{-- <li class="nav-item {{ Request::is('pengembalian') ? 'active' : '' }}">
-            <a href="/pengembalian" class="nav-link">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Pengembalian</span>
-            </a>
-        </li> --}}
         <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
             <a href="/peminjamanUmum" class="nav-link">
                 <i class="fas fa-fw fa-hand-holding"></i>
@@ -49,9 +43,9 @@
                 <span>Riwayat Peminjaman</span>
             </a>
         </li>
-    @endrole
+    @endcan
 
-    @role('1')
+    @can('admin')
         <li class="nav-item {{ Request::is('barang') || Request::is('kategori-barang') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang" aria-expanded="true"
                 aria-controls="barang">
@@ -163,8 +157,7 @@
                 </div>
             </div>
         </li>
-    @endrole
-
+    @endcan
     @role(['1', '2'])
         <li
             class="nav-item {{ Request::is(['laporan-barang', 'laporan-barang-masuk', 'laporan-barang-keluar', 'laporan-peminjaman', 'laporan-stok']) ? 'active' : '' }}">

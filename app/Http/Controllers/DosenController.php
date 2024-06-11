@@ -111,23 +111,20 @@ class DosenController extends Controller
         try {
             $dosen = Dosen::findOrFail($id);
 
-            $rules = [];
+            $rules = [
+                'email' => 'required|email|' . Rule::unique('dosen')->ignore($dosen),
+                // "no_telpn" => Rule::unique('dosen')->ignore($dosen),
+                "nip" => Rule::unique('dosen')->ignore($dosen)
+            ];
+
             if ($request->hasFile('dir_foto')) {
                 if ($dosen->photo_dir) {
                     Storage::delete('public/dosen/' . $dosen->photo_dir);
                 }
-
-                $rules = [
-                    'email' => [
-                        'required',
-                        'email',
-                        Rule::unique('dosen')->ignore($dosen),
-                    ],
-                    "dir_foto" => [
-                        'image',
-                        'mimes:jpeg,png,jpg',
-                        'max:2048'
-                    ]
+                $rules["dir_foto"] = [
+                    'image',
+                    'mimes:jpeg,png,jpg',
+                    'max:2048'
                 ];
 
 
@@ -136,20 +133,6 @@ class DosenController extends Controller
                 $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalExtension();
                 $file->storeAs('public/dosen', $filename); // Simpan file dengan nama tertentu
                 $dosen->photo_dir = $filename;
-            } else {
-                $rules = [
-                    'email' => [
-                        'required',
-                        'email',
-                        Rule::unique('dosen')->ignore($dosen),
-                    ],
-                    "phone_number" => [
-                        Rule::unique('dosen')->ignore($dosen)
-                    ],
-                    "nip" => [
-                        Rule::unique('dosen')->ignore($dosen)
-                    ]
-                ];
             }
 
             $validator = Validator::make($request->all(), $rules, [

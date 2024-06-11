@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBarangKeluarRequest;
 use App\Http\Requests\UpdateBarangKeluarRequest;
 use App\Models\Barang;
 use App\Models\BarangKeluar;
+use App\Models\User;
 
 class BarangKeluarController extends Controller
 {
@@ -15,12 +16,27 @@ class BarangKeluarController extends Controller
     public function index()
     {
         $barang = Barang::latest()->get();
-        return view("barang_keluar.index")->with('barangs', $barang);
+        $user = User::with(['mahasiswa', 'dosen'])
+            ->where(function ($query) {
+                $query->where('role', '3')
+                    ->whereNotNull('dosen_id');
+            })
+            ->orWhere(function ($query) {
+                $query->where('role', '4')
+                    ->whereNotNull('mahasiswa_id');
+            })
+            ->where('email_verified_at', '!=', null)
+            ->orWhereNotIn('role', ['2', '3', '4'])
+            ->where('role', '!=', '1')
+            ->latest()->get();
+        return view("barang_keluar.index")->with(['barangs' => $barang, 'users' => $user]);
+
+
     }
 
     public function getAllData()
     {
-        $data = BarangKeluar::with('barang')->latest()->get();
+        $data = BarangKeluar::with(['barang', 'user'])->latest()->get();
         return response()->json([
             'data' => $data,
             'message' => "Data Berhasil didapatkan."
@@ -46,7 +62,8 @@ class BarangKeluarController extends Controller
             "barang_id" => $request->barang,
             "tgl_keluar" => now(),
             "quantity" => $request->quantity,
-            "keterangan" => $request->keterangan
+            "keterangan" => $request->keterangan,
+            "user_id" => $request->user
         ];
 
         if ($request->quantity > $barang->quantity) {

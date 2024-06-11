@@ -158,3 +158,42 @@ div:where(.swal2-container) {
 .error-cs {
     border: 2px solid rgb(226, 0, 0);
 }
+
+/* my element */
+
+.rainbow-border {
+    width: max-content;
+    height: max-content;
+    object-fit: cover;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.rainbow-border img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.rainbow-border::before {
+    border-radius: 50%;
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    scale: 1.05;
+    background: conic-gradient(from 45deg, red, yellow, lime, aqua, blue, magenta, red);
+    animation: 3s rotated linear infinite;
+    box-shadow: 0 0 15px rgb(165, 165, 165);
+}
+
+@keyframes rotated {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

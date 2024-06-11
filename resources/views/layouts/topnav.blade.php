@@ -90,16 +90,18 @@
                 aria-haspopup="true" aria-expanded="false">
                 <span
                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->mahasiswa_id ? auth()->user()->mahasiswa->nama : (auth()->user()->dosen_id ? auth()->user()->dosen->name : Auth::user()->username) }}</span>
-                <img class="img-profile rounded-circle"
-                    src=" {{ auth()->user()->avatar
-                        ? '/storage/avatar/' . auth()->user()->avatar
-                        : 'https://ui-avatars.com/api/?name=' .
-                            (auth()->user()->mahasiswa_id
-                                ? auth()->user()->mahasiswa->nama
-                                : (auth()->user()->dosen_id
-                                    ? auth()->user()->dosen->name
-                                    : Auth::user()->username)) .
-                            '&background=4e73df&color=ffffff&size=100' }} ">
+                <div class="rainbow-border" style="z-index: 99">
+                    <img class="img-profile"
+                        src=" {{ auth()->user()->avatar
+                            ? '/storage/avatar/' . auth()->user()->avatar
+                            : 'https://ui-avatars.com/api/?name=' .
+                                (auth()->user()->mahasiswa_id
+                                    ? auth()->user()->mahasiswa->nama
+                                    : (auth()->user()->dosen_id
+                                        ? auth()->user()->dosen->name
+                                        : Auth::user()->username)) .
+                                '&background=4e73df&color=ffffff&size=100' }} ">
+                </div>
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

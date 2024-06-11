@@ -23,17 +23,19 @@
                                 <div class="col-auto text-center mt-3">
                                     <label class="d-block position-relative" style="width: 120px; height: 120px;"
                                         for="file_image">
-                                        <img class="img-profile rounded-circle avatar"
-                                            style="width: 120px; height: 120px; object-fit: cover;" id="img-preview"
-                                            src=" {{ auth()->user()->avatar
-                                                ? '/storage/avatar/' . auth()->user()->avatar
-                                                : 'https://ui-avatars.com/api/?name=' .
-                                                    (auth()->user()->mahasiswa_id
-                                                        ? auth()->user()->mahasiswa->nama
-                                                        : (auth()->user()->dosen_id
-                                                            ? auth()->user()->dosen->name
-                                                            : Auth::user()->username)) .
-                                                    '&background=4e73df&color=ffffff&size=100' }} ">
+                                        <div class="rainbow-border" style="z-index: 99">
+                                            <img class="img-profile rounded-circle avatar"
+                                                style="width: 120px; height: 120px; object-fit: cover;" id="img-preview"
+                                                src=" {{ auth()->user()->avatar
+                                                    ? '/storage/avatar/' . auth()->user()->avatar
+                                                    : 'https://ui-avatars.com/api/?name=' .
+                                                        (auth()->user()->mahasiswa_id
+                                                            ? auth()->user()->mahasiswa->nama
+                                                            : (auth()->user()->dosen_id
+                                                                ? auth()->user()->dosen->name
+                                                                : Auth::user()->username)) .
+                                                        '&background=4e73df&color=ffffff&size=100' }} ">
+                                        </div>
                                         <div class="overlayy">
                                             <i class="fas fa-edit opacity-50"></i>
                                         </div>

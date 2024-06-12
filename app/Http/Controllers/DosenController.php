@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDosenRequest;
 use App\Models\ActivityLog;
 use App\Models\Dosen;
 use App\Models\Jabatan;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -150,7 +151,7 @@ class DosenController extends Controller
             $dosen->email = $request->email;
 
             $dosen->save();
-
+            User::where('dosen_id', '=', $dosen->id_dosen)->update(['email' => $request->email]);
             $log = new ActivityLog();
             $log->createLog('update', 'Mengupdate data dosen');
 

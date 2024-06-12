@@ -210,7 +210,8 @@
     <div class="sidebar-card mt-3 d-none d-lg-flex">
         {{-- <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="..."> --}}
         <p class="text-center mb-2"><strong>Copyright &copy; PBL P2 TRPL2B {{ date('Y') }}</strong></p>
-        <a class="btn btn-success btn-sm" target="blank" href="https://www.instagram.com/pitok_df">Chat Owner</a>
+        <a class="btn btn-success btn-sm" target="blank" href="https://www.instagram.com/pbltrpl2b_kel4/">Chat
+            Owner</a>
     </div>
 
     <div class="text-center d-none d-md-inline">

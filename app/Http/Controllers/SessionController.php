@@ -104,18 +104,22 @@ class SessionController extends Controller
 
         $validator = Validator::make($rq->all(), [
             'email' => "email|unique:users,email",
-            'capcha' => 'required|captcha'
+            'capcha' => 'required|captcha',
+            'password' => 'regex:/[0-9]/|regex:/[a-z]/|regex:/[A-Z]/|regex:/[!@#$%]/'
         ], [
             "email.unique" => "Email sudah tersedia.",
             "email.email" => "Masukkan email yang valid.",
-            'capcha.captcha' => 'captcha tidak sesuai.'
+            'capcha.captcha' => 'captcha tidak sesuai.',
+            'password.regex' => 'Password harus terdapat huruf besar, huruf kecil, angka, dan karakter spesial (!@#$%)'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
+        $username = str_replace(' ', '_', strtolower($rq->username));
         $data = [
-            "username" => $rq->name,
+            "username" => $username,
             "email" => $rq->email,
             "password" => bcrypt($rq->password),
         ];
@@ -130,7 +134,7 @@ class SessionController extends Controller
         // Ubah pesan respons
         return response()->json([
             "status" => 200,
-            "message" => "Email verifikasi telah dikirimkan ke email Anda. Silahkan login ke akun Anda."
+            "message" => "Email verifikasi telah dikirimkan ke email, Silahkan login ke akun Anda."
         ]);
     }
 

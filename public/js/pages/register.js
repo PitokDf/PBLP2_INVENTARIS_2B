@@ -12,7 +12,7 @@ $(document).ready(function () {
     }
     getCapcha();
     $('.btn-register').click(function () {
-        var checkFirstname = $('#firstname').val().trim() == '' ? ($('#firstname').addClass('is-invalid'), false) : ($('#firstname').removeClass('is-invalid'), true);
+        var checkFirstname = $('#username').val().trim() == '' ? ($('#username').addClass('is-invalid'), false) : ($('#username').removeClass('is-invalid'), true);
         var pass1 = $('#pass1').val().trim();
         var pass2 = $('#pass2').val().trim();
 
@@ -40,7 +40,7 @@ $(document).ready(function () {
         var data = "";
         if (check) {
             data = new FormData();
-            data.append('name', $('#firstname').val() + " " + $('#lastname').val());
+            data.append('username', $('#username').val());
             data.append('email', $('#email').val())
             data.append('password', $('#pass1').val())
             data.append('capcha', $('#capcha').val())
@@ -94,6 +94,9 @@ $(document).ready(function () {
                     if (error.responseJSON.message) {
                         let message2 = `<div class="alert alert-danger" role="alert">Periksa koneksi internet anda.`;
                         $('.message').html(message2)
+                    }
+                    if (error.responseJSON.password) {
+                        $('#errorpass').html('<div class="text-danger ml-2">' + error.responseJSON.password + '</div>');
                     }
                 }
             });

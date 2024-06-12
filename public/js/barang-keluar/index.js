@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $('#barangM').select2();
     $('#tableBarangKeluar').DataTable({
         "processing": true,
         "paging": true,

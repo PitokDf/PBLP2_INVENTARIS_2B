@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    $('#prodi').select2();
     function clearAkunError() {
         $("#pass_error").html('')
         $("#password").removeClass('is-invalid');

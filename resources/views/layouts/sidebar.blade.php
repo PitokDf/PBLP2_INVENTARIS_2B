@@ -50,7 +50,7 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang" aria-expanded="true"
                 aria-controls="barang">
                 <i class="fas fa-archive"></i>
-                <span>Barang</span>
+                <span>{{ Request::is('barang') ? 'Data Barang' : (Request::is('kategori-barang') ? 'Kategori Barang' : 'Barang') }}</span>
             </a>
             <div id="barang" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -68,7 +68,7 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#berita" aria-expanded="true"
                 aria-controls="berita">
                 <i class="far fa-calendar-plus"></i>
-                <span>Berita</span>
+                <span>{{ Request::is('berita') ? 'Data Berita' : (Request::is('kategori-berita') ? 'Kategori Berita' : 'Barang') }}</span>
             </a>
             <div id="berita" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -141,7 +141,7 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others" aria-expanded="true"
                 aria-controls="others">
                 <i class="fas fa-network-wired"></i>
-                <span>Others</span>
+                <span>{{ Request::is('prodi') ? 'Prodi' : (Request::is('jabatan') ? 'Jabatan' : 'Others') }}</span>
             </a>
             <div id="others" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">

@@ -36,11 +36,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    // if (row.role == 1) {
-                    //     return "<button type='button' class='btn btn-sm btn-danger' style='cursor: not-alowed' disabled><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' disabled><i class='fas fa-regular fa-pen'></i></button>"
-                    // } else {
                     return "<button type='button' data-id='" + row.id_user + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_user + "'><i class='fas fa-regular fa-pen'></i></button>"
-                    // }
                 }
                 , "orderable": false
             } // Contoh tombol aksi
@@ -52,7 +48,9 @@ $(document).ready(function () {
     function setKondisiNormal() {
         $('#kondisi').html('');
         $('#role').attr('disabled', false);
-        $('#email').attr('readonly', false)
+        $('#email').attr('readonly', false);
+        $('#email').val('');
+        $('#name').val('');
     }
     function clearErrorMsg() {
         $('#name_error').text('');
@@ -102,6 +100,7 @@ $(document).ready(function () {
                     clerInput(modal = "modalUser");
                     clearErrorMsg();
                     reloadTable(tableUsers);
+                    setKondisiNormal();
                     $('#modalUser').modal('hide');
                     Swal.fire({
                         title: "Created!",
@@ -128,8 +127,16 @@ $(document).ready(function () {
         $('#email').attr('readonly', false)
         $('#email').val('')
         AjaxGetData('/getEmailDosen/' + $(this).val(), function (res) {
-            res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true)) : ''
+            res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true), $('#name').val(res.nama)) : ''
             res.status === 404 ? $('#email').attr('readonly', false) : ''
+            console.log(res)
+        });
+    });
+    $(document).on('change', '#nim', function () {
+        $('#email').attr('readonly', false)
+        $('#email').val('')
+        AjaxGetData('/getNamaMahasiswa/' + $(this).val(), function (res) {
+            res.status === 200 ? $('#name').val(res.nama) : ''
             console.log(res)
         });
     });
@@ -178,13 +185,14 @@ $(document).ready(function () {
                         if (response.status === 200) {
                             $.each(response.data, function (indexInArray, data) {
                                 $('#nip').append(`
-                                <option value="${data.id_dosen}">${data.nip}</option>
+                                <option value="${data.id_dosen}">${data.nip} - ${data.name} - ${data.jabatan.jabatan}</option>
                                 `);
                             });
                         }
                     }
                 });
             } else if (role == 4) {
+                setKondisiNormal();
                 $('#kondisi').html(`
                 <div class="mb-3">
                     <label for="nim" class="form-label">NIM</label>
@@ -202,15 +210,14 @@ $(document).ready(function () {
                         if (response.status === 200) {
                             $.each(response.data, function (indexInArray, data) {
                                 $('#nim').append(`
-                                <option value="${data.id_mahasiswa}">${data.nim}</option>
+                                <option value="${data.id_mahasiswa}">${data.nim} - ${data.nama}</option>
                                 `);
                             });
                         }
                     }
                 });
             } else {
-                $('#kondisi').html('');
-                $('#email').attr('readonly', false)
+                setKondisiNormal();
             }
         }
     }

@@ -25,7 +25,7 @@ class DosenController extends Controller
 
     public function getDosenNip()
     {
-        $dosen = Dosen::whereDoesntHave('user')->get();
+        $dosen = Dosen::whereDoesntHave('user')->with('jabatan')->get();
         return response()->json([
             'status' => 200,
             'data' => $dosen

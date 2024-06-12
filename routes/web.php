@@ -24,6 +24,7 @@ use App\Http\Controllers\UsersController;
 use App\Models\Barang;
 use App\Models\Dosen;
 use App\Models\KategoriBarang;
+use App\Models\Mahasiswas;
 use App\Models\Peminjaman;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -120,7 +121,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             if (!$data) {
                 return response()->json(['staus' => 404, 'message' => 'Data not found']);
             }
-            return response()->json(['status' => 200, 'email' => $data->first()->email]);
+            return response()->json(['status' => 200, 'email' => $data->email, 'nama' =>$data->name]);
+        });
+        Route::get('getNamaMahasiswa/{id}', function ($id) {
+            $data = Mahasiswas::find($id);
+            if (!$data) {
+                return response()->json(['staus' => 404, 'message' => 'Data not found']);
+            }
+            return response()->json(['status' => 200, 'nama' =>$data->nama]);
         });
         Route::resource('user', UsersController::class);
         Route::get('getAllDataUser', [UsersController::class, "getAllData"]);

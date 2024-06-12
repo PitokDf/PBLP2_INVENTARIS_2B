@@ -29,6 +29,10 @@
                             <td>: <span id="txt_pemasok">PT. Anugrah Selalu (dummy)</span></td>
                         </tr>
                         <tr>
+                            <th class="text-dark">Penerima</th>
+                            <td>: <span id="txt_penerima">PT. Anugrah Selalu (dummy)</span></td>
+                        </tr>
+                        <tr>
                             <th class="text-dark">Tgl Masuk</th>
                             <td>: <span id="txt_tgl_masuk">Minggu, 26 mei 2024 (dummy)</span></td>
                         </tr>

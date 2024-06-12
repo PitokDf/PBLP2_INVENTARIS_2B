@@ -24,6 +24,8 @@ class StoreBarangMasukRequest extends FormRequest
         return [
             'barang' => 'required|exists:barang,id_barang',
             'quantity' => 'required|numeric|min:1',
+            'penerima' => 'required',
+            'tanggal_masuk' => 'required|date',
             'pemasok' => 'required|exists:pemasoks,id',
             'keterangan' => 'required',
         ];
@@ -36,6 +38,9 @@ class StoreBarangMasukRequest extends FormRequest
             'quantity.required' => 'Quantity harus diisi.',
             'quantity.numeric' => 'Quantity harus terdiri dari angka.',
             'pemasok.required' => 'Pemasok tidak boleh kosong',
+            'penerima.required' => 'Penerima tidak boleh kosong',
+            'tanggal_masuk.required' => 'Tanggal tidak boleh kosong',
+            'tanggal_masuk.date' => 'Tanggal harus format yang benar',
         ];
     }
 }

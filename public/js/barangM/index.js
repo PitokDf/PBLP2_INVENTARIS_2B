@@ -49,16 +49,33 @@ $(document).ready(function () {
         $('#modalPemasok').modal('show');
     });
 
+    $('#bulan').change(function () {
+        var month = $(this).val();
+        var daySelect = $('#tanggal');
+        daySelect.empty();
+        daySelect.append('<option value="">--Pilih Tanggal--</option>');
+
+        if (month) {
+            var daysInMonth = new Date($('#tahun').val(), month, 0).getDate();
+            for (var i = 1; i <= daysInMonth; i++) {
+                daySelect.append('<option value="' + i + '">' + i + '</option>');
+            }
+        }
+    });
+
     // fungsi untuk membersihkan pesan error
     function clearErrorMsg() {
         $('#barang_error').text('');
         $('#quantity_error').text('');
         $('#pemasok_error').text('');
         $('#keterangan_error').text('');
+        $('#penerima_error').text('');
+        $('#tanggal_masuk_error').text('');
         $('#barangM').removeClass('is-invalid');
         $('#quantity').removeClass('is-invalid');
         $('#keterangan').removeClass('is-invalid');
         $('#pemasok').removeClass('is-invalid');
+        $('#penerima').removeClass('is-invalid');
     }
 
     function clearInput() {
@@ -66,15 +83,21 @@ $(document).ready(function () {
         $('#quantity').val('');
         $('#keterangan').val('');
         $('#pemasok').val('');
+        $('#penerima').val('');
+        $('#tahun').val('');
+        $('#tanggal').val('');
+        $('#bulan').val('');
     }
 
     // menangani proses store barang masuk
-    $('#simpan').on('click', function () {
+    $('#simpanBarang').on('click', function () {
         var data = new FormData();
         data.append('barang', $('#barangM').val());
         data.append('quantity', $('#quantity').val());
         data.append('pemasok', $('#pemasok').val());
         data.append('keterangan', $('#keterangan').val());
+        data.append('penerima', $('#penerima').val());
+        data.append('tanggal_masuk', $('#tahun').val() + '-' + $('#bulan').val() + '-' + $('#tanggal').val());
 
         $.ajax({
             type: "POST",
@@ -115,6 +138,13 @@ $(document).ready(function () {
                     $('#pemasok_error').text(errors.pemasok);
                     $('#pemasok').addClass('is-invalid');
                 }
+                if (errors.penerima) {
+                    $('#penerima_error').text(errors.penerima);
+                    $('#penerima').addClass('is-invalid');
+                }
+                if (errors.tanggal_masuk) {
+                    $('#tanggal_masuk_error').text(errors.tanggal_masuk);
+                }
                 console.info(errors)
             }
         });
@@ -140,38 +170,13 @@ $(document).ready(function () {
                     $('#txt_kode_barang').text(data.barang.code_barang);
                     $('#txt_namaBarang').text(data.barang.nama_barang);
                     $('#txt_quantity').text(data.quantity);
+                    $('#txt_penerima').text(data.penerima);
                     $('#txt_pemasok').text(data.pemasok.nama);
-                    $('#txt_tgl_masuk').text(dateCutomFormat(data.created_at));
+                    $('#txt_tgl_masuk').text(dateCutomFormat(data.tanggal_masuk));
                 }
             }
         });
     });
-    // saat tombol edit di click maka akan mengambil data sesaui id
-    // $(document).on('click', '#btn-edit', function () {
-    //     clearErrorMsg();
-    //     modal.modal('show');
-    //     modal_title.text('Edit Barang Masuk');
-    //     btnAction.attr('id', 'btnEdit');
-    //     btnAction.html("<i class='fas fa-regular fa-pen'></i> Update");
-    //     url = "/barangM/" + $(this).data('id') + "/edit";
-
-    //     $.ajax({
-    //         type: "GET",
-    //         url: url, // Menggunakan variabel 'url' yang sudah didefinisikan sebelumnya
-    //         dataType: "json",
-    //         success: function (response) {
-    //             console.log(response)
-    //             var data = response.data;
-    //             $('#id').val(data.id);
-    //             $('#barangM').val(data.barang_id);
-    //             $('#pemasok').val(data.pemasok);
-    //             $('#quantity').val(data.quantity);
-    //         },
-    //         error: function (xhr, status, error) {
-    //             console.error(xhr + "\n" + status + "\n" + error)
-    //         }
-    //     });
-    // });
 
     // menangani proses delete data
     $(document).on('click', '#btn-hapus', function () {

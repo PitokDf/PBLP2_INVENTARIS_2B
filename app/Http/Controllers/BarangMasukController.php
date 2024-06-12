@@ -22,18 +22,10 @@ class BarangMasukController extends Controller
 
     public function getData()
     {
-        $data = BarangMasuk::with(['barang', 'pemasok'])->latest()->get();
+        $data = BarangMasuk::with(['barang', 'pemasok'])->latest('tanggal_masuk')->get();
         return response()->json([
             'data' => $data,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -45,6 +37,8 @@ class BarangMasukController extends Controller
             "barang_id" => $request->barang,
             "pemasok_id" => $request->pemasok,
             "quantity" => $request->quantity,
+            "penerima" => $request->penerima,
+            "tanggal_masuk" => $request->tanggal_masuk ?? now(),
             "keterangan" => $request->keterangan
         ]);
 

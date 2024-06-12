@@ -33,7 +33,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Pemasok</label>
-                        <div class="input-group mb-3">
+                        <div class="input-group">
                             <select name="barang" id="pemasok" class="form-select" style="flex:1">
                                 <option value="">--Pilih Pemasok--</option>
                                 @foreach ($pemasoks as $item)
@@ -45,18 +45,43 @@
                         </div>
                         <span id="pemasok_error" class="text-danger"></span>
                     </div>
-
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
                         <input type="number" name="quantity" id="quantity" placeholder="Quantity" class="form-control">
                         <span id="quantity_error" class="text-danger"></span>
                     </div>
-                    <label for="penerima" class="form-label">Penerima</label>
-                    <div class="input-group">
-                        <input type="text" name="penerima" id="penerima" placeholder="penerima" class="form-control">
-                        <input type="date" class="form-control date-picker-button" id="tanggal">
+                    <div class="mb-3">
+                        <label for="penerima" class="form-label">Penerima</label>
+                        <div class="input-group">
+                            <input type="text" name="penerima" id="penerima" placeholder="penerima"
+                                class="form-control">
+                        </div>
+                        <span id="penerima_error" class="text-danger"></span>
                     </div>
-                    <span id="penerima_error" class="text-danger"></span>
+                    <div class="mb-3">
+                        <label for="tahun" class="form-label">Tahun Masuk</label>
+                        <div class="input-group">
+                            <select id="tahun" class="form-control">
+                                <option value="">Tahun</option>
+                                @for ($i = date('Y'); $i > 1999; $i--)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                            <select id="bulan" class="form-control">
+                                <option value="">Bulan</option>
+                                <?php
+                                $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                ?>
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <option value="{{ $i }}">{{ $bulan[$i - 1] }}</option>
+                                @endfor
+                            </select>
+                            <select id="tanggal" class="form-control">
+                                <option value="">Tanggal</option>
+                            </select>
+                        </div>
+                        <div id="tanggal_masuk_error" class="text-danger"></div>
+                    </div>
                     <div class="mb-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <textarea name="keterangan" class="form-control" id="keterangan" cols="30" rows="3"></textarea>
@@ -64,7 +89,7 @@
                     </div>
                     <div class="divider"></div>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-sm btn-primary" id="simpan">Submit</button>
+                        <button class="btn btn-sm btn-primary" id="simpanBarang">Submit</button>
                     </div>
                 </div>
             </div>

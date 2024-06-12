@@ -51,11 +51,12 @@
                         <input type="number" name="quantity" id="quantity" placeholder="Quantity" class="form-control">
                         <span id="quantity_error" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
-                        <label for="penerima" class="form-label">Penerima</label>
+                    <label for="penerima" class="form-label">Penerima</label>
+                    <div class="input-group">
                         <input type="text" name="penerima" id="penerima" placeholder="penerima" class="form-control">
-                        <span id="penerima_error" class="text-danger"></span>
+                        <input type="date" class="form-control date-picker-button" id="tanggal">
                     </div>
+                    <span id="penerima_error" class="text-danger"></span>
                     <div class="mb-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <textarea name="keterangan" class="form-control" id="keterangan" cols="30" rows="3"></textarea>

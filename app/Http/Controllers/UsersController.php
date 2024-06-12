@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Imports\UserImport;
 use App\Models\ActivityLog;
+use App\Models\Dosen;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -108,13 +109,14 @@ class UsersController extends Controller
                 }
             }
             $rules = [
-                "email" => 'required|email|' . Rule::unique('users')->ignore($user),
+                "email" => 'email|' . Rule::unique('users')->ignore($user),
                 "role" => 'required_if:role,!null',
                 'password' => 'nullable|min:8'
             ];
 
+
             $validator = Validator::make($request->all(), $rules, [
-                "email.unique" => "Email sudah pernah tersedia.",
+                "email.unique" => "Email sudah tersedia.",
                 "password" => "Password minimal :min karakter."
             ]);
 
@@ -138,6 +140,9 @@ class UsersController extends Controller
                 $user->password = bcrypt($request->password);
             }
             $user->save();
+            if (in_array($user->role, ['2', '3', '4'])) {
+                Dosen::find($user->dosen_id)->update(['email' => $request->email]);
+            }
             ActivityLog::createLog('update', 'Mengupdate data user');
             return response()->json([
                 'status' => 200,

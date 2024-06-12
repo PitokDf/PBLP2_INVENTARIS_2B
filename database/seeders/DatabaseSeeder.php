@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Barang;
+use App\Models\Dosen;
+use App\Models\Jabatan;
 use App\Models\KategoriBarang;
+use App\Models\Mahasiswas;
+use App\Models\Prodi;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,8 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        // User::factory(10)->create();
+
         User::create([
             'username' => 'Admin',
             'email' => 'admin@gmail.com',
@@ -28,6 +31,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $kategori = ['Monitor', 'Keyboard', 'Personal Komputer', 'SSD'];
+        $prodi = [
+            'TRPL' => 'Teknologi Rekayasa Perangkat Lunak',
+            'MI' => 'Manajemen Informatika',
+            'TeKom' => 'Teknologi Komputer',
+            'AM' => 'Animasi'
+        ];
+        $jabatan = ['Staf', 'Kepala Labor', 'Dosen Pengajar', 'Kajur', 'Kaprodi'];
 
         for ($i = 0; $i <= 3; $i++) {
             KategoriBarang::create([
@@ -35,6 +45,21 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        for ($i = 0; $i < count($jabatan); $i++) {
+            Jabatan::create([
+                'jabatan' => $jabatan[$i]
+            ]);
+        }
+
+        foreach ($prodi as $key => $value) {
+            Prodi::create([
+                'code_prodi' => $key,
+                'nama_prodi' => $value
+            ]);
+        }
+
         Barang::factory(50)->create();
+        Mahasiswas::factory(10)->create();
+        Dosen::factory(20)->create();
     }
 }

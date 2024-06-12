@@ -18,7 +18,7 @@ class ReportController extends Controller
     }
     public function reportBarangMasuk()
     {
-        $data = BarangMasuk::with(['barang', 'pemasok'])->latest()->get();
+        $data = BarangMasuk::with(['barang', 'pemasok'])->latest('tanggal_masuk')->get();
         return view("reports.barang-masuk")->with("barangs", $data);
     }
     public function reportBarangKeluar()
@@ -80,7 +80,7 @@ class ReportController extends Controller
         return $this->printPdf(
             'reports.pdf.report_barang_masuk',
             'Laporan Barang Masuk',
-            BarangMasuk::with(['barang', 'pemasok'])->latest()->get(),
+            BarangMasuk::with(['barang', 'pemasok'])->latest('tanggal_masuk')->get(),
             'laporan-barang-masuk.pdf'
         );
     }

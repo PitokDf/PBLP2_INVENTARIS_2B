@@ -19,7 +19,7 @@
                     <td>{{ $item->barang->code_barang }}</td>
                     <td>{{ $item->barang->nama_barang }}</td>
                     <td>{{ $item->pemasok->nama }}</td>
-                    <td>{{ $item->created_at }}</td>
+                    <td>{{ $item->tanggal_masuk }}</td>
                     <td>{{ $item->quantity }}</td>
                 </tr>
             @endforeach

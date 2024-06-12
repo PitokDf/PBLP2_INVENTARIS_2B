@@ -115,6 +115,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('get-barang/{code}', [BarangController::class, "getById"]);
     Route::group(["middleware" => "userAkses:1"], function () {
+        Route::get('getEmailDosen/{id}', function ($id) {
+            $data = Dosen::find($id);
+            if (!$data) {
+                return response()->json(['staus' => 404, 'message' => 'Data not found']);
+            }
+            return response()->json(['status' => 200, 'email' => $data->first()->email]);
+        });
         Route::resource('user', UsersController::class);
         Route::get('getAllDataUser', [UsersController::class, "getAllData"]);
         Route::post('importUser', [UsersController::class, "import"]);

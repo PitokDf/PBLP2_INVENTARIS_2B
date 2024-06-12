@@ -51,7 +51,8 @@ $(document).ready(function () {
 
     function setKondisiNormal() {
         $('#kondisi').html('');
-        $('#role').attr('disabled', false)
+        $('#role').attr('disabled', false);
+        $('#email').attr('readonly', false)
     }
     function clearErrorMsg() {
         $('#name_error').text('');
@@ -81,7 +82,6 @@ $(document).ready(function () {
         }
         $('#labelPass').text('Password');
         showModal(modal = "modalUser", title = "Add User", form = "btnCreateform", icon = "<i class='fas fa-save'></i> Simpan");
-
     });
 
     $(document).on('click', '#btnCreateform', function () {
@@ -124,9 +124,20 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('change', '#nip', function () {
+        $('#email').attr('readonly', false)
+        $('#email').val('')
+        AjaxGetData('/getEmailDosen/' + $(this).val(), function (res) {
+            res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true)) : ''
+            res.status === 404 ? $('#email').attr('readonly', false) : ''
+            console.log(res)
+        });
+    });
+
     function getKondisiData(role, other = null) {
         if (other !== null) {
             if (role == 2 || role == 3 || role == 5) {
+                $('#email').attr('readonly', true)
                 $('#kondisi').html(`
                 <div class="mb-3">
                     <label for="nip" class="form-label">NIP</label>
@@ -199,6 +210,7 @@ $(document).ready(function () {
                 });
             } else {
                 $('#kondisi').html('');
+                $('#email').attr('readonly', false)
             }
         }
     }

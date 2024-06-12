@@ -46,7 +46,7 @@ class UsersController extends Controller
     public function store(StoreUsersRequest $request)
     {
         $data = [
-            'username' => $request->name,
+            'username' => str_replace(' ', '_', strtolower($request->name)),
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => $request->role,
@@ -131,7 +131,7 @@ class UsersController extends Controller
                 $user->dosen_id = $request->nip;
             }
 
-            $user->username = $request->name;
+            $user->username = str_replace(' ', '_', strtolower($request->name));
             $user->email = $request->email;
 
             if (!empty($request->password)) {

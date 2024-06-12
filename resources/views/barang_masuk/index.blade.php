@@ -1,6 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
+    <script src="{{ asset('js/pemasok/index.js') }}"></script>
     <script src="{{ asset('js/barangM/index.js') }}"></script>
 @endsection
 @section('modal')
@@ -8,7 +9,6 @@
 @endsection
 
 @section('title', 'Barang Masuk')
-
 
 @section('content')
     {{-- @dd($barangM) --}}
@@ -33,18 +33,28 @@
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Pemasok</label>
-                        <select name="barang" id="pemasok" class="form-control">
-                            <option value="">--Pilih Pemasok--</option>
-                            @foreach ($pemasoks as $item)
-                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            <select name="barang" id="pemasok" class="form-select" style="flex:1">
+                                <option value="">--Pilih Pemasok--</option>
+                                @foreach ($pemasoks as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                @endforeach
+                            </select>
+                            <button type="button" class="btn btn-info" id='showModalPemasok'><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
                         <span id="pemasok_error" class="text-danger"></span>
                     </div>
+
                     <div class="mb-3">
-                        <label for="barang" class="form-label">Quantity</label>
+                        <label for="quantity" class="form-label">Quantity</label>
                         <input type="number" name="quantity" id="quantity" placeholder="Quantity" class="form-control">
                         <span id="quantity_error" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="penerima" class="form-label">Penerima</label>
+                        <input type="text" name="penerima" id="penerima" placeholder="penerima" class="form-control">
+                        <span id="penerima_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label for="keterangan" class="form-label">Keterangan</label>

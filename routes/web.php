@@ -76,6 +76,41 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/laporan-barang-keluar', [ReportController::class, 'reportBarangKeluar']);
         Route::get('/laporan-peminjaman', [ReportController::class, 'reportPeminjaman']);
         Route::get('/laporan-stok', [ReportController::class, 'reportStok']);
+        Route::get('test', function () {
+            $result = KategoriBarang::with([
+                'barang.peminjaman' => function ($query) {
+                    $query->whereNull('tgl_pengembalian')->where('status', '=', true);
+                }
+            ])->latest()->get()->map(function ($kategori) {
+                return [
+                    'jumlah_peminjaman' => $kategori->barang->sum(function ($barang) {
+                        return $barang->peminjaman->sum('jumlah');
+                    })
+                ];
+            });
+            $kategori = KategoriBarang::latest()->get();
+            $labels = [];
+            $idKategori = [];
+            $stock = [];
+            $bgColor = [];
+
+            foreach ($kategori as $item) {
+                $labels[] = $item->nama_kategori_barang;
+                $idKategori[] = $item->id;
+                $bgColor[] = "rgba(" . rand(0, 255) . ", " . rand(0, 255) . ", " . rand(0, 255) . ", 0.4)";
+            }
+            for ($i = 0; $i < count($idKategori); $i++) {
+                $stock[] = Barang::with(['kategori', 'peminjaman'])->where('id_kategory', $idKategori[$i])->get()->sum('quantity');
+            };
+            return response()->json([
+                "data" => [
+                    "labels" => $labels,
+                    "stok" => $stock,
+                    "dipinjam" => $result,
+                    "bgcolor" => $bgColor,
+                ],
+            ]);
+        });
     });
 
     Route::get('get-barang/{code}', [BarangController::class, "getById"]);
@@ -125,42 +160,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/getDataPemasok', [PemasokController::class, 'getAllData']);
         Route::get('/getKodePeminjaman', function () {
             return Peminjaman::getKodePeminjaman();
-        });
-
-        Route::get('test', function () {
-            $result = KategoriBarang::with([
-                'barang.peminjaman' => function ($query) {
-                    $query->whereNull('tgl_pengembalian')->where('status', '=', true);
-                }
-            ])->latest()->get()->map(function ($kategori) {
-                return [
-                    'jumlah_peminjaman' => $kategori->barang->sum(function ($barang) {
-                        return $barang->peminjaman->sum('jumlah');
-                    })
-                ];
-            });
-            $kategori = KategoriBarang::latest()->get();
-            $labels = [];
-            $idKategori = [];
-            $stock = [];
-            $bgColor = [];
-
-            foreach ($kategori as $item) {
-                $labels[] = $item->nama_kategori_barang;
-                $idKategori[] = $item->id;
-                $bgColor[] = "rgba(" . rand(0, 255) . ", " . rand(0, 255) . ", " . rand(0, 255) . ", 0.4)";
-            }
-            for ($i = 0; $i < count($idKategori); $i++) {
-                $stock[] = Barang::with(['kategori', 'peminjaman'])->where('id_kategory', $idKategori[$i])->get()->sum('quantity');
-            };
-            return response()->json([
-                "data" => [
-                    "labels" => $labels,
-                    "stok" => $stock,
-                    "dipinjam" => $result,
-                    "bgcolor" => $bgColor,
-                ],
-            ]);
         });
     });
 

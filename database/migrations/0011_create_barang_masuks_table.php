@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreign('barang_id')->references('id_barang')->on('barang');
             $table->foreignId('pemasok_id')->constrained('pemasoks');
             $table->integer('quantity');
+            $table->string('penerima');
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

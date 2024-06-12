@@ -45,6 +45,10 @@ $(document).ready(function () {
         ]
     });
 
+    $(document).on('click', '#showModalPemasok', function () {
+        $('#modalPemasok').modal('show');
+    });
+
     // fungsi untuk membersihkan pesan error
     function clearErrorMsg() {
         $('#barang_error').text('');

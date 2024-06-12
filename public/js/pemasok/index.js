@@ -60,7 +60,7 @@ $(document).ready(function () {
         $('#alamat').val('');
     }
 
-    $('#simpan').on('click', function () {
+    $(document).on('click', '#simpan', function () {
         var data = new FormData();
         data.append('nama_pemasok', $('#nama_pemasok').val());
         data.append('kode_pos', $('#kode_pos').val());
@@ -79,15 +79,22 @@ $(document).ready(function () {
                 if (response.status == 200) {
                     clearErrorMsg();
                     clearInput();
-                    reloadTable(tablePemasok);
                     Swal.fire({
                         title: "Created!",
                         text: response.message,
                         icon: "success",
                         confirmButtonText: "Ok"
                     });
+                    if ($('#modalPemasok').length) {
+                        $('#modalPemasok').modal('hide');
+                        setInterval(() => {
+                            location.reload();
+                        }, 1000);
+                    }
+                    if ($('#tablePemasok').length) {
+                        reloadTable(tablePemasok);
+                    }
                 }
-
 
                 if (response.status == 400) {
                     Swal.fire({

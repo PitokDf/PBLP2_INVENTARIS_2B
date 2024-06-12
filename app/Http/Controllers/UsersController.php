@@ -100,7 +100,7 @@ class UsersController extends Controller
         try {
             $user = User::findOrFail($id);
             if (!empty($request->role)) {
-                if (in_array($user->role, ['3', '4']) && ($user->mahasiswa_id !== null || $user->dosen_id !== null)) {
+                if (in_array($user->role, ['2', '3', '4']) && ($user->mahasiswa_id !== null || $user->dosen_id !== null)) {
                     return response()->json([
                         'status' => '400',
                         'message' => 'Role Mahasiswa atau Dosen tidak boleh diubah.'

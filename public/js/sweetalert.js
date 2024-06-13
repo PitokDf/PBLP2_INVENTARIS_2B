@@ -92,11 +92,11 @@ $(document).ready(function () {
             data: formData,
             dataType: "json",
             beforeSend: function () {
-                $('#btnCreateform').text('Simpan...');
+                $('.action').html('Memproses...');
             },
             success: function (response) {
                 if (response.status == 200) {
-                    $('#btnCreateform').text('Simpan');
+                    $('.action').html(`<i class='fas fa-save'></i> Simpan`);
                     clerInput(modal = "modalUser");
                     clearErrorMsg();
                     reloadTable(tableUsers);
@@ -112,7 +112,7 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 console.error(xhr);
-                $('#btnCreateform').text('Simpan');
+                $('.action').html(`<i class='fas fa-save'></i> Simpan`);
                 clearErrorMsg();
                 var errorMessage = xhr.responseJSON.errors;
                 $('#name_error').text(errorMessage.name);
@@ -187,9 +187,14 @@ $(document).ready(function () {
                                 $('#nip').append(`
                                 <option value="${data.id_dosen}">${data.nip} - ${data.name} - ${data.jabatan.jabatan}</option>
                                 `);
+                                $('#nip').selectpicker('refresh');
                             });
                         }
                     }
+                });
+
+                $('#nip').selectpicker({
+                    liveSearch: true
                 });
             } else if (role == 4) {
                 setKondisiNormal();
@@ -212,9 +217,13 @@ $(document).ready(function () {
                                 $('#nim').append(`
                                 <option value="${data.id_mahasiswa}">${data.nim} - ${data.nama}</option>
                                 `);
+                                $('#nim').selectpicker('refresh');
                             });
                         }
                     }
+                });
+                $('#nim').selectpicker({
+                    liveSearch: true
                 });
             } else {
                 setKondisiNormal();

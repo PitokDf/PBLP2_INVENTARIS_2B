@@ -7,6 +7,8 @@ use App\Models\Dosen;
 use App\Models\Jabatan;
 use App\Models\KategoriBarang;
 use App\Models\Mahasiswas;
+use App\Models\Merk;
+use App\Models\Pemasok;
 use App\Models\Prodi;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +22,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $merks = ['Samsung', 'Sony', 'Apple', 'Dell', 'HP', 'Asus', 'Lenovo', 'Acer', 'Microsoft', 'Google'];
+        for ($i = 0; $i < count($merks); $i++) {
+            Merk::create(['merk' => $merks[$i]]);
+        }
+
+        Pemasok::factory(10)->create();
 
         User::create([
             'username' => 'Admin',

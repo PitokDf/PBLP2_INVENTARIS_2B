@@ -1,7 +1,7 @@
 <!-- create/update data user Modal-->
 <div class="modal fade" id="modal-kategori" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modal-kategori">Modal title</h1>
@@ -9,12 +9,12 @@
             </div>
             <form id="form">
                 <div class="modal-body">
-                    <div class="col">
-                        <div class="row-12">
-                            <div class="error"></div>
-                            <div class="mb-3">
-                                <input type="hidden" class="form-control" name="id" id="id" />
-                            </div>
+                    <div class="error"></div>
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" name="id" id="id" />
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="kode_barang" class="form-label">Kode Barang</label>
                                 <input type="text" class="form-control" name="kode_barang" id="kode_barang"
@@ -52,6 +52,53 @@
                                 <span id="foto_error" class="text-danger"></span>
                             </div>
                         </div>
+
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="merek" class="form-label">Merek</label>
+                                <input type="text" class="form-control" name="merek" id="merek"
+                                    placeholder="exp: Asus" />
+                                <span id="merek_error" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
+                                <div class="input-group">
+                                    <select id="tahun" class="form-control">
+                                        <option value="">Tahun</option>
+                                        @for ($i = date('Y'); $i > 1999; $i--)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    <select id="bulan" class="form-control">
+                                        <option value="">Bulan</option>
+                                        <?php
+                                        $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                        ?>
+                                        @for ($i = 1; $i <= 12; $i++)
+                                            <option value="{{ $i }}">{{ $bulan[$i - 1] }}</option>
+                                        @endfor
+                                    </select>
+                                    <select id="tanggal" class="form-control">
+                                        <option value="">Tanggal</option>
+                                    </select>
+                                </div>
+                                <span id="tgl_error" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pemasok" class="form-label">Pemasok</label>
+                                <select name="pemasok" class="form-control" id="pemasok">
+                                </select>
+                                <span id="pemasok_error" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <textarea name="deskripsi" class="form-control" id="deskripsi">
+                            </textarea>
+                            <span id="deskripsi_error" class="text-danger"></span>
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">

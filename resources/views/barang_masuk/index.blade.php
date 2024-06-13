@@ -34,7 +34,7 @@
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Pemasok</label>
                         <div class="input-group">
-                            <select name="barang" id="pemasok" class="form-select" style="flex:1">
+                            <select name="barang" id="pemasok" class="form-select selectpicker">
                                 <option value="">--Pilih Pemasok--</option>
                                 @foreach ($pemasoks as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama }}</option>

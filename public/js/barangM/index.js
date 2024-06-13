@@ -3,6 +3,11 @@ $(document).ready(function () {
         liveSearch: true,
         liveSearchPlaceholder: 'cari barang'
     });
+    $('#pemasok').selectpicker({
+        liveSearch: true,
+        liveSearchPlaceholder: 'cari pemasok'
+    });
+
     $('#tableBarangM').DataTable({
         "processing": true,
         "paging": true,
@@ -56,7 +61,7 @@ $(document).ready(function () {
         var month = $(this).val();
         var daySelect = $('#tanggal');
         daySelect.empty();
-        daySelect.append('<option value="">--Pilih Tanggal--</option>');
+        daySelect.append('<option value="">Tanggal</option>');
 
         if (month) {
             var daysInMonth = new Date($('#tahun').val(), month, 0).getDate();

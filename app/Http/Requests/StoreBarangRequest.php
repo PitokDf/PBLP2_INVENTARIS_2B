@@ -28,6 +28,10 @@ class StoreBarangRequest extends FormRequest
             "jumlah" => ["required", "numeric", "min:1"],
             "foto" => ["required", "max:2000"],
             "posisi" => ["required"],
+            'merk' => 'required|exists:merks,id',
+            'tanggal_masuk' => 'required|date',
+            'pemasok' => 'required|exists:pemasoks,id',
+            'deskripsi' => 'required|min:3'
         ];
     }
 

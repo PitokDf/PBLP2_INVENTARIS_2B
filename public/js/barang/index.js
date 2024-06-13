@@ -75,6 +75,20 @@ $(document).ready(function () {
     var modal_title = $('.modal-title');
     var btnAction = $('.action');
 
+    $('#bulan').change(function () {
+        var month = $(this).val();
+        var daySelect = $('#tanggal');
+        daySelect.empty();
+        daySelect.append('<option value="">Tanggal</option>');
+
+        if (month) {
+            var daysInMonth = new Date($('#tahun').val(), month, 0).getDate();
+            for (var i = 1; i <= daysInMonth; i++) {
+                daySelect.append('<option value="' + i + '">' + i + '</option>');
+            }
+        }
+    });
+
     // fungsi untuk membersihkan pesan error
     function clearErrorMsg() {
         $('#kode_error').text('');
@@ -185,13 +199,17 @@ $(document).ready(function () {
     // menangani proses create data
     $(document).on('click', '#btnCreateform', function () {
         var formData = new FormData();
-        if ($('#foto')[0].files.length > 0) {
-            formData.append('foto', $('#foto')[0].files[0]);
+        if ($('#file_image')[0].files.length > 0) {
+            formData.append('foto', $('#file_image')[0].files[0]);
         }
         formData.append('jumlah', $('#jumlah').val());
         formData.append('kategori', $('#kategori').val());
         formData.append('kode_barang', $('#kode_barang').val());
         formData.append('nama_barang', $('#nama_barang').val());
+        formData.append('posisi', $('#posisi').val());
+        formData.append('merk', $('#merek').val());
+        formData.append('posisi', $('#posisi').val());
+        formData.append('posisi', $('#posisi').val());
         formData.append('posisi', $('#posisi').val());
         $.ajax({
             type: "POST",

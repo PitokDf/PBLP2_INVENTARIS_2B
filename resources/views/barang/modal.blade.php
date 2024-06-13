@@ -10,7 +10,7 @@
             <form id="form">
                 <div class="modal-body">
                     <div class="error"></div>
-                    <div class="mb-3">
+                    <div class="mb-3 d-none">
                         <input type="hidden" class="form-control" name="id" id="id" />
                     </div>
                     <div class="row">
@@ -38,18 +38,6 @@
                                 <input type="number" class="form-control" name="jumlah" placeholder="exp: 12"
                                     id="jumlah">
                                 <span id="jumlah_error" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="posisi" class="form-label">Posisi</label>
-                                <input type="text" class="form-control" name="posisi" placeholder="exp: E201"
-                                    id="posisi">
-                                <span id="posisi_error" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="foto" class="form-label">Foto</label>
-                                <input type="file" class="form-control" name="foto" accept="image/*"
-                                    id="foto">
-                                <span id="foto_error" class="text-danger"></span>
                             </div>
                         </div>
 
@@ -90,15 +78,31 @@
                                 </select>
                                 <span id="pemasok_error" class="text-danger"></span>
                             </div>
+                            <div class="mb-3">
+                                <label for="posisi" class="form-label">Posisi</label>
+                                <input type="text" class="form-control" name="posisi" placeholder="exp: E201"
+                                    id="posisi">
+                                <span id="posisi_error" class="text-danger"></span>
+                            </div>
                         </div>
-
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control" id="deskripsi">
-                            </textarea>
+                            <textarea name="deskripsi" class="form-control" rows="5" id="deskripsi"></textarea>
                             <span id="deskripsi_error" class="text-danger"></span>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="">Foto</label>
+                            <div>
+                                <label for="file_image" class="form-label">
+                                    <img src="{{ asset('images/download.png') }}" class="img-thumbnail"
+                                        id="img-preview" style="width: 200px;" alt="">
+                                    <span id="dir_foto_error" class="text-danger"></span>
+                                </label>
+                            </div>
+                            <input type="file" class="form-control" onchange="previewImage()" name="dir_foto"
+                                id="file_image" accept="image/*" hidden />
+                            <span id="foto_error" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

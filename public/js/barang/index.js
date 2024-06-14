@@ -62,7 +62,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id_barang + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_barang + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    return "<button type='button' data-id='" + row.id_barang + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_barang + "'><i class='fas fa-regular fa-pen'></i></button> <button class='btn btn-sm btn-info btnDetail' id='" + row.id_barang + "'><i class='fas fa-regular fa-info-circle'></i></button>"
                 }
                 , "orderable": false
             }
@@ -97,12 +97,17 @@ $(document).ready(function () {
         $('#jumlah_error').text('');
         $('#posisi_error').text('');
         $('#foto_error').text('');
+        $('#pemasok_error').text('');
+        $('#deskripsi_error').text('');
+        $('#merek_error').text('');
+        $('#tgl_error').text('');
         $('#kode_barang').removeClass('is-invalid');
         $('#nama_barang').removeClass('is-invalid');
         $('#kategori').removeClass('is-invalid');
         $('#jumlah').removeClass('is-invalid');
         $('#posisi').removeClass('is-invalid');
         $('#foto').removeClass('is-invalid');
+        $('#deskripsi').removeClass('is-invalid');
     }
     function claerInput() {
         $('#kode_barang').val('');
@@ -110,9 +115,20 @@ $(document).ready(function () {
         $('#kategori').val(1).trigger('change');
         $('#jumlah').val('');
         $('#posisi').val('');
-        $('#foto').val('');
+        $('#tahun').val('');
+        $('#bulan').val('');
+        $('#tanggal').val('');
+        $('#pemasok').val('');
+        $('#deskripsi').val('');
+        $('#merek').val('');
     }
 
+    $('#pemasok').selectpicker({
+        liveSearch: true,
+    });
+    $('#merek').selectpicker({
+        liveSearch: true,
+    });
     // saat tombol edit di click maka akan mengambil data sesaui id
     $(document).on('click', '.btnEdit', function () {
         clearErrorMsg();
@@ -128,6 +144,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 var data = response.data[0];
+                console.log(data)
                 $('#id').val(data.id_barang);
                 $('#kode_barang').val(data.code_barang);
                 $('#nama_barang').val(data.nama_barang);
@@ -208,9 +225,9 @@ $(document).ready(function () {
         formData.append('nama_barang', $('#nama_barang').val());
         formData.append('posisi', $('#posisi').val());
         formData.append('merk', $('#merek').val());
-        formData.append('posisi', $('#posisi').val());
-        formData.append('posisi', $('#posisi').val());
-        formData.append('posisi', $('#posisi').val());
+        formData.append('tanggal_masuk', $('#tahun').val() + '-' + $('#bulan').val() + '-' + $('#tanggal').val());
+        formData.append('deskripsi', $('#deskripsi').val());
+        formData.append('pemasok', $('#pemasok').val());
         $.ajax({
             type: "POST",
             url: "barang",
@@ -260,6 +277,20 @@ $(document).ready(function () {
                     $('#foto_error').text(data.foto);
                     $('#foto').addClass('is-invalid');
                 }
+                if (data.merk) {
+                    $('#merek_error').text(data.merk);
+                    $('#merek').addClass('is-invalid');
+                }
+                if (data.deskripsi) {
+                    $('#deskripsi_error').text(data.deskripsi);
+                    $('#deskripsi').addClass('is-invalid');
+                }
+                if (data.tanggal_masuk) {
+                    $('#tgl_error').text(data.tanggal_masuk);
+                }
+                if (data.pemasok) {
+                    $('#pemasok_error').text(data.pemasok);
+                }
             }
         });
     });
@@ -267,15 +298,19 @@ $(document).ready(function () {
     // menangani proses edit data
     $(document).on('click', '#btnEdit', function () {
         var data = new FormData();
-        data.append('_method', "PUT")
-        if ($('#foto')[0].files.length > 0) {
-            data.append('foto', $('#foto')[0].files[0]);
+        data.append('_method', 'PUT');
+        if ($('#file_image')[0].files.length > 0) {
+            data.append('foto', $('#file_image')[0].files[0]);
         }
         data.append('jumlah', $('#jumlah').val());
         data.append('kategori', $('#kategori').val());
         data.append('kode_barang', $('#kode_barang').val());
         data.append('nama_barang', $('#nama_barang').val());
         data.append('posisi', $('#posisi').val());
+        data.append('merk', $('#merek').val());
+        data.append('tanggal_masuk', $('#tahun').val() + '-' + $('#bulan').val() + '-' + $('#tanggal').val());
+        data.append('deskripsi', $('#deskripsi').val());
+        data.append('pemasok', $('#pemasok').val());
         var id = $('#id').val();
         var url = "barang/" + id;
         $.ajax({
@@ -302,6 +337,7 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 clearErrorMsg();
                 var data = xhr.responseJSON.errors;
+                console.log(data)
                 if (data.kode_barang) {
                     $('#kode_error').text(data.kode_barang);
                     $('#kode_barang').addClass('is-invalid');
@@ -324,6 +360,10 @@ $(document).ready(function () {
                 if (data.foto) {
                     $('#foto_error').text(data.foto);
                     $('#foto').addClass('is-invalid');
+                }
+                if (data.merk) {
+                    $('#merek_error').text(data.merk);
+                    $('#merek').addClass('is-invalid');
                 }
             }
         });

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BarangExport;
 use App\Imports\BarangImport;
+use App\Models\Merk;
+use App\Models\Pemasok;
 use Illuminate\Http\Request;
 
 
@@ -22,7 +24,9 @@ class BarangController extends Controller
 
     public function index()
     {
-        return view("barang.index");
+        $merk = Merk::orderByRaw('merk')->get();
+        $pemasok = Pemasok::orderByRaw('nama')->get();
+        return view("barang.index")->with(['merk' => $merk, 'pemasoks' => $pemasok]);
     }
 
     public function getData()
@@ -64,8 +68,6 @@ class BarangController extends Controller
      */
     public function store(StoreBarangRequest $request)
     {
-        $data = [];
-
         if ($request->hasFile("foto")) {
             $file = $request->file("foto");
             $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalName();
@@ -76,7 +78,11 @@ class BarangController extends Controller
                     "quantity" => $request->jumlah,
                     "id_kategory" => $request->kategori,
                     "posisi" => $request->posisi,
-                    "photo" => $filename
+                    "photo" => $filename,
+                    "merk_id" => $request->merk,
+                    "tanggal_masuk" => $request->tanggal_masuk,
+                    "supplier_id" => $request->pemasok,
+                    "deskripsi" => $request->deskripsi
                 ];
             } else {
                 return response()->json([
@@ -87,12 +93,7 @@ class BarangController extends Controller
         }
 
         Barang::create($data);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'add',
-            'deskripsi' => 'menambahkan data barang pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('add', 'Menambahkan data barang');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menambahkan data."
@@ -119,7 +120,11 @@ class BarangController extends Controller
             "quantity",
             "id_kategory",
             "posisi",
-            "photo"
+            "photo",
+            "merk_id",
+            "supplier_id",
+            "deskripsi",
+            "tanggal_masuk"
         ])->where('id_barang', $id)->get();
 
         return response()->json([
@@ -134,7 +139,6 @@ class BarangController extends Controller
      */
     public function update(UpdateBarangRequest $request, $id)
     {
-        $data = [];
         $barang = Barang::findOrFail($id);
 
         if ($request->hasFile("foto")) {

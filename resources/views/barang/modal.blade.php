@@ -75,7 +75,7 @@
                                         <div class="input-group">
                                             <select id="tahun" class="form-control">
                                                 <option value="">Tahun</option>
-                                                @for ($i = date('Y'); $i > 1999; $i--)
+                                                @for ($i = date('Y'); $i > 1900; $i--)
                                                     <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
                                             </select>
@@ -85,7 +85,8 @@
                                                 $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                                 ?>
                                                 @for ($i = 1; $i <= 12; $i++)
-                                                    <option value="{{ $i }}">{{ $bulan[$i - 1] }}</option>
+                                                    <option value="{{ $i < 10 ? '0' . $i : $i }}">{{ $bulan[$i - 1] }}
+                                                    </option>
                                                 @endfor
                                             </select>
                                             <select id="tanggal" class="form-control">

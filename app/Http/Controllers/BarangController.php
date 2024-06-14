@@ -78,7 +78,7 @@ class BarangController extends Controller
                     "quantity" => $request->jumlah,
                     "id_kategory" => $request->kategori,
                     "posisi" => $request->posisi,
-                    "photo" => $filename,
+                    "photo" => '/storage/barang/' . $filename,
                     "merk_id" => $request->merk,
                     "tanggal_masuk" => $request->tanggal_masuk,
                     "supplier_id" => $request->pemasok,
@@ -154,7 +154,7 @@ class BarangController extends Controller
                     "quantity" => $request->jumlah,
                     "id_kategory" => $request->kategori,
                     "posisi" => $request->posisi,
-                    "photo" => $filename
+                    "photo" => '/storage/barang/' . $filename
                 ];
             }
         } else {

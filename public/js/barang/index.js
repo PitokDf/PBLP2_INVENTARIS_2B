@@ -75,19 +75,20 @@ $(document).ready(function () {
     var modal_title = $('.modal-title');
     var btnAction = $('.action');
 
-    $('#bulan').change(function () {
-        var month = $(this).val();
+    function updateDays() {
+        var month = $('#bulan').val();
         var daySelect = $('#tanggal');
         daySelect.empty();
         daySelect.append('<option value="">Tanggal</option>');
 
         if (month) {
-            var daysInMonth = new Date($('#tahun').val(), month, 0).getDate();
+            var year = $('#tahun').val();
+            var daysInMonth = new Date(year, month, 0).getDate();
             for (var i = 1; i <= daysInMonth; i++) {
-                daySelect.append('<option value="' + i + '">' + i + '</option>');
+                daySelect.append('<option value="' + (i < 10 ? '0' + i : i) + '">' + i + '</option>');
             }
         }
-    });
+    }
 
     // fungsi untuk membersihkan pesan error
     function clearErrorMsg() {
@@ -118,9 +119,10 @@ $(document).ready(function () {
         $('#tahun').val('');
         $('#bulan').val('');
         $('#tanggal').val('');
-        $('#pemasok').val('');
+        $('#pemasok').selectpicker('val', '');
         $('#deskripsi').val('');
-        $('#merek').val('');
+        $('#merek').selectpicker('val', '');
+        $('#img-preview').attr('src', '/images/download.png');
     }
 
     $('#pemasok').selectpicker({
@@ -128,6 +130,10 @@ $(document).ready(function () {
     });
     $('#merek').selectpicker({
         liveSearch: true,
+    });
+
+    $('#bulan').on('change', function () {
+        updateDays()
     });
     // saat tombol edit di click maka akan mengambil data sesaui id
     $(document).on('click', '.btnEdit', function () {
@@ -151,6 +157,17 @@ $(document).ready(function () {
                 $('#kategori').val(data.id_kategory);
                 $('#jumlah').val(data.quantity);
                 $('#posisi').val(data.posisi);
+                $('#pemasok').selectpicker('val', data.supplier_id);
+                $('#merek').selectpicker('val', data.merk_id);
+                const date = data.tanggal_masuk;
+                const parts = date.split('-');
+                console.log(parts)
+                $('#tahun').val(parts[0]);
+                $('#bulan').val(parts[1]);
+                updateDays();
+                $('#tanggal').val(parts[2]);
+                $('#img-preview').attr('src', data.photo ?? '/images/download.png')
+                $('#deskripsi').val(data.deskripsi)
             },
             error: function (xhr, status, error) {
                 console.error(xhr + "\n" + status + "\n" + error)
@@ -207,8 +224,9 @@ $(document).ready(function () {
         btnAction.html("<i class='fas fa-save'></i> Simpan");
         $('#name_error').text('');
         if (btnAction.attr('id') != "btnCreateform") {
+            claerInput();
             clearErrorMsg();
-            $('#modal-kategori input').val('');
+            // $('#modal-kategori input').val('');
         }
         btnAction.attr('id', 'btnCreateform');
     });

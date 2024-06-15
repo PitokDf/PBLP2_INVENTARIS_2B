@@ -57,8 +57,13 @@ $(document).ready(function () {
                 },
                 "orderable": true
             },
-            { "data": "quantity", "orderable": false },
-            { "data": "posisi", "orderable": false },
+            {
+                "data": null,
+                "render": function (_data, _type, row) {
+                    return row.merek.merk
+                }, "orderable": true
+            },
+            { "data": "quantity", "orderable": true },
             {
                 "data": null,
                 "render": function (_data, _type, row) {

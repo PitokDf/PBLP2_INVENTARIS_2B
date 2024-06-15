@@ -52,8 +52,8 @@
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Kategori Barang</th>
+                                        <th>Merek</th>
                                         <th>Quantity</th>
-                                        <th>Posisi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -64,8 +64,8 @@
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Kategori Barang</th>
+                                        <th>Merek</th>
                                         <th>Quantity</th>
-                                        <th>Posisi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>

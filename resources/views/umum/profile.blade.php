@@ -19,8 +19,9 @@
                     <div class="card-body">
                         <div id="area-message-akun"></div>
                         <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-auto text-center mt-3">
+                            <div class="row">
+                                <div class="col-12 text-center mt-3 d-flex flex-column justify-content-center"
+                                    style="align-items: center">
                                     <label class="d-block position-relative"
                                         style="width: 120px; height: 120px; z-index: 99" for="file_image">
                                         <div class="rainbow-border">

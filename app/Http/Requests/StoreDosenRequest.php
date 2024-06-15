@@ -22,7 +22,7 @@ class StoreDosenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ["required", "regex:/^[a-zA-Z\s]+$/u"],
+            "name" => ["required", "regex:/^[a-zA-Z,.\s]+$/u"],
             "nip" => ["required", "regex:/^[0-9]+$/u", "digits:16", "unique:dosen"],
             "jabatan" => ["required", "exists:jabatans,id"],
             "no_telpn" => ["required", 'regex:/^08[0-9]{9,}$/', "unique:dosen,phone_number"],

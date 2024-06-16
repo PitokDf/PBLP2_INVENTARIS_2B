@@ -33,7 +33,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Storage;
 
 // Route::middleware(['guest'])->group(function () {
-Route::get("login", [SessionController::class, "index"])->middleware('to.secure.link');
+Route::get("login", [SessionController::class, "index"]);
 Route::post("login", [SessionController::class, "login"])->name('login');
 Route::get("forgot", [SessionController::class, "forgotShow"])->name('forgotpass');
 Route::post("forgot", [SessionController::class, "forgotSend"])->name('password.email');

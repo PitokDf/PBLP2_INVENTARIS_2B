@@ -23,19 +23,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendors/css/dataTables.css') }}" rel="stylesheet">
+    <link href="/vendors/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendors/css/dataTables.css" rel="stylesheet">
 
     {{-- css datatales --}}
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
 
-    <link
-        href="{{ asset('vendors/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/dataTables.bootstrap4.min.css') }}"
+    <link href="/vendors/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/dataTables.bootstrap4.min.css"
         rel="stylesheet">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="iziToast.min.css">
-    <link rel="stylesheet" href="{{ asset('css/customBoostrap.css') }}">
-    <link rel="icon" href="{{ asset('asset/baru3.png') }}" type="image/*">
+    <link rel="stylesheet" href="/iziToast.min.css">
+    <link rel="stylesheet" href="/css/customBoostrap.css">
+    <link rel="icon" href="/asset/baru3.png" type="image/*">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
 </head>

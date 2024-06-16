@@ -104,7 +104,7 @@ class UsersController extends Controller
                 if (in_array($user->role, ['2', '3', '4']) && ($user->mahasiswa_id !== null || $user->dosen_id !== null)) {
                     return response()->json([
                         'status' => '400',
-                        'message' => 'Role Mahasiswa atau Dosen tidak boleh diubah.'
+                        'message' => 'Role Dosen tidak boleh diubah.'
                     ]);
                 }
             }
@@ -140,7 +140,7 @@ class UsersController extends Controller
                 $user->password = bcrypt($request->password);
             }
             $user->save();
-            if (in_array($user->role, ['2', '3', '4'])) {
+            if (in_array($user->role, ['2', '3', '5'])) {
                 Dosen::find($user->dosen_id)->update(['email' => $request->email]);
             }
             ActivityLog::createLog('update', 'Mengupdate data user');

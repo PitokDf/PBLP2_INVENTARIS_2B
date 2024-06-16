@@ -24,8 +24,9 @@ class StoreUsersRequest extends FormRequest
         return [
             "name" => "required",
             "email" => [
-                "unique:users,email",
                 "required",
+                'email',
+                "unique:users,email"
             ],
             'nim' => 'nullable|exists:mahasiswa,id_mahasiswa',
             'nip' => 'nullable|exists:dosen,id_dosen',

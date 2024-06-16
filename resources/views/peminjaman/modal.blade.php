@@ -198,6 +198,10 @@
                             <td>: <span id="batasPeminjaman"></span></td>
                         </tr>
                         <tr>
+                            <th class="text-dark">Banyak Dipinjam</th>
+                            <td>: <span id="banyakPinjam"></span></td>
+                        </tr>
+                        <tr>
                             <th class="text-dark">Status</th>
                             <td>: <span id="statusP"></span></td>
                         </tr>

@@ -177,9 +177,8 @@ $(document).ready(function () {
                     $('#namaBarang').text(data.barang.nama_barang);
                     $('#peminjam').html(data.user.role == '5' ? data.user.dosen.name + ' <span class="badge text-bg-primary">Staf</span>' : (data.user.mahasiswa ? data.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>' : (data.user.dosen ? data.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>' : data.user.username + ' <span class="badge text-bg-primary">Staf</span>')));
                     $('#kodeBarang').text(data.barang.code_barang);
-
+                    $('#banyakPinjam').text(data.jumlah);
                     let denda = calculateDenda(data.batas_pengembalian, getCurrentDate(), 1500);
-
                     $('#denda').text(data.denda == 0 ? formatRupiah(denda) : formatRupiah(data.denda));
                     $('#batasPeminjaman').text(dateCutomFormat(data.batas_pengembalian) ?? '~');
                     $('#dipinjam').text(dateCutomFormat(data.tgl_peminjaman) ?? '~');

@@ -41,7 +41,7 @@ class BarangController extends Controller
 
     public function getById(string $code)
     {
-        $barang = Barang::with('kategori')->where('code_barang', $code)->first();
+        $barang = Barang::with(['kategori', 'merek'])->where('code_barang', $code)->first();
         if (!$barang) {
             return response()->json([
                 'status' => 404,
@@ -103,9 +103,9 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Barang $barang)
+    public function show(string $id)
     {
-        //
+        return response()->json(['status' => 200, 'data' => Barang::with(['merek', 'kategori'])->find($id)]);
     }
 
     /**
@@ -168,12 +168,7 @@ class BarangController extends Controller
         }
 
         $barang->update($data);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'update',
-            'deskripsi' => 'mengupdate data barang pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('update', 'mengupdate data barang');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mengupdate data.",

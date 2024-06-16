@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Dosen;
 use App\Models\KategoriBarang;
 use App\Models\Mahasiswa;
 use App\Models\Mahasiswas;
@@ -17,6 +18,7 @@ class DashboardController extends Controller
         $dataBarang = Barang::sum('quantity');
         $dataKategori = KategoriBarang::count();
         $mahasiswa = Mahasiswas::count();
+        $dosen = Dosen::count();
         $userVeirfied = User::where("email_verified_at", '!=', null);
         $pinjaman = Peminjaman::where("tgl_pengembalian", "=", null)->sum('jumlah');
         return view("dashboard.index")->with([
@@ -25,6 +27,7 @@ class DashboardController extends Controller
             'user' => $userVeirfied,
             'pinjaman' => $pinjaman,
             'mahasiswa' => $mahasiswa,
+            'dosen' => $dosen
         ]);
     }
     public function getTopThreeBarang()

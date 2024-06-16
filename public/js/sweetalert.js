@@ -154,6 +154,7 @@ $(document).ready(function () {
                 </div>
                 `);
             } else if (role == 4) {
+                setKondisiNormal();
                 $('#kondisi').html(`
                 <div class="mb-3">
                     <label for="nim" class="form-label">NIM</label>

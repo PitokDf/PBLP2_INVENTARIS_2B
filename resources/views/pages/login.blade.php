@@ -56,9 +56,9 @@
                                             }, 1000);
                                         </script>
                                     @endif
-                                    @if (session('gagal'))
+                                    @if (session('error'))
                                         <div class="alert alert-danger" role="alert">
-                                            {{ session('gagal') }}
+                                            {{ session('error') }}
                                         </div>
                                     @endif
                                     @if ($errors->any())
@@ -112,7 +112,6 @@
             </div>
         </div>
     </div>
-
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session('logged'))

@@ -90,6 +90,9 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Dosen</div>
+                            <div class="h5 mb-1 font-weight-bold text-gray-800">{{ $dosen }}</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Mahasiswa</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mahasiswa }}</div>
                         </div>

@@ -33,7 +33,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Storage;
 
 // Route::middleware(['guest'])->group(function () {
-Route::get("login", [SessionController::class, "index"]);
+Route::get("login", [SessionController::class, "index"])->middleware('to.secure.link');
 Route::post("login", [SessionController::class, "login"])->name('login');
 Route::get("forgot", [SessionController::class, "forgotShow"])->name('forgotpass');
 Route::post("forgot", [SessionController::class, "forgotSend"])->name('password.email');
@@ -65,7 +65,7 @@ Route::get('/email/verify', function () {
 Route::get('topThreeBarang', [DashboardController::class, 'getTopThreeBarang']);
 
 Route::get('editData/{id}', [UsersController::class, "edit"]);
-Route::middleware(['sessionCheck'])->group(function () {
+Route::middleware(['sessionCheck', 'to.secure.link'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::resource('/', DashboardController::class);
         Route::get('report-stok', [ReportController::class, 'cetakStok'])->name('cetak.pdf');

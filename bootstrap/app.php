@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\RedirectToHttps;
 use App\Http\Middleware\SessionTimeOut;
 use App\Http\Middleware\UserAkses;
 use Illuminate\Foundation\Application;
@@ -15,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'userAkses' => UserAkses::class,
-            'sessionCheck' => SessionTimeOut::class
+            'sessionCheck' => SessionTimeOut::class,
+            'to.secure.link'=>RedirectToHttps::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

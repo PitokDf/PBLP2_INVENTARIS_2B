@@ -17,6 +17,7 @@ class SessionTimeOut
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && empty(Auth::user()->email_verified_at)) {
+            Auth::logout();
             return redirect()->route('login')->with('error', 'Email tidak terverikasi.');
         }
         if (!Auth::check()) {

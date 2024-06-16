@@ -7087,7 +7087,6 @@
             ],
             "description": "Docker files for running a basic Laravel application.",
             "keywords": [
-                "docker",
                 "laravel"
             ],
             "support": {

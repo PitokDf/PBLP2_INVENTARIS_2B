@@ -55,7 +55,7 @@ $(document).ready(function () {
             }
             $.ajax({
                 type: "post",
-                url: 'register',
+                url: '/register',
                 data: data,
                 processData: false,
                 contentType: false,
@@ -70,7 +70,7 @@ $(document).ready(function () {
                         let message = `<div class="alert alert-success" role="alert">${response.message} <strong>${$('#email').val()}</strong>.`;
                         response.status == 200 ? $('.message').html(message) : "";
                         setInterval(() => {
-                            location.reload();
+                            location.href = '/email/verify';
                         }, 1000);
                     }
                 },

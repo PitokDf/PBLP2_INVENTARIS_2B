@@ -1,8 +1,8 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="js/datatables.js"></script>
-    <script src="js/sweetalert.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/sweetalert.js"></script>
 @endsection
 @section('title', 'Users')
 @section('modal')

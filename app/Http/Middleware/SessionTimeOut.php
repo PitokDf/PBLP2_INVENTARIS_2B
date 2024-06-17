@@ -18,13 +18,13 @@ class SessionTimeOut
     {
         if (Auth::check() && empty(Auth::user()->email_verified_at)) {
             Auth::logout();
-            return redirect()->route('login')->with('error', 'Email tidak terverikasi.');
+            return redirect()->route('login')->with('gagal', 'Email tidak terverikasi.');
         }
         if (!Auth::check()) {
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Sesi Anda berakhir, silahkan login kembali.'], 401);
             } else {
-                return redirect()->route('login')->with('error', 'Sesi Anda berakhir, silahkan login kembali.');
+                return redirect()->route('login')->with('gagal', 'Sesi Anda berakhir, silahkan login kembali.');
             }
         }
         return $next($request);

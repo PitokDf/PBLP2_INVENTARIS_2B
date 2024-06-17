@@ -56,9 +56,9 @@
                                             }, 1000);
                                         </script>
                                     @endif
-                                    @if (session('error'))
+                                    @if (session('gagal'))
                                         <div class="alert alert-danger" role="alert">
-                                            {{ session('error') }}
+                                            {{ session('gagal') }}
                                         </div>
                                     @endif
                                     @if ($errors->any())
@@ -74,7 +74,7 @@
                                         </div>
                                     @endif
 
-                                    <form class="user" action="{{ route('login') }}" method="POST">
+                                    <form class="user" action="/login" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email"

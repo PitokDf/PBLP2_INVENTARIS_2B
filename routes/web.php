@@ -32,19 +32,19 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Storage;
 
-// Route::middleware(['guest'])->group(function () {
-Route::get("login", [SessionController::class, "index"]);
-Route::post("login", [SessionController::class, "login"])->name('login');
-Route::get("forgot", [SessionController::class, "forgotShow"])->name('forgotpass');
-Route::post("forgot", [SessionController::class, "forgotSend"])->name('password.email');
-Route::get('/reset-password/{token}', function (string $token) {
-    return view('auth.reset-pass', ['token' => $token]);
-})->middleware('guest')->name('password.reset');
-Route::post('/reset-password', [SessionController::class, 'resetPass'])->middleware('guest')->name('password.update');
-Route::get("register", [SessionController::class, "register"])->name('register');
-Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
-Route::get('reload-capcha', [SessionController::class, 'reloadCapcha']);
-// });
+Route::middleware(['guest'])->group(function () {
+    Route::get("login", [SessionController::class, "index"]);
+    Route::post("login", [SessionController::class, "login"])->name('login');
+    Route::get("forgot", [SessionController::class, "forgotShow"])->name('forgotpass');
+    Route::post("forgot", [SessionController::class, "forgotSend"])->name('password.email');
+    Route::get('/reset-password/{token}', function (string $token) {
+        return view('auth.reset-pass', ['token' => $token]);
+    })->middleware('guest')->name('password.reset');
+    Route::post('/reset-password', [SessionController::class, 'resetPass'])->middleware('guest')->name('password.update');
+    Route::get("register", [SessionController::class, "register"])->name('register');
+    Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
+    Route::get('reload-capcha', [SessionController::class, 'reloadCapcha']);
+});
 
 Route::get('activity', [ActivityLogController::class, 'index'])->name('activity');
 
@@ -56,16 +56,16 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {
         return redirect('/');
     }
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['auth.withMessage', 'signed'])->name('verification.verify');
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+})->middleware('auth.withMessage')->name('verification.notice');
 
 Route::get('topThreeBarang', [DashboardController::class, 'getTopThreeBarang']);
 
 Route::get('editData/{id}', [UsersController::class, "edit"]);
-Route::middleware(['sessionCheck'])->group(function () {
+Route::middleware(['auth.withMessage', 'verified'])->group(function () {
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::resource('/', DashboardController::class);
         Route::get('report-stok', [ReportController::class, 'cetakStok'])->name('cetak.pdf');

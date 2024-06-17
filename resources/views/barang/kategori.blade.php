@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/barang/proseskategori.js') }}"></script>
+    <script src="/js/barang/proseskategori.js"></script>
 @endsection
 @section('modal')
     @include('barang.modalAddcategori')

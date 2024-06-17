@@ -1,8 +1,8 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/datatables.js') }}"></script>
-    <script src="{{ asset('js/prodi/proses.js') }}"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/prodi/proses.js') }}"></script>
 @endsection
 @section('title', 'Prodi')
 @section('modal')

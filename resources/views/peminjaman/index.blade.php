@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/peminjaman/index.js') }}"></script>
+    <script src="/js/peminjaman/index.js"></script>
 @endsection
 @section('modal')
     @include('peminjaman.modal')

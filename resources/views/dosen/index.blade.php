@@ -1,8 +1,8 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/dosen/index.js') }}"></script>
-    <script src="{{ asset('js/preview.js') }}"></script>
+    <script src="/js/dosen/index.js"></script>
+    <script src="/js/preview.js"></script>
 @endsection
 @section('modal')
     @include('dosen.modal')

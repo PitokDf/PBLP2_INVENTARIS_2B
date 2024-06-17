@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/jabatan/index.js') }}"></script>
+    <script src="/js/jabatan/index.js"></script>
 @endsection
 @section('modal')
     @include('jabatan.modal')

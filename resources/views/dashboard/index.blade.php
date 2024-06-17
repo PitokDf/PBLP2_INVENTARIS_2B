@@ -5,8 +5,8 @@
 @endsection
 @section('title', 'Dashboard')
 @section('scriptPages')
-    <script src="{{ asset('js/dashboard/data.js') }}"></script>
-    <script src="{{ asset('js/dashboard/topThreeBarangPie.js') }}"></script>
+    <script src="/js/dashboard/data.js"></script>
+    <script src="/js/dashboard/topThreeBarangPie.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         $.ajax({

@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/mahasiswa/proses.js') }}"></script>
+    <script src="js/mahasiswa/proses.js"></script>
 @endsection
 @section('modal')
     @include('mahasiswa.modal')

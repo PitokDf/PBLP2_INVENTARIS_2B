@@ -1,8 +1,8 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="{{ asset('js/pemasok/index.js') }}"></script>
-    <script src="{{ asset('js/barangM/index.js') }}"></script>
+    <script src="/js/pemasok/index.js"></script>
+    <script src="/js/barangM/index.js"></script>
 @endsection
 @section('modal')
     @include('barang_masuk.modal')

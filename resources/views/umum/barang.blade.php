@@ -23,6 +23,7 @@
     </div>
 @endsection
 @section('scriptPages')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#tablebarang').DataTable();
@@ -43,6 +44,19 @@
                         console.log(xhr)
                     }
                 });
+            });
+            var clipboard = new ClipboardJS('.copyBtn', {
+                text: function(trigger) {
+                    return trigger.getAttribute('data-code');
+                }
+            });
+
+            clipboard.on('success', function(e) {
+                alert('Kode barang berhasil disalin: ' + e.text);
+            });
+
+            clipboard.on('error', function(e) {
+                alert('Gagal menyalin kode barang.');
             });
         });
     </script>

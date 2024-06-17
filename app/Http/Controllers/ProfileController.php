@@ -8,6 +8,7 @@ use App\Models\Mahasiswas;
 use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -59,11 +60,13 @@ class ProfileController extends Controller
 
         // menghapus file gambar sebelumnya jika ada
         if ($user->avatar && $cek) {
-            Storage::delete('public/avatar/' . $user->avatar);
+            File::exists(public_path('avatar/' . $user->avatar)) ?
+                File::delete(public_path('avatar/' . $user->avatar)) : '';
+            // unlink('public/avatar/' . $user->avatar);
         }
 
-        // menyimpan file gambar ke folder storage
-        $file !== null ? $file->storeAs('public/avatar/', $fileName) : '';
+        // menyimpan file gambar ke folder public
+        $file !== null ? $file->move(public_path('avatar'), $fileName) : '';
         // mengupdate data user
         $user->update($data);
         return response()->json([

@@ -28,7 +28,7 @@
                                             <img class="img-profile rounded-circle avatar"
                                                 style="width: 120px; height: 120px; object-fit: cover;" id="img-preview"
                                                 src=" {{ auth()->user()->avatar
-                                                    ? '/storage/avatar/' . auth()->user()->avatar
+                                                    ? '/avatar/' . auth()->user()->avatar
                                                     : 'https://ui-avatars.com/api/?name=' .
                                                         (auth()->user()->mahasiswa_id
                                                             ? auth()->user()->mahasiswa->nama

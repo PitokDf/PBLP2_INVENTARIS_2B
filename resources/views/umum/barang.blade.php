@@ -81,7 +81,12 @@
                                     @foreach ($barang as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->code_barang }}</td>
+                                            <td>
+                                                <span class="code-barang">{{ $item->code_barang }}</span> <button
+                                                    class="btn btn-sm btn-secondary copyBtn"
+                                                    data-code="{{ $item->code_barang }}"><i
+                                                        class="fas fa-copy"></i></button>
+                                            </td>
                                             <td>{{ $item->nama_barang }}</td>
                                             <td>{{ $item->kategori->nama_kategori_barang }}</td>
                                             <td>{{ $item->merek->merk }}</td>

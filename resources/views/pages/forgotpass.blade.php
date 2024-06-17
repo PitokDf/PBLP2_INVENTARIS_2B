@@ -49,6 +49,11 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
+                                    @if (session('status'))
+                                        <div class="alert alert-success">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
                                     <form class="user" action="/forgot" method="POST">
                                         @csrf
                                         <div class="form-group">

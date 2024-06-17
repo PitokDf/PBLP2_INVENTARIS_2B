@@ -1,7 +1,8 @@
 <ul class="navbar-nav bg-custom-dark-2 sidebar accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center"
+        href="{{ in_array(auth()->user()->role, ['1', '2']) ? '/' : '/peminjamanUmum' }}">
         <div class="sidebar-brand-icon "><img style="width:35px" src="{{ asset('asset/baru3.png') }}"></div>
 
         <div class="sidebar-brand-text mx-3">IT Ventory</div>
@@ -54,7 +55,8 @@
             </a>
             <div id="barang" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('barang') ? 'active' : '' }}" href="{{ route('barang.index') }}">
+                    <a class="collapse-item {{ Request::is('barang') ? 'active' : '' }}"
+                        href="{{ route('barang.index') }}">
                         <span>Data Barang</span>
                     </a>
                     <a class="collapse-item {{ Request::is('kategori-barang') ? 'active' : '' }}"

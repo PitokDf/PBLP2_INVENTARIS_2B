@@ -14,7 +14,7 @@ class ProdiController extends Controller
      */
     public function index()
     {
-        return view("prodi.index");
+        return view("admin.prodi.index");
     }
 
     /**

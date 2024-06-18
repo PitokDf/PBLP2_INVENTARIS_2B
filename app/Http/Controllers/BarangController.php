@@ -26,7 +26,7 @@ class BarangController extends Controller
     {
         $merk = Merk::orderByRaw('merk')->get();
         $pemasok = Pemasok::orderByRaw('nama')->get();
-        return view("barang.index")->with(['merk' => $merk, 'pemasoks' => $pemasok]);
+        return view("admin.barang.index")->with(['merk' => $merk, 'pemasoks' => $pemasok]);
     }
 
     public function getData()
@@ -140,7 +140,17 @@ class BarangController extends Controller
     public function update(UpdateBarangRequest $request, $id)
     {
         $barang = Barang::findOrFail($id);
-
+        $data = [
+            "code_barang" => $request->kode_barang,
+            "nama_barang" => $request->nama_barang,
+            "quantity" => $request->jumlah,
+            "id_kategory" => $request->kategori,
+            "merk_id" => $request->merk,
+            "tanggal_masuk" => $request->tanggal_masuk,
+            "supplier_id" => $request->pemasok,
+            "deskripsi" => $request->deskripsi,
+            "posisi" => $request->posisi
+        ];
         if ($request->hasFile("foto")) {
             if ($barang->photo != "") {
                 Storage::delete('public/barang/' . $barang->photo);
@@ -148,23 +158,8 @@ class BarangController extends Controller
             $file = $request->file("foto");
             $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalName();
             if ($file->storeAs("public/barang/", $filename)) {
-                $data = [
-                    "code_barang" => $request->kode_barang,
-                    "nama_barang" => $request->nama_barang,
-                    "quantity" => $request->jumlah,
-                    "id_kategory" => $request->kategori,
-                    "posisi" => $request->posisi,
-                    "photo" => '/storage/barang/' . $filename
-                ];
+                $data["photo"] = '/storage/barang/' . $filename;
             }
-        } else {
-            $data = [
-                "code_barang" => $request->kode_barang,
-                "nama_barang" => $request->nama_barang,
-                "quantity" => $request->jumlah,
-                "id_kategory" => $request->kategori,
-                "posisi" => $request->posisi,
-            ];
         }
 
         $barang->update($data);

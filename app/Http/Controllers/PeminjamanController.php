@@ -30,7 +30,7 @@ class PeminjamanController extends Controller
             ->orWhereNotIn('role', ['2', '3', '4'])
             ->where('role', '!=', '1')
             ->latest()->get();
-        return view('peminjaman.index')->with(['barangs' => $barang, 'users' => $user]);
+        return view('admin.peminjaman.index')->with(['barangs' => $barang, 'users' => $user]);
     }
 
     /**

@@ -14,7 +14,7 @@ class KategoriBeritaController extends Controller
      */
     public function index()
     {
-        return view("berita.kategori");
+        return view("admin.berita.kategori");
     }
 
     public function getData()

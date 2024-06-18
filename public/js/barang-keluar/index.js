@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    $('#barangM').select2();
+    $('#barangM').selectpicker({
+        liveSearch: true,
+        liveSearchPlaceholder: 'cari barang'
+    });
     $('#tableBarangKeluar').DataTable({
         "processing": true,
         "paging": true,

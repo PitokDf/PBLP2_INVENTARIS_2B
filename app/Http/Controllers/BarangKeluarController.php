@@ -29,7 +29,7 @@ class BarangKeluarController extends Controller
             ->orWhereNotIn('role', ['2', '3', '4'])
             ->where('role', '!=', '1')
             ->latest()->get();
-        return view("barang_keluar.index")->with(['barangs' => $barang, 'users' => $user]);
+        return view("admin.barang_keluar.index")->with(['barangs' => $barang, 'users' => $user]);
 
 
     }

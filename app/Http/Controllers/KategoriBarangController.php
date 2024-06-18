@@ -14,7 +14,7 @@ class KategoriBarangController extends Controller
      */
     public function index()
     {
-        return view("barang.kategori");
+        return view("admin.barang.kategori");
     }
 
     public function getKategori()

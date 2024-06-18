@@ -47,10 +47,12 @@ $(document).ready(function () {
 
     function setKondisiNormal() {
         $('#kondisi').html('');
-        $('#role').attr('disabled', false);
-        $('#email').attr('readonly', false);
-        $('#email').val('');
-        $('#name').val('');
+        if ($('.action').attr('id') !== 'btnEditform') {
+            $('#role').attr('disabled', false);
+            $('#email').attr('readonly', false);
+            $('#email').val('');
+            $('#name').val('');
+        }
     }
     function clearErrorMsg() {
         $('#name_error').text('');

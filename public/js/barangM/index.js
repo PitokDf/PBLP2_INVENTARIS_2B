@@ -8,6 +8,7 @@ $(document).ready(function () {
         liveSearchPlaceholder: 'cari pemasok'
     });
 
+
     $('#tableBarangM').DataTable({
         "processing": true,
         "paging": true,
@@ -87,10 +88,10 @@ $(document).ready(function () {
     }
 
     function clearInput() {
-        $('#barangM').val('');
+        $('#pemasok').selectpicker('val', '');
+        $('#barangM').selectpicker('val', '');
         $('#quantity').val('');
         $('#keterangan').val('');
-        $('#pemasok').val('');
         $('#penerima').val('');
         $('#tahun').val('');
         $('#tanggal').val('');

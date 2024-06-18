@@ -22,7 +22,7 @@ class UsersController extends Controller
     // private $log = new ActivityLog();
     public function index()
     {
-        return view("user.index");
+        return view("admin.user.index");
     }
 
     public function getAllData()
@@ -100,6 +100,7 @@ class UsersController extends Controller
     {
         try {
             $user = User::findOrFail($id);
+            $userConnect = $user->mahasiswa_id && $user->dosen_id ? true : false;
             if (!empty($request->role)) {
                 if (in_array($user->role, ['2', '3', '4']) && ($user->mahasiswa_id !== null || $user->dosen_id !== null)) {
                     return response()->json([
@@ -113,7 +114,6 @@ class UsersController extends Controller
                 "role" => 'required_if:role,!null',
                 'password' => 'nullable|min:8'
             ];
-
 
             $validator = Validator::make($request->all(), $rules, [
                 "email.unique" => "Email sudah tersedia.",
@@ -140,7 +140,7 @@ class UsersController extends Controller
                 $user->password = bcrypt($request->password);
             }
             $user->save();
-            if (in_array($user->role, ['2', '3', '5'])) {
+            if (in_array($user->role, ['2', '3', '5']) && $userConnect) {
                 Dosen::find($user->dosen_id)->update(['email' => $request->email]);
             }
             ActivityLog::createLog('update', 'Mengupdate data user');

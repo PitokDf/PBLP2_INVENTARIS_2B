@@ -20,7 +20,7 @@ class DosenController extends Controller
     public function index()
     {
         $jabatan = Jabatan::all();
-        return view("dosen.index")->with('jabatans', $jabatan);
+        return view("admin.dosen.index")->with('jabatans', $jabatan);
     }
 
     public function getDosenNip()

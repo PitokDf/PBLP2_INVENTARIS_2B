@@ -13,7 +13,7 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        return view("jabatan.index");
+        return view("admin.jabatan.index");
     }
 
     public function getAllData()

@@ -144,7 +144,61 @@ div:where(.swal2-container) {
     opacity: .7;
 }
 
+.loaded {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
 
+.loaded span {
+    background: rgba(151, 3, 205, 0.745);
+    border-radius: 10px;
+    width: 5px;
+    height: 5px;
+}
+
+.loaded span:nth-child(1) {
+    animation: loading infinite 1.5s ease-in-out;
+}
+
+.loaded span:nth-child(2) {
+    animation: loading infinite 1.5s ease-in-out;
+    animation-delay: .25s;
+}
+
+.loaded span:nth-child(3) {
+    animation: loading infinite 1.5s ease-in-out;
+    animation-delay: .5s;
+}
+
+.loaded span:nth-child(4) {
+    animation: loading infinite 1.5s ease-in-out;
+    animation-delay: .75s;
+}
+
+@keyframes loading {
+    0% {
+        height: 5px;
+        width: 5px;
+    }
+
+    50% {
+        height: inherit;
+        width: 5px;
+    }
+
+    100% {
+        height: 5px;
+        width: 5px;
+    }
+}
 
 .position-relative:hover .overlayy {
     opacity: 1;
@@ -206,4 +260,19 @@ div:where(.swal2-container) {
 
 span.text {
     font-size: 16px;
+}
+
+.log-content {
+    display: flex;
+    text-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.text-des {
+    color: rgb(59, 59, 59);
+    font-weight: 600;
+}
+
+.modal-body::-webkit-scrollbar {
+    display: none;
 }

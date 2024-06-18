@@ -5,7 +5,11 @@ $(document).on('click', '#activity-log', function () {
         type: "get",
         url: "activity",
         dataType: "json",
+        beforeSend: function () {
+            document.getElementById("activity-content").innerHTML = `<div class="loaded"><span></span><span></span><span></span><span></span></div>`
+        },
         success: function (response) {
+            document.getElementById("activity-content").innerHTML = '';
             if (response.length == 0) {
                 document.getElementById("activity-content").innerHTML = `<h2 class="h2">Belum ada log activity!</h2>`
             }
@@ -15,7 +19,7 @@ $(document).on('click', '#activity-log', function () {
                 } else if (response[i].activity == 'add') {
                     setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-plus-circle text-white"></i>`, response[i].deskripsi, 'bg-success')
                 } else if (response[i].activity == 'logout') {
-                    setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-sign-out-alt"></i>`, response[i].deskripsi, 'bg-warning')
+                    setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-sign-out-alt text-white"></i>`, response[i].deskripsi, 'bg-warning')
                 } else if (response[i].activity == 'Login') {
                     setIconLog(response[i].time, response[i].user.username, `<i class="fas fa-sign-in-alt text-white"></i>`, response[i].deskripsi, 'bg-success')
                 } else {
@@ -28,17 +32,28 @@ $(document).on('click', '#activity-log', function () {
 
 
 function setIconLog(time, username, icon, deskripsi, background) {
+    // document.getElementById("activity-content").innerHTML +=
+    //     `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
+    //         <div class="mr-3">
+    //             <div class="icon-circle ${background}">
+    //                 ${icon}
+    //             </div>
+    //         </div>
+    //     <div>
+    //         <div class="small text-gray-500">${time}</div>
+    //         ${username} ${deskripsi}
+    //     </div>
+    // </a>`
     document.getElementById("activity-content").innerHTML +=
-        `<a class="dropdown-item d-flex align-items-center mb-2" href="#">
+        `<div class="log-content">
             <div class="mr-3">
                 <div class="icon-circle ${background}">
-                    ${icon}
+                ${icon}
                 </div>
             </div>
-        <div>
-            <div class="small text-gray-500">${time}</div>
-            ${username} ${deskripsi}
-        </div>
-    </a>
-    <hr>`
+            <div>
+                <div class="small text-gray-500">${time}</div>
+                <span class="text-des">${username} ${deskripsi}</span>
+            </div>
+        </div>`
 }

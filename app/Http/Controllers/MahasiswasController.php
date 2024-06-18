@@ -22,7 +22,7 @@ class MahasiswasController extends Controller
     public function index()
     {
         $prodi = Prodi::all();
-        return view("mahasiswa.index")->with("prodi", $prodi);
+        return view("admin.mahasiswa.index")->with("prodi", $prodi);
     }
 
     public function getMahasiswaNim()

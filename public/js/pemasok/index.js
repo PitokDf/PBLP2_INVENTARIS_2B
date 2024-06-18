@@ -31,7 +31,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger' id='btn-hapus'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-info' id='btn-detail' data-id='" + row.id + "'><i class='fas fa-regular fa-info-circle'></i></button>"
+                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger' id='btn-hapus'><i class='fas a-solid fa-trash'></i></button> <button type='button' data-id='" + row.id + "' class='btn btn-sm btn-warning' id='btn-edit'><i class='fas a-solid fa-pen'></i></button> <button class='btn btn-sm btn-info' id='btn-detail' data-id='" + row.id + "'><i class='fas fa-regular fa-info-circle'></i></button>"
                 }
                 , "orderable": false
             }
@@ -87,9 +87,7 @@ $(document).ready(function () {
                     });
                     if ($('#modalPemasok').length) {
                         $('#modalPemasok').modal('hide');
-                        setInterval(() => {
-                            location.reload();
-                        }, 1000);
+                        getPemasok();
                     }
                     if ($('#tablePemasok').length) {
                         reloadTable(tablePemasok);
@@ -132,7 +130,6 @@ $(document).ready(function () {
             }
         });
     });
-
 
     $(document).on('click', '#btn-detail', function () {
         $('#modalDetail').modal('show');
@@ -197,6 +194,95 @@ $(document).ready(function () {
                         }
                     }
                 });
+            }
+        });
+    });
+
+    function setNormal() {
+        $('.form-title').text('Form Pemasok');
+        $('.action-btn').attr('id', 'simpan');
+        $('.action-btn').text('Submit');
+        $('.action-btn').removeClass('btn-warning');
+        $('.action-btn').addClass('btn-primary');
+        $('#btn-cancel').html(``);
+    }
+
+    $(document).on('click', '#btn-edit', function () {
+        AjaxGetData('/pemasok/' + $(this).data('id'), function (response) {
+            // console.log(response)
+            if (response.status === 200) {
+                clearErrorMsg();
+                const data = response.data;
+                $('#nama_pemasok').val(data.nama);
+                $('#id').val(data.id);
+                $('#kode_pos').val(data.kode_pos);
+                $('#kota').val(data.kota);
+                $('#no_hp').val(data.no_hp);
+                $('#alamat').val(data.alamat);
+
+                $('.form-title').text('Edit Data Pemasok');
+                $('.action-btn').attr('id', 'update');
+                $('.action-btn').text('Update');
+                $('.action-btn').removeClass('btn-primary');
+                $('.action-btn').addClass('btn-warning');
+                $('#btn-cancel').html(`<button class="btn btn-sm btn-danger me-2" id="cancel-update">Cancel</button>`);
+            }
+        });
+    });
+
+    // mengembalikan ke form sebelumnya
+    $(document).on('click', '#cancel-update', function () {
+        clearErrorMsg();
+        clearInput();
+        setNormal();
+    });
+
+    $(document).on('click', '#update', function () {
+        var data = new FormData(); // membuat object dari form data yang akan digunakan untuk menyimpan data input
+        data.append('_method', 'PUT');
+        data.append('nama_pemasok', $('#nama_pemasok').val());
+        data.append('kode_pos', $('#kode_pos').val());
+        data.append('kota', $('#kota').val());
+        data.append('no_hp', $('#no_hp').val());
+        data.append('alamat', $('#alamat').val());
+
+        AjaxPostIncludeData('/pemasok/' + $('#id').val(), data, function (response) {
+            // console.log(response)
+            if (response.status === 200) {
+                clearErrorMsg();
+                clearInput();
+                setNormal();
+                reloadTable(tablePemasok);
+                Swal.fire({
+                    title: "Updated!",
+                    text: response.message,
+                    icon: "success",
+                    confirmButtonText: "Ok"
+                });
+            }
+
+            if (response.status === 422) {
+                const errors = response.responseJSON.errors;
+                if (errors.nama_pemasok) {
+                    $('#nama_error').text(errors.nama_pemasok);
+                    $('#nama_pemasok').addClass('is-invalid');
+                }
+                if (errors.kode_pos) {
+                    $('#kode_pos_error').text(errors.kode_pos);
+                    $('#kode_pos').addClass('is-invalid');
+                }
+                if (errors.kota) {
+                    $('#kota_error').text(errors.kota);
+                    $('#kota').addClass('is-invalid');
+                }
+                if (errors.no_hp) {
+                    $('#nohp_error').text(errors.no_hp);
+                    $('#no_hp').addClass('is-invalid');
+                }
+                if (errors.alamat) {
+                    $('#alamat_error').text(errors.alamat);
+                    $('#alamat').addClass('is-invalid');
+                }
             }
         });
     });

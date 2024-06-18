@@ -13,7 +13,7 @@ class PemasokController extends Controller
      */
     public function index()
     {
-        return view('pemasok.index');
+        return view('admin.pemasok.index');
     }
 
     /**
@@ -80,7 +80,19 @@ class PemasokController extends Controller
      */
     public function update(UpdatePemasokRequest $request, Pemasok $pemasok)
     {
-        //
+        $data = [
+            "nama" => $request->nama_pemasok,
+            "alamat" => $request->alamat,
+            "kode_pos" => $request->kode_pos,
+            "kota" => $request->kota,
+            "no_hp" => $request->no_hp
+        ];
+
+        $pemasok->update($data);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data pemasok berhasil di update.'
+        ]);
     }
 
     /**

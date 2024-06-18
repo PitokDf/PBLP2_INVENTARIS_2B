@@ -15,9 +15,9 @@ class BarangMasukController extends Controller
      */
     public function index()
     {
-        $barang = Barang::all();
-        $pemasok = Pemasok::latest()->get();
-        return view("barang_masuk.index")->with(['pemasoks' => $pemasok, 'barangs' => $barang]);
+        $barang = Barang::orderByRaw('nama_barang')->get();
+        $pemasok = Pemasok::orderByRaw('nama')->get();
+        return view("admin.barang_masuk.index")->with(['pemasoks' => $pemasok, 'barangs' => $barang]);
     }
 
     public function getData()

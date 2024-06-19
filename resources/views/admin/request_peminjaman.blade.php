@@ -25,30 +25,21 @@
                                 cellspacing="0">
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
-                                        <th>Kode Peminjaman</th>
                                         <th>Nama Barang</th>
                                         <th>Nama Peminjam</th>
-                                        <th>Status</th>
+                                        <th>Alasan Meminjam</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Kode Peminjaman</th>
                                         <th>Nama Barang</th>
-                                        <th>Nama User</th>
-                                        <th>Status</th>
+                                        <th>Nama Peminjam</th>
+                                        <th>Alasan Meminjam</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    {{-- @foreach ($data as $item)
-                                        <tr>
-                                            <td>{{ $item->kode_peminjaman }}</td>
-                                            <td>{{ $item->barang->nama_barang }}</td>
-                                            <td>{{ $item->user->username }}</td>
-                                            <td>{!!  !!}
-                                            </td>
-                                        </tr>
-                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div>

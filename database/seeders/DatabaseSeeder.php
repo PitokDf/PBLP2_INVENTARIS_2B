@@ -38,6 +38,14 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
         ]);
+        User::create([
+            'username' => 'pitokdf',
+            'email' => 'pitok@gmail.com',
+            'role' => '5',
+            'id_user' => Uuid::uuid4(),
+            'email_verified_at' => now(),
+            'password' => bcrypt('12345678'),
+        ]);
 
         $kategori = ['Monitor', 'Keyboard', 'Personal Komputer', 'SSD'];
         $prodi = [

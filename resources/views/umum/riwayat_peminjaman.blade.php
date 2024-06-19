@@ -28,7 +28,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('content')
     <div class="row">
@@ -36,7 +35,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h5 class="m-0 font-weight-bold text-secondary">Daftar Barang Tersedia</h5>
+                    <h5 class="m-0 font-weight-bold text-secondary">Riwayat Peminjaman</h5>
                     <div>
                     </div>
                 </div>
@@ -61,15 +60,17 @@
                                     @foreach ($peminjaman as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->kode_peminjaman }}</td>
+                                            <td>{{ $item->kode_peminjaman ?? '~' }}</td>
                                             <td>{{ $item->barang->nama_barang }}</td>
                                             <td>{{ $item->tgl_peminjaman }}</td>
                                             <td>{{ $item->batas_pengembalian }}</td>
-                                            <td>{!! $item->status
+                                            <td>{!! $item->status == 1
                                                 ? ($item->tgl_pengembalian === null
-                                                    ? '<span class="badge text-bg-danger">Belum dikembalikan</span>'
+                                                    ? '<span class="badge text-bg-info">Belum dikembalikan</span>'
                                                     : '<span class="badge text-bg-success">Sudah dikembalikan</span>')
-                                                : '<span class="badge text-bg-warning"><i class="fas fa-clock"></i> Pending Request</span>' !!}
+                                                : ($item->status == 2
+                                                    ? '<span class="badge text-bg-danger"><i class="fas fa-ban"></i> Request ditolak</span>'
+                                                    : '<span class="badge text-bg-warning"><i class="fas fa-clock"></i> Pending Request</span>') !!}
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-info" data-id="{{ $item->id }}"

@@ -163,6 +163,7 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::get('getDataPeminjaman', [PeminjamanController::class, 'getData']);
         Route::get('request-peminjaman', [RequestPeminjaman::class, 'index']);
         Route::post('setujui-peminjaman', [RequestPeminjaman::class, 'setujui']);
+        Route::post('reject-peminjaman', [RequestPeminjaman::class, 'reject']);
         Route::get('getRequestPeminjaman', function () {
             return response()->json(['status' => 200, 'data' => Peminjaman::with(['barang', 'user', 'user.dosen', 'user.mahasiswa'])->where('status', '=', false)->get()]);
         });

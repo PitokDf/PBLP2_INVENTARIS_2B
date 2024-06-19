@@ -138,6 +138,7 @@ $(document).ready(function () {
             }
 
             if (response.status == 203) {
+                console.log(response)
                 Swal.fire({
                     icon: 'error',
                     title: 'Ops !!',

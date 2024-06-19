@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_peminjaman')->unique();
+            $table->string('kode_peminjaman')->nullable()->unique();
             $table->unsignedBigInteger('id_barang');
             $table->foreign('id_barang')->references('id_barang')->on('barang');
             $table->uuid('id_user');
@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->date('batas_pengembalian');
             $table->date('tgl_pengembalian')->nullable();
             $table->integer('jumlah');
-            $table->boolean('status')->default(false);
+            $table->tinyInteger('status')->default(0); // 0 = belum disetujui, 1 = disetujui, 2 = ditolak
             $table->decimal('denda')->default(0.00);
             $table->text('keterangan');
             $table->text('kondisi')->nullable();

@@ -23,7 +23,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id_kategori + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' id='" + row.id_kategori + "'><i class='fas fa-regular fa-pen'></i></button>"
+                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger btnDelete'><i class='fas a-solid fa-trash'></i></button> <button class='btn btn-sm btn-warning btnEdit' data-id='" + row.id + "'><i class='fas fa-regular fa-pen'></i></button>"
                 }
                 , "orderable": false
             }
@@ -44,7 +44,7 @@ $(document).ready(function () {
         $('#name_kategori').removeClass('is-invalid');
         $('#name_error').text('');
         btnAction.html("<i class='fas fa-regular fa-pen'></i> Update");
-        url = "kategori-berita/" + $(this).attr('id') + "/edit";
+        url = "/kategori-berita/" + $(this).data('id') + "/edit";
 
         $.ajax({
             type: "GET",
@@ -54,7 +54,7 @@ $(document).ready(function () {
                 var data = response.data[0];
                 console.log(data)
                 $('#name_kategori').val(data.nama_kategori);
-                $('#id').val(data.id_kategori);
+                $('#id').val(data.id);
             },
             error: function (xhr, status, error) {
                 console.error(xhr + "\n" + status + "\n" + error)

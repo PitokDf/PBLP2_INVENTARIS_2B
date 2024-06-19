@@ -70,7 +70,7 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#berita" aria-expanded="true"
                 aria-controls="berita">
                 <i class="far fa-calendar-plus"></i>
-                <span>{{ Request::is('berita') ? 'Data Berita' : (Request::is('kategori-berita') ? 'Kategori Berita' : 'Barang') }}</span>
+                <span>{{ Request::is('berita') ? 'Data Berita' : (Request::is('kategori-berita') ? 'Kategori Berita' : 'Berita') }}</span>
             </a>
             <div id="berita" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">

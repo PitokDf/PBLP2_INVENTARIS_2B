@@ -6,6 +6,7 @@
 @section('modal')
     @include('admin.barang.modal')
     @include('admin.barang.modalAddcategori')
+    @include('admin.barang.modalDetail')
 @endsection
 
 @section('title', 'Barang')

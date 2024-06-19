@@ -47,12 +47,10 @@ $(document).ready(function () {
 
     function setKondisiNormal() {
         $('#kondisi').html('');
-        if ($('.action').attr('id') !== 'btnEditform') {
-            $('#role').attr('disabled', false);
-            $('#email').attr('readonly', false);
-            $('#email').val('');
-            $('#name').val('');
-        }
+        $('#role').attr('disabled', false);
+        $('#email').attr('disabled', false);
+        $('#email').val('');
+        $('#name').val('');
     }
     function clearErrorMsg() {
         $('#name_error').text('');
@@ -146,6 +144,7 @@ $(document).ready(function () {
     function getKondisiData(role, other = null) {
         if (other !== null) {
             if (role == 2 || role == 3 || role == 5) {
+                setKondisiNormal();
                 $('#email').attr('readonly', true)
                 $('#kondisi').html(`
                 <div class="mb-3">
@@ -156,6 +155,7 @@ $(document).ready(function () {
                 </div>
                 `);
             } else if (role == 4) {
+                $('#email').attr('readonly', false)
                 setKondisiNormal();
                 $('#kondisi').html(`
                 <div class="mb-3">
@@ -165,6 +165,8 @@ $(document).ready(function () {
                 </div>
                 `);
             } else {
+                $('#email').attr('readonly', false)
+                setKondisiNormal();
                 $('#kondisi').html('');
             }
         } else {

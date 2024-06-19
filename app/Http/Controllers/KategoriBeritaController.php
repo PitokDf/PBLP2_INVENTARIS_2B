@@ -63,9 +63,9 @@ class KategoriBeritaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        $data = KategoriBerita::where("id_kategori", $id)->get(['nama_kategori', 'id_kategori']);
+        $data = KategoriBerita::where("id", $id)->get(['nama_kategori', 'id']);
         return response()->json([
             'status' => 200,
             'data' => $data

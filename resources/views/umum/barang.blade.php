@@ -1,26 +1,6 @@
 @extends('layouts.content')
 @section('title', 'Daftar Barang')
 @section('modal')
-    <div class="modal fade" id="detailBarang" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
-        aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        Detail Barang : <span class="text-dark" id="_barang"></span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">Body</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('scriptPages')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
@@ -88,7 +68,6 @@
                                         <th>Kategori</th>
                                         <th>Merek/Type</th>
                                         <th>Stok</th>
-                                        <th>Detail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,9 +84,6 @@
                                             <td>{{ $item->kategori->nama_kategori_barang }}</td>
                                             <td>{{ $item->merek->merk }}</td>
                                             <td>{{ $item->quantity }}</td>
-                                            <td><button class="btn btn-sm btn-info detailBtn"
-                                                    data-id="{{ $item->id_barang }}"><i
-                                                        class="fas fa-info-circle"></i></button></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -117,6 +93,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

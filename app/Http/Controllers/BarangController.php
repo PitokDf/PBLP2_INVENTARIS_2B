@@ -105,7 +105,7 @@ class BarangController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json(['status' => 200, 'data' => Barang::with(['merek', 'kategori'])->find($id)]);
+        return response()->json(['status' => 200, 'data' => Barang::with(['merek', 'kategori', 'pemasok'])->find($id)]);
     }
 
     /**

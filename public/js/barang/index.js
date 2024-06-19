@@ -511,4 +511,23 @@ $(document).ready(function () {
             });
         }
     });
+
+    $(document).on('click', '.btnDetail', function () {
+        $('#detailBarang').modal('show');
+        AjaxGetData('/barang/' + $(this).attr('id'), function (response) {
+            console.log(response);
+            if (response.status === 200) {
+                $('#txt_code_barang').text(response.data.code_barang);
+                $('#txt_nama_barang').text(response.data.nama_barang);
+                $('#txt_kategori').text(response.data.kategori.nama_kategori_barang);
+                $('#photo').attr('src', response.data.photo);
+                $('#txt_merek').text(response.data.merek.merk);
+                $('#txt_pemasok').text(response.data.pemasok.nama);
+                $('#txt_tgl_masuk').text(dateCutomFormat(response.data.tanggal_masuk));
+                $('#txt_jumlah').text(response.data.quantity);
+                $('#txt_posisi').text(response.data.posisi);
+                $('#txt_deskripsi').text(response.data.deskripsi);
+            }
+        });
+    });
 });

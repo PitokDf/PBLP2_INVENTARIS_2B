@@ -245,8 +245,9 @@ $(document).ready(function () {
     // menangani proses delete data
     $(document).on('click', '.btnDelete', function () {
         Swal.fire({
-            title: "Yakin ingin menghapus?, data yang berelasi juga akan dihapus",
+            title: "Yakin ingin menghapus?",
             icon: "warning",
+            text: "Data yang berelasi juga akan dihapus",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",

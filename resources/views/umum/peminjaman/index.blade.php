@@ -60,10 +60,25 @@
         </div>
     @elseif(in_array(auth()->user()->role, ['3', '4']) || auth()->user()->role == 5)
         <div id="message"></div>
-        <div class="alert alert-success">
-            Selamat Datang Kembali
-            <strong>{{ auth()->user()->dosen_id ? auth()->user()->dosen->name : (auth()->user()->mahasiswa ? auth()->user()->mahasiswa->nama : auth()->user()->username) }}</strong>.
-        </div>
+        @if (count($peminjaman) > 0)
+            @foreach ($peminjaman as $item)
+                <?php $dayRemaining = \Carbon\Carbon::parse($item->batas_pengembalian)->diffInDays(\Carbon\Carbon::now(), false); ?>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Halo,
+                        {{ auth()->user()->dosen_id ? auth()->user()->dosen->name : (auth()->user()->mahasiswa ? auth()->user()->mahasiswa->nama : auth()->user()->username) }}!</strong>
+                    Terdapat peminjaman dengan kode <strong>{{ $item->kode_peminjaman }}</strong> dan barang
+                    (<strong>{{ $item->barang->nama_barang . ' - ' . $item->barang->code_barang }}</strong>)
+                    batas pengembalian pada: {{ $item->batas_pengembalian }},
+                    {!! $dayRemaining == 0
+                        ? 'Harus dikembalikan hari ini'
+                        : ($dayRemaining > 0
+                            ? '<strong>Sudah terlambat ' . ceil(abs($dayRemaining)) . ' hari.</strong>'
+                            : '<strong>Harus dikembalikan dalam ' . ceil(abs($dayRemaining)) . ' hari lagi.</strong>') !!}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endforeach
+        @endif
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card shadow mb-4">
@@ -81,10 +96,7 @@
                                     <label for="code_barang">Kode Barang</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Masukkan kode barang!"
-                                            style="height: 50px" aria-label="code barang" name="code_barang"
-                                            id="code_barang">
-                                        <button type="button" class="btn btn-success" id="cari_barang"><i
-                                                class="fas fa-search"></i></button>
+                                            aria-label="code barang" name="code_barang" id="code_barang">
                                     </div>
                                 </div>
                             </div>

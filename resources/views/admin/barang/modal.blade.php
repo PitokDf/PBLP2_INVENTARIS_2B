@@ -21,6 +21,13 @@
                                     placeholder="exp: B121203" />
                                 <span id="kode_error" class="text-danger"></span>
                             </div>
+                            <div class="mb-3">
+                                <label for="nama_barang" class="form-label">Nama Barang</label>
+                                <input type="text" class="form-control" name="nama_barang" id="nama_barang"
+                                    placeholder="exp: Samsung Monitor" />
+                                <span id="nama_error" class="text-danger"></span>
+                            </div>
+
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
@@ -43,6 +50,15 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="deskripsi" class="form-label">Deskripsi</label>
+                                <textarea name="deskripsi" class="form-control" rows="8" id="deskripsi"></textarea>
+                                <span id="deskripsi_error" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="pemasok" class="form-label">Pemasok</label>
                                 <select name="pemasok" class="form-control" id="pemasok">
@@ -53,20 +69,7 @@
                                 </select>
                                 <span id="pemasok_error" class="text-danger"></span>
                             </div>
-                            <div class="mb-3">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                <textarea name="deskripsi" class="form-control" rows="8" id="deskripsi"></textarea>
-                                <span id="deskripsi_error" class="text-danger"></span>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="nama_barang" class="form-label">Nama Barang</label>
-                                <input type="text" class="form-control" name="nama_barang" id="nama_barang"
-                                    placeholder="exp: Samsung Monitor" />
-                                <span id="nama_error" class="text-danger"></span>
-                            </div>
 
                             <div class="row">
                                 <div class="col-7">

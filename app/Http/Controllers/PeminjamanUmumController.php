@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\Jabatan;
 use App\Models\Mahasiswas;
+use App\Models\Peminjaman;
 use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PeminjamanUmumController extends Controller
 {
@@ -17,10 +19,15 @@ class PeminjamanUmumController extends Controller
         $jabatan = Jabatan::latest()->get();
         $prodi = Prodi::latest()->get();
 
+        $peminjamanDeadline = Peminjaman::where('id_user', auth()->user()->id_user)
+            ->whereNull('tgl_pengembalian')->where('batas_pengembalian', '<=', Carbon::now()->addDays(2)->toDateString())
+            ->where('status', 1)->whereNull('tgl_pengembalian')
+            ->get();
+
         return in_array(Auth::user()->role, ['3', '5']) ?
-            view("umum.peminjaman.index")->with('jabatans', $jabatan) :
+            view("umum.peminjaman.index")->with(['jabatans' => $jabatan, 'peminjaman' => $peminjamanDeadline]) :
             (
-                Auth::user()->role == '4' ? view("umum.peminjaman.index")->with('prodis', $prodi) : view("umum.peminjaman.index")
+                Auth::user()->role == '4' ? view("umum.peminjaman.index")->with(['prodis' => $prodi, 'peminjaman' => $peminjamanDeadline]) : view("umum.peminjaman.index")
             );
     }
 

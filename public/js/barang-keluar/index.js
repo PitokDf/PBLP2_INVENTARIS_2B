@@ -152,6 +152,7 @@ $(document).ready(function () {
                     $('#txt_quantity').text(data.quantity);
                     $('#txt_tgl_keluar').text(dateCutomFormat(data.tgl_keluar));
                     $('#txt_keterangan').text(data.keterangan);
+                    $('#txt_penerima').text(data.penerima);
                 }
             },
             error: function (xhr) {

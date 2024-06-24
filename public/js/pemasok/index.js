@@ -31,7 +31,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger' id='btn-hapus'><i class='fas a-solid fa-trash'></i></button> <button type='button' data-id='" + row.id + "' class='btn btn-sm btn-warning' id='btn-edit'><i class='fas a-solid fa-pen'></i></button> <button class='btn btn-sm btn-info' id='btn-detail' data-id='" + row.id + "'><i class='fas fa-regular fa-info-circle'></i></button>"
+                    return "<button type='button' data-id='" + row.id + "' class='btn btn-sm btn-danger' id='btn-hapus'><i class='fas a-solid fa-trash'></i></button> <button type='button' data-id='" + row.id + "' class='btn btn-sm btn-warning test' id='btn-edit'><i class='fas a-solid fa-pen'></i></button> <button class='btn btn-sm btn-info' id='btn-detail' data-id='" + row.id + "'><i class='fas fa-regular fa-info-circle'></i></button>"
                 }
                 , "orderable": false
             }
@@ -176,6 +176,9 @@ $(document).ready(function () {
                     success: function (response) {
                         console.log(response);
                         if (response.status == 200) {
+                            clearErrorMsg();
+                            clearInput();
+                            setNormal();
                             reloadTable(tablePemasok);
                             Swal.fire({
                                 title: "Deleted!",
@@ -196,6 +199,16 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+
+    $(document).on('mouseover', '#btn-edit', function () {
+        $('.form-pemasok').addClass('shadow-warning');
+        $('.form-pemasok').removeClass('shadow');
+    });
+
+    $(document).on('mouseout', '#btn-edit', function () {
+        $('.form-pemasok').removeClass('shadow-warning');
+        $('.form-pemasok').addClass('shadow');
     });
 
     function setNormal() {

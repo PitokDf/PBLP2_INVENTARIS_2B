@@ -14,11 +14,20 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h5 class="m-0 font-weight-bold text-secondary">Laporan Barang Masuk</h5>
+                    {{-- <label for="dari">Dimulai dari : <input type="date" id="dari" name="dari"></label> --}}
+
                     <div>
-                        <a href="/report-barang-masuk" class="btn btn-sm btn-primary" target="_blank" id="btnCreate">
+                        <div class="input-group mb-3">
+                            <input type="date" class="form-control" placeholder="Tanggal Mulai"
+                                aria-describedby="button-addon2">
+                            <input type="date" class="form-control" placeholder="Tanggal Akhir"
+                                aria-describedby="button-addon2">
+                            <button class="btn btn-primary" type="button" id="button-addon2">Cetak</button>
+                        </div>
+                        {{-- <a href="/report-barang-masuk" class="btn btn-sm btn-primary" target="_blank" id="btnCreate">
                             <i class="fas fa-solid fa-print"></i>
                             Cetak
-                        </a>
+                        </a> --}}
                         @if (Auth::user()->role == 2)
                             <a href="" class="btn btn-sm btn-danger" data-toggle="modal" id="btnCreate">
                                 <i class="fas fa-solid fa-flag"></i>

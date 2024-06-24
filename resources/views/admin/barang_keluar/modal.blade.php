@@ -24,10 +24,10 @@
                             <th class="text-dark">Jumlah</th>
                             <td>: <span id="txt_quantity">135 (dummy)</span></td>
                         </tr>
-                        {{-- <tr>
-                            <th class="text-dark">Pemasok</th>
-                            <td>: <span id="txt_pemasok">PT. Anugrah Selalu (dummy)</span></td>
-                        </tr> --}}
+                        <tr>
+                            <th class="text-dark">Penerima</th>
+                            <td>: <span id="txt_penerima">PT. Anugrah Selalu (dummy)</span></td>
+                        </tr>
                         <tr>
                             <th class="text-dark">Tgl Keluar</th>
                             <td>: <span id="txt_tgl_keluar">Minggu, 26 mei 2024 (dummy)</span></td>

@@ -82,12 +82,11 @@ $(document).ready(function () {
         });
     });
 
-    $('#cari_barang').click(function () {
-        const code = document.getElementById('code_barang').value;
-        if (code.trim() !== '') {
+    $('#code_barang').on('blur', function () {
+        if ($(this).val().trim() !== '') {
             $.ajax({
                 type: "get",
-                url: "/get-barang/" + code,
+                url: "/get-barang/" + $(this).val(),
                 dataType: "json",
                 success: function (response) {
                     $('#nama_barang').val('');

@@ -276,3 +276,11 @@ span.text {
 .modal-body::-webkit-scrollbar {
     display: none;
 }
+
+.shadow-warning {
+    box-shadow: 0 0 24px rgba(255, 166, 0, 0.671);
+}
+
+.card {
+    transition: all .2s ease-in-out;
+}

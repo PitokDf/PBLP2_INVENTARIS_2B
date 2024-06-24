@@ -71,7 +71,7 @@ class ReportController extends Controller
         return $this->printPdf(
             'admin.reports.pdf.report_barang',
             'Laporan Data Barang',
-            Barang::with('kategori')->latest()->get(),
+            Barang::with('kategori')->whereBetween('created_at', [''])->latest()->get(),
             'laporan-barang.pdf'
         );
     }

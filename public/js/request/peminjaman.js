@@ -43,7 +43,8 @@ $(document).ready(function () {
                         '<button class="btn btn-sm btn-outline-success" id="btnSetujui" data-id=' + row
                             .id + '><i class="fas fa-check"></i></button> <button class="btn btn-sm btn-outline-danger" id="btnReject" data-id=' + row
                             .id + '><i class="fas fa-times"></i></button>' :
-                        '';
+                        '<button class="btn btn-sm btn-danger" id="btnHapus" data-id=' + row
+                            .id + '><i class="fas fa-trash"></i></button>';
                 },
                 "orderable": false
             }

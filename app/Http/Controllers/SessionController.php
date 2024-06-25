@@ -30,7 +30,7 @@ class SessionController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role == 3 || Auth::user()->role == 4 || Auth::user()->role == 5) {
+            if (in_array(auth()->user()->role, ['3', '4', '5'])) {
                 ActivityLog::createLog('Login', 'Login');
                 return redirect('peminjamanUmum');
             } elseif (Auth::user()->role == 1 || Auth::user()->role == 2) {

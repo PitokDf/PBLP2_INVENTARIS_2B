@@ -15,15 +15,17 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h5 class="m-0 font-weight-bold text-secondary">Laporan Barang Masuk</h5>
                     {{-- <label for="dari">Dimulai dari : <input type="date" id="dari" name="dari"></label> --}}
-
                     <div>
-                        <div class="input-group mb-3">
-                            <input type="date" class="form-control" placeholder="Tanggal Mulai"
-                                aria-describedby="button-addon2">
-                            <input type="date" class="form-control" placeholder="Tanggal Akhir"
-                                aria-describedby="button-addon2">
-                            <button class="btn btn-primary" type="button" id="button-addon2">Cetak</button>
-                        </div>
+                        <form action="/report-barang-masuk" method="GET" target="_blank">
+                            <div class="input-group mb-3">
+                                <input type="date" name="awal" class="form-control" placeholder="Tanggal Mulai"
+                                    aria-describedby="button-addon2">
+                                <input type="date" name="akhir" class="form-control" placeholder="Tanggal Akhir"
+                                    aria-describedby="button-addon2">
+                                <button class="btn btn-primary" type="submit" data-bs-toggle="tooltip" id="cetakLaporan"
+                                    data-bs-placement="top" title="Cetak laporan">Cetak</button>
+                            </div>
+                        </form>
                         {{-- <a href="/report-barang-masuk" class="btn btn-sm btn-primary" target="_blank" id="btnCreate">
                             <i class="fas fa-solid fa-print"></i>
                             Cetak

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling\Schedule;
+use Spatie\DbDumper\Databases\MySql;
 
 class BackupData extends Command
 {
@@ -26,14 +27,22 @@ class BackupData extends Command
      */
     public function handle()
     {
-        // Logika untuk membuat backup data
-        $filename = 'backup-' . date('Y-m-d') . '.sql';
-        $path = storage_path('app/backups/' . $filename);
+        $databaseName = env('DB_DATABASE');
+        $userName = env('DB_USERNAME');
+        $password = env('DB_PASSWORD');
+        $host = env('DB_HOST');
+        $backupPath = public_path('backups');
 
-        // Jalankan perintah untuk membuat backup MySQL menggunakan mysqldump
-        exec('mysqldump -u ' . env('DB_USERNAME') . ' -p' . env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' > ' . $path);
+        $fileName = $databaseName . '_' . date('Y_m_d_His') . '.sql';
 
-        $this->info('Backup data berhasil dibuat: ' . $filename);
+        MySql::create()
+            ->setDbName($databaseName)
+            ->setUserName($userName)
+            ->setPassword($password)
+            ->setHost($host)
+            ->dumpToFile($backupPath . '/' . $fileName);
+
+        $this->info('Backup data berhasil dibuat: ' . $fileName);
     }
 
     // File: app/Console/Kernel.php

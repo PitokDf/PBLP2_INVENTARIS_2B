@@ -12,6 +12,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\MahasiswasController;
+use App\Http\Controllers\MerkController;
 use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanUmumController;
@@ -147,6 +148,8 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
             return Storage::download('public/Barangs.csv', 'exp-barang.csv');
         })->name('download.barang');
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
+        Route::get('getAllMerk', [MerkController::class, "getData"]);
+        Route::resource('merk-barang', MerkController::class);
         Route::resource("mahasiswa", MahasiswasController::class);
         Route::get("/getMahasiswaNim", [MahasiswasController::class, 'getMahasiswaNim']);
         Route::post("importMahasiswa", [MahasiswasController::class, 'import']);

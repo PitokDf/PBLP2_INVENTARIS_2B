@@ -27,7 +27,7 @@ class PeminjamanController extends Controller
                     ->whereNotNull('mahasiswa_id');
             })
             ->where('email_verified_at', '!=', null)
-            ->orWhereNotIn('role', ['2', '3', '4'])
+            ->orWhereNotIn('role', ['2', '3', '4', '5'])
             ->where('role', '!=', '1')
             ->latest()->get();
         return view('admin.peminjaman.index')->with(['barangs' => $barang, 'users' => $user]);

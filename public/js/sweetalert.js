@@ -48,7 +48,7 @@ $(document).ready(function () {
     function setKondisiNormal() {
         $('#kondisi').html('');
         $('#role').attr('disabled', false);
-        $('#email').attr('disabled', false);
+        $('#email').attr('readonly', false);
         $('#email').val('');
         $('#name').val('');
     }

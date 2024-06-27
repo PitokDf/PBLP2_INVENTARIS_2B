@@ -47,11 +47,11 @@
     @endcan
 
     @can('admin')
-        <li class="nav-item {{ Request::is('barang') || Request::is('kategori-barang') ? 'active' : '' }}">
+        <li class="nav-item {{ Request::is(['kategori-barang', 'merk-barang', 'barang']) ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#barang" aria-expanded="true"
                 aria-controls="barang">
                 <i class="fas fa-archive"></i>
-                <span>{{ Request::is('barang') ? 'Data Barang' : (Request::is('kategori-barang') ? 'Kategori Barang' : 'Barang') }}</span>
+                <span>{{ Request::is('barang') ? 'Data Barang' : (Request::is('kategori-barang') ? 'Kategori Barang' : (Request::is('merk-barang') ? 'Merk' : 'Barang')) }}</span>
             </a>
             <div id="barang" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -62,6 +62,10 @@
                     <a class="collapse-item {{ Request::is('kategori-barang') ? 'active' : '' }}"
                         href="{{ route('kategori-barang.index') }}">
                         <span>Kategori Barang</span>
+                    </a>
+                    <a class="collapse-item {{ Request::is('merk-barang') ? 'active' : '' }}"
+                        href="{{ route('merk-barang.index') }}">
+                        <span>Merk</span>
                     </a>
                 </div>
             </div>
@@ -140,8 +144,8 @@
             </div>
         </li>
         <li class="nav-item {{ Request::is(['prodi', 'jabatan']) ? 'active' : '' }}">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others" aria-expanded="true"
-                aria-controls="others">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#others"
+                aria-expanded="true" aria-controls="others">
                 <i class="fas fa-network-wired"></i>
                 <span>{{ Request::is('prodi') ? 'Prodi' : (Request::is('jabatan') ? 'Jabatan' : 'Others') }}</span>
             </a>

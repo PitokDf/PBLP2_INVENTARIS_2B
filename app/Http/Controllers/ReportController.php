@@ -71,16 +71,21 @@ class ReportController extends Controller
         return $this->printPdf(
             'admin.reports.pdf.report_barang',
             'Laporan Data Barang',
-            Barang::with('kategori')->whereBetween('created_at', [''])->latest()->get(),
+            Barang::with('kategori')->latest()->get(),
             'laporan-barang.pdf'
         );
     }
     public function cetakBarangMasuk()
     {
+        if (request('awal') || request('akhir')) {
+            $data = BarangMasuk::with(['barang', 'pemasok'])->whereBetween('tanggal_masuk', [request('awal'), request('akhir')])->latest('tanggal_masuk')->get();
+        } else {
+            $data = BarangMasuk::with(['barang', 'pemasok'])->latest('tanggal_masuk')->get();
+        }
         return $this->printPdf(
             'admin.reports.pdf.report_barang_masuk',
             'Laporan Barang Masuk',
-            BarangMasuk::with(['barang', 'pemasok'])->latest('tanggal_masuk')->get(),
+            $data,
             'laporan-barang-masuk.pdf'
         );
     }

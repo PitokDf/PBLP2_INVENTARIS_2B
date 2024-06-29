@@ -415,25 +415,25 @@ $(document).ready(function () {
     });
 
     // menangani proses export
-    $('.btnExport').click(function () {
-        // Membuat permintaan AJAX GET
-        $.ajax({
-            type: "GET",
-            url: "exportUser",
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            beforeSend: function () {
-                $('.btnExport').text('sedang memproses..');
-            },
-            success: function () {
-                $('.btnExport').text('Export');
-                alert('file berhasil diexport, silahkan check pada donwloads browser anda.')
-            },
-            error: function (xhr, status, error) {
-                // Menampilkan pesan jika terjadi kesalahan saat mengunduh file
-                alert("Terjadi kesalahan saat mengunduh file: " + error);
-            }
-        });
-    });
+    // $('.btnExport').click(function () {
+    //     // Membuat permintaan AJAX GET
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "exportUser",
+    //         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+    //         beforeSend: function () {
+    //             $('.btnExport').text('sedang memproses..');
+    //         },
+    //         success: function () {
+    //             $('.btnExport').text('Export');
+    //             alert('file berhasil diexport, silahkan check pada donwloads browser anda.')
+    //         },
+    //         error: function (xhr, status, error) {
+    //             // Menampilkan pesan jika terjadi kesalahan saat mengunduh file
+    //             alert("Terjadi kesalahan saat mengunduh file: " + error);
+    //         }
+    //     });
+    // });
 
 
 });

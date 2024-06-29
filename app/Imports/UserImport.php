@@ -21,7 +21,7 @@ class UserImport implements ToModel, WithHeadingRow
             return null;
         }
         return new User([
-            "name" => $row["nama"],
+            "username" => $row["username"],
             "email" => $row["email"],
             "role" => $row["role"],
             "password" => bcrypt($row['password'])

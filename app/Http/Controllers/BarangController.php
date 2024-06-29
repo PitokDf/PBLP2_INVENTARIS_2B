@@ -138,7 +138,7 @@ class BarangController extends Controller
      */
     public function update(UpdateBarangRequest $request, $id)
     {
-        $barang = Barang::findOrFail($id)->first();
+        $barang = Barang::where('id_barang', $id)->first();
         $data = [
             "code_barang" => $request->kode_barang,
             "nama_barang" => $request->nama_barang,
@@ -212,6 +212,14 @@ class BarangController extends Controller
     public function bulkDelete(Request $request)
     {
         $ids = $request->input('ids');
+
+        for ($i = 0; $i < count($ids); $i++) {
+            $barang = Barang::where('id_barang', $ids[$i])->first();
+            if (File::exists($barang->photo)) {
+                File::delete($barang->photo);
+            }
+        }
+
         if (!empty($ids)) {
             Barang::whereIn('id_barang', $ids)->delete();
             return response()->json([

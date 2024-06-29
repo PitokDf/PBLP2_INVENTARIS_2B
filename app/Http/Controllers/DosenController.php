@@ -153,7 +153,7 @@ class DosenController extends Controller
 
         return response()->json([ // mereturn response json jika semua proses berjalan semestinya
             'status' => 200,
-            'message' => 'Berhasil mengupdate data dosen.' . $dosen->photo_dir
+            'message' => 'Berhasil mengupdate data dosen.'
         ]);
     }
 

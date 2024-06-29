@@ -474,12 +474,12 @@ $(document).ready(function () {
                             console.log(response)
                             reloadTable(table_barang);
                             Swal.fire({
-                                title: "Opss..!",
+                                title: "Success",
                                 text: response.message,
-                                icon: "error"
+                                icon: "success"
                             });
 
-                            if (xhr.status === 400) {
+                            if (response.status === 400) {
                                 Swal.fire({
                                     title: "Ops !!",
                                     text: response.message,

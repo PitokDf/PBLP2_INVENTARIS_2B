@@ -20,7 +20,7 @@ class DosenFactory extends Factory
         $jabatan = Jabatan::pluck('id')->toArray();
         return [
             "name" => fake()->name,
-            "nip" => fake()->bothify('################'),
+            "nip" => fake()->bothify('##################'),
             "jabatan_id" => fake()->randomElement($jabatan),
             "phone_number" => fake()->unique()->bothify('08##########'),
             "email" => fake()->unique()->safeEmail

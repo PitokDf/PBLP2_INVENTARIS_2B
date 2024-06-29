@@ -43,7 +43,7 @@
             <p>pelapor : {{ $bugReport->pelapor }}</p>
             <p>email : {{ $bugReport->email }}</p>
         </div>
-        <p>{{ $bugReport->description }}</p>
+        <p>Deskripsi : {{ $bugReport->description }}</p>
     </div>
 </body>
 

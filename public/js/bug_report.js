@@ -5,7 +5,6 @@ $(document).ready(function () {
             url: "/reload-capcha",
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 $('#captcha_area').html(response);
             }
         });
@@ -41,9 +40,15 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             dataType: "json",
+            beforeSend: function () {
+                $('#send_bug_report').text('memproses...');
+            },
             success: function (response) {
-                console.log(response);
                 if (response.status === 200) {
+                    $('#alert-section').html(
+                        `<span class="toast-success-cs">${response.message}</span>`
+                    );
+                    $('#send_bug_report').text('Send');
                     clearErrorMsg();
                     clearInput();
                     $('#modalbugreport').modal('hide');
@@ -51,8 +56,8 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                console.log(xhr);
                 if (xhr.status === 422) {
+                    $('#send_bug_report').text('Send');
                     const errors = xhr.responseJSON.errors;
                     reloadCaptcha();
                     clearErrorMsg();

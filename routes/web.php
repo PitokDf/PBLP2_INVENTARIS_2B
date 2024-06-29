@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\BugReportController;
 use App\Http\Controllers\CommandHelper;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
@@ -44,10 +45,9 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/reset-password', [SessionController::class, 'resetPass'])->middleware('guest')->name('password.update');
     Route::get("register", [SessionController::class, "register"])->name('register');
     Route::post("register", [SessionController::class, "prosesRegister"])->name('register.proses');
-    Route::get('reload-capcha', [SessionController::class, 'reloadCapcha']);
 });
+Route::get('reload-capcha', [SessionController::class, 'reloadCapcha']);
 
-Route::get('activity', [ActivityLogController::class, 'index'])->name('activity');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -118,6 +118,7 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
 
     Route::get('get-barang/{code}', [BarangController::class, "getById"]);
     Route::group(["middleware" => "userAkses:1"], function () {
+        Route::get('activity', [ActivityLogController::class, 'index'])->name('activity');
         Route::get('getEmailDosen/{id}', function ($id) {
             $data = Dosen::find($id);
             if (!$data) {
@@ -219,6 +220,10 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
             ])->where('id_user', Auth::user()->id_user)->latest()->get();
             return view('umum.riwayat_peminjaman')->with('peminjaman', $data);
         });
+    });
+
+    Route::group(['middleware' => ['userAkses:2|3|4|5']], function () {
+        Route::post('report-bug', [BugReportController::class, "store"]);
     });
 
 });

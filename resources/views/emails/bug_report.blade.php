@@ -40,8 +40,8 @@
     <div class="container">
         <h1>Laporan Bug Baru</h1>
         <div class="deskripsi">
-            <p>pelapor : {{ $username }}</p>
-            <p>email : {{ $email }}</p>
+            <p>pelapor : {{ $bugReport->pelapor }}</p>
+            <p>email : {{ $bugReport->email }}</p>
         </div>
         <p>{{ $bugReport->description }}</p>
     </div>

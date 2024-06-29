@@ -81,8 +81,8 @@
                                                         class="fas fa-copy"></i></button>
                                             </td>
                                             <td>{{ $item->nama_barang }}</td>
-                                            <td>{{ $item->kategori->nama_kategori_barang }}</td>
-                                            <td>{{ $item->merek->merk }}</td>
+                                            <td>{{ $item->kategori->nama_kategori_barang ?? 'not found' }}</td>
+                                            <td>{{ $item->merek->merk ?? 'not found' }}</td>
                                             <td>{{ $item->quantity }}</td>
                                         </tr>
                                     @endforeach

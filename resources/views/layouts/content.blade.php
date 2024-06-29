@@ -43,6 +43,54 @@
                             </div>
                         </div>
                     </div>
+
+                    @if (auth()->user()->role != '1')
+                        <div class="bug-btn"><i class="fas fa-bug"></i></div>
+
+                        <div class="modal fade" id="modalbugreport" tabindex="-1" data-bs-backdrop="static"
+                            data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalTitleId">
+                                            Laporkan Masalah Sistem
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Deskripsi</label>
+                                            <textarea name="description" id="description" class="form-control" cols="20" rows="10"
+                                                placeholder="jelaskan bug yang kamu alami"></textarea>
+                                            <small id="desc_error" class="form-text text-danger"></small>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Captcha</label>
+                                            <div id="captcha_area" class="mb-2"></div>
+                                            <input type="number" class="form-control" name="captcha" id="captcha">
+                                            <small id="captcha_error" class="form-text text-danger"></small>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                            id="send_bug_report">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Optional: Place to the bottom of scripts -->
+                        <script>
+                            const myModal = new bootstrap.Modal(
+                                document.getElementById("modalId"),
+                                options,
+                            );
+                        </script>
+                    @endif
                 </div>
                 <!-- /.container-fluid -->
 

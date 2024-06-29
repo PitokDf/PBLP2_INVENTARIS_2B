@@ -17,7 +17,7 @@ class PeminjamanController extends Controller
     public function index()
     {
         $barang = Barang::latest()->where('quantity', '>', '0')->get();
-        $user = User::with(['mahasiswa', 'dosen'])
+        $user = User::with(['mahasiswa', 'dosen', 'dosenTest'])
             ->where(function ($query) {
                 $query->where('role', '3')
                     ->whereNotNull('dosen_id');

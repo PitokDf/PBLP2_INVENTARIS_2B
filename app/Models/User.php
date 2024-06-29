@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function DosenTest()
     {
-        return $this->hasOne(Dosen::class, 'user_id', "id_user");
+        return $this->hasOne(Dosen::class, 'id_dosen', "id_user");
     }
     public function dosen()
     {

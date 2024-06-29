@@ -21,6 +21,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     @yield('content')
+                    <div id="alert-section"></div>
                     <!-- Logout Modal-->
                     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,9 +64,19 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+
     @yield('modal')
 
     @include('layouts.scriptsrc')
+    <script>
+        $(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+            if (jqxhr.status === 401 || jqxhr.status === 419) {
+                $('#alert-section').html(
+                    `<span class="toast-cs">Sesi Anda telah habis, silahkan <a href="/login" style="margin-left: 3px; margin-right: 3px; color:inherit;"> login </a> kembali!.</span>`
+                );
+            }
+        });
+    </script>
 </body>
 
 </html>

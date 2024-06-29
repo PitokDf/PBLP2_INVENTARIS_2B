@@ -25,6 +25,7 @@ class StoreBarangKeluarRequest extends FormRequest
             "barang" => "required|exists:barang,id_barang",
             "quantity" => "required|numeric|min:1",
             "keterangan" => "required",
+            'tgl_keluar' => "required|date",
             'user' => 'required|exists:users,id_user'
         ];
     }
@@ -33,7 +34,7 @@ class StoreBarangKeluarRequest extends FormRequest
     {
         return [
             "barang.required" => "Silahkan pilih barang.",
-            "barang.exists" => "Barang tidak terdaftar.",
+            "barang.exists" => "Barang tidak terdaftar.tgl_masuk",
             "quantity.required" => "Quantity harus diisi.",
             "quantity.numeric" => "Quantity harus numeric.",
             "quantity.min" => "Quantity minimal :min."

@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/dosen/index.js"></script>
+    <script src="/js/dosen/dosen.js"></script>
     <script src="/js/preview.js"></script>
 @endsection
 @section('modal')

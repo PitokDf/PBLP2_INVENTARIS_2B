@@ -13,8 +13,7 @@ use App\Imports\BarangImport;
 use App\Models\Merk;
 use App\Models\Pemasok;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\File;
 
 class BarangController extends Controller
 {
@@ -70,15 +69,15 @@ class BarangController extends Controller
     {
         if ($request->hasFile("foto")) {
             $file = $request->file("foto");
-            $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalName();
-            if ($file->storeAs("public/barang", $filename)) {
+            $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalExtension();
+            if ($file->move(public_path("asset/barang"), $filename)) {
                 $data = [
                     "code_barang" => $request->kode_barang,
                     "nama_barang" => $request->nama_barang,
                     "quantity" => $request->jumlah,
                     "id_kategory" => $request->kategori,
                     "posisi" => $request->posisi,
-                    "photo" => '/storage/barang/' . $filename,
+                    "photo" => 'asset/barang/' . $filename,
                     "merk_id" => $request->merk,
                     "tanggal_masuk" => $request->tanggal_masuk,
                     "supplier_id" => $request->pemasok,
@@ -139,7 +138,7 @@ class BarangController extends Controller
      */
     public function update(UpdateBarangRequest $request, $id)
     {
-        $barang = Barang::findOrFail($id);
+        $barang = Barang::findOrFail($id)->first();
         $data = [
             "code_barang" => $request->kode_barang,
             "nama_barang" => $request->nama_barang,
@@ -152,13 +151,13 @@ class BarangController extends Controller
             "posisi" => $request->posisi
         ];
         if ($request->hasFile("foto")) {
-            if ($barang->photo != "") {
-                Storage::delete('public/barang/' . $barang->photo);
+            if (file_exists($barang->photo)) {
+                unlink($barang->photo);
             }
             $file = $request->file("foto");
-            $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalName();
-            if ($file->storeAs("public/barang/", $filename)) {
-                $data["photo"] = '/storage/barang/' . $filename;
+            $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalExtension();
+            if ($file->move(public_path("asset/barang"), $filename)) {
+                $data["photo"] = 'asset/barang/' . $filename;
             }
         }
 
@@ -192,8 +191,8 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id);
 
-        if ($barang->photo != "") {
-            Storage::delete("public/barang/" . $barang->photo);
+        if (File::exists($barang->photo)) {
+            File::delete($barang->photo);
         }
 
         $barang->delete();

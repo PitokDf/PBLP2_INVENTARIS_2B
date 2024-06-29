@@ -12,7 +12,8 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="mb-3">
-                                <input type="hidden" class="form-control" name="id" id="id" />
+                                <input type="hidden" style="display: none" class="form-control" name="id"
+                                    id="id" />
                                 <label for="name" class="form-label">Nama Dosen</label>
                                 <input type="text" class="form-control" name="name" id="name"
                                     placeholder="exp: Budi Siregar" />
@@ -62,8 +63,8 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label for="file_image" class="form-label">Foto
-                                    <img src="{{ asset('images/download.png') }}" class="img-thumbnail" id="img-preview"
-                                        style="width: 200px; display: none;" alt="">
+                                    <img src="/images/download.png" class="img-thumbnail" id="img-preview"
+                                        style="width: 200px; display: block;" alt="">
                                     <span id="dir_foto_error" class="text-danger"></span>
                                 </label>
                                 <input type="file" class="form-control" onchange="previewImage()" name="dir_foto"

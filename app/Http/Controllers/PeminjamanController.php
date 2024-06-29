@@ -18,18 +18,22 @@ class PeminjamanController extends Controller
     {
         $barang = Barang::latest()->where('quantity', '>', '0')->get();
         $user = User::with(['mahasiswa', 'dosen'])
-            ->where(function ($query) {
-                $query->where('role', '3')
-                    ->whereNotNull('dosen_id');
+        ->whereNotNull('email_verified_at') // Email sudah terverifikasi
+        ->where(function ($query) {
+            $query->where(function ($query) {
+                $query->whereIn('role', ['3', '5'])
+                    ->whereNotNull('dosen_id'); // Role 3 dan 5 dengan dosen_id tidak kosong
             })
             ->orWhere(function ($query) {
                 $query->where('role', '4')
-                    ->whereNotNull('mahasiswa_id');
-            })
-            ->where('email_verified_at', '!=', null)
-            ->orWhereNotIn('role', ['2', '3', '4', '5'])
-            ->where('role', '!=', '1')
-            ->latest()->get();
+                    ->whereNotNull('mahasiswa_id'); // Role 4 dengan mahasiswa_id tidak kosong
+            });
+        })
+        ->whereNotIn('role', ['2', '3', '4'])
+        ->where('role', '!=', '1')
+        ->latest()
+        ->get();
+    
         return view('admin.peminjaman.index')->with(['barangs' => $barang, 'users' => $user]);
     }
 

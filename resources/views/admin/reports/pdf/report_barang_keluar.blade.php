@@ -7,8 +7,8 @@
                 <th>No</th>
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
-                <th>Pemasok</th>
-                <th>Tanggal Masuk</th>
+                <th>Penerima</th>
+                <th>Tanggal Keluar</th>
                 <th>Jumlah</th>
             </tr>
         </thead>
@@ -23,8 +23,8 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->barang->code_barang }}</td>
                     <td>{{ $item->barang->nama_barang }}</td>
-                    <td>{{ $item->pemasok->nama }}</td>
-                    <td>{{ $item->tanggal_masuk }}</td>
+                    <td>{{ $item->user->username }}</td>
+                    <td>{{ $item->tgl_keluar }}</td>
                     <td>{{ $item->quantity }}</td>
                 </tr>
             @endforeach

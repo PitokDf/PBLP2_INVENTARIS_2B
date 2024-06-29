@@ -69,8 +69,8 @@
                     Terdapat peminjaman dengan kode <strong>{{ $item->kode_peminjaman }}</strong> dan barang
                     (<strong>{{ $item->barang->nama_barang . ' - ' . $item->barang->code_barang }}</strong>)
                     batas pengembalian pada: {{ $item->batas_pengembalian }},
-                    {!! $dayRemaining == 0
-                        ? 'Harus dikembalikan hari ini'
+                    {!! $dayRemaining >= 0
+                        ? '<strong>Harus dikembalikan hari ini.</strong>'
                         : ($dayRemaining > 0
                             ? '<strong>Sudah terlambat ' . ceil(abs($dayRemaining)) . ' hari.</strong>'
                             : '<strong>Harus dikembalikan dalam ' . ceil(abs($dayRemaining)) . ' hari lagi.</strong>') !!}

@@ -13,6 +13,11 @@
             </tr>
         </thead>
         <tbody>
+            @if (count($data) == 0)
+                <tr>
+                    <td colspan="6" style="text-align: center;">Data kosong</td>
+                </tr>
+            @endif
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>

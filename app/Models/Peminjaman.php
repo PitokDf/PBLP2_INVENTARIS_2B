@@ -23,7 +23,7 @@ class Peminjaman extends Model
 
     public static function getKodePeminjaman()
     {
-        $lastPeminjaman = self::whereNotNull('kode_peminjaman')->where('status', '!=', false)->latest('updated_at')->first();
+        $lastPeminjaman = self::latest()->whereNotNull('kode_peminjaman')->where('status', '=', 1)->first();
         $nextNumber = 1;
         if ($lastPeminjaman) {
             $lastKode = $lastPeminjaman->kode_peminjaman;

@@ -73,6 +73,7 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::get('report-barang', [ReportController::class, 'cetakBarang'])->name('cetak.barang');
         Route::get('report-peminjaman', [ReportController::class, 'cetakPeminjaman'])->name('cetak.peminjaman');
         Route::get('report-barang-masuk', [ReportController::class, 'cetakBarangMasuk'])->name('cetak.barang.masuk');
+        Route::get('report-barang-keluar', [ReportController::class, 'cetakBarangKeluar'])->name('cetak.barang.masuk');
         Route::get('/laporan-barang', [ReportController::class, 'reportBarang']);
         Route::get('/laporan-barang-masuk', [ReportController::class, 'reportBarangMasuk']);
         Route::get('/laporan-barang-keluar', [ReportController::class, 'reportBarangKeluar']);
@@ -165,6 +166,7 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::get('getAllJabatan', [JabatanController::class, 'getAllData']);
         Route::get('getDataPeminjaman', [PeminjamanController::class, 'getData']);
         Route::get('request-peminjaman', [RequestPeminjaman::class, 'index']);
+        Route::delete('hapus-peminjaman/{id}', [RequestPeminjaman::class, 'destroy']);
         Route::post('setujui-peminjaman', [RequestPeminjaman::class, 'setujui']);
         Route::post('reject-peminjaman', [RequestPeminjaman::class, 'reject']);
         Route::get('getRequestPeminjaman', function () {

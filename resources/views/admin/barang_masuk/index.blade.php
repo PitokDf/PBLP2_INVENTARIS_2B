@@ -78,7 +78,7 @@
                         <span id="penerima_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="tahun" class="form-label">Tahun Masuk</label>
+                        <label for="tahun" class="form-label">Tanggal Masuk</label>
                         <div class="input-group">
                             <select id="tahun" class="form-control">
                                 <option value="">Tahun</option>

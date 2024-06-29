@@ -33,16 +33,16 @@ class ProfileController extends Controller
 
         $user = User::find(auth()->user()->id_user); // mencari user berdasarkan id user yang login
         $rules = []; // membuat variabel rules yang akan menampung rules-rules nantinya
-        $data = []; // membuat vairabel data yang menampung 
-        $fileName = null;
+        $data = []; // membuat vairabel data yang menampung data yang akan dipudate
+        $fileName = null; // variable untuk menyimpana nama file gambar ke databases
         $file = null;
         $cek = false;
 
-        if ($request->hasFile('file_image')) {
-            $rules['file_image'] = 'image|mimes:jpeg,png,jpg|max:2048';
-            $file = $request->file('file_image');
-            $fileName = uniqid() . '_' . time() . '_' . now()->timestamp . '.' . $file->getClientOriginalExtension();
-            $data['avatar'] = $fileName;
+        if ($request->hasFile('file_image')) { // melakukan pengecekan apakah request menyertakan gambar
+            $rules['file_image'] = 'image|mimes:jpeg,png,jpg|max:2048'; // memberi rule untuk request gambar
+            $file = $request->file('file_image'); // 
+            $fileName = uniqid() . '_' . time() . '_' . now()->timestamp . '.' . $file->getClientOriginalExtension(); // membuat nama file yang akan disimpan
+            $data['avatar'] = 'asset/avatar/' . $fileName; // memasukkan gambar ke array data yang akan diupdate
             $cek = true;
         }
 
@@ -52,21 +52,23 @@ class ProfileController extends Controller
         }
 
         $message = [
-            'password.regex' => 'password harus terdiri dari huruf besar, kecil, angka dan karakter !@#$%'
+            'password.regex' => 'password harus terdiri dari huruf besar, kecil, angka dan karakter !@#$%' // message yang dirubah jadi bahasa yang muda dipahami
         ];
 
         // memvalidasi inputan sesuai validasi yang sudah disimpan di variable $rules
         $request->validate($rules, $message);
 
         // menghapus file gambar sebelumnya jika ada
-        if ($user->avatar && $cek) {
-            File::exists(public_path('avatar/' . $user->avatar)) ?
-                File::delete(public_path('avatar/' . $user->avatar)) : '';
-            // unlink('public/avatar/' . $user->avatar);
+        File::exists(public_path('avatar/' . $user->avatar)) && $cek ?
+            File::delete(public_path('avatar/' . $user->avatar)) : '';
+        // unlink('public/avatar/' . $user->avatar);
+
+
+        if ($file !== null) { // melakukan apakah terdapat file
+            $file->move(public_path('asset/avatar/'), $fileName); // menyimpan file gambar ke folder public
+            File::exists($user->avatar) ? File::delete($user->avatar) : ''; // menghapus file sebelumnya jika ada
         }
 
-        // menyimpan file gambar ke folder public
-        $file !== null ? $file->move(public_path('avatar'), $fileName) : '';
         // mengupdate data user
         $user->update($data);
         return response()->json([
@@ -79,7 +81,7 @@ class ProfileController extends Controller
     {
         // menjalankan kode didalamnya jika role 4 atau mahasiswa
         if (auth()->user()->role == '4') {
-            $mahasiswa = auth()->user()->mahasiswa;
+            $mahasiswa = auth()->user()->mahasiswa; // mengambil data mahasiswa dari relasi pada model user
             $cekMahasisChanges =
                 $mahasiswa->nama === $request->namaM &&
                 $mahasiswa->code_prodi === $request->prodi &&

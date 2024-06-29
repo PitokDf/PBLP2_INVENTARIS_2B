@@ -116,4 +116,37 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(document).on('click', '#btnHapus', function () {
+        Swal.fire({
+            title: "Hapus record?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var data = new FormData();
+                // data.append('id', $(this).data('id'));
+                data.append('_method', 'DELETE');
+                AjaxPostIncludeData('/hapus-peminjaman/' + $(this).data('id'), data, function (response) {
+                    response.status == 200 ?
+                        (Swal.fire({
+                            title: "Success",
+                            text: response.message,
+                            icon: "success",
+                            confirmButtonText: "Ok"
+                        }), reloadTable(table_request)) : ''
+                    response.status == 400 ?
+                        Swal.fire({
+                            title: "Ops..",
+                            text: response.message,
+                            icon: "error",
+                            confirmButtonText: "Ok"
+                        }) : ''
+                })
+            }
+        });
+    });
 });

@@ -93,7 +93,7 @@
                 <div class="rainbow-border" style="z-index: 99">
                     <img class="img-profile"
                         src=" {{ auth()->user()->avatar
-                            ? '/avatar/' . auth()->user()->avatar
+                            ? auth()->user()->avatar
                             : 'https://ui-avatars.com/api/?name=' .
                                 (auth()->user()->mahasiswa_id
                                     ? auth()->user()->mahasiswa->nama

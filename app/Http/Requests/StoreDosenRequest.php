@@ -27,7 +27,7 @@ class StoreDosenRequest extends FormRequest
             "jabatan" => ["required", "exists:jabatans,id"],
             "no_telpn" => ["required", 'regex:/^08[0-9]{9,}$/', "unique:dosen,phone_number"],
             "email" => ["required", "email", "unique:dosen,email"],
-            "dir_foto" => 'image|mimes:jpeg,png,jpg|max:2048',
+            "dir_foto" => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 

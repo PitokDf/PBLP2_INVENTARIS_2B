@@ -50,7 +50,7 @@ class PeminjamanUmumController extends Controller
                 'nip' => 'required|numeric|digits:16|unique:dosen,nip',
                 'nama' => 'required',
                 'jabatan' => 'required|exists:jabatans,id',
-                'no_hp' => 'required|unique:dosen,phone_number'
+                'no_hp' => 'required|numeric|unique:dosen,phone_number'
             ]);
 
             $data = [

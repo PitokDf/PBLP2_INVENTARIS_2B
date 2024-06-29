@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\BarangKeluar;
 use App\Models\BarangMasuk;
 use App\Models\Peminjaman;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -23,14 +24,16 @@ class ReportController extends Controller
     }
     public function reportBarangKeluar()
     {
-        $data = Barang::latest()->get();
-        return view("admin.reports.barang")->with("barangs", $data);
+        $data = BarangKeluar::latest()->get();
+        return view("admin.reports.barang-keluar")->with("barangs", $data);
     }
     public function reportPeminjaman()
     {
         $data = Peminjaman::with('barang')->latest()->get();
         return view("admin.reports.peminjaman")->with("peminjamans", $data);
     }
+
+
     public function reportStok()
     {
         $data = Barang::with([
@@ -41,13 +44,13 @@ class ReportController extends Controller
         return view("admin.reports.stok")->with("barangs", $data);
     }
 
-    private function printPdf($view, $header, $data, $fileName)
+    private function printPdf($view, $header, $data, $fileName, $time = null)
     {
         Carbon::setLocale('id');
         $pdf = Pdf::loadView($view, [
             'header' => $header,
             'data' => $data,
-            'time' => Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
+            'time' => $time ?? Carbon::create(date('Y'), date('m'), date('d'))->translatedFormat('l, j F Y'),
             'title' => $header
         ]);
         return $pdf->stream($fileName);
@@ -77,8 +80,10 @@ class ReportController extends Controller
     }
     public function cetakBarangMasuk()
     {
+        $time = null;
         if (request('awal') || request('akhir')) {
             $data = BarangMasuk::with(['barang', 'pemasok'])->whereBetween('tanggal_masuk', [request('awal'), request('akhir')])->latest('tanggal_masuk')->get();
+            $time = 'Dari ' . request('awal') . ' sampai ' . request('akhir');
         } else {
             $data = BarangMasuk::with(['barang', 'pemasok'])->latest('tanggal_masuk')->get();
         }
@@ -86,16 +91,26 @@ class ReportController extends Controller
             'admin.reports.pdf.report_barang_masuk',
             'Laporan Barang Masuk',
             $data,
-            'laporan-barang-masuk.pdf'
+            'laporan-barang-masuk.pdf',
+            $time
         );
     }
     public function cetakBarangKeluar()
     {
+        $time = null;
+        if (request('awal') || request('akhir')) {
+            $data = BarangKeluar::with(['barang', 'user'])->whereBetween('tgl_keluar', [request('awal'), request('akhir')])->latest('tgl_keluar')->get();
+            $time = 'Dari ' . request('awal') . ' sampai ' . request('akhir');
+        } else {
+            $data = BarangKeluar::with(['barang', 'user'])->latest('tgl_keluar')->get();
+        }
+
         return $this->printPdf(
-            'admin.reports.pdf.report_stok',
-            'Laporan Stok Barang',
-            BarangMasuk::with(['barang', 'pemasok'])->latest()->get(),
-            'laporan-barang-keluar.pdf'
+            'admin.reports.pdf.report_barang_keluar',
+            'Laporan Barang Keluar',
+            $data,
+            'laporan-barang-keluar.pdf',
+            $time
         );
     }
     public function cetakPeminjaman()

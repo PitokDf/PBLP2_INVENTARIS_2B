@@ -60,7 +60,7 @@ class BarangKeluarController extends Controller
 
         $data = [
             "barang_id" => $request->barang,
-            "tgl_keluar" => now(),
+            "tgl_keluar" => $request->tgl_keluar,
             "quantity" => $request->quantity,
             "keterangan" => $request->keterangan,
             "user_id" => $request->user

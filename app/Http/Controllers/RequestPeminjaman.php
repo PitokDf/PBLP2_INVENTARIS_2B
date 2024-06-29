@@ -109,4 +109,23 @@ class RequestPeminjaman extends Controller
             'message' => 'Peminjaman ditolak'
         ]);
     }
+
+    public function destroy(string $id)
+    {
+        $peminjaman = Peminjaman::where('id', $id)->first();
+
+
+        if (!$peminjaman) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data not found'
+            ]);
+        }
+
+        $peminjaman->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Record berhasil di hapus.'
+        ]);
+    }
 }

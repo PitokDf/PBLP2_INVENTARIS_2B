@@ -72,6 +72,9 @@ $(document).ready(function () {
         $('#quantity').val('');
         $('#keterangan').val('');
         $('#user').val('');
+        $('#tahun').val('');
+        $('#tanggal').val('');
+        $('#bulan').val('');
     }
 
     $('#simpan').on('click', function () {
@@ -81,6 +84,7 @@ $(document).ready(function () {
         data.append('quantity', $('#quantity').val());
         data.append('keterangan', $('#keterangan').val());
         data.append('user', $('#user').val());
+        data.append('tgl_keluar', $('#tahun').val() + '-' + $('#bulan').val() + '-' + $('#tanggal').val());
 
         $.ajax({
             type: "POST",
@@ -123,6 +127,9 @@ $(document).ready(function () {
                 if (errorMessage.quantity) {
                     $('#quantity_error').text(errorMessage.quantity);
                     $('#quantity').addClass('is-invalid');
+                }
+                if (errorMessage.tgl_keluar) {
+                    $('#tgl_keluar_error').text(errorMessage.tgl_keluar);
                 }
                 if (errorMessage.keterangan) {
                     $('#keterangan_error').text(errorMessage.keterangan);
@@ -203,5 +210,19 @@ $(document).ready(function () {
                 });
             }
         });
+
+    });
+    $('#bulan').change(function () {
+        var month = $(this).val();
+        var daySelect = $('#tanggal');
+        daySelect.empty();
+        daySelect.append('<option value="">Tanggal</option>');
+
+        if (month) {
+            var daysInMonth = new Date($('#tahun').val(), month, 0).getDate();
+            for (var i = 1; i <= daysInMonth; i++) {
+                daySelect.append('<option value="' + i + '">' + i + '</option>');
+            }
+        }
     });
 });

@@ -55,7 +55,6 @@ $(document).ready(function () {
         $('#no_telpn').removeClass('is-invalid');
         $('#email').removeClass('is-invalid');
         $('#dir_foto').removeClass('is-invalid');
-
     }
 
     function clerInput(modal) {
@@ -71,7 +70,6 @@ $(document).ready(function () {
         $('.action').html(icon);
     }
 
-    var server = "http://127.0.0.1:8000/";
     $('#btnCreate').click(function () {
         var modal = "modalDosen";
         $('#img-preview').css('display', 'block');
@@ -86,7 +84,15 @@ $(document).ready(function () {
 
     // proses yang akan menangani proses create data dan mengembalikan error saat terjadi error
     $(document).on('click', '#btnCreateform', function () {
-        var formData = new FormData(document.getElementById('form'));
+        var formData = new FormData();
+        formData.append('name', $('#name').val());
+        formData.append('nip', $('#nip').val());
+        formData.append('jabatan', $('#jabatan').val());
+        formData.append('no_telpn', $('#no_telpn').val());
+        formData.append('email', $('#email').val());
+        if ($('#file_image')[0].files.length > 0) {
+            formData.append('dir_foto', $('#file_image')[0].files[0]);
+        }
         url = "dosen";
         $.ajax({
             type: "POST",
@@ -96,6 +102,7 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
+                console.log(response)
                 if (response.status == 200) {
                     clerInput(modal = "modalDosen");
                     clearErrorMsg();
@@ -160,6 +167,7 @@ $(document).ready(function () {
                 $('#email').val(response.data.email);
                 $('#img-preview').css('display', 'block');
                 if (response.data.photo_dir) {
+                    console.log(response.data.photo_dir);
                     $('#img-preview').attr('src', "storage/dosen/" + response.data.photo_dir);
                 }
             },
@@ -184,7 +192,9 @@ $(document).ready(function () {
         formData.append('jabatan', $('#jabatan').val());
         formData.append('no_telpn', $('#no_telpn').val());
         formData.append('email', $('#email').val());
-        formData.append('dir_foto', $('#file_image')[0].files[0]);
+        if ($('#file_image')[0].files.length > 0) {
+            formData.append('dir_foto', $('#file_image')[0].files[0]);
+        }
         var id = $('#id').val();
         url = "dosen/" + id;
 

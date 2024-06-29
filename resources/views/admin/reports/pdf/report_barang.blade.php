@@ -23,7 +23,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->code_barang }}</td>
                     <td>{{ $item->nama_barang }}</td>
-                    <td>{{ $item->kategori->nama_kategori_barang }}</td>
+                    <td>{!! $item->kategori->nama_kategori_barang ?? '<strong style="color:red;">not found</strong>' !!}</td>
                     <td class="{{ $item->quantity > 0 ? '' : 'bg-danger text-white' }}">{{ $item->quantity }}</td>
                     <td>{{ $item->posisi }}</td>
                 </tr>

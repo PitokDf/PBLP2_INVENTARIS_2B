@@ -28,7 +28,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->code_barang }}</td>
                     <td>{{ $item->nama_barang }}</td>
-                    <td>{{ $item->kategori->nama_kategori_barang }}</td>
+                    <td>{!! $item->kategori->nama_kategori_barang ?? '<strong style="color: red;">not found</strong>' !!}
                     <td>
                         {{ $item->quantity + $item->peminjaman->sum('jumlah') }}
                     </td>

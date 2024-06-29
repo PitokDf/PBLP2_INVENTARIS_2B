@@ -19,20 +19,24 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _row, item) {
-                    return item.barang.nama_barang
+                    return item.barang ? item.barang.nama_barang : '<strong style="color:red;">not found</strong>'
                 }, "orderable": true
             },
             {
                 "data": null,
                 "render": function (_data, _row, item) {
-                    if (item.user.role == 4) {
-                        return item.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>'
-                    } else if (item.user.role == 3) {
-                        return item.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>'
-                    } else if (item.user.role == 5) {
-                        return item.user.dosen.name + ' <span class="badge text-bg-primary">Staf</span>'
+                    if (item.user) {
+                        if (item.user.role == 4) {
+                            return item.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>'
+                        } else if (item.user.role == 3) {
+                            return item.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>'
+                        } else if (item.user.role == 5) {
+                            return item.user.dosen.name + ' <span class="badge text-bg-primary">Staf</span>'
+                        } else {
+                            return item.user.username + ' <span class="badge text-bg-primary">Staf</span>';
+                        }
                     } else {
-                        return item.user.username + ' <span class="badge text-bg-primary">Staf</span>';
+                        return `<strong style="color:red;">not found</strong>`;
                     }
                 },
                 "orderable": true
@@ -103,10 +107,10 @@ $(document).ready(function () {
                 console.log(response);
                 const data = response.data;
                 $('#id').val(data.id);
-                $('#nama_barangK').val(data.barang.nama_barang);
-                $('#kode_barangK').val(data.barang.code_barang);
+                $('#nama_barangK').val(data.barang ? data.barang.nama_barang : 'not found');
+                $('#kode_barangK').val(data.barang ? data.barang.code_barang : 'not found');
                 $('#jumlahK').val(data.jumlah);
-                $('#peminjamK').val(data.user.username);
+                $('#peminjamK').val(data.user ? data.user.username : 'not found');
                 $('#tglpeminjamanK').val(dateCutomFormat(data.tgl_peminjaman));
                 $('#bataspengembalianK').val(dateCutomFormat(data.batas_pengembalian));
                 $('#reasonK').val(data.keterangan);
@@ -174,9 +178,9 @@ $(document).ready(function () {
                 if (response.status === 200) {
                     const data = response.data;
                     $('#id_peminjaman').text(data.kode_peminjaman);
-                    $('#namaBarang').text(data.barang.nama_barang);
-                    $('#peminjam').html(data.user.role == '5' ? data.user.dosen.name + ' <span class="badge text-bg-primary">Staf</span>' : (data.user.mahasiswa ? data.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>' : (data.user.dosen ? data.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>' : data.user.username + ' <span class="badge text-bg-primary">Staf</span>')));
-                    $('#kodeBarang').text(data.barang.code_barang);
+                    $('#namaBarang').text(data.barang ? data.barang.nama_barang : '<strong style="color:red;">not found</strong>');
+                    $('#peminjam').html(data.user ? (data.user.role == '5' ? data.user.dosen.name + ' <span class="badge text-bg-primary">Staf</span>' : (data.user.mahasiswa ? data.user.mahasiswa.nama + ' <span class="badge text-bg-primary">Mahasiswa</span>' : (data.user.dosen ? data.user.dosen.name + ' <span class="badge text-bg-primary">Dosen</span>' : data.user.username + ' <span class="badge text-bg-primary">Staf</span>'))) : '<strong style="color:red;">not found</strong>');
+                    $('#kodeBarang').html(data.barang ? data.barang.code_barang : '<strong style="color:red;">not found</strong>');
                     $('#banyakPinjam').text(data.jumlah);
                     let denda = calculateDenda(data.batas_pengembalian, getCurrentDate(), 1500);
                     $('#denda').text(data.denda == 0 ? formatRupiah(denda) : formatRupiah(data.denda));

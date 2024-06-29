@@ -190,7 +190,7 @@ $(document).ready(function () {
                         if (response.status === 200) {
                             $.each(response.data, function (indexInArray, data) {
                                 $('#nip').append(`
-                                <option value="${data.id_dosen}">${data.nip} - ${data.name} - ${data.jabatan.jabatan}</option>
+                                <option value="${data.id_dosen}">${data.nip} - ${data.name} - ${data.jabatan ? data.jabatan.jabatan : 'not found'}</option>
                                 `);
                                 $('#nip').selectpicker('refresh');
                             });

@@ -9,7 +9,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "getAllDataDosen", // Ganti dengan URL endpoint Anda
+            "url": "getAllDataDosen",
             "type": "GET"
         },
         "columns": [
@@ -24,7 +24,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return row.jabatan.jabatan
+                    return row.jabatan ? row.jabatan.jabatan : '<strong style="color:red;">not found</strong>';
                 },
                 "orderable": true
             },

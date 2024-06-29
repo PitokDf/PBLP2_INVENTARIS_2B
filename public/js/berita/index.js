@@ -50,7 +50,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return row.kategori.nama_kategori
+                    return row.kategori ? row.kategori.nama_kategori : '<strong style="color:red;">not found</strong>';
                 },
                 "orderable": true
             },

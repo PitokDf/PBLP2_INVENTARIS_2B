@@ -62,9 +62,9 @@
                                     @foreach ($barangs as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->barang->code_barang }}</td>
-                                            <td>{{ $item->barang->nama_barang }}</td>
-                                            <td>{{ $item->pemasok->nama }}</td>
+                                            <td>{!! $item->barang->code_barang ?? '<strong style="color:red;">not found</strong>' !!}</td>
+                                            <td>{!! $item->barang->nama_barang ?? '<strong style="color:red;">not found</strong>' !!}</td>
+                                            <td>{!! $item->pemasok->nama ?? '<strong style="color:red;">not found</strong>' !!}</td>
                                             <td>{{ $item->tanggal_masuk }}</td>
                                             <td>{{ $item->quantity }}</td>
                                         </tr>

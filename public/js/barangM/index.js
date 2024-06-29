@@ -32,14 +32,14 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return data.barang.nama_barang
+                    return data.barang ? data.barang.nama_barang : '<strong style="color:red;">not found</strong>';
                 },
                 "orderable": true
             },
             {
                 "data": null,
                 "render": function (_row, _type, data) {
-                    return data.pemasok.nama
+                    return data.pemasok ? data.pemasok.nama : '<strong style="color:red;">not found</strong>';
                 },
                 "orderable": true
             },

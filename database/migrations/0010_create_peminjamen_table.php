@@ -13,10 +13,10 @@ return new class extends Migration {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
             $table->string('kode_peminjaman')->nullable()->unique();
-            $table->unsignedBigInteger('id_barang');
-            $table->foreign('id_barang')->references('id_barang')->on('barang');
-            $table->uuid('id_user');
-            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->unsignedBigInteger('id_barang')->nullable();
+            $table->foreign('id_barang')->references('id_barang')->on('barang')->nullOnDelete();
+            $table->uuid('id_user')->nullable();
+            $table->foreign('id_user')->references('id_user')->on('users')->nullOnDelete();
             $table->date('tgl_peminjaman');
             $table->date('batas_pengembalian');
             $table->date('tgl_pengembalian')->nullable();

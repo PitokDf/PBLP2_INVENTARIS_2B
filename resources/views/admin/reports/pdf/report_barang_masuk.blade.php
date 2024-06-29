@@ -21,9 +21,9 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->barang->code_barang }}</td>
-                    <td>{{ $item->barang->nama_barang }}</td>
-                    <td>{{ $item->pemasok->nama }}</td>
+                    <td>{{ $item->barang->code_barang ?? 'not found' }}</td>
+                    <td>{{ $item->barang->nama_barang ?? 'not found' }}</td>
+                    <td>{{ $item->pemasok->nama ?? 'not found' }}</td>
                     <td>{{ $item->tanggal_masuk }}</td>
                     <td>{{ $item->quantity }}</td>
                 </tr>

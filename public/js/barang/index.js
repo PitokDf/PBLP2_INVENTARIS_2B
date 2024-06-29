@@ -53,14 +53,14 @@ $(document).ready(function () {
             {
                 "data": null,
                 render: function (_data, _type, row) {
-                    return row.kategori.nama_kategori_barang
+                    return row.kategori ? row.kategori.nama_kategori_barang : '<strong style="color:red;">not found</strong>';
                 },
                 "orderable": true
             },
             {
                 "data": null,
                 "render": function (_data, _type, row) {
-                    return row.merek.merk
+                    return row.merek ? row.merek.merk : '<strong style="color:red;">not found</strong>';
                 }, "orderable": true
             },
             { "data": "quantity", "orderable": true },
@@ -515,18 +515,18 @@ $(document).ready(function () {
     $(document).on('click', '.btnDetail', function () {
         $('#detailBarang').modal('show');
         AjaxGetData('/barang/' + $(this).attr('id'), function (response) {
-            console.log(response);
             if (response.status === 200) {
-                $('#txt_code_barang').text(response.data.code_barang);
-                $('#txt_nama_barang').text(response.data.nama_barang);
-                $('#txt_kategori').text(response.data.kategori.nama_kategori_barang);
-                $('#photo').attr('src', response.data.photo);
-                $('#txt_merek').text(response.data.merek.merk);
-                $('#txt_pemasok').text(response.data.pemasok.nama);
-                $('#txt_tgl_masuk').text(dateCutomFormat(response.data.tanggal_masuk));
-                $('#txt_jumlah').text(response.data.quantity);
-                $('#txt_posisi').text(response.data.posisi);
-                $('#txt_deskripsi').text(response.data.deskripsi);
+                const data = response.data;
+                $('#txt_code_barang').text(data.code_barang);
+                $('#txt_nama_barang').text(data.nama_barang);
+                $('#txt_kategori').html(data.kategori ? data.kategori.nama_kategori_barang : '<strong style="color:red;">not found</strong>');
+                $('#photo').attr('src', data.photo);
+                $('#txt_merek').html(data.merek ? data.merek.merk : '<strong style="color:red;">not found</strong>');
+                $('#txt_pemasok').html(data.pemasok ? data.pemasok.nama : '<strong style="color:red;">not found</strong>');
+                $('#txt_tgl_masuk').text(dateCutomFormat(data.tanggal_masuk));
+                $('#txt_jumlah').text(data.quantity);
+                $('#txt_posisi').text(data.posisi);
+                $('#txt_deskripsi').text(data.deskripsi);
             }
         });
     });

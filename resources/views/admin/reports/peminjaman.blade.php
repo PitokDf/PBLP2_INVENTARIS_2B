@@ -49,8 +49,8 @@
                                     @foreach ($peminjamans as $item)
                                         <tr>
                                             <td>{{ $item->kode_peminjaman }}</td>
-                                            <td>{{ $item->barang->code_barang }}</td>
-                                            <td>{{ $item->barang->nama_barang }}</td>
+                                            <td>{!! $item->barang->code_barang ?? '<strong style="color:red;">not found</strong>' !!}</td>
+                                            <td>{!! $item->barang->nama_barang ?? '<strong style="color:red;">not found</strong>' !!}</td>
                                             <td>{{ $item->jumlah }}</td>
                                             <td
                                                 class="{{ $item->tgl_pengembalian ? 'text-success text-bold' : 'text-danger text-bold' }}">

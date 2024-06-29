@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('barang_masuks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('barang_id');
-            $table->foreign('barang_id')->references('id_barang')->on('barang');
-            $table->foreignId('pemasok_id')->constrained('pemasoks');
+            $table->unsignedBigInteger('barang_id')->nullable();
+            $table->foreign('barang_id')->references('id_barang')->on('barang')->nullOnDelete();
+            $table->foreignId('pemasok_id')->nullable()->constrained('pemasoks')->nullOnDelete();
             $table->integer('quantity');
             $table->string('penerima');
             $table->date('tanggal_masuk');

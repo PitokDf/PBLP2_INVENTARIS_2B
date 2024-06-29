@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::create('barang_keluars', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('barang_id');
-            $table->foreign('barang_id')->references('id_barang')->on('barang');
-            $table->uuid('user_id');
-            $table->foreign('user_id')->references('id_user')->on('users');
+            $table->unsignedBigInteger('barang_id')->nullable();
+            $table->foreign('barang_id')->references('id_barang')->on('barang')->nullOnDelete();
+            $table->uuid('user_id')->nullable();
+            $table->foreign('user_id')->references('id_user')->on('users')->nullOnDelete();
             $table->date('tgl_keluar');
             $table->integer('quantity')->default(1);
             $table->string('keterangan');

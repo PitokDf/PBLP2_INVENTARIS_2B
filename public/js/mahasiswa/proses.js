@@ -21,7 +21,10 @@ $(document).ready(function () {
             },
             { "data": "nama", "orderable": true },
             {
-                "data": "code_prodi", "orderable": true
+                "data": null,
+                "render": function (data) {
+                    return data.code_prodi ?? '<strong style="color:red;">not found</strong>';
+                }, "orderable": true
             },
             {
                 "data": null,
@@ -234,7 +237,7 @@ $(document).ready(function () {
                     var data = response.data[0];
                     console.log(data);
                     $('.nim').text(data.nim);
-                    $('.prodi').text(data.prodi.nama_prodi);
+                    $('.prodi').html(data.prodi ? data.prodi.nama_prodi : '<strong style="color:red;">not found</strong>');
                     $('.angkatan').text(data.angkatan);
                     $('.nama').text(data.nama);
                     $('.ipk').text(data.ipk);

@@ -21,10 +21,10 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $item->kode_peminjaman }}</td>
-                    <td>{{ $item->user->mahasiswa ? $item->user->mahasiswa->nama : ($item->user->dosen ? $item->user->dosen->name : $item->user->username . ' - S') }}
+                    <td>{{ $item->user ? ($item->user->mahasiswa ? $item->user->mahasiswa->nama : ($item->user->dosen ? $item->user->dosen->name : $item->user->username . ' - S')) : 'not found' }}
                     </td>
-                    <td>{{ $item->barang->code_barang }}</td>
-                    <td>{{ $item->barang->nama_barang }}</td>
+                    <td>{{ $item->barang->code_barang ?? 'not found' }}</td>
+                    <td>{{ $item->barang->nama_barang ?? 'not found' }}</td>
                     <td>{{ $item->jumlah }}</td>
                     <td>{{ $item->tgl_pengembalian ? 'Sudah Dikembalikan' : 'Belum Dikembalikan' }}</td>
                 </tr>

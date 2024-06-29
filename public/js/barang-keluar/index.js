@@ -26,14 +26,14 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return data.barang.nama_barang;
+                    return data.barang ? data.barang.nama_barang : '<strong style="color:red;">not found</strong>';
                 },
                 "orderable": true
             },
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return data.user.username;
+                    return data.user ? data.user.username : '<strong style="color:red;">not found</strong>';
                 },
                 "orderable": true
             },
@@ -154,8 +154,8 @@ $(document).ready(function () {
                 console.log(response)
                 if (response.status == 200) {
                     const data = response.data;
-                    $('#txt_kode_barang').text(data.barang.code_barang);
-                    $('#txt_namaBarang').text(data.barang.nama_barang);
+                    $('#txt_kode_barang').text(data.barang ? data.barang.code_barang : '<strong style="color:red;">not found</strong>');
+                    $('#txt_namaBarang').text(data.barang ? data.barang.nama_barang : '<strong style="color:red;">not found</strong>');
                     $('#txt_quantity').text(data.quantity);
                     $('#txt_tgl_keluar').text(dateCutomFormat(data.tgl_keluar));
                     $('#txt_keterangan').text(data.keterangan);

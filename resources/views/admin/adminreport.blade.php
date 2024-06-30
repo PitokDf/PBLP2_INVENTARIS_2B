@@ -18,11 +18,11 @@
 
                     {{-- admin bug report --}}
 
-                    <div class="card mb-4 shadow-lg">
+                    <div class="card mb-4 ">
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="basic-addon3">Bug 1</span>
-                            <div class="form-control flex-grow-1">
-                                <label for="basic-url">siky@gmail.com <span class="badge rounded-pill bg-primary text-white">Mahasiswa</span></label>
+                            <div class="form-control flex-grow-1 ">
+                                <label for="basic-url">siky@gmail.com <span class="badge rounded-pill bg-primary text-white d-none d-md-inline">Mahasiswa</span></label>
                             </div>
                             <div class="form-control text-end">
                                 <label for="basic-url" style="color: #b4b4b4">Solved <i class="far fa-check-circle" style="color: #04ff00;"></i></label>
@@ -37,11 +37,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-4 shadow-lg">
+                    <div class="card mb-4">
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="basic-addon3">Bug 2</span>
                             <div class="form-control flex-grow-1">
-                                <label for="basic-url">siky@gmail.com <span class="badge rounded-pill bg-primary text-white">Mahasiswa</span></label>
+                                <label for="basic-url">siky@gmail.com <span class="badge rounded-pill bg-primary text-white d-none d-md-inline">Mahasiswa</span></label>
                             </div>
                             <div class="form-control text-end">
                                 <label for="basic-url" style="color: #b4b4b4">Unsolved <i class="far fa-times-circle" style="color: #eb0000;"></i></label>
@@ -56,11 +56,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-4 shadow-lg">
+                    <div class="card mb-4">
                         <div class="input-group mb-2">
                             <span class="input-group-text" id="basic-addon3">Bug 3</span>
                             <div class="form-control flex-grow-1">
-                                <label for="basic-url">siky@gmail.com <span class="badge rounded-pill bg-primary text-white">Mahasiswa</span></label>
+                                <label for="basic-url">siky@gmail.com <span class="badge rounded-pill bg-primary text-white d-none d-md-inline">Mahasiswa</span></label>
                             </div>
                             <div class="form-control text-end">
                                 <label for="basic-url" style="color: #b4b4b4">Unsolved <i class="far fa-times-circle" style="color: #eb0000;"></i></label>

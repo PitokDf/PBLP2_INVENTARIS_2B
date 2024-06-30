@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
@@ -119,6 +120,7 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
     Route::get('get-barang/{code}', [BarangController::class, "getById"]);
     Route::group(["middleware" => "userAkses:1"], function () {
         Route::get('activity', [ActivityLogController::class, 'index'])->name('activity');
+        Route::get('/admin-report', [AdminReportController::class, 'index']);
         Route::get('getEmailDosen/{id}', function ($id) {
             $data = Dosen::find($id);
             if (!$data) {

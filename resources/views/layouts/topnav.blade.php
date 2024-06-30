@@ -114,7 +114,7 @@
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Activity Log
                     </a>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/admin-report">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Bug Reports
                     </a>

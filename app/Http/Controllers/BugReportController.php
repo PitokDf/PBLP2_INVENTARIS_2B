@@ -64,7 +64,7 @@ class BugReportController extends Controller
         foreach ($adminEmail as $admin) {
             Mail::to($admin)->send(new BugReportMail($bugReport));
         }
-        return response()->json(['status' => 200, 'message' => 'Berhasil melaporakan bug.']);
+        return response()->json(['status' => 200, 'message' => 'Berhasil melaporkan bug.']);
     }
 
     /**

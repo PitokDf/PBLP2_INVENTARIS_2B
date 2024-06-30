@@ -1,10 +1,6 @@
 @extends('layouts.content')
 
-@section('scriptPages')
-    <script src="/js/request/peminjaman.js"></script>
-@endsection
-@section('modal')
-@endsection
+
 
 @section('title', 'Admin Bug Report')
 

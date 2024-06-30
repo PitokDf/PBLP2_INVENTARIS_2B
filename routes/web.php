@@ -185,6 +185,9 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::get('/getKodePeminjaman', function () {
             return Peminjaman::getKodePeminjaman();
         });
+        Route::get('get-data-report-bug', [BugReportController::class, "getAllData"]);
+        Route::delete('report-bug/{id}', [BugReportController::class, "destroy"]);
+        Route::put('report-bug/{id}', [BugReportController::class, "update"]);
     });
 
     Route::group(["middleware" => ["userAkses:3|4|5"]], function () {

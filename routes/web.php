@@ -67,6 +67,7 @@ Route::get('topThreeBarang', [DashboardController::class, 'getTopThreeBarang']);
 
 Route::get('editData/{id}', [UsersController::class, "edit"]);
 Route::middleware(['auth.withMessage', 'verified'])->group(function () {
+    Route::get('getAllDataBarang', [BarangController::class, "getData"]);
     Route::group(["middleware" => "userAkses:1|2"], function () {
         Route::resource('/', DashboardController::class);
         Route::get('report-stok', [ReportController::class, 'cetakStok'])->name('cetak.pdf');
@@ -150,7 +151,6 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::get('barangs/contoh/file', function () {
             return response()->download(public_path('asset/barang/Barangs.csv'), 'exp-import-barang.csv');
         })->name('download.barang');
-        Route::get('getAllDataBarang', [BarangController::class, "getData"]);
         Route::get('getAllMerk', [MerkController::class, "getData"]);
         Route::resource('merk-barang', MerkController::class);
         Route::resource("mahasiswa", MahasiswasController::class);
@@ -215,11 +215,12 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
             return view('umum.barang')->with('barang', $data);
         });
         Route::get('/riwayat-peminjaman', function () {
-            $data = Peminjaman::with([
-                'user',
-                'barang'
-            ])->where('id_user', Auth::user()->id_user)->latest()->get();
+            $data = Peminjaman::with(['user', 'barang'])->where('id_user', Auth::user()->id_user)->latest()->get();
             return view('umum.riwayat_peminjaman')->with('peminjaman', $data);
+        });
+        Route::get('/get-riwayat-peminjaman', function () {
+            $data = Peminjaman::with(['user', 'barang'])->where('id_user', Auth::user()->id_user)->latest()->get();
+            return response()->json(['data' => $data]);
         });
     });
 

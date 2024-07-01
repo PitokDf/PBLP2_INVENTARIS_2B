@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Prodi extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    protected $guarded = [];
     public $primaryKey = "code_prodi";
     public $keyType = 'string';
     public $incrementing = false;

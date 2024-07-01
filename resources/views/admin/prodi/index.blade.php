@@ -16,13 +16,13 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h5 class="m-0 font-weight-bold text-secondary">Data Prodi</h5>
                     <div>
-                        <button type="button" class="btn btn-sm btn-light btn-refresh" data-toggle="modal">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
                         <a href="" class="btn btn-sm btn-success" data-toggle="modal" id="btnCreate">
                             <i class="fas fa-solid fa-plus"></i>
                             Add
                         </a>
+                        <button type="button" class="btn btn-sm btn-light" id="btn_refresh" data-table="tableProdi">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
                     </div>
                 </div>
                 <!-- Card Body -->

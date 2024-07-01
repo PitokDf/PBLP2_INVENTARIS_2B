@@ -16,6 +16,9 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h5 class="m-0 font-weight-bold text-secondary">Request Peminjaman</h5>
+                    <button type="button" class="btn btn-sm btn-light" id="btn_refresh" data-table="table_request">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">

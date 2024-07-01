@@ -1,5 +1,62 @@
 $(document).ready(function () {
-    $('#tablebarang').DataTable();
+    $('#tablebarang').DataTable({
+        "processing": true,
+        "paging": true,
+        "searching": true,
+        "responsive": true,
+        "language": {
+            "search": "cari"
+        },
+        "ajax": {
+            "url": "/get-riwayat-peminjaman",
+            "type": "GET"
+        },
+        "columns": [{
+            "data": null,
+            "render": function (_data, _type, _row, meta) {
+                return meta.row + 1;
+            }
+        },
+        {
+            "data": null,
+            "render": function (_data, _type, _row, meta) {
+                return _data.kode_peminjaman ?? '~';
+            }
+        },
+        {
+            "data": null,
+            "render": function (_data, _type, _row, meta) {
+                return _data.barang.nama_barang ?? '~';
+            }
+        },
+        {
+            "data": null,
+            "render": function (_data, _type, _row, meta) {
+                return dateCutomFormat(_data.tgl_peminjaman) ?? '~';
+            }
+        },
+        {
+            "data": null,
+            "render": function (_data, _type, _row, meta) {
+                return dateCutomFormat(_data.batas_pengembalian) ?? '~';
+            }
+        },
+        {
+            "data": null,
+            "render": function (_data, _type, _row, meta) {
+                return _data.status == 1 ? (_data.tgl_pengembalian ? `<span class="badge text-bg-success">Sudah dikembalikan</span>` : `<span class="badge text-bg-info">Belum dikembalikan</span>`) : (_data.status == 2 ? `<span class="badge text-bg-danger"><i class="fas fa-ban"></i> Request ditolak</span>` : `<span class="badge text-bg-warning"><i class="fas fa-clock"></i> Pending Request</span>`);
+            }
+        },
+        {
+            "data": null,
+            "render": function (_data, _type, _row, meta) {
+                return `<button class="btn btn-sm btn-info" data-id="${_data.id}" id="btnDetail">
+                            <i class="fas fa-info-circle"></i>
+                        </button>`;
+            }
+        },
+        ]
+    });
 
     $(document).on('click', '#btnDetail', function () {
         // alert($(this).data('id'));

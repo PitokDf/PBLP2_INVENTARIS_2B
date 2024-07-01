@@ -22,6 +22,9 @@
                             <i class="fas fa-solid fa-plus"></i>
                             Add
                         </a>
+                        <button type="button" class="btn btn-sm btn-light" id="btn_refresh" data-table="table_peminjaman">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
                     </div>
                 </div>
                 <!-- Card Body -->

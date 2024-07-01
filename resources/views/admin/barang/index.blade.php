@@ -37,6 +37,9 @@
                             <i class="fas fa-solid fa-trash"></i>
                             Delete
                         </button>
+                        <button type="button" class="btn btn-sm btn-light" id="btn_refresh" data-table="table_barang">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
                     </div>
                 </div>
                 <!-- Card Body -->

@@ -57,6 +57,7 @@ $(document).ready(function () {
         if ($('.action').attr('id') != 'btnCreateForm') {
             clearErrorMsg();
             clerInput();
+            $('#kode').attr('readonly', false);
         }
         showModal(modal = "modalProdi", title = "Add Prodi", form = "btnCreateForm", icon = "<i class='fas fa-save'></i> Simpan");
     });
@@ -118,6 +119,7 @@ $(document).ready(function () {
                     const data = response.data;
                     $('#id').val(data[0].code_prodi);
                     $('#kode').val(data[0].code_prodi);
+                    $('#kode').attr('readonly', true);
                     $('#nama_prodi').val(data[0].nama_prodi);
                 }
             },
@@ -141,6 +143,7 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
+                console.log(response)
                 clearErrorMsg();
                 clerInput();
                 reloadTable(tableProdi);

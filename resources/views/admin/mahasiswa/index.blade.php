@@ -32,6 +32,9 @@
                             <i class="fas fa-solid fa-file-import"></i>
                             Import
                         </a>
+                        <button type="button" class="btn btn-sm btn-light" id="btn_refresh" data-table="table_mahasiswa">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
                     </div>
                 </div>
                 <!-- Card Body -->

@@ -54,8 +54,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="mb-3">
@@ -94,10 +92,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
                     <div class="divider"></div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-sm btn-primary" id="kembalikan">Kembalikan</button>

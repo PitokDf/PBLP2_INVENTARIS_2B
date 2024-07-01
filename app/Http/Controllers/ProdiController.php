@@ -6,6 +6,7 @@ use App\Models\ActivityLog;
 use App\Models\Prodi;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProdiController extends Controller
 {
@@ -70,7 +71,7 @@ class ProdiController extends Controller
      */
     public function edit(string $id)
     {
-        $prodi = Prodi::findOrFail($id)->get([
+        $prodi = Prodi::where('code_prodi', $id)->get([
             'code_prodi',
             'nama_prodi'
         ]);
@@ -86,15 +87,16 @@ class ProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $prodi = Prodi::where('code_prodi', $id)->first();
         $validator = Validator::make($request->all(), [
-            'nama' => 'required',
+            'nama' => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        Prodi::where('code_prodi', $request->kode)->update([
+        $prodi->update([
             'nama_prodi' => $request->nama
         ]);
 

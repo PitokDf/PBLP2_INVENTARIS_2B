@@ -6,24 +6,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#tablebarang').DataTable();
-            $('.detailBtn').on('click', function() {
-                $('#detailBarang').modal('show')
-                $.ajax({
-                    type: "GET",
-                    url: "/detail-barang/" + $(this).data('id'),
-                    dataType: "json",
-                    success: function(response) {
-                        const data = response.data;
-                        $('#_barang').text(
-                            `${data.nama_barang} (${data.code_barang})`
-                        );
-                        console.log(response);
+            $('#tablebarang').DataTable({
+                "processing": true,
+                "paging": true,
+                "searching": true,
+                "responsive": true,
+                "language": {
+                    "search": "cari"
+                },
+                "ajax": {
+                    "url": "getAllDataBarang", // Ganti dengan URL endpoint Anda
+                    "type": "GET"
+                },
+                "columns": [{
+                        "data": null,
+                        "render": function(_data, _type, _row, meta) {
+                            return meta.row + 1; // Nomor urut otomatis berdasarkan posisi baris
+                        },
+                        "orderable": false
                     },
-                    error: function(xhr) {
-                        console.log(xhr)
-                    }
-                });
+                    {
+                        "data": null,
+                        "render": function(data) {
+                            return `<span class="code-barang">${data.code_barang}</span> 
+                            <button class="btn btn-sm btn-secondary copyBtn"data-code="${data.code_barang}">
+                                <i class="fas fa-copy"></i>
+                            </button>`;
+                        },
+                        "orderable": true
+                    },
+                    {
+                        "data": "nama_barang",
+                        "orderable": true
+                    },
+                    {
+                        "data": null,
+                        render: function(_data, _type, row) {
+                            return row.kategori ? row.kategori.nama_kategori_barang :
+                                '<strong style="color:red;">not found</strong>';
+                        },
+                        "orderable": true
+                    },
+                    {
+                        "data": null,
+                        "render": function(_data, _type, row) {
+                            return row.merek ? row.merek.merk :
+                                '<strong style="color:red;">not found</strong>';
+                        },
+                        "orderable": true
+                    },
+                    {
+                        "data": "quantity",
+                        "orderable": true
+                    },
+                ]
             });
             var clipboard = new ClipboardJS('.copyBtn', {
                 text: function(trigger) {
@@ -32,7 +68,7 @@
             });
 
             clipboard.on('success', function(e) {
-                alert('Kode barang berhasil disalin: ' + e.text);
+                alert('Kode barang berhasil disalin');
             });
 
             clipboard.on('error', function(e) {
@@ -49,7 +85,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h5 class="m-0 font-weight-bold text-secondary">Daftar Barang Tersedia</h5>
                     <div>
-                        <button type="button" class="btn btn-sm btn-light btn-refresh" data-toggle="modal">
+                        <button type="button" class="btn btn-sm btn-light" id="btn_refresh" data-table="tablebarang">
                             <i class="fas fa-sync-alt"></i>
                         </button>
                     </div>
@@ -71,7 +107,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($barang as $item)
+                                    {{-- @foreach ($barang as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
@@ -85,7 +121,7 @@
                                             <td>{{ $item->merek->merk ?? 'not found' }}</td>
                                             <td>{{ $item->quantity }}</td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div>

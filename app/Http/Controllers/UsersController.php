@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
+use App\Models\Mahasiswas;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
@@ -179,6 +180,17 @@ class UsersController extends Controller
                 'message' => 'Tidak dapat menghapus diri sendiri.'
             ]);
         }
+    }
+
+    public function unlinkDosen(string $nip)
+    {
+        Dosen::where('nip', $nip)->first()->user()->update(['dosen_id' => null]);
+        return response()->json(['status' => 200]);
+    }
+    public function unlinkMahasiswa(string $nim)
+    {
+        Mahasiswas::where('nim', $nim)->first()->user()->update(['mahasiswa_id' => null]);
+        return response()->json(['status' => 200]);
     }
 
     public function import()

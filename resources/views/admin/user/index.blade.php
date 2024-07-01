@@ -42,7 +42,7 @@
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
+                                        <th>Username</th>
                                         <th>Email</th>
                                         <th>Status</th>
                                         <th>Peran</th>

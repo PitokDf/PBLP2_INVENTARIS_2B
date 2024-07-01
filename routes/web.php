@@ -139,6 +139,9 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::get('getAllDataUser', [UsersController::class, "getAllData"]);
         Route::post('importUser', [UsersController::class, "import"]);
         Route::get('exportUser', [UsersController::class, "export"])->name('user.export');
+        Route::get('/unlink-dosen/{nip}', [UsersController::class, "unlinkDosen"]);
+        Route::get('/unlink-mahasiswa/{nim}', [UsersController::class, "unlinkMahasiswa"]);
+        Route::get('exportUser', [UsersController::class, "export"])->name('user.export');
         Route::resource("kategori-berita", KategoriBeritaController::class);
         Route::get('getAllDataKategori', [KategoriBeritaController::class, "getData"]);
         Route::resource("dosen", DosenController::class);

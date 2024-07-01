@@ -137,6 +137,67 @@ $(document).ready(function () {
         });
     });
 
+    function fetchingNip() {
+        $('#kondisi').html(`
+            <div class="mb-3">
+                <label for="nip" class="form-label">NIP</label>
+                <select id="nip" name="nip" class="form-control">
+                <option value="">-- Pilih nip --</option>
+                </select>
+                <span id="nip_error" class="text-danger"></span>
+            </div>
+            `);
+
+        $.ajax({
+            type: "GET",
+            url: "/getDosenNip",
+            dataType: "json",
+            success: function (response) {
+                if (response.status === 200) {
+                    $.each(response.data, function (indexInArray, data) {
+                        $('#nip').append(`
+                            <option value="${data.id_dosen}">${data.nip} - ${data.name} - ${data.jabatan ? data.jabatan.jabatan : 'not found'}</option>
+                            `);
+                        $('#nip').selectpicker('refresh');
+                    });
+                }
+            }
+        });
+
+        $('#nip').selectpicker({
+            liveSearch: true
+        });
+    }
+    function fetchingNim() {
+        $('#kondisi').html(`
+            <div class="mb-3">
+                <label for="nim" class="form-label">NIM</label>
+                <select id="nim" name="nim" class="form-control">
+                <option value="">-- Pilih nim --</option>
+                </select>
+                <span id="nim_error" class="text-danger"></span>
+            </div>
+            `);
+        $.ajax({
+            type: "GET",
+            url: "/getMahasiswaNim",
+            dataType: "json",
+            success: function (response) {
+                if (response.status === 200) {
+                    $.each(response.data, function (indexInArray, data) {
+                        $('#nim').append(`
+                            <option value="${data.id_mahasiswa}">${data.nim} - ${data.nama}</option>
+                            `);
+                        $('#nim').selectpicker('refresh');
+                    });
+                }
+            }
+        });
+        $('#nim').selectpicker({
+            liveSearch: true
+        });
+    }
+
     function getKondisiData(role, other = null) {
         if (other !== null) {
             if (role == 2 || role == 3 || role == 5) {
@@ -145,8 +206,10 @@ $(document).ready(function () {
                 $('#kondisi').html(`
                 <div class="mb-3">
                     <label for="nip" class="form-label">NIP</label>
-                    <input type="number" value="${other}" class="form-control" name="nip" id="nip" placeholder="exp: 1999270190" disabled/>
-                    </select>
+                    <div class="input-group mb-3">
+                        <input type="number" value="${other}" class="form-control" name="nip" id="nip" placeholder="exp: 1999270190" disabled/>
+                        <button type="button" class="btn btn-warning" data-id="${other}" data-role="dosen" id="unlink"><i class="fas fa-unlink"></i></button>
+                    </div>
                     <span id="nip_error" class="text-danger"></span>
                 </div>
                 `);
@@ -156,7 +219,10 @@ $(document).ready(function () {
                 $('#kondisi').html(`
                 <div class="mb-3">
                     <label for="nim" class="form-label">NIM</label>
-                    <input type="number" value="${other}" class="form-control" name="nim" id="nim" placeholder="exp: 2211083044" disabled />
+                    <div class="input-group">
+                        <input type="number" value="${other}" class="form-control" name="nim" id="nim" placeholder="exp: 2211083044" disabled />
+                        <button type="button" class="btn btn-warning" data-id="${other}" data-role="mahasiswa" id="unlink"><i class="fas fa-unlink"></i></button>
+                    </div>
                     <span id="nim_error" class="text-danger"></span>
                 </div>
                 `);
@@ -168,64 +234,10 @@ $(document).ready(function () {
         } else {
             $('#role').attr('disabled', false);
             if (role == 2 || role == 3 || role == 5) {
-                $('#kondisi').html(`
-                <div class="mb-3">
-                    <label for="nip" class="form-label">NIP</label>
-                    <select id="nip" name="nip" class="form-control">
-                    <option value="">-- Pilih nip --</option>
-                    </select>
-                    <span id="nip_error" class="text-danger"></span>
-                </div>
-                `);
-
-                $.ajax({
-                    type: "GET",
-                    url: "/getDosenNip",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.status === 200) {
-                            $.each(response.data, function (indexInArray, data) {
-                                $('#nip').append(`
-                                <option value="${data.id_dosen}">${data.nip} - ${data.name} - ${data.jabatan ? data.jabatan.jabatan : 'not found'}</option>
-                                `);
-                                $('#nip').selectpicker('refresh');
-                            });
-                        }
-                    }
-                });
-
-                $('#nip').selectpicker({
-                    liveSearch: true
-                });
+                fetchingNip();
             } else if (role == 4) {
                 setKondisiNormal();
-                $('#kondisi').html(`
-                <div class="mb-3">
-                    <label for="nim" class="form-label">NIM</label>
-                    <select id="nim" name="nim" class="form-control">
-                    <option value="">-- Pilih nim --</option>
-                    </select>
-                    <span id="nim_error" class="text-danger"></span>
-                </div>
-                `);
-                $.ajax({
-                    type: "GET",
-                    url: "/getMahasiswaNim",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.status === 200) {
-                            $.each(response.data, function (indexInArray, data) {
-                                $('#nim').append(`
-                                <option value="${data.id_mahasiswa}">${data.nim} - ${data.nama}</option>
-                                `);
-                                $('#nim').selectpicker('refresh');
-                            });
-                        }
-                    }
-                });
-                $('#nim').selectpicker({
-                    liveSearch: true
-                });
+                fetchingNim();
             } else {
                 setKondisiNormal();
             }
@@ -405,6 +417,60 @@ $(document).ready(function () {
                 console.error(xhr.responseJSON)
                 $('.action').html("<i class='fas fa-solid fa-file-import'></i> Import");
                 alert('check file .csv/.xlsx anda, pastikan terdapat coloumn nama, email, role(1=admin, 2=pimpinan,3=dosen, 4=mahasiswa, 5=staff), dan password')
+            }
+        });
+    });
+
+    // function unlinkDosen(nip) {
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "/unlink-dosen/" + nip,
+    //         dataType: "json",
+    //         success: function (response) {
+    //             return response.status;
+    //         }
+    //     });
+    // }
+    // function unlinkMahasiswa(nim) {
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "/unlink-mahasiswa/" + nim,
+    //         dataType: "json",
+    //         success: function (response) {
+    //             console.log(response.status);
+    //         }
+    //     });
+    // }
+
+    $(document).on('click', '#unlink', function () {
+        Swal.fire({
+            title: "Yakin ingin unlink user?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if ($(this).data('role') === 'dosen') {
+                    $.ajax({
+                        type: "GET",
+                        url: "/unlink-dosen/" + $(this).data('id'),
+                        dataType: "json",
+                        success: function (response) {
+                            response.status === 200 ? (fetchingNip(), $('#role').attr('disabled', false), $('#email').attr('readonly', false)) : Swal.fire({ title: "Ops..!", text: "Cant unlink", icon: "error" });
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: "/unlink-mahasiswa/" + $(this).data('id'),
+                        dataType: "json",
+                        success: function (response) {
+                            response.status === 200 ? (fetchingNim(), $('#role').attr('disabled', false)) : Swal.fire({ title: "Ops..!", text: "Cant unlink", icon: "error" });
+                        }
+                    });
+                }
             }
         });
     });

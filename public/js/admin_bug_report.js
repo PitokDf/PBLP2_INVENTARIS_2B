@@ -18,7 +18,7 @@ $(document).ready(function () {
                     <div class="input-group mb-2">
                         <span class="input-group-text" id="basic-addon3">Bug ${meta.row + 1}</span>
                         <div class="form-control flex-grow-1 ">
-                            <label for="basic-url">${_data.email} <span class="badge rounded-pill bg-primary text-white d-none d-lg-inline">${_data.role}</span></label>
+                            <label for="basic-url">${_data.email} <span class="badge rounded-pill bg-primary text-white d-none d-lg-inline">${_data.role ?? 'Uknown'}</span></label>
                         </div>
                         <div class="form-control text-end">
                             ${_data.status === 0 ? '<label for="basic-url" style="color: #b4b4b4">Pending <i class="fas fa-clock text-warning"></i></label>' : '<label for="basic-url" style="color: #b4b4b4">Solved <i class="far fa-check-circle" style="color: #04ff00;"></i></label>'}

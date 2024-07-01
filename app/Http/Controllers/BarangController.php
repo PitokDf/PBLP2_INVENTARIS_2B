@@ -67,22 +67,22 @@ class BarangController extends Controller
      */
     public function store(StoreBarangRequest $request)
     {
+        $data = [
+            "code_barang" => $request->kode_barang,
+            "nama_barang" => $request->nama_barang,
+            "quantity" => $request->jumlah,
+            "id_kategory" => $request->kategori,
+            "posisi" => $request->posisi,
+            "merk_id" => $request->merk,
+            "tanggal_masuk" => $request->tanggal_masuk,
+            "supplier_id" => $request->pemasok,
+            "deskripsi" => $request->deskripsi
+        ];
         if ($request->hasFile("foto")) {
             $file = $request->file("foto");
             $filename = time() . "_" . uniqid() . "." . $file->getClientOriginalExtension();
             if ($file->move(public_path("asset/barang"), $filename)) {
-                $data = [
-                    "code_barang" => $request->kode_barang,
-                    "nama_barang" => $request->nama_barang,
-                    "quantity" => $request->jumlah,
-                    "id_kategory" => $request->kategori,
-                    "posisi" => $request->posisi,
-                    "photo" => 'asset/barang/' . $filename,
-                    "merk_id" => $request->merk,
-                    "tanggal_masuk" => $request->tanggal_masuk,
-                    "supplier_id" => $request->pemasok,
-                    "deskripsi" => $request->deskripsi
-                ];
+                $data["photo"] = 'asset/barang/' . $filename;
             } else {
                 return response()->json([
                     "status" => 408,

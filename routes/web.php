@@ -33,7 +33,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Storage;
 
 Route::middleware(['guest'])->group(function () {
     Route::get("login", [SessionController::class, "index"]);

@@ -91,6 +91,11 @@
 </head>
 
 <body>
+    @if (auth()->user()->email_verified_at)
+        {!! in_array(auth()->user()->role, ['1', '2'])
+            ? '<script>location.href = "/"</script>'
+            : '<script>location.href = "/peminjamanUmum"</script>' !!}
+    @endif
     <div class="container">
         <div class="card">
             @if (session('message'))
@@ -101,7 +106,7 @@
             <h3 class="h1">Silahkan verifikasi email anda!</h3>
             <p class="text-gray">Tidak menerima tautan verifikasi?<br>Kirim ulang tautan verifikasi dengan mengklik
                 tombol dibawah.</p>
-            <form method="POST" action="{{ route('verification.send') }}">
+            <form method="POST" action="/email/verification-notification">
                 @csrf
                 <div class="form-group">
                     <input type="hidden" class="form-control" id="email" name="email"

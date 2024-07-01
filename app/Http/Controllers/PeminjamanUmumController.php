@@ -47,7 +47,7 @@ class PeminjamanUmumController extends Controller
     {
         if (in_array(auth()->user()->role, ['3', '5'])) {
             $request->validate([
-                'nip' => 'required|numeric|digits:16|unique:dosen,nip',
+                'nip' => 'required|numeric|digits:18|unique:dosen,nip',
                 'nama' => 'required',
                 'jabatan' => 'required|exists:jabatans,id',
                 'no_hp' => 'required|numeric|unique:dosen,phone_number'

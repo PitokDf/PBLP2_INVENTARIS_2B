@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-box fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mahasiswa }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $kategoriB }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-list fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -127,17 +127,9 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Pengguna Terverifikasi</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $user->count() }}</div>
-                            <div class="row">
-                                <div class="col-6">Admin</div>
-                                <div class="col-6">: {{ $user->where('role', '=', '1')->count() }}</div>
-                                <div class="col-6">Umum</div>
-                                <div class="col-6">:
-                                    {{ $user->orWhere('role', '=', '3')->orWhere('role', '=', '4')->orWhere('role', '=', '5')->count() - 1 }}
-                                </div>
-                            </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

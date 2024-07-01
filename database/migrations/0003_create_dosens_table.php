@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id('id_dosen');
             $table->string('name')->nullable();
             $table->string('nip', 20)->unique()->nullable();
-            $table->foreignId('jabatan_id')->nullable()->constrained('jabatans')->nullOnDelete();
+            $table->foreignId('jabatan_id')->nullable()->constrained('jabatans')->cascadeOnDelete();
             $table->string('phone_number')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('photo_dir')->nullable();

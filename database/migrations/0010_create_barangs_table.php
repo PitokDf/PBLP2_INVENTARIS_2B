@@ -16,12 +16,12 @@ return new class extends Migration {
             $table->string('nama_barang')->nullable();
             $table->integer('quantity')->nullable();
             $table->unsignedBigInteger('id_kategory')->nullable();
-            $table->foreign('id_kategory')->references('id')->on('kategori_barang')->nullOnDelete();
+            $table->foreign('id_kategory')->references('id')->on('kategori_barang')->cascadeOnDelete();
             $table->unsignedBigInteger('merk_id')->nullable();
-            $table->foreign('merk_id')->references('id')->on('merks')->nullOnDelete();
+            $table->foreign('merk_id')->references('id')->on('merks')->cascadeOnDelete();
             $table->date('tanggal_masuk')->nullable(); // Tanggal masuk
             $table->unsignedBigInteger('supplier_id')->nullable(); // Supplier ID
-            $table->foreign('supplier_id')->references('id')->on('pemasoks')->nullOnDelete();
+            $table->foreign('supplier_id')->references('id')->on('pemasoks')->cascadeOnDelete();
             $table->text('deskripsi')->nullable();
             $table->text('posisi')->nullable();
             $table->text('photo')->nullable();

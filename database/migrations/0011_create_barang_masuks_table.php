@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('barang_masuks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barang_id')->nullable();
-            $table->foreign('barang_id')->references('id_barang')->on('barang')->nullOnDelete();
-            $table->foreignId('pemasok_id')->nullable()->constrained('pemasoks')->nullOnDelete();
+            $table->foreign('barang_id')->references('id_barang')->on('barang')->cascadeOnDelete();
+            $table->foreignId('pemasok_id')->nullable()->constrained('pemasoks')->cascadeOnDelete();
             $table->integer('quantity');
             $table->string('penerima');
             $table->date('tanggal_masuk');

@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('nama')->nullable();
             $table->char('nim', 10)->unique()->nullable();
             $table->string('code_prodi')->nullable();
-            $table->foreign('code_prodi')->references('code_prodi')->on('prodis')->nullOnDelete();
+            $table->foreign('code_prodi')->references('code_prodi')->on('prodis')->cascadeOnDelete();
             $table->integer('angkatan')->nullable();
             $table->decimal('ipk', 3, 2)->default(0.00);
             $table->timestamps();

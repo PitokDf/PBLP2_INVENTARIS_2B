@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->string('kode_peminjaman')->nullable()->unique();
             $table->unsignedBigInteger('id_barang')->nullable();
-            $table->foreign('id_barang')->references('id_barang')->on('barang')->nullOnDelete();
+            $table->foreign('id_barang')->references('id_barang')->on('barang')->cascadeOnDelete();
             $table->uuid('id_user')->nullable();
-            $table->foreign('id_user')->references('id_user')->on('users')->nullOnDelete();
+            $table->foreign('id_user')->references('id_user')->on('users')->cascadeOnDelete();
             $table->date('tgl_peminjaman');
             $table->date('batas_pengembalian');
             $table->date('tgl_pengembalian')->nullable();

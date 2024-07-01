@@ -155,7 +155,6 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 var data = response.data[0];
-                console.log(data)
                 $('#id').val(data.id_barang);
                 $('#kode_barang').val(data.code_barang);
                 $('#nama_barang').val(data.nama_barang);
@@ -166,7 +165,6 @@ $(document).ready(function () {
                 $('#merek').selectpicker('val', data.merk_id);
                 const date = data.tanggal_masuk;
                 const parts = date.split('-');
-                console.log(parts)
                 $('#tahun').val(parts[0]);
                 $('#bulan').val(parts[1]);
                 updateDays();
@@ -259,7 +257,6 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status == 200) {
                     reloadTable(table_barang);
                     modal.modal('hide');
@@ -360,7 +357,6 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 clearErrorMsg();
                 var data = xhr.responseJSON.errors;
-                console.log(data)
                 if (data.kode_barang) {
                     $('#kode_error').text(data.kode_barang);
                     $('#kode_barang').addClass('is-invalid');
@@ -471,7 +467,6 @@ $(document).ready(function () {
                         data: data,
                         dataType: "json",
                         success: function (response) {
-                            console.log(response)
                             reloadTable(table_barang);
                             Swal.fire({
                                 title: "Success",
@@ -489,7 +484,6 @@ $(document).ready(function () {
                             }
                         },
                         error: function (xhr, stattus, error) {
-                            console.log(xhr)
                             if (xhr.status === 500) {
                                 Swal.fire({
                                     title: "Ops !!",

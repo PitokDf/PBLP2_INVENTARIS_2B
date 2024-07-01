@@ -91,7 +91,6 @@ $(document).ready(function () {
                 success: function (response) {
                     $('#nama_barang').val('');
                     $('#kategori_barang').val('');
-                    console.log(response)
                     if (response.status === 200) {
                         $('#jumlah').attr('readonly', false);
                         $('.action').attr('disabled', false);
@@ -122,8 +121,6 @@ $(document).ready(function () {
     $('#btnRequest_peminjaman').on('click', function () {
         const data = $('#form').serialize();
         AjaxPostIncludeSerialize('request-peminjaman', data, function (response, error) {
-            console.log(response)
-            console.log(error)
             if (response.status == 200) {
                 $('#jumlah').removeClass('is-invalid'); $('#jumlah_error').text(''); $('#code_barang').removeClass('is-invalid'); $('#reason').removeClass('is-invalid'); $('#reason_error').text('')
                 $('#code_barang').val(''); $('#stok').val(''); $('#nama_barang').val(''); $('#kategori_barang').val(''); $('#jumlah').val(''); $('#reason').val('')
@@ -137,7 +134,6 @@ $(document).ready(function () {
             }
 
             if (response.status == 203) {
-                console.log(response)
                 Swal.fire({
                     icon: 'error',
                     title: 'Ops !!',
@@ -166,7 +162,6 @@ $(document).ready(function () {
 
     $(document).on('click', '#btnDetail', function () {
         AjaxGetData('/detail-peminjaman/' + $(this).data('id'), function (res, errors) {
-            console.log('2222')
         });
     });
 });

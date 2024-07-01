@@ -151,7 +151,6 @@ $(document).ready(function () {
             url: "/barang-keluar/" + $(this).data('id'),
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status == 200) {
                     const data = response.data;
                     $('#txt_kode_barang').text(data.barang ? data.barang.code_barang : '<strong style="color:red;">not found</strong>');
@@ -188,7 +187,6 @@ $(document).ready(function () {
                     data: data,
                     dataType: "json",
                     success: function (response) {
-                        console.log(response);
                         if (response.status == 200) {
                             reloadTable(tableBarangKeluar);
                             Swal.fire({

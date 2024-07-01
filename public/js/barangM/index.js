@@ -173,7 +173,6 @@ $(document).ready(function () {
             url: "/barangM/" + $(this).data('id'),
             dataType: "json",
             success: function (response) {
-                console.info(response)
                 if (response.status === 200) {
                     const data = response.data;
                     $('#txt_kode_barang').text(data.barang.code_barang);
@@ -206,7 +205,6 @@ $(document).ready(function () {
                     data: data,
                     dataType: "json",
                     success: function (response) {
-                        console.log(response)
                         reloadTable(tableBarangM);
                         Swal.fire({
                             title: "Deleted!",

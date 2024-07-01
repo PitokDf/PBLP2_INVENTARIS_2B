@@ -6,7 +6,6 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 $('#capcha_code').html(response);
-                console.log(response)
             }
         });
     }
@@ -49,10 +48,6 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-            for (var pair of data.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
-            }
             $.ajax({
                 type: "post",
                 url: '/register',

@@ -143,7 +143,6 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
-                console.log(response)
                 clearErrorMsg();
                 clerInput();
                 reloadTable(tableProdi);

@@ -52,7 +52,6 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 var data = response.data[0];
-                console.log(data)
                 $('#name_kategori').val(data.nama_kategori);
                 $('#id').val(data.id);
             },
@@ -127,7 +126,6 @@ $(document).ready(function () {
             data: formData,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status == 200) {
                     modal.modal('hide');
                     Swal.fire({

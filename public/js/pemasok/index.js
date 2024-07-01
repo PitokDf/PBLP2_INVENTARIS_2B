@@ -138,7 +138,6 @@ $(document).ready(function () {
             url: "/pemasok/" + $(this).data('id'),
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status == 200) {
                     const data = response.data;
                     $('#txt_nama_pemasok').text(data.nama);
@@ -174,7 +173,6 @@ $(document).ready(function () {
                     data: data,
                     dataType: "json",
                     success: function (response) {
-                        console.log(response);
                         if (response.status == 200) {
                             clearErrorMsg();
                             clearInput();
@@ -222,7 +220,6 @@ $(document).ready(function () {
 
     $(document).on('click', '#btn-edit', function () {
         AjaxGetData('/pemasok/' + $(this).data('id'), function (response) {
-            // console.log(response)
             if (response.status === 200) {
                 clearErrorMsg();
                 const data = response.data;
@@ -260,7 +257,6 @@ $(document).ready(function () {
         data.append('alamat', $('#alamat').val());
 
         AjaxPostIncludeData('/pemasok/' + $('#id').val(), data, function (response) {
-            // console.log(response)
             if (response.status === 200) {
                 clearErrorMsg();
                 clearInput();

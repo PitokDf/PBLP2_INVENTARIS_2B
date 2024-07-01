@@ -70,7 +70,6 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#btnCreateform', function () {
-        console.log('tombol create pada form diclick');
         var data = new FormData();
         data.append('nama_mahasiswa', $('#nama_mahasiswa').val());
         data.append('angkatan', $('#angkatan').val());
@@ -235,7 +234,6 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status == 200) {
                     var data = response.data[0];
-                    console.log(data);
                     $('.nim').text(data.nim);
                     $('.prodi').html(data.prodi ? data.prodi.nama_prodi : '<strong style="color:red;">not found</strong>');
                     $('.angkatan').text(data.angkatan);

@@ -104,7 +104,6 @@ $(document).ready(function () {
             url: "/peminjaman/" + $(this).data('id'),
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 const data = response.data;
                 $('#id').val(data.id);
                 $('#nama_barangK').val(data.barang ? data.barang.nama_barang : 'not found');
@@ -174,7 +173,6 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status === 200) {
                     const data = response.data;
                     $('#id_peminjaman').text(data.kode_peminjaman);
@@ -255,7 +253,6 @@ $(document).ready(function () {
                 success: function (response) {
                     $('#nama_barang').val('');
                     $('#kategori_barang').val('');
-                    console.log(response)
                     if (response.status === 200) {
                         $('#jumlah').attr('readonly', false);
                         $('.action').attr('disabled', false);

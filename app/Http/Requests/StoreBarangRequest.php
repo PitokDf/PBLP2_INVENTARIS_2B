@@ -26,7 +26,7 @@ class StoreBarangRequest extends FormRequest
             "nama_barang" => ["required"],
             "kategori" => ["required", "exists:kategori_barang,id"],
             "jumlah" => ["required", "numeric", "min:1"],
-            "foto" => ["required", "max:2000"],
+            "foto" => ["nullable", "max:2000"],
             "posisi" => ["required"],
             'merk' => 'required|exists:merks,id',
             'tanggal_masuk' => 'required|date',

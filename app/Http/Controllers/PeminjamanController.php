@@ -27,11 +27,12 @@ class PeminjamanController extends Controller
                 });
             })
             ->orWhere(function ($query) {
-                $query->where('role', '4')
-                    ->whereNotNull('mahasiswa_id'); // Role 4 dengan mahasiswa_id tidak kosong
+                $query->where(function ($query) {
+                    $query->whereIn('role', ['4'])
+                        ->whereNotNull('mahasiswa_id');
+                });
             })
-            ->whereNotIn('role', ['2', '3', '4'])
-            ->where('role', '!=', '1')
+            ->whereNotIn('role', ['1', '2'])
             ->latest()
             ->get();
 

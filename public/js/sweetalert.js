@@ -49,9 +49,8 @@ $(document).ready(function () {
         $('#kondisi').html('');
         $('#role').attr('disabled', false);
         $('#email').attr('readonly', false);
-        $('#email').val('');
-        $('#name').val('');
     }
+
     function clearErrorMsg() {
         $('#name_error').text('');
         $('#email_error').text('');

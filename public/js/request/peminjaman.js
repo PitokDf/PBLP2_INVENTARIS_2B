@@ -64,7 +64,6 @@ $(document).ready(function () {
                 var data = new FormData();
                 data.append('kode_peminjaman', $(this).data('id'));
                 AjaxPostIncludeData('/setujui-peminjaman', data, function (response) {
-                    console.log(response);
                     response.status == 200 ?
                         (Swal.fire({
                             title: "Success",
@@ -130,7 +129,7 @@ $(document).ready(function () {
                 var data = new FormData();
                 // data.append('id', $(this).data('id'));
                 data.append('_method', 'DELETE');
-                AjaxPostIncludeData('/hapus-peminjaman/' + $(this).data('id'), data, function (response) {
+                AjaxPostIncludeData('/peminjaman/' + $(this).data('id'), data, function (response) {
                     response.status == 200 ?
                         (Swal.fire({
                             title: "Success",
@@ -138,7 +137,7 @@ $(document).ready(function () {
                             icon: "success",
                             confirmButtonText: "Ok"
                         }), reloadTable(table_request)) : ''
-                    response.status == 400 ?
+                    response.status == 202 ?
                         Swal.fire({
                             title: "Ops..",
                             text: response.message,

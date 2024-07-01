@@ -94,7 +94,6 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 if (response.status == 200) {
                     clearInput();
                     clearErrorMsg();
@@ -150,7 +149,6 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status === 200) {
                     $('#id').val(response.data.id_dosen);
                     $('#name').val(response.data.name);
@@ -187,7 +185,6 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 if (response.status == 200) {
                     clearInput();
                     clearErrorMsg();

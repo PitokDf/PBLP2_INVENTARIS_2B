@@ -84,7 +84,6 @@ $(document).ready(function () {
 
     $(document).on('click', '#btnCreateform', function () {
         var formData = $('#form').serialize();
-        console.log(formData)
         url = "user";
         $.ajax({
             type: "POST",
@@ -129,7 +128,6 @@ $(document).ready(function () {
         AjaxGetData('/getEmailDosen/' + $(this).val(), function (res) {
             res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true), $('#name').val(res.nama)) : ''
             res.status === 404 ? $('#email').attr('readonly', false) : ''
-            console.log(res)
         });
     });
     $(document).on('change', '#nim', function () {
@@ -137,7 +135,6 @@ $(document).ready(function () {
         $('#email').val('')
         AjaxGetData('/getNamaMahasiswa/' + $(this).val(), function (res) {
             res.status === 200 ? $('#name').val(res.nama) : ''
-            console.log(res)
         });
     });
 
@@ -284,7 +281,6 @@ $(document).ready(function () {
             data: formData,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 response.status == 400 ? Swal.fire({
                     icon: "error",
                     title: "Oops...",

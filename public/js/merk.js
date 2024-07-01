@@ -60,7 +60,6 @@ $(document).ready(function () {
 
     $(document).on('click', '#btnCreateForm', function () {
         AjaxPostIncludeSerialize('/merk-barang', $('#form').serialize(), function (res) {
-            console.log(res)
             if (res.status == 200) {
                 clearErrorMsg();
                 clerInput();
@@ -92,7 +91,6 @@ $(document).ready(function () {
         showModal(modal = "modalMerk", title = "Edit Merk", form = "btnEditForm", icon = "<i class='fas fa-pen'></i> Update");
         const url = "/merk-barang/" + $(this).attr('id') + "/edit";
         AjaxGetData(url, function (res) {
-            console.log(res)
             if (res.status == 200) {
                 const data = res.data;
                 $('#id').val(data.id);

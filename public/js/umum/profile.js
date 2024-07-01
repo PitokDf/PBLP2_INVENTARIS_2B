@@ -29,7 +29,6 @@ $(document).ready(function () {
         data.append('password', $('#password').val())
 
         AjaxPostIncludeData('/edit-akun', data, function (res) {
-            console.log(res)
             if (res.status === 200) {
                 $('#area-message-akun').html(`<div class="alert alert-success" role="alert">Berhasil mengupdate info akun.</div>`);
                 setTimeout(() => {
@@ -70,7 +69,6 @@ $(document).ready(function () {
         data.append('phone_number', $('#no_telp').val());
 
         AjaxPostIncludeData('/edit-profile', data, function (res) {
-            console.log(res)
             if (res.status === 200) {
                 $('#area-message-profile').html(`<div class="alert alert-success" role="alert">${res.message}</div>`);
                 setInterval(() => {

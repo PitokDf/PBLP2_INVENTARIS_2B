@@ -81,9 +81,7 @@ class PeminjamanController extends Controller
         }
 
         $barang = Barang::where('code_barang', $request->namaBarang)->first();
-        // $user = User::where('id_user', $request->namaUser)->first();
 
-        // $barang = Barang::where('code_barang', $request->namaBarang)->first();
         $existingPeminjaman = Peminjaman::where('id_barang', $barang->id_barang)
             ->where('id_user', $request->namaUser)
             ->whereNull('tgl_pengembalian')

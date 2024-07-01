@@ -174,7 +174,6 @@ $(document).ready(function () {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 if (response.status == 200) {
                     modal.modal('hide');
                     Swal.fire({
@@ -191,7 +190,6 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.info(xhr)
                 console.error(xhr.responseJSON.errors)
                 const errors = xhr.responseJSON.errors;
                 clearErrorMsg();
@@ -222,7 +220,6 @@ $(document).ready(function () {
         data.append('publikasi', $('#publikasi').val());
         var id = $('#id').val();
         var url = "berita/" + id;
-        console.log($('#content').val() + $('#title').val())
         $.ajax({
             type: "POST",
             url: url,
@@ -241,7 +238,6 @@ $(document).ready(function () {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             claerInput();
-                            console.log(response.data)
                             reloadTable(table_berita);
                         }
                     });

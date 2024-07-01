@@ -1,0 +1,8 @@
+Kode,Nama,Kategori,Merk,Jumlah,Tanggal Masuk,Pemasok,Posisi,,,
+KB001,SSD PNY 512GB,SSD,Google,45,2024-01-01,PT Pitok (persero) Tbk,Gudang G,,,
+KB002,Keyboard Logitech,Keyboard,Lenovo,23,2024-01-02,PT Pitok (persero) Tbk,Gudang G,,,Keterangan :
+KB003,Samsung Monitor,Monitor,Dell,12,2024-01-03,PT Pitok (persero) Tbk,Gudang G,,,1. Kategori barang harus terdaftar terlebih dahulu pada halaman kategori barang admin
+KB004,Dell Komputer,Personal Komputer,Sharp,23,2024-01-04,PT Pitok (persero) Tbk,Gudang G,,,2. Merk Harus sama dengan merk yang terdaftar pada halaman merk
+,,,,,,,,,,3. Pemasok harus sama dengan pemasok yang terdaftar pada halaman pemasok
+,,,,,,,,,,
+,,,,,,,,,,Jika terdapat hal diatas yang tidak sesuai data pada baris tersebut tidak akan diimport

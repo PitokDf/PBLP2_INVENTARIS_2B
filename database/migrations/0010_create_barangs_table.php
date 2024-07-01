@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->date('tanggal_masuk')->nullable(); // Tanggal masuk
             $table->unsignedBigInteger('supplier_id')->nullable(); // Supplier ID
             $table->foreign('supplier_id')->references('id')->on('pemasoks')->nullOnDelete();
-            $table->text('deskripsi');
+            $table->text('deskripsi')->nullable();
             $table->text('posisi')->nullable();
             $table->text('photo')->nullable();
             $table->timestamps();

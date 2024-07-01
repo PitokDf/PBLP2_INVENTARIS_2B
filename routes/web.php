@@ -149,7 +149,8 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::resource("barang", BarangController::class);
         Route::delete("barangs/bulk-delete", [BarangController::class, 'bulkDelete']);
         Route::get('barangs/contoh/file', function () {
-            return Storage::download('public/Barangs.csv', 'exp-barang.csv');
+            // return Storage::download('/public/Barangs.csv', 'exp-barang.csv');
+            return response()->streamDownload(public_path('asset/barang/Barangs.csv'), 'exp-import-barang.csv');
         })->name('download.barang');
         Route::get('getAllDataBarang', [BarangController::class, "getData"]);
         Route::get('getAllMerk', [MerkController::class, "getData"]);

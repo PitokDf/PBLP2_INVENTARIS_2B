@@ -196,12 +196,7 @@ class BarangController extends Controller
         }
 
         $barang->delete();
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'delete',
-            'deskripsi' => 'menghapus data barang pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('delete', 'menghapus data barang');
 
         return response()->json([
             "status" => 200,
@@ -227,6 +222,7 @@ class BarangController extends Controller
                 'message' => 'Berhasil menghapus data terpilih.'
             ]);
         }
+        ActivityLog::createLog('delete', 'mengupdate banyak data barang');
         return response()->json([
             'status' => 400,
             'message' => 'Tidak ada item yang dipilih.'

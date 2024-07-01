@@ -129,13 +129,7 @@ class MahasiswasController extends Controller
             $mahasiswa->ipk = $request->ipk;
 
             $mahasiswa->save();
-            ActivityLog::create([
-                'id_user' => auth()->user()->id_user,
-                'activity' => 'update',
-                'deskripsi' => 'mengupdate data mahasiswa pada ' . date('Y-F-d H:i'),
-                'time' => now()
-            ]);
-            ActivityLog::createLog('update', 'Mengupdate data prodi');
+            ActivityLog::createLog('update', 'Mengupdate data mahasiswa');
             return response()->json([
                 'status' => 200,
                 'message' => "Berhasil mengupdate data."

@@ -13,14 +13,14 @@ class AdminReportController extends Controller
     {
         return view('admin.adminreport');
     }
-    
 
-    
-   
+
+
+
 
     public function destroy(string $id)
     {
-       
-       
+
+
     }
 }

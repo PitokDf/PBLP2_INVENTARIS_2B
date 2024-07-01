@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBarangKeluarRequest;
 use App\Http\Requests\UpdateBarangKeluarRequest;
+use App\Models\ActivityLog;
 use App\Models\Barang;
 use App\Models\BarangKeluar;
 use App\Models\User;
@@ -77,6 +78,7 @@ class BarangKeluarController extends Controller
                 'quantity' => $barang->quantity -= $request->quantity
             ]);
         }
+        ActivityLog::createLog('add', 'menambahkan data barang keluar');
         return response()->json([
             "status" => 200,
             "message" => "Barang keluar berhasil dicatat."
@@ -124,6 +126,7 @@ class BarangKeluarController extends Controller
     public function destroy(BarangKeluar $barangKeluar)
     {
         if ($barangKeluar->delete()) {
+            ActivityLog::createLog('delete', 'menghapus data barang keluar');
             return response()->json([
                 'status' => 200,
                 'message' => 'Record barang keluar berhasil dihapus.'

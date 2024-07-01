@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBarangMasukRequest;
 use App\Http\Requests\UpdateBarangMasukRequest;
+use App\Models\ActivityLog;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\Pemasok;
@@ -49,6 +50,7 @@ class BarangMasukController extends Controller
                 "message" => "Berhasil menambahkan barang masuk."
             ]);
         }
+        ActivityLog::createLog('add', 'menambahkan data barang masuk');
         return response()->json([
             "status" => 202,
             "message" => "Terjadi masalah saat menambahkan barang masuk."
@@ -102,6 +104,7 @@ class BarangMasukController extends Controller
                 "pemasok" => $request->pemasok,
                 "quantity" => $request->quantity
             ]);
+            ActivityLog::createLog('update', 'mengupdate data barang masuk');
             return response()->json([
                 "status" => 200,
                 'message' => "Berhasil Mengupdata Data."
@@ -117,7 +120,7 @@ class BarangMasukController extends Controller
     {
         $barangM = BarangMasuk::findOrFail($id);
         $barangM->delete();
-
+        ActivityLog::createLog('delete', 'menghapus data barang masuk');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menghapus data."

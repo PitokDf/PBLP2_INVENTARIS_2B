@@ -51,12 +51,7 @@ class BeritaController extends Controller
             'kategori_id' => $request->kategori,
             'user_id' => auth()->user()->id_user
         ]);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'add',
-            'deskripsi' => 'menambahkan data berita pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('add', 'menambahkan data berita pada');
         return response()->json([
             'status' => 200,
             'message' => 'Data Berhasil Ditambahkan!'
@@ -108,12 +103,7 @@ class BeritaController extends Controller
             'tgl_publikasi' => $request->publikasi,
             'id_kategori' => $request->kategori,
         ]);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'update',
-            'deskripsi' => 'mengupdate data berita pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('update', 'mengupdate data berita');
         return response()->json([
             'status' => 200,
             'message' => 'Berita Berhasil diupdate!',
@@ -127,12 +117,7 @@ class BeritaController extends Controller
     {
         $berita = Berita::findOrFail($id);
         $berita->delete();
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'delete',
-            'deskripsi' => 'menghapus data berita pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('delete', 'menghapus data berita');
         return response()->json([
             'status' => 200,
             'message' => 'Data Berhasil Dihapus'

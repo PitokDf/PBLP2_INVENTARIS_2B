@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Barang;
 use App\Models\Dosen;
 use App\Models\Peminjaman;
@@ -115,6 +116,7 @@ class PeminjamanController extends Controller
             ]);
 
             $barang->decrement('quantity', $request->quantity);
+            ActivityLog::createLog('add', 'meminjamkan barang');
             return response()->json([
                 'status' => 200,
                 'message' => 'Berhasil Melakukan Peminjaman.'
@@ -186,6 +188,7 @@ class PeminjamanController extends Controller
             ]
         );
         Barang::findOrFail($dataPeminjam->barang->id_barang)->increment('quantity', $peminjaman->jumlah);
+        ActivityLog::createLog('update', 'menerima barang yang dipinjam');
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil Mengembalikan Barang.'
@@ -205,6 +208,7 @@ class PeminjamanController extends Controller
             ]);
         }
         Peminjaman::findOrFail($id)->delete();
+        ActivityLog::createLog('delete', 'menghapus data peminjaman');
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil Menghapus Peminjaman'

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePemasokRequest;
 use App\Http\Requests\UpdatePemasokRequest;
+use App\Models\ActivityLog;
 use App\Models\Pemasok;
 
 class PemasokController extends Controller
@@ -48,7 +49,7 @@ class PemasokController extends Controller
                 "message" => "Something went wrong."
             ]);
         }
-
+        ActivityLog::createLog('add', 'menambahkan data pemasok');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menambahkan data pemasok."
@@ -89,6 +90,7 @@ class PemasokController extends Controller
         ];
 
         $pemasok->update($data);
+        ActivityLog::createLog('update', 'mengupdate data pemasok');
         return response()->json([
             'status' => 200,
             'message' => 'Data pemasok berhasil di update.'
@@ -101,6 +103,7 @@ class PemasokController extends Controller
     public function destroy(Pemasok $pemasok)
     {
         $pemasok->delete();
+        ActivityLog::createLog('delete', 'menghapus data pemasok');
         return response()->json([
             "status" => 200,
             "message" => "Data berhasil dihapus"

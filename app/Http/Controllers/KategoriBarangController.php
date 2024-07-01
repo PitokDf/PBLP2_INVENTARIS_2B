@@ -43,12 +43,7 @@ class KategoriBarangController extends Controller
             "nama_kategori_barang" => $request->name_kategori
         ];
         KategoriBarang::create($data);
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'add',
-            'deskripsi' => 'menambahkan data kategori barang pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('add', 'menambahkan data kategori barang');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil Menambahkan kategorid."
@@ -69,7 +64,6 @@ class KategoriBarangController extends Controller
     public function edit($id)
     {
         $data = KategoriBarang::where("id", $id)->get(["id", "nama_kategori_barang"]);
-
         return response()->json([
             "status" => 200,
             "message" => "berhasil mendapatkan data.",
@@ -85,12 +79,7 @@ class KategoriBarangController extends Controller
         $kategori = KategoriBarang::findOrFail($id);
         $kategori->nama_kategori_barang = $request->name_kategori;
         $kategori->save();
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'update',
-            'deskripsi' => 'mengupdate data kategori barang pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('update', 'mengupdate data kategori barang');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mengupdate kategori."
@@ -104,12 +93,7 @@ class KategoriBarangController extends Controller
     {
         $kategori = KategoriBarang::findOrFail($id);
         $kategori->delete();
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'delete',
-            'deskripsi' => 'menghapus data kategori barang pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('delete', 'menghapus data kategori barang');
         return response()->json([
             "status" => 200,
             "message" => "Berhasil menghapus kategori."

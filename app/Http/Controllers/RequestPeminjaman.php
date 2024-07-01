@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Barang;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class RequestPeminjaman extends Controller
             'status' => true,
             'kode_peminjaman' => Peminjaman::getKodePeminjaman()
         ]);
+        ActivityLog::createLog('update', 'menyetujui request peminjaman');
         return response()->json([
             'status' => 200,
             'message' => 'Peminjaman disetujui.'

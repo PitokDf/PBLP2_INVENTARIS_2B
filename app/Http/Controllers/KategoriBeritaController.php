@@ -80,12 +80,7 @@ class KategoriBeritaController extends Controller
         $kategori = KategoriBerita::findOrFail($id);
         $kategori->nama_kategori = $request->name_kategori;
         $kategori->save();
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'update',
-            'deskripsi' => 'mengupdate data kategori berita pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('update', 'mengupdate data kategori berita');
         return response()->json([
             'status' => 200,
             "message" => "Berhasil mengupdate data."
@@ -99,12 +94,7 @@ class KategoriBeritaController extends Controller
     {
         $delete = KategoriBerita::findOrFail($id);
         $delete->delete();
-        ActivityLog::create([
-            'id_user' => auth()->user()->id_user,
-            'activity' => 'delete',
-            'deskripsi' => 'menghapus data kategori berita pada ' . date('Y-F-d H:i'),
-            'time' => now()
-        ]);
+        ActivityLog::createLog('delete', 'menghapus data kategori berita');
         return response()->json([
             "status" => 200,
             'message' => "Berhasil menghapus data."

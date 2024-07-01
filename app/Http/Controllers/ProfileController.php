@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Dosen;
 use App\Models\Jabatan;
 use App\Models\Mahasiswas;
@@ -38,7 +39,7 @@ class ProfileController extends Controller
         $file = null;
 
         if ($request->hasFile('file_image')) { // melakukan pengecekan apakah request menyertakan gambar
-            $rules['file_image'] = 'image|mimes:jpeg,png,jpg|max:2048'; // memberi rule untuk request gambar
+            $rules['file_image'] = 'image|mimes:jpeg,png,jpg|max:124'; // memberi rule untuk request gambar
             $file = $request->file('file_image'); // 
             $fileName = uniqid() . '_' . time() . '_' . now()->timestamp . '.' . $file->getClientOriginalExtension(); // membuat nama file yang akan disimpan
             $data['avatar'] = 'asset/avatar/' . $fileName; // memasukkan gambar ke array data yang akan diupdate
@@ -61,12 +62,14 @@ class ProfileController extends Controller
             File::exists($user->avatar) ? File::delete($user->avatar) : ''; // menghapus file sebelumnya jika ada
 
             if (auth()->user()->dosen_id) {
+                File::exists(auth()->user()->dosen->photo_dir) ? File::delete(auth()->user()->dosen->photo_dir) : '';
                 auth()->user()->dosen->update(['photo_dir' => $data['avatar']]);
             }
         }
 
         // mengupdate data user
         $user->update($data);
+        ActivityLog::createLog('update', 'mengupdate informasi akun');
         return response()->json([
             'status' => 200,
             'message' => 'berhasil merubah informasi akun.'
@@ -142,7 +145,7 @@ class ProfileController extends Controller
                 'phone_number' => $request->phone_number ?? $dosen->phone_number
             ]);
         }
-
+        ActivityLog::createLog('update', 'mengupdate informasi profile');
         return response()->json(['status' => 200, 'message' => 'Berhasil mengupdate info profile, halaman akan di refresh dalam 2 detik']);
 
     }

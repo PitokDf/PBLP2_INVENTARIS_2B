@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Merk;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -43,6 +44,7 @@ class MerkController extends Controller
         ], ['merk.unique' => 'Merk sudah ada.']);
 
         Merk::create(['merk' => $request->merk]);
+        ActivityLog::createLog('add', 'menambahkan data merk');
         return response()->json(['status' => 200, 'message' => 'Berhasil menambahkan merk.']);
     }
 
@@ -75,6 +77,7 @@ class MerkController extends Controller
 
         $request->validate(['merk' => 'required|' . Rule::unique('merks')->ignore($merk)], ['merk.unique' => 'Merk sudah ada.']);
         $merk->update(['merk' => $request->merk]);
+        ActivityLog::createLog('update', 'mengupdate data merk');
         return response()->json(['status' => 200, 'message' => 'Berhasil mengupdate merk.']);
     }
 
@@ -88,6 +91,7 @@ class MerkController extends Controller
             return response()->json(['status' => 404, 'message' => 'Data not found.']);
         }
         $merk->delete();
+        ActivityLog::createLog('delete', 'menghapus data merk');
         return response()->json(['status' => 200, 'message' => 'Berhasil menghapus merk.']);
     }
 }

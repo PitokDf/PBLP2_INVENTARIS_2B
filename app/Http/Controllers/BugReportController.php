@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\BugReportMail;
+use App\Models\ActivityLog;
 use App\Models\BugReport;
 use App\Models\User;
 use Carbon\Carbon;
@@ -64,6 +65,7 @@ class BugReportController extends Controller
         foreach ($adminEmail as $admin) {
             Mail::to($admin)->send(new BugReportMail($bugReport));
         }
+        ActivityLog::createLog('add', 'mengirim report bug sistem');
         return response()->json(['status' => 200, 'message' => 'Berhasil melaporkan bug.']);
     }
 
@@ -94,6 +96,7 @@ class BugReportController extends Controller
         }
 
         $bugReport->update(['status' => 1]);
+        ActivityLog::createLog('update', 'bug sudah teratasi');
         return response()->json(['status' => 200, 'message' => 'Bug Resolved.']);
     }
 
@@ -107,6 +110,7 @@ class BugReportController extends Controller
             return response()->json(['status' => 404, 'message' => 'Data not found.']);
         }
         $bugReport->delete();
+        ActivityLog::createLog('delete', 'menghapus data report bug');
         return response()->json(['status' => 200, 'message' => 'Record berhasil dihapus.']);
     }
 }

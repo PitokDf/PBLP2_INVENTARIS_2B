@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,6 +52,7 @@ class JabatanController extends Controller
             "jabatan" => $request->jabatan
         ]);
 
+        ActivityLog::createLog('add', 'menambahkan data jabatan');
         return response()->json([
             "status" => 200,
             "message" => "Jabatan Berhasil Ditambahkan."
@@ -94,7 +96,7 @@ class JabatanController extends Controller
         Jabatan::where('id', $id)->update([
             "jabatan" => $request->jabatan
         ]);
-
+        ActivityLog::createLog('update', 'mengupdate data jabatan');
         return response()->json([
             "status" => 200,
             "message" => "Jabatan Berhasil Diupdate."
@@ -107,6 +109,7 @@ class JabatanController extends Controller
     public function destroy(string $id)
     {
         Jabatan::destroy($id);
+        ActivityLog::createLog('delete', 'menghapus data jabatan');
         return response()->json([
             "status" => 200,
             "message" => "Jabatan Berhasil Dihapus."

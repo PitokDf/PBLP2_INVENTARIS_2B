@@ -199,9 +199,6 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
         Route::resource('peminjamanUmum', PeminjamanUmumController::class);
         Route::get('/detail-peminjaman/{id}', [PeminjamanController::class, 'show']);
         Route::post('/lengkapi-data', [PeminjamanUmumController::class, "lengkapi"]);
-        Route::get('/profile', [ProfileController::class, 'index']);
-        Route::post('/edit-akun', [ProfileController::class, 'editAkun']);
-        Route::post('/edit-profile', [ProfileController::class, 'editProfile']);
         Route::get('/detail-barang/{id}', [BarangController::class, 'show']);
         Route::get('/roleMahasiswa', function () {
             User::where('id_user', auth()->user()->id_user)->update([
@@ -230,6 +227,9 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
 
     Route::group(['middleware' => ['userAkses:2|3|4|5']], function () {
         Route::post('report-bug', [BugReportController::class, "store"]);
+        Route::get('/profile', [ProfileController::class, 'index']);
+        Route::post('/edit-akun', [ProfileController::class, 'editAkun']);
+        Route::post('/edit-profile', [ProfileController::class, 'editProfile']);
     });
 
 });

@@ -23,7 +23,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data) {
-                    return data.code_prodi ?? '<strong style="color:red;">not found</strong>';
+                    return data.prodi.nama_prodi ?? '<strong style="color:red;">not found</strong>';
                 }, "orderable": true
             },
             {

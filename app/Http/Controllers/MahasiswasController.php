@@ -36,7 +36,7 @@ class MahasiswasController extends Controller
 
     public function getData()
     {
-        $data = Mahasiswas::all();
+        $data = Mahasiswas::with('prodi')->latest()->get();
 
         return response()->json([
             "status" => 200,

@@ -79,7 +79,7 @@
                     </div>
                     <div class="card-body">
                         <div id="area-message-profile"></div>
-                        @if (in_array(auth()->user()->role, ['3', '5']))
+                        @if (in_array(auth()->user()->role, ['2', '3', '5']))
                             <div class="mb-3">
                                 <label for="">Nama</label>
                                 <div class="input-group mb-3">
@@ -97,7 +97,8 @@
                                 <label for="">Jabatan</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                                    <select class="form-control" id="jabatan">
+                                    <select class="form-control" id="jabatan"
+                                        {{ auth()->user()->role == '2' ? 'disabled' : '' }}>
                                         <option value="">--Pilih Jabatan--</option>
                                         @foreach ($jabatans as $item)
                                             <option value="{{ $item->id }}"

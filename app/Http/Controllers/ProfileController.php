@@ -36,14 +36,12 @@ class ProfileController extends Controller
         $data = []; // membuat vairabel data yang menampung data yang akan dipudate
         $fileName = null; // variable untuk menyimpana nama file gambar ke databases
         $file = null;
-        $cek = false;
 
         if ($request->hasFile('file_image')) { // melakukan pengecekan apakah request menyertakan gambar
             $rules['file_image'] = 'image|mimes:jpeg,png,jpg|max:2048'; // memberi rule untuk request gambar
             $file = $request->file('file_image'); // 
             $fileName = uniqid() . '_' . time() . '_' . now()->timestamp . '.' . $file->getClientOriginalExtension(); // membuat nama file yang akan disimpan
             $data['avatar'] = 'asset/avatar/' . $fileName; // memasukkan gambar ke array data yang akan diupdate
-            $cek = true;
         }
 
         if (!empty($request->password)) {
@@ -58,15 +56,13 @@ class ProfileController extends Controller
         // memvalidasi inputan sesuai validasi yang sudah disimpan di variable $rules
         $request->validate($rules, $message);
 
-        // menghapus file gambar sebelumnya jika ada
-        File::exists(public_path('avatar/' . $user->avatar)) && $cek ?
-            File::delete(public_path('avatar/' . $user->avatar)) : '';
-        // unlink('public/avatar/' . $user->avatar);
-
-
         if ($file !== null) { // melakukan apakah terdapat file
             $file->move(public_path('asset/avatar/'), $fileName); // menyimpan file gambar ke folder public
             File::exists($user->avatar) ? File::delete($user->avatar) : ''; // menghapus file sebelumnya jika ada
+
+            if (auth()->user()->dosen_id) {
+                auth()->user()->dosen->update(['photo_dir' => $data['avatar']]);
+            }
         }
 
         // mengupdate data user
@@ -115,7 +111,7 @@ class ProfileController extends Controller
         }
 
         // menjalankan kode didalamnya jika role 3 atau 5 dosen atau staf
-        if (in_array(auth()->user()->role, ['3', '5'])) {
+        if (in_array(auth()->user()->role, ['2', '3', '5'])) {
             $dosen = auth()->user()->dosen;
 
             $cekDosenChanges = $request->namaD === $dosen->name &&

@@ -19,7 +19,6 @@
         rel="stylesheet">
     <link href="/vendor/startbootstrap/sb-admin-2.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="/iziToast.min.css">
     <link rel="icon" href="/asset/baru3.png" type="image/*">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
     <script type="application/ld+json">

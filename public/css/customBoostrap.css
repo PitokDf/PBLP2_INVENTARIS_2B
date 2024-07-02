@@ -55,18 +55,31 @@
     color: #f6f6f6;
 }
 
-.paginate_button.page-item.active .page-link {
-    background-color: #65b789;
-    color: #feffff;
+.dt-paging-button.page-item .page-link {
+    color: #65b789;
 }
 
-.paginate_button.page-item .page-link {
-    color: #65b789;
+.dt-paging-button.page-item .page-link:focus {
+    border: 1px solid #65b789;
+    box-shadow: 0 0 6 #65b78985;
+    transition: all ease .25s;
+}
+
+.dt-paging-button.page-item.active .page-link {
+    background-color: #65b789;
+    color: #feffff;
 }
 
 .btn-warning {
     background-color: #f39200;
     color: #feffff;
+}
+
+table.dataTable thead>tr>th.dt-orderable-asc,
+table.dataTable thead>tr>th.dt-orderable-desc,
+table.dataTable thead>tr>th.dt-orderable-none {
+    background-color: #2c3b42;
+    color: #f6f6f6;
 }
 
 .footer-sidebar {

@@ -524,4 +524,34 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(document).on('click', '#scan_kode', function () {
+        const qrReader = document.getElementById('qr-reader');
+        const kodeBarangInput = document.getElementById('kode_barang');
+
+        function onScanSuccess(decodedText, decodedResult) {
+            // Ketika kode barang ditemukan
+            kodeBarangInput.value = decodedText;
+            // Hentikan pemindaian dan sembunyikan pemindai
+            html5QrcodeScanner.clear();
+            qrReader.style.display = 'none';
+            $('#modal_scan_kode').modal('hide');
+        }
+
+        html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 }
+        );
+
+        html5QrcodeScanner.render(onScanSuccess);
+        qrReader.style.display = 'block';
+        $('#modal_scan_kode').modal('show');
+    });
+
+    // Event listener untuk menutup modal dan menghentikan pemindaian
+    document.getElementById('modal_scan_kode').addEventListener('hidden.bs.modal', function () {
+        if (html5QrcodeScanner) {
+            html5QrcodeScanner.clear();
+        }
+        document.getElementById('qr-reader').style.display = 'none';
+    });
 });

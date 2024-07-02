@@ -17,8 +17,12 @@
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="kode_barang" class="form-label">Kode Barang</label>
-                                <input type="text" class="form-control" name="kode_barang" id="kode_barang"
-                                    placeholder="exp: B121203" />
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="kode_barang" id="kode_barang"
+                                        placeholder="exp: B121203" />
+                                    <button type="button" class="btn btn-primary" id="scan_kode"><i
+                                            class="fas fa-barcode"></i></button>
+                                </div>
                                 <span id="kode_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
@@ -139,6 +143,27 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+{{-- modal scan kode barang --}}
+<div class="modal fade" id="modal_scan_kode" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-secondary">
+                    Scan Kode Barang.
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="qr-reader" style="width: 100%;"></div>
+                    <div id="qr-reader-results"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

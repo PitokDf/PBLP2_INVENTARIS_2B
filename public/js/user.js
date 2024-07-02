@@ -421,27 +421,6 @@ $(document).ready(function () {
         });
     });
 
-    // function unlinkDosen(nip) {
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "/unlink-dosen/" + nip,
-    //         dataType: "json",
-    //         success: function (response) {
-    //             return response.status;
-    //         }
-    //     });
-    // }
-    // function unlinkMahasiswa(nim) {
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "/unlink-mahasiswa/" + nim,
-    //         dataType: "json",
-    //         success: function (response) {
-    //             console.log(response.status);
-    //         }
-    //     });
-    // }
-
     $(document).on('click', '#unlink', function () {
         Swal.fire({
             title: "Yakin ingin unlink user?",

@@ -1,8 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/datatables.js"></script>
-    <script src="/js/sweetalert.js"></script>
+    <script src="/js/user.js"></script>
 @endsection
 @section('title', 'Users')
 @section('modal')
@@ -49,48 +48,7 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                {{-- <tfoot style="background-color: rgb(0, 80, 104); color: white">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Email</th>
-                                        <th>Peran</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </tfoot> --}}
                                 <tbody>
-                                    <?php
-                                    // $role = ['Admin', 'Pimpinan', 'Dosen', 'Mahasiswa', 'Staff'];
-                                    ?>
-                                    {{-- @foreach ($data as $item)
-                                        <tr>
-                                            <th>{{ $loop->iteration }}</th>
-                                            <td>{{ $item->name }}</td>
-                                            <td>{{ $item->email }}</td>
-                                            <td>{{ $role[$item->role - 1] }}</td>
-                                            <td>
-                                                @if ($item->role == 1)
-                                                    <button disabled style="cursor: not-allowed;"
-                                                        class="btn btn-sm btn-danger">
-                                                        <i class="fas a-solid fa-trash"></i>
-                                                    </button> |
-                                                    <button disabled style="cursor: not-allowed;"
-                                                        class="btn btn-sm btn-warning">
-                                                        <i class="fas fa-regular fa-pen"></i>
-                                                    </button>
-                                                @else
-                                                    <button type="button" data-id="{{ $item->id_user }}"
-                                                        class="btn btn-sm btn-danger btnDelete">
-                                                        <i class="fas a-solid fa-trash"></i>
-                                                    </button> |
-                                                    <button class="btn btn-sm btn-warning btnEdit"
-                                                        id="{{ $item->id_user }}">
-                                                        <i class="fas fa-regular fa-pen"></i>
-                                                    </button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div>

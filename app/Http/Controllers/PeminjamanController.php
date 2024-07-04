@@ -179,11 +179,14 @@ class PeminjamanController extends Controller
             return response()->json($validator->errors(), 422);
         }
         $peminjaman = Peminjaman::findOrFail($id);
+        $terlambat = $peminjaman->selectRaw('SUM(DATEDIFF(?, batas_pengembalian)) as denda', [now()])->value('denda');
+        $denda = $terlambat > 0 ? $terlambat * 1500 : 0; // set denda dari hari terlambat dikali 1500
         $dataPeminjam = Peminjaman::with(['user', 'barang'])->where('id', $id)->first();
         $peminjaman->update(
             [
                 'tgl_pengembalian' => now(),
-                "kondisi" => $request->kondisi
+                "kondisi" => $request->kondisi,
+                "denda" => $denda
             ]
         );
         Barang::findOrFail($dataPeminjam->barang->id_barang)->increment('quantity', $peminjaman->jumlah);

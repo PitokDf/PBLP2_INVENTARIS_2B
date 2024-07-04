@@ -61,7 +61,7 @@ class DosenController extends Controller
             'jabatan' => 'required|exists:jabatans,id', // rule untuk jabatan wajib diisi, dan jabatan harus ada di tabel jabatan
             'no_telpn' => 'required|regex:/^08[0-9]{9,}$/|unique:dosen,phone_number', // rule untuk nomor telepon wajin diisi, nomor telepon harus diawali dengan '08', nomor telepon unique di tabel dosen
             'email' => 'required|email|unique:dosen,email', // rule untuk email wajib diisi, email harus bertype email, email unique pada table dosen
-            'dir_foto' => 'nullable|image|mimes:jpeg,png,jpeg|max:124' // rule untuk foto wajib diisi, file harus bertype gambar, ekstensi gambar yang diizinkan 'jpg, png, dan jpeg', ukuran maksimal gambar '2MB'
+            'dir_foto' => 'nullable|image|mimes:jpeg,png,jpeg|max:2048' // rule untuk foto wajib diisi, file harus bertype gambar, ekstensi gambar yang diizinkan 'jpg, png, dan jpeg', ukuran maksimal gambar '2MB'
         ];
 
         $request->validate($rules, $this->messageIDN()); // melakukan validasi pada rules yang sudah ditentukan
@@ -122,7 +122,7 @@ class DosenController extends Controller
             'jabatan' => 'required|exists:jabatans,id', // rule untuk jabatan wajib diisi, dan jabatan harus ada di tabel jabatan
             'phone_number' => 'required|regex:/^08[0-9]{9,}$/|' . Rule::unique('dosen')->ignore($dosen), // rule untuk nomor telepon wajin diisi, nomor telepon harus diawali dengan '08', nomor telepon unique dan mengabaikan data yang sedang diedit
             'email' => 'required|email|' . Rule::unique('dosen')->ignore($dosen), // rule untuk email wajib diisi, email harus bertype email, email unique pada table dosen mengabaikan data yang sedang diedit
-            'dir_foto' => 'nullable|image|mimes:jpeg,png,jpeg|max:124' // rule untuk foto boleh tidak diisi, file harus bertype gambar, ekstensi gambar yang diizinkan 'jpg, png, dan jpeg', ukuran maksimal gambar '124 Kb'
+            'dir_foto' => 'nullable|image|mimes:jpeg,png,jpeg|max:2048' // rule untuk foto boleh tidak diisi, file harus bertype gambar, ekstensi gambar yang diizinkan 'jpg, png, dan jpeg', ukuran maksimal gambar '124 Kb'
         ];
 
         $request->validate($rules, $this->messageIDN()); // melakukan validasi pada rules yang sudah dibuat
@@ -202,7 +202,7 @@ class DosenController extends Controller
             'dir_foto.required' => 'Foto wajib diisi.',
             'dir_foto.image' => 'File harus berupa gambar.',
             'dir_foto.mimes' => 'Ekstensi gambar yang diizinkan hanya jpg, png, dan jpeg.',
-            'dir_foto.max' => 'Ukuran gambar maksimal 124kb.',
+            'dir_foto.max' => 'Ukuran gambar maksimal 2MB.',
         ];
     }
 }

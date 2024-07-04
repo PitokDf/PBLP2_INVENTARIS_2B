@@ -122,16 +122,18 @@ $(document).ready(function () {
     });
 
     $(document).on('change', '#nip', function () {
-        $('#email').attr('readonly', false)
-        $('#email').val('')
+        $('.action').attr('id') === 'btnCreateform' ?
+            ($('#email').attr('readonly', false),
+                $('#email').val('')) : '';
         AjaxGetData('/getEmailDosen/' + $(this).val(), function (res) {
-            res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true), $('#name').val(res.nama)) : ''
-            res.status === 404 ? $('#email').attr('readonly', false) : ''
+            $('.action').attr('id') === 'btnCreateform' ?
+                (res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true), $('#name').val(res.nama)) : '',
+                    res.status === 404 ? $('#email').attr('readonly', false) : '') : ''
         });
     });
     $(document).on('change', '#nim', function () {
-        $('#email').attr('readonly', false)
-        $('#email').val('')
+        $('.action').attr('id') === 'btnCreateform' ?
+            $('#email').attr('readonly', false) : '';
         AjaxGetData('/getNamaMahasiswa/' + $(this).val(), function (res) {
             res.status === 200 ? $('#name').val(res.nama) : ''
         });
@@ -282,14 +284,21 @@ $(document).ready(function () {
     $('#role').change(function () { getKondisiData($(this).val()) });
 
     $(document).on('click', '#btnEditform', function () {
-        var formData = $('#form').serialize();
+        var formData = new FormData();
+        formData.append('_method', 'PUT');
+        formData.append('name', $('#name').val());
+        formData.append('email', $('#email').val());
+        formData.append('role', $('#role').val());
+        formData.append('password', $('#password').val());
         var id = $('#id').val();
-        url = "user/" + id;
+        url = "/user/" + id;
 
         $.ajax({
-            type: "PUT",
+            type: "POST",
             url: url,
             data: formData,
+            processData: false,
+            contentType: false,
             dataType: "json",
             success: function (response) {
                 response.status == 400 ? Swal.fire({
@@ -345,9 +354,14 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 var url = 'user/' + $(this).data('id');
+                var data = new FormData();
+                data.append('_method', 'DELETE');
                 $.ajax({
-                    type: "DELETE",
+                    type: "POST",
                     url: url,
+                    processData: false,
+                    contentType: false,
+                    data: data,
                     dataType: "json",
                     success: function (response) {
                         response.status === 302 ? Swal.fire({

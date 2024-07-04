@@ -29,7 +29,7 @@ class ReportController extends Controller
     }
     public function reportPeminjaman()
     {
-        $data = Peminjaman::with('barang')->latest()->get();
+        $data = Peminjaman::with('barang')->whereNotIn('status', [0, 2])->latest()->get();
         return view("admin.reports.peminjaman")->with("peminjamans", $data);
     }
 

@@ -27,19 +27,19 @@
                         <select name="barang" id="barangM" class="form-control">
                             <option value="">--Pilih Barang--</option>
                             @foreach ($barangs as $item)
-                                <option value="{{ $item->id_barang }}">{{ $item->nama_barang }}</option>
+                                <option value="{{ $item->id_barang }}">{{ $item->nama_barang . ' - ' . $item->code_barang }}
+                                </option>
                             @endforeach
                         </select>
                         <span id="barang_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="user" class="form-label">User</label>
+                        <label for="user" class="form-label">Penerima</label>
                         <select name="user" id="user" class="form-control">
-                            <option value="">--Pilih user--</option>
+                            <option value="">--Pilih penerima--</option>
                             @foreach ($users as $item)
                                 <option value="{{ $item->id_user }}">
-                                    {{ $item->mahasiswa_id !== null ? $item->mahasiswa->nama . ' - ' . $item->mahasiswa->nim . ' (Mahasiswa)' : ($item->dosen_id !== null ? $item->dosen->name . ' - ' . $item->dosen->nip . ' (Dosen)' : $item->username . ' (Staf)') }}
-
+                                    {{ $item->mahasiswa_id ? $item->mahasiswa->nama . ' - ' . $item->mahasiswa->nim . ' (Mahasiswa)' : ($item->dosen_id ? $item->dosen->name . ' - ' . $item->dosen->nip . ' (Dosen)' : $item->username . ' (Staf)') }}
                                 </option>
                             @endforeach
                         </select>

@@ -214,8 +214,7 @@ Route::middleware(['auth.withMessage', 'verified'])->group(function () {
             return redirect()->back();
         })->name('dosen');
         Route::get('/daftar-barang', function () {
-            $data = Barang::with(['kategori', 'merek'])->where('quantity', '!=', 0)->latest()->get();
-            return view('umum.barang')->with('barang', $data);
+            return view('umum.barang');
         });
         Route::get('/riwayat-peminjaman', function () {
             $data = Peminjaman::with(['user', 'barang'])->where('id_user', Auth::user()->id_user)->latest()->get();

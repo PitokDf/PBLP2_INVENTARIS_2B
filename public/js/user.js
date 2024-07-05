@@ -236,6 +236,7 @@ $(document).ready(function () {
         } else {
             $('#role').attr('disabled', false);
             if (role == 2 || role == 3 || role == 5) {
+                setKondisiNormal();
                 fetchingNip();
             } else if (role == 4) {
                 setKondisiNormal();
@@ -288,7 +289,9 @@ $(document).ready(function () {
         formData.append('_method', 'PUT');
         formData.append('name', $('#name').val());
         formData.append('email', $('#email').val());
-        formData.append('role', $('#role').val());
+        $('#nim').val() ? formData.append('nim', $('#nim').val()) : '';
+        $('#nip').val() ? formData.append('nip', $('#nip').val()) : '';
+        !$('#role').attr('disabled') ? formData.append('role', $('#role').val()) : ''; // hanya mengirim variabel role jika role tidak ada atribut disabled
         formData.append('password', $('#password').val());
         var id = $('#id').val();
         url = "/user/" + id;

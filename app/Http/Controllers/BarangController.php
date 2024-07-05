@@ -30,7 +30,9 @@ class BarangController extends Controller
 
     public function getData()
     {
-        $data = Barang::with(['kategori', 'merek', 'pemasok'])->latest()->get();
+        auth()->user()->role != '1' ?
+            $data = Barang::with(['kategori', 'merek'])->latest()->where('quantity', '>', 0)->get() :
+            $data = Barang::with(['kategori', 'merek', 'pemasok'])->latest()->get();
         return response()->json([
             "status" => 200,
             "message" => "Berhasil mendapatkan data.",

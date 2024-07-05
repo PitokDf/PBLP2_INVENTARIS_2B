@@ -103,10 +103,10 @@ class UsersController extends Controller
             $user = User::findOrFail($id);
             $userConnect = $user->mahasiswa_id && $user->dosen_id ? true : false;
             if (!empty($request->role)) {
-                if (in_array($user->role, ['2', '3', '4']) && ($user->mahasiswa_id !== null || $user->dosen_id !== null)) {
+                if (in_array($user->role, ['2', '3', '4']) && ($user->mahasiswa_id || $user->dosen_id)) {
                     return response()->json([
                         'status' => '400',
-                        'message' => 'Role Dosen tidak boleh diubah.'
+                        'message' => 'Role tidak dapat diubah, unlink user terlebih dahulu.'
                     ]);
                 }
             }

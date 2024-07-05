@@ -16,7 +16,7 @@ class BarangKeluarController extends Controller
      */
     public function index()
     {
-        $barang = Barang::latest()->get();
+        $barang = Barang::latest()->where('quantity', '>', 0)->get();
         $user = User::with(['mahasiswa', 'dosen'])
             ->whereNotNull('email_verified_at') // Email sudah terverifikasi
             ->where(function ($query) {

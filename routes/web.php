@@ -209,13 +209,13 @@ Route::middleware('me')->group(function () {
                 User::where('id_user', auth()->user()->id_user)->update([
                     'role' => '4'
                 ]);
-                return redirect()->back();
+                return redirect('peminjamanUmum');
             })->name('mahasiswa');
             Route::get('/roleDosen', function () {
                 User::where('id_user', auth()->user()->id_user)->update([
                     'role' => '3'
                 ]);
-                return redirect()->back();
+                return redirect('peminjamanUmum');
             })->name('dosen');
             Route::get('/daftar-barang', function () {
                 return view('umum.barang');

@@ -32,10 +32,11 @@ class BugReportController extends Controller
     {
         Carbon::setLocale('id');
         $bugReports = BugReport::latest()->get();
-        $roles = ['Pimpinan', 'Dosen', 'Mahasiswa', 'Staff'];
+        $roles = ['Pimpinan', 'Dosen', 'Mahasiswa', 'Staff', 'Uknown'];
 
         foreach ($bugReports as $bugReport) {
-            $bugReport->role = $roles[(int) $bugReport->user->role - 2];
+            $role = $bugReport->role ?? 6;
+            $bugReport->role = $roles[(int) $role - 2];
             $bugReport->tanggal_report = Carbon::parse($bugReport->created_at)->translatedFormat('l, j F Y');
         }
 

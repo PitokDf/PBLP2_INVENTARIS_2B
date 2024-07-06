@@ -16,20 +16,24 @@ class BarangKeluarController extends Controller
      */
     public function index()
     {
-        $barang = Barang::latest()->get();
+        $barang = Barang::latest()->where('quantity', '>', 0)->get();
         $user = User::with(['mahasiswa', 'dosen'])
+            ->whereNotNull('email_verified_at') // Email sudah terverifikasi
             ->where(function ($query) {
-                $query->where('role', '3')
-                    ->whereNotNull('dosen_id');
+                $query->where(function ($query) {
+                    $query->whereIn('role', ['3', '5'])
+                        ->whereNotNull('dosen_id'); // Role 3 dan 5 dengan dosen_id tidak kosong
+                });
             })
             ->orWhere(function ($query) {
-                $query->where('role', '4')
-                    ->whereNotNull('mahasiswa_id');
+                $query->where(function ($query) {
+                    $query->whereIn('role', ['4'])
+                        ->whereNotNull('mahasiswa_id');
+                });
             })
-            ->where('email_verified_at', '!=', null)
-            ->orWhereNotIn('role', ['2', '3', '4'])
-            ->where('role', '!=', '1')
-            ->latest()->get();
+            ->whereNotIn('role', ['1', '2'])
+            ->latest()
+            ->get();
         return view("admin.barang_keluar.index")->with(['barangs' => $barang, 'users' => $user]);
 
 
@@ -90,7 +94,7 @@ class BarangKeluarController extends Controller
      */
     public function show(string $id)
     {
-        $barangKeluar = BarangKeluar::with('barang')->findOrFail($id);
+        $barangKeluar = BarangKeluar::with(['barang', 'user', 'user.mahasiswa', 'user.dosen'])->findOrFail($id);
         if (!$barangKeluar) {
             return response()->json([
                 "status" => 404,

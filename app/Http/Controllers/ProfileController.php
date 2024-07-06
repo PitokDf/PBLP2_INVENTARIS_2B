@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $file = null;
 
         if ($request->hasFile('file_image')) { // melakukan pengecekan apakah request menyertakan gambar
-            $rules['file_image'] = 'image|mimes:jpeg,png,jpg|max:124'; // memberi rule untuk request gambar
+            $rules['file_image'] = 'image|mimes:jpeg,png,jpg|max:2048'; // memberi rule untuk request gambar
             $file = $request->file('file_image'); // 
             $fileName = uniqid() . '_' . time() . '_' . now()->timestamp . '.' . $file->getClientOriginalExtension(); // membuat nama file yang akan disimpan
             $data['avatar'] = 'asset/avatar/' . $fileName; // memasukkan gambar ke array data yang akan diupdate
@@ -51,7 +51,8 @@ class ProfileController extends Controller
         }
 
         $message = [
-            'password.regex' => 'password harus terdiri dari huruf besar, kecil, angka dan karakter !@#$%' // message yang dirubah jadi bahasa yang muda dipahami
+            'password.regex' => 'password harus terdiri dari huruf besar, kecil, angka dan karakter !@#$%', // message yang dirubah jadi bahasa yang muda dipahami
+            'file_image.max' => 'Gambar maksimal 2MB'
         ];
 
         // memvalidasi inputan sesuai validasi yang sudah disimpan di variable $rules

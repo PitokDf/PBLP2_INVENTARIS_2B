@@ -122,16 +122,18 @@ $(document).ready(function () {
     });
 
     $(document).on('change', '#nip', function () {
-        $('#email').attr('readonly', false)
-        $('#email').val('')
+        $('.action').attr('id') === 'btnCreateform' ?
+            ($('#email').attr('readonly', false),
+                $('#email').val('')) : '';
         AjaxGetData('/getEmailDosen/' + $(this).val(), function (res) {
-            res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true), $('#name').val(res.nama)) : ''
-            res.status === 404 ? $('#email').attr('readonly', false) : ''
+            $('.action').attr('id') === 'btnCreateform' ?
+                (res.status === 200 ? ($('#email').val(res.email), $('#email').attr('readonly', true), $('#name').val(res.nama)) : '',
+                    res.status === 404 ? $('#email').attr('readonly', false) : '') : ''
         });
     });
     $(document).on('change', '#nim', function () {
-        $('#email').attr('readonly', false)
-        $('#email').val('')
+        $('.action').attr('id') === 'btnCreateform' ?
+            $('#email').attr('readonly', false) : '';
         AjaxGetData('/getNamaMahasiswa/' + $(this).val(), function (res) {
             res.status === 200 ? $('#name').val(res.nama) : ''
         });
@@ -234,6 +236,7 @@ $(document).ready(function () {
         } else {
             $('#role').attr('disabled', false);
             if (role == 2 || role == 3 || role == 5) {
+                setKondisiNormal();
                 fetchingNip();
             } else if (role == 4) {
                 setKondisiNormal();
@@ -282,14 +285,23 @@ $(document).ready(function () {
     $('#role').change(function () { getKondisiData($(this).val()) });
 
     $(document).on('click', '#btnEditform', function () {
-        var formData = $('#form').serialize();
+        var formData = new FormData();
+        formData.append('_method', 'PUT');
+        formData.append('name', $('#name').val());
+        formData.append('email', $('#email').val());
+        $('#nim').val() ? formData.append('nim', $('#nim').val()) : '';
+        $('#nip').val() ? formData.append('nip', $('#nip').val()) : '';
+        !$('#role').attr('disabled') ? formData.append('role', $('#role').val()) : ''; // hanya mengirim variabel role jika role tidak ada atribut disabled
+        formData.append('password', $('#password').val());
         var id = $('#id').val();
-        url = "user/" + id;
+        url = "/user/" + id;
 
         $.ajax({
-            type: "PUT",
+            type: "POST",
             url: url,
             data: formData,
+            processData: false,
+            contentType: false,
             dataType: "json",
             success: function (response) {
                 response.status == 400 ? Swal.fire({
@@ -345,9 +357,14 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 var url = 'user/' + $(this).data('id');
+                var data = new FormData();
+                data.append('_method', 'DELETE');
                 $.ajax({
-                    type: "DELETE",
+                    type: "POST",
                     url: url,
+                    processData: false,
+                    contentType: false,
+                    data: data,
                     dataType: "json",
                     success: function (response) {
                         response.status === 302 ? Swal.fire({

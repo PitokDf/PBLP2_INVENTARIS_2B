@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AuthenticateCustom;
+use App\Http\Middleware\me;
 use App\Http\Middleware\RedirectToHttps;
 use App\Http\Middleware\UserAkses;
 // use Illuminate\Auth\Middleware\Authenticate;
@@ -18,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'userAkses' => UserAkses::class,
             'auth.withMessage' => AuthenticateCustom::class,
-            'to.secure.link' => RedirectToHttps::class
+            'to.secure.link' => RedirectToHttps::class,
+            'me'=> me::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -126,4 +126,10 @@ class BarangMasukController extends Controller
             "message" => "Berhasil menghapus data."
         ]);
     }
+
+    public function scanBarang(string $kode)
+    {
+        $barang = Barang::where('code_barang', $kode)->first();
+        return !$barang ? response()->json(['status' => 404, 'message' => 'Barang belum terdaftar pada sistem.']) : response()->json(['status' => 200, 'data' => $barang]);
+    }
 }

@@ -1,6 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
+    <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
         function getPemasok() {
             AjaxGetData('/getDataPemasok', function(response) {
@@ -24,6 +25,25 @@
 @endsection
 @section('modal')
     @include('admin.barang_masuk.modal')
+    {{-- modal scan kode barang --}}
+    <div class="modal fade" id="modal_scan_kode" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="text-secondary">
+                        Scan Kode Barang.
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div id="qr-reader" style="width: 100%;"></div>
+                        <div id="qr-reader-results"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('title', 'Barang Masuk')
@@ -41,13 +61,18 @@
                     <div class="mb-3">
                         <input type="hidden" class="form-control" name="id" id="id" />
                         <label for="barang" class="form-label">Barang</label>
-                        <select name="barang" id="barangM" class="form-control">
-                            <option value="">--Pilih Barang--</option>
-                            @foreach ($barangs as $item)
-                                <option value="{{ $item->id_barang }}">{{ $item->nama_barang . ' - ' . $item->code_barang }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="input-group">
+                            <select name="barang" id="barangM" class="form-control">
+                                <option value="">--Pilih Barang--</option>
+                                @foreach ($barangs as $item)
+                                    <option value="{{ $item->id_barang }}">
+                                        {{ $item->nama_barang . ' - ' . $item->code_barang }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button type="button" class="btn btn-primary" id="scan_kode"><i
+                                    class="fas fa-barcode"></i></button>
+                        </div>
                         <span id="barang_error" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -126,8 +151,8 @@
                 <div class="card-body">
                     <div class="table table-responsive">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" id="tableBarangM" width="100%"
-                                cellspacing="0">
+                            <table class="table table-bordered table-striped table-hover" id="tableBarangM"
+                                width="100%" cellspacing="0">
                                 <thead style="background-color: #2c3b42; color: #f6f6f6">
                                     <tr>
                                         <th>No</th>

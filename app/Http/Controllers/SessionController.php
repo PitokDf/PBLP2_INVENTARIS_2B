@@ -132,10 +132,7 @@ class SessionController extends Controller
         Auth::login($user);
 
         // Ubah pesan respons
-        return response()->json([
-            "status" => 200,
-            "message" => "Email verifikasi telah dikirimkan ke email, Silahkan login ke akun Anda."
-        ]);
+        return response()->json(["status" => 200, "message" => "Email verifikasi telah dikirimkan ke email, Silahkan login ke akun Anda."]);
     }
 
     public function reloadCapcha()

@@ -244,7 +244,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error(xhr.responseJSON.errors);
+                console.error(xhr);
                 const errors = xhr.responseJSON.errors;
                 clearErrorMsg();
                 if (errors.title) {

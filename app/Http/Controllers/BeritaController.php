@@ -93,14 +93,13 @@ class BeritaController extends Controller
         $request->validate([
             "title" => "required",
             "content" => "required",
-            "kategori" => "required|exists:kategori_berita,id_kategori",
-            "publikasi" => "required|date",
+            "kategori" => "required|exists:kategori_berita,id"
         ]);
 
         Berita::findOrFail($id)->update([
             'title' => $request->title,
             'content' => $request->content,
-            'tgl_publikasi' => $request->publikasi,
+            'tgl_publikasi' => now(),
             'id_kategori' => $request->kategori,
         ]);
         ActivityLog::createLog('update', 'mengupdate data berita');

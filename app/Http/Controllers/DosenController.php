@@ -64,10 +64,12 @@ class DosenController extends Controller
             'dir_foto' => 'nullable|image|mimes:jpeg,png,jpeg|max:2048' // rule untuk foto wajib diisi, file harus bertype gambar, ekstensi gambar yang diizinkan 'jpg, png, dan jpeg', ukuran maksimal gambar '2MB'
         ];
 
+        $fileName = null;
+
         $request->validate($rules, $this->messageIDN()); // melakukan validasi pada rules yang sudah ditentukan
 
         $file = $request->file('dir_foto'); // membuat inisialisasi dari method file
-        $fileName = now() . '_' . uniqid() . '.' . $file->getClientOriginalExtension(); // membuat nama file yang akan disimpan
+        $file ? $fileName = now() . '_' . uniqid() . '.' . $file->getClientOriginalExtension() : ''; // membuat nama file yang akan disimpan
 
         $data = [ // membuat variable data yang menampung field yang akan dicreate
             "name" => $request->name,
@@ -79,7 +81,7 @@ class DosenController extends Controller
         ];
 
         if (Dosen::create($data)) { // melakukan pengecekan apakah data dosen dicreate
-            $file->move(public_path('asset/dosen/'), $fileName); // menyimpan file gambar jika data dosen berhasil dicreate
+           $file ? $file->move(public_path('asset/dosen/'), $fileName) : ''; // menyimpan file gambar jika data dosen berhasil dicreate
             ActivityLog::createLog('add', 'menambahkan data dosen');
         }
 

@@ -64,6 +64,8 @@ class DosenController extends Controller
             'dir_foto' => 'nullable|image|mimes:jpeg,png,jpeg|max:2048' // rule untuk foto wajib diisi, file harus bertype gambar, ekstensi gambar yang diizinkan 'jpg, png, dan jpeg', ukuran maksimal gambar '2MB'
         ];
 
+        $fileName = null;
+
         $request->validate($rules, $this->messageIDN()); // melakukan validasi pada rules yang sudah ditentukan
 
         $file = $request->file('dir_foto'); // membuat inisialisasi dari method file

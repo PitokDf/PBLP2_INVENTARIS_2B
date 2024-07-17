@@ -24,6 +24,7 @@ export default defineConfig({
                 "resources/js/kategori_berita.js",
                 "resources/js/mahasiswa.js",
                 "resources/js/merk.js",
+                "resources/js/peminjaman.js",
                 "resources/js/pemasok.js",
                 "resources/js/preview.js",
                 "resources/js/prodi.js",

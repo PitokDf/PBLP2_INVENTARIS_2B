@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/user.js"></script>
+    @vite(['resources/js/user.js'])
 @endsection
 @section('title', 'Users')
 @section('modal')

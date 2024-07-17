@@ -5,13 +5,12 @@
 @endsection
 @section('title', 'Dashboard')
 @section('scriptPages')
-    <script src="/js/dashboard/data.js"></script>
-    <script src="/js/dashboard/topThreeBarangPie.js"></script>
+    @vite('resources/js/topThreeBarang.js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         $.ajax({
             type: "GET",
-            url: "/test",
+            url: "test",
             dataType: "json",
             success: function(response) {
                 // console.log(response, dipinjam);

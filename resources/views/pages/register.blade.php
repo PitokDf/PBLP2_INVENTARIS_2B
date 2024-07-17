@@ -8,12 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="asset/baru1.png" type="image/*">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Register - PBL P2</title>
 
     <!-- Custom fonts for this template-->
-    <link href="/vendor/startbootstrap/fontawesome-free/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/startbootstrap/fontawesome-free/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -76,10 +77,10 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="/forgot">Forgot Password?</a>
+                                <a class="small" href="forgot">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="/login">Already have an account? Login!</a>
+                                <a class="small" href="login">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
@@ -92,13 +93,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery.easing.min.js"></script>
+    <script src="{{ asset('vendor/jquery.easing.min.js') }}"></script>
     <!-- Custom scripts for all pages-->
-    <script src="/vendor/startbootstrap/sb-admin-2.min.js"></script>
+    <script src="{{ asset('vendor/startbootstrap/sb-admin-2.min.js') }}"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
-    <script src="/js/pages/register.js"></script>
+    @vite(['resources/js/pages/register.js'])
 
 </body>
 

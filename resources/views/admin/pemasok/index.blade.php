@@ -1,8 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    {{-- <script src="{{ asset('js/barangM/index.js') }}"></script> --}}
-    <script src="/js/pemasok/index.js"></script>
+    @vite(['resources/js/pemasok.js'])
 @endsection
 @section('modal')
     @include('admin.pemasok.modal')

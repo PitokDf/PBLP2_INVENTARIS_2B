@@ -1,8 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="https://unpkg.com/html5-qrcode"></script>
-    <script src="/js/barang/index.js"></script>
+    @vite(['resources/js/barang.js'])
 @endsection
 @section('modal')
     @include('admin.barang.modal')

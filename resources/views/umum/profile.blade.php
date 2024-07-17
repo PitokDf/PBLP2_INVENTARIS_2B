@@ -4,7 +4,7 @@
     <script>
         $('#tablebarang').DataTable();
     </script>
-    <script src="/js/umum/profile.js"></script>
+    @vite('resources/js/umum/profile.js')
 @endsection
 @section('content')
     @if (!auth()->user()->mahasiswa_id && !auth()->user()->dosen_id)

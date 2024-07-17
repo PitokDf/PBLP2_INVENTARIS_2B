@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="js/mahasiswa/proses.js"></script>
+    @vite(['resources/js/mahasiswa.js'])
 @endsection
 @section('modal')
     @include('admin.mahasiswa.modal')

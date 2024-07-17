@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/merk.js"></script>
+    @vite(['resources//js/merk.js'])
 @endsection
 @section('modal')
     @include('admin.merk.modal')

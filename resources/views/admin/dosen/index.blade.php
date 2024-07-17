@@ -1,8 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/dosen/dosen.js"></script>
-    <script src="/js/preview.js"></script>
+    @vite(['resources/js/preview.js', 'resources/js/dosen.js'])
 @endsection
 @section('modal')
     @include('admin.dosen.modal')

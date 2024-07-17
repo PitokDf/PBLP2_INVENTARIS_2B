@@ -1,7 +1,7 @@
 @extends('layouts.content')
 @section('title', 'Peminjaman')
 @section('scriptPages')
-    <script src="/js/umum/peminjaman.js"></script>
+    @vite(['resources/js/umum/peminjaman.js'])
 @endsection
 @section('content')
     @if (auth()->user()->mahasiswa_id === null && auth()->user()->dosen_id === null)

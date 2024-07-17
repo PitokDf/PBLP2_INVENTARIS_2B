@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/barang/proseskategori.js"></script>
+    @vite(['resources/js/kategori_barang.js'])
 @endsection
 @section('modal')
     @include('admin.barang.modalAddcategori')

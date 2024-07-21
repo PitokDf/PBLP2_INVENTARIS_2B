@@ -1,7 +1,7 @@
 @extends('layouts.content')
 @section('title', 'Bug Report')
 @section('scriptPages')
-    <script src="/js/admin_bug_report.js"></script>
+    @vite(['resources/js/admin_bug_report.js'])
 @endsection
 @section('content')
     <div class="row">

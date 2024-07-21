@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/request/peminjaman.js"></script>
+    @vite(['resources/js/request_peminjaman.js'])
 @endsection
 @section('modal')
 @endsection

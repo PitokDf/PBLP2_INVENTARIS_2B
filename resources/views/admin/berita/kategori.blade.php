@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/berita/prosesKategori.js"></script>
+    @vite(['resources/js/kategori_berita.js'])
 @endsection
 @section('modal')
     @include('admin.berita.modalkategori')

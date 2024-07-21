@@ -2,26 +2,7 @@
 
 @section('scriptPages')
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <script>
-        function getPemasok() {
-            AjaxGetData('/getDataPemasok', function(response) {
-                if ($('#pemasok').html().trim !== '') {
-                    $('#pemasok').html('')
-                }
-                if (response.status === 200) {
-                    $('#pemasok').append(`<option value="">--pilih pemasok--</option>`);
-                    $.each(response.data, function(indexInArray, data) {
-                        $('#pemasok').append(
-                            `<option value="${data.id}">${data.nama}</option>`);
-                    });
-                    $('#pemasok').selectpicker('refresh');
-                }
-            });
-        }
-        getPemasok();
-    </script>
-    <script src="/js/pemasok/index.js"></script>
-    <script src="/js/barangM/index.js"></script>
+    @vite(['resources/js/pemasok.js', 'resources/js/barang_masuk.js'])
 @endsection
 @section('modal')
     @include('admin.barang_masuk.modal')

@@ -27,19 +27,19 @@
 
     @can('umum')
         <li class="nav-item {{ Request::is('daftar-barang') ? 'active' : '' }}">
-            <a href="/daftar-barang" class="nav-link">
+            <a href="daftar-barang" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Daftar Barang</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('peminjamanUmum') ? 'active' : '' }}">
-            <a href="/peminjamanUmum" class="nav-link">
+            <a href="peminjamanUmum" class="nav-link">
                 <i class="fas fa-fw fa-hand-holding"></i>
                 <span>Peminjaman</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('riwayat-peminjaman') ? 'active' : '' }}">
-            <a href="/riwayat-peminjaman" class="nav-link">
+            <a href="riwayat-peminjaman" class="nav-link">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Riwayat Peminjaman</span>
             </a>
@@ -124,12 +124,12 @@
                         href="{{ route('barangM.index') }}">
                         <span>Barang Masuk</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('barang-keluar') ? 'active' : '' }}" href="/barang-keluar">
+                    <a class="collapse-item {{ Request::is('barang-keluar') ? 'active' : '' }}" href="barang-keluar">
                         <span>Barang Keluar BHP</span>
                     </a>
 
                     <a class="collapse-item {{ Request::is('request-peminjaman') ? 'active' : '' }}"
-                        href="/request-peminjaman">
+                        href="request-peminjaman">
                         Request Peminjaman
                     </a>
                     <a class="collapse-item {{ Request::is('peminjaman') ? 'active' : '' }}"
@@ -184,26 +184,26 @@
             </a>
             <div id="laporan" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ Request::is('laporan-barang') ? 'active' : '' }}" href="/laporan-barang">
+                    <a class="collapse-item {{ Request::is('laporan-barang') ? 'active' : '' }}" href="laporan-barang">
                         <i class="fas fa-archive"></i>
                         <span>Barang</span>
                     </a>
                     <a class="collapse-item {{ Request::is('laporan-barang-masuk') ? 'active' : '' }}"
-                        href="/laporan-barang-masuk">
+                        href="laporan-barang-masuk">
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Transaksi Masuk</span>
                     </a>
                     <a class="collapse-item {{ Request::is('laporan-barang-keluar') ? 'active' : '' }}"
-                        href="/laporan-barang-keluar">
+                        href="laporan-barang-keluar">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Transaksi Keluar</span>
                     </a>
                     <a class="collapse-item {{ Request::is('laporan-peminjaman') ? 'active' : '' }}"
-                        href="/laporan-peminjaman">
+                        href="laporan-peminjaman">
                         <i class="fas fa-hand-holding"></i>
                         <span>Peminjaman</span>
                     </a>
-                    <a class="collapse-item {{ Request::is('laporan-stok') ? 'active' : '' }}" href="/laporan-stok">
+                    <a class="collapse-item {{ Request::is('laporan-stok') ? 'active' : '' }}" href="laporan-stok">
                         <i class="fas fa-boxes"></i>
                         <span>Stok</span>
                     </a>

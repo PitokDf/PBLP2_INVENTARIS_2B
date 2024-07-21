@@ -1,8 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/datatables.js"></script>
-    <script src="/js/prodi/proses.js"></script>
+    @vite('resources/js/prodi.js')
 @endsection
 @section('title', 'Prodi')
 @section('modal')

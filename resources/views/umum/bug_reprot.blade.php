@@ -11,7 +11,7 @@
                 $('#detailBarang').modal('show')
                 $.ajax({
                     type: "GET",
-                    url: "/detail-barang/" + $(this).data('id'),
+                    url: "detail-barang/" + $(this).data('id'),
                     dataType: "json",
                     success: function(response) {
                         const data = response.data;

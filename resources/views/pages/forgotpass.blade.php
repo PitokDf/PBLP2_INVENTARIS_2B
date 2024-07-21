@@ -8,18 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="asset/baru1.png" type="image/*">
 
     <title>Forgot Password - PBL P2</title>
 
     <!-- Custom fonts for this template-->
-    <link href="/vendor/startbootstrap/fontawesome-free/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="vendor/startbootstrap/fontawesome-free/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="/vendor/startbootstrap/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/customBoostrap.css">
+    <link href="vendor/startbootstrap/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/customBoostrap.css">
 </head>
 
 <body class="bg-custom-light">
@@ -53,7 +54,7 @@
                                             {{ session('status') }}
                                         </div>
                                     @endif
-                                    <form class="user" action="/forgot" method="POST">
+                                    <form class="user" action="forgot" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email"
@@ -66,10 +67,10 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="/register">Create an Account!</a>
+                                        <a class="small" href="register">Create an Account!</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="/login">Already have an account?
+                                        <a class="small" href="login">Already have an account?
                                             Login!</a>
                                     </div>
                                 </div>

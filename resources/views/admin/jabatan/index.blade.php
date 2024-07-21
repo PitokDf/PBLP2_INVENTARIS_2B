@@ -1,7 +1,7 @@
 @extends('layouts.content')
 
 @section('scriptPages')
-    <script src="/js/jabatan/index.js"></script>
+    @vite(['resources/js/jabatan.js'])
 @endsection
 @section('modal')
     @include('admin.jabatan.modal')

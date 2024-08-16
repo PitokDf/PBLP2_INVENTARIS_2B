@@ -2,7 +2,7 @@ $(document).ready(function () {
     function reloadCaptcha() {
         $.ajax({
             type: "GET",
-            url: "/reload-capcha",
+            url: "reload-capcha",
             dataType: "json",
             success: function (response) {
                 $('#captcha_area').html(response);
@@ -35,7 +35,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/report-bug",
+            url: "report-bug",
             data: data,
             processData: false,
             contentType: false,

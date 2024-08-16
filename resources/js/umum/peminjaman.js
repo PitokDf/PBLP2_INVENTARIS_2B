@@ -87,7 +87,7 @@ $(document).ready(function () {
         if ($(this).val().trim() !== '') {
             $.ajax({
                 type: "get",
-                url: "/get-barang/" + $(this).val(),
+                url: "get-barang/" + $(this).val(),
                 dataType: "json",
                 success: function (response) {
                     $('#nama_barang').val('');

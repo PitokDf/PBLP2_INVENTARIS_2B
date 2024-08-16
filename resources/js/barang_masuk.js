@@ -1,5 +1,5 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { getPemasok } from "./setupAjax";
+import { dateCutomFormat, getPemasok } from "./setupAjax";
 let html5QrcodeScanner;
 $(document).ready(function () {
 
@@ -24,7 +24,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "/getDataBarangMasuk", // Ganti dengan URL endpoint Anda
+            "url": "getDataBarangMasuk", // Ganti dengan URL endpoint Anda
             "type": "GET"
         },
         "columns": [

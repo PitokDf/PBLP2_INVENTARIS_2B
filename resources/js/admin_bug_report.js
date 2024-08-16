@@ -1,3 +1,4 @@
+import { reloadTable } from "./reloadTable";
 $(document).ready(function () {
     $('#table_bug').DataTable({
         "processing": true,
@@ -8,7 +9,7 @@ $(document).ready(function () {
             "search": "cari"
         },
         "ajax": {
-            "url": "/get-data-report-bug",
+            "url": "get-data-report-bug",
             "type": "GET"
         },
         "columns": [{
@@ -48,7 +49,7 @@ $(document).ready(function () {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                var url = '/report-bug/' + $(this).data('id');
+                var url = 'report-bug/' + $(this).data('id');
                 $.ajax({
                     type: "DELETE",
                     url: url,
@@ -79,7 +80,7 @@ $(document).ready(function () {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                var url = '/report-bug/' + $(this).data('id');
+                var url = 'report-bug/' + $(this).data('id');
                 $.ajax({
                     type: "PUT",
                     url: url,

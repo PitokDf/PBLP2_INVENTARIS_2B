@@ -185,7 +185,7 @@ $(document).ready(function () {
             `);
         $.ajax({
             type: "GET",
-            url: "/getMahasiswaNim",
+            url: "getMahasiswaNim",
             dataType: "json",
             success: function (response) {
                 if (response.status === 200) {
@@ -454,7 +454,7 @@ $(document).ready(function () {
                 if ($(this).data('role') === 'dosen') {
                     $.ajax({
                         type: "GET",
-                        url: "/unlink-dosen/" + $(this).data('id'),
+                        url: "unlink-dosen/" + $(this).data('id'),
                         dataType: "json",
                         success: function (response) {
                             response.status === 200 ? (fetchingNip(), $('#role').attr('disabled', false), $('#email').attr('readonly', false)) : Swal.fire({ title: "Ops..!", text: "Cant unlink", icon: "error" });
@@ -463,7 +463,7 @@ $(document).ready(function () {
                 } else {
                     $.ajax({
                         type: "GET",
-                        url: "/unlink-mahasiswa/" + $(this).data('id'),
+                        url: "unlink-mahasiswa/" + $(this).data('id'),
                         dataType: "json",
                         success: function (response) {
                             response.status === 200 ? (fetchingNim(), $('#role').attr('disabled', false)) : Swal.fire({ title: "Ops..!", text: "Cant unlink", icon: "error" });

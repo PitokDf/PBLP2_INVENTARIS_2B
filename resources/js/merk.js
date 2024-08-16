@@ -144,7 +144,7 @@ $(document).ready(function () {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                var url = '/merk-barang/' + $(this).data('id');
+                var url = 'merk-barang/' + $(this).data('id');
                 var data = new FormData();
                 data.append('_method', 'DELETE');
                 AjaxPostIncludeData(url, data, function (res, errors) {

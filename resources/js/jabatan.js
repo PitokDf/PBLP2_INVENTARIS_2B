@@ -62,7 +62,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#btnCreateForm', function () {
-        AjaxPostIncludeSerialize('/jabatan', $('#form').serialize(), function (res) {
+        AjaxPostIncludeSerialize('jabatan', $('#form').serialize(), function (res) {
             if (res.status == 200) {
                 clearErrorMsg();
                 clerInput();

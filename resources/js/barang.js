@@ -403,7 +403,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/importBarang",
+            url: "importBarang",
             data: data,
             processData: false,
             contentType: false,

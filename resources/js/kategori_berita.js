@@ -44,7 +44,7 @@ $(document).ready(function () {
         $('#name_kategori').removeClass('is-invalid');
         $('#name_error').text('');
         btnAction.html("<i class='fas fa-regular fa-pen'></i> Update");
-        url = "/kategori-berita/" + $(this).data('id') + "/edit";
+        url = "kategori-berita/" + $(this).data('id') + "/edit";
 
         $.ajax({
             type: "GET",

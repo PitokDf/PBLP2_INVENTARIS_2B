@@ -1,5 +1,6 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { dateCutomFormat, getPemasok } from "./setupAjax";
+import { reloadTable } from "./reloadTable";
 let html5QrcodeScanner;
 $(document).ready(function () {
 
